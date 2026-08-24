@@ -180,7 +180,7 @@ export function LoginForm({
               onClick={onSignUpClick}
               className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer"
             >
-              Sign Up
+              Register
             </button>
           </p>
         </div>

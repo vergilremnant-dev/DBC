@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 
 /** Typed payload emitted when registration is complete. */
 export interface RegisterPayload {
@@ -8,8 +9,6 @@ export interface RegisterPayload {
   email: string;
   password?: string;
   phoneNumber?: string;
-  city?: string;
-  categoryId?: string;
   [key: string]: unknown;
 }
 
@@ -19,465 +18,241 @@ interface RegisterWizardProps {
 }
 
 export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWizardProps) {
-  const [step, setStep] = useState(1);
-  const [role, setRole] = useState<'CUSTOMER' | 'PROVIDER' | 'CONSULTANT'>('CUSTOMER');
+  const [fullName, setFullName] = useState('');
+  const [channel, setChannel] = useState<'email' | 'phone'>('email');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-  // Form Field States
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-    // Customer adaptive fields
-    preferredCity: 'Hyderabad',
-    projectInterest: 'Build a New Home',
-    // Provider adaptive fields
-    skills: 'Plumbing Systems',
-    experienceYears: 5,
-    // Consultant adaptive fields
-    specialization: 'Villa Layout Blueprints',
-    consultationFee: 1000,
-  });
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
 
-  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+    // Validation
+    if (!fullName.trim()) {
+      setError('Full Name is required.');
+      return;
+    }
 
-  const getPasswordStrength = () => {
-    const len = formData.password.length;
-    if (len === 0) return { label: 'None', color: 'bg-light-stone' };
-    if (len < 6) return { label: 'Weak', color: 'bg-rose-500' };
-    if (len < 10) return { label: 'Good', color: 'bg-amber-500' };
-    return { label: 'Strong', color: 'bg-brand-emerald' };
-  };
-
-  const handleNextStep = () => {
-    if (step === 2) {
-      if (formData.password !== formData.confirmPassword) {
-        alert('Passwords do not match.');
+    if (channel === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setError('Please enter a valid email address.');
         return;
       }
-      if (formData.password.length < 6) {
-        alert('Password must be at least 6 characters.');
+    } else {
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone)) {
+        setError('Please enter a valid 10-digit phone number.');
         return;
       }
     }
-    setStep(step + 1);
-  };
 
-  const handlePrevStep = () => {
-    setStep(step - 1);
-  };
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate user payload registration success
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    // Success - trigger completion
+    const [first, ...rest] = fullName.trim().split(' ');
     const finalPayload: RegisterPayload = {
-      ...formData,
-      role: role === 'PROVIDER' ? 'ROLE_PROVIDER' : role === 'CONSULTANT' ? 'ROLE_PROVIDER' : 'ROLE_CUSTOMER',
+      role: 'ROLE_CUSTOMER',
+      firstName: first || '',
+      lastName: rest.join(' '),
+      email: channel === 'email' ? email : `${phone}@dbc.com`, // dummy email fallback if registered with phone
+      phoneNumber: channel === 'phone' ? phone : undefined,
     };
-    onRegisterComplete(finalPayload);
-    setStep(5); // Show success verification screen
-  };
 
-  const strength = getPasswordStrength();
+    onRegisterComplete(finalPayload);
+    setSuccess(true);
+  };
 
   return (
-    <div className="space-y-6 text-left animate-gentle-fade">
-      
-      {/* Progress indicators stepper */}
-      {step < 5 && (
-        <div className="space-y-2">
-          <div className="flex justify-between items-center text-[8px] font-black uppercase tracking-widest text-stone-gray">
-            <span>Setup Step {step} of 4</span>
-            <span>{Math.round((step / 4) * 100)}% Setup</span>
-          </div>
-          <div className="dbc-progress-bar">
-            <div
-              className="dbc-progress-fill"
-              style={{ width: `${(step / 4) * 100}%` }}
+    <div className="space-y-4 text-left">
+      <div className="space-y-1">
+        <h3 className="text-xl font-bold font-serif text-stone-900">Create Your Account</h3>
+        <p className="text-xs text-stone-500">Sign up as a customer to get started with your projects.</p>
+      </div>
+
+      {!success ? (
+        <form onSubmit={handleSubmit} className="space-y-3.5 pt-2">
+          {/* Full Name */}
+          <div>
+            <label htmlFor="reg-fullname" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+              Full Name
+            </label>
+            <input
+              id="reg-fullname"
+              type="text"
+              name="fullName"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="John Doe"
+              required
+              className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
             />
           </div>
-        </div>
-      )}
 
-      {/* STEP 1: Account Type Selection */}
-      {step === 1 && (
-        <div className="space-y-5">
-          <div className="space-y-1">
-            <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Select Account Type</h3>
-            <p className="text-[10px] text-stone-gray font-semibold">Choose the profile pathway matching your objective.</p>
-          </div>
-
-          <div className="grid gap-3 grid-cols-1">
-            {[
-              { type: 'CUSTOMER', title: 'Customer Profile', icon: '👤', desc: 'Hire professionals, post project requirements, and compare verified contractor quotes.' },
-              { type: 'PROVIDER', title: 'Professional Trade Partner', icon: '👷', desc: 'List manual trade services (plumbing, electrical, brickwork) and receive customer leads.' },
-              { type: 'CONSULTANT', title: 'Architect & Layout Consultant', icon: '📐', desc: 'Schedule design consultations, review spatial blueprint drafts, and coordinate layouts.' },
-            ].map((opt) => (
+          {/* Toggle Choice */}
+          <div>
+            <span className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+              Registration Channel
+            </span>
+            <div className="grid grid-cols-2 gap-2 p-1 bg-stone-100 rounded-xl border border-stone-200">
               <button
-                key={opt.type}
                 type="button"
-                onClick={() => setRole(opt.type as 'CUSTOMER' | 'PROVIDER' | 'CONSULTANT')}
-                className={`p-4 rounded-2xl text-left border transition-all duration-200 cursor-pointer flex gap-3.5 items-start ${
-                  role === opt.type
-                    ? 'border-brand-emerald bg-brand-emerald/5 shadow-apple-sm'
-                    : 'border-light-border bg-white hover:bg-light-stone/20'
+                onClick={() => {
+                  setChannel('email');
+                  setError(null);
+                }}
+                className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
+                  channel === 'email'
+                    ? 'bg-white text-stone-900 shadow-sm'
+                    : 'text-stone-500 hover:text-stone-800'
                 }`}
               >
-                <span className="text-xl p-1 bg-white border border-light-border rounded-xl">{opt.icon}</span>
-                <div className="min-w-0">
-                  <h4 className="text-xs font-black text-stone-black leading-snug">{opt.title}</h4>
-                  <p className="text-[10px] text-stone-gray mt-0.5 leading-relaxed font-semibold">{opt.desc}</p>
-                </div>
+                Email Address
               </button>
-            ))}
-          </div>
-
-          <div className="pt-4 border-t border-light-border/40 flex justify-between">
-            <button
-              type="button"
-              onClick={onBackToLogin}
-              className="text-xs font-black text-stone-gray hover:text-stone-black uppercase tracking-wider cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleNextStep}
-              className="dbc-btn dbc-btn-primary py-2 px-5 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 2: Basic credentials input */}
-      {step === 2 && (
-        <div className="space-y-4">
-          <div className="space-y-1">
-            <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Credential Details</h3>
-            <p className="text-[10px] text-stone-gray font-semibold">Enter your secure identification details below.</p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <label htmlFor="reg-firstName" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">First Name</label>
-              <input
-                id="reg-firstName"
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleFieldChange}
-                required
-                className="w-full text-xs bg-white border border-light-border rounded-lg px-3 py-2 outline-none focus:border-brand-emerald"
-              />
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="reg-lastName" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Last Name</label>
-              <input
-                id="reg-lastName"
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleFieldChange}
-                required
-                className="w-full text-xs bg-white border border-light-border rounded-lg px-3 py-2 outline-none focus:border-brand-emerald"
-              />
+              <button
+                type="button"
+                onClick={() => {
+                  setChannel('phone');
+                  setError(null);
+                }}
+                className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
+                  channel === 'phone'
+                    ? 'bg-white text-stone-900 shadow-sm'
+                    : 'text-stone-500 hover:text-stone-800'
+                }`}
+              >
+                Phone Number
+              </button>
             </div>
           </div>
 
-          <div className="space-y-1">
-            <label htmlFor="reg-email" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Email Address</label>
-            <input
-              id="reg-email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleFieldChange}
-              required
-              className="w-full text-xs bg-white border border-light-border rounded-lg px-3.5 py-2 outline-none focus:border-brand-emerald"
-            />
-          </div>
+          {/* Email Input */}
+          {channel === 'email' && (
+            <div>
+              <label htmlFor="reg-email" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                Email Address
+              </label>
+              <input
+                id="reg-email"
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+                required
+                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+              />
+            </div>
+          )}
 
-          <div className="space-y-1">
-            <label htmlFor="reg-phone" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Phone Contact</label>
-            <input
-              id="reg-phone"
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleFieldChange}
-              required
-              className="w-full text-xs bg-white border border-light-border rounded-lg px-3.5 py-2 outline-none focus:border-brand-emerald"
-            />
-          </div>
+          {/* Phone Input */}
+          {channel === 'phone' && (
+            <div>
+              <label htmlFor="reg-phone" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                Phone Number
+              </label>
+              <input
+                id="reg-phone"
+                type="tel"
+                name="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="9876543210"
+                required
+                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+              />
+            </div>
+          )}
 
+          {/* Passwords */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <label htmlFor="reg-password" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Password</label>
+            <div>
+              <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                Password
+              </label>
               <input
                 id="reg-password"
                 type="password"
                 name="password"
-                value={formData.password}
-                onChange={handleFieldChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
                 required
-                className="w-full text-xs bg-white border border-light-border rounded-lg px-3 py-2 outline-none focus:border-brand-emerald"
+                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
               />
             </div>
-            <div className="space-y-1">
-              <label htmlFor="reg-confirmPassword" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Confirm Pass</label>
+            <div>
+              <label htmlFor="reg-confirm-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                Confirm Password
+              </label>
               <input
-                id="reg-confirmPassword"
+                id="reg-confirm-password"
                 type="password"
                 name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleFieldChange}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="••••••••"
                 required
-                className="w-full text-xs bg-white border border-light-border rounded-lg px-3 py-2 outline-none focus:border-brand-emerald"
+                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
               />
             </div>
           </div>
 
-          {/* Strength Bar */}
-          <div className="space-y-1">
-            <div className="flex justify-between items-center text-[8px] font-black uppercase text-stone-gray">
-              <span>Security Rating</span>
-              <span className="font-extrabold">{strength.label}</span>
-            </div>
-            <div className="h-1 w-full bg-light-stone rounded-full overflow-hidden">
-              <div className={`h-full ${strength.color}`} style={{ width: formData.password.length > 0 ? `${Math.min(100, formData.password.length * 10)}%` : '0%' }}></div>
-            </div>
-          </div>
-
-          <div className="pt-4 border-t border-light-border/40 flex justify-between">
-            <button
-              type="button"
-              onClick={handlePrevStep}
-              className="text-xs font-black text-stone-gray hover:text-stone-black uppercase tracking-wider cursor-pointer"
-            >
-              Back
-            </button>
-            <button
-              type="button"
-              onClick={handleNextStep}
-              className="dbc-btn dbc-btn-primary py-2 px-5 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
-            >
-              Next Step
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 3: Role Adaptive Selection */}
-      {step === 3 && (
-        <div className="space-y-4">
-          <div className="space-y-1">
-            <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Role Information</h3>
-            <p className="text-[10px] text-stone-gray font-semibold">Tell us about your coordination preferences.</p>
-          </div>
-
-          {role === 'CUSTOMER' && (
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <label htmlFor="customer-city" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Primary Region</label>
-                <select
-                  id="customer-city"
-                  name="preferredCity"
-                  value={formData.preferredCity}
-                  onChange={handleFieldChange}
-                  className="w-full text-xs bg-white border border-light-border rounded-lg p-2 focus:outline-none"
-                >
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Bangalore">Bangalore</option>
-                  <option value="Chennai">Chennai</option>
-                </select>
-              </div>
-              <div className="space-y-1">
-                <label htmlFor="customer-project" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Project Focus</label>
-                <select
-                  id="customer-project"
-                  name="projectInterest"
-                  value={formData.projectInterest}
-                  onChange={handleFieldChange}
-                  className="w-full text-xs bg-white border border-light-border rounded-lg p-2 focus:outline-none"
-                >
-                  <option value="Build a New Home">Build a New Home</option>
-                  <option value="Renovate My Home">Renovate My Home</option>
-                  <option value="Interior Design">Interior Design</option>
-                </select>
-              </div>
+          {/* Error Notification */}
+          {error && (
+            <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 leading-relaxed" role="alert">
+              ⚠️ {error}
             </div>
           )}
 
-          {role === 'PROVIDER' && (
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <label htmlFor="provider-skills" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Primary Skillset</label>
-                <select
-                  id="provider-skills"
-                  name="skills"
-                  value={formData.skills}
-                  onChange={handleFieldChange}
-                  className="w-full text-xs bg-white border border-light-border rounded-lg p-2 focus:outline-none"
-                >
-                  <option value="Plumbing Systems">Plumbing Systems</option>
-                  <option value="Electrical Fitouts">Electrical Fitouts</option>
-                  <option value="Carpentry & Woods">Carpentry & Woods</option>
-                  <option value="Wall Painting">Wall Painting</option>
-                </select>
-              </div>
-              <div className="space-y-1">
-                <label htmlFor="provider-experience" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Experience Years</label>
-                <input
-                  id="provider-experience"
-                  type="number"
-                  name="experienceYears"
-                  min="1"
-                  max="40"
-                  value={formData.experienceYears}
-                  onChange={handleFieldChange}
-                  className="w-full text-xs bg-white border border-light-border rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-            </div>
-          )}
-
-          {role === 'CONSULTANT' && (
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <label htmlFor="consultant-spec" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Specialization Area</label>
-                <input
-                  id="consultant-spec"
-                  type="text"
-                  name="specialization"
-                  value={formData.specialization}
-                  onChange={handleFieldChange}
-                  className="w-full text-xs bg-white border border-light-border rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-              <div className="space-y-1">
-                <label htmlFor="consultant-fee" className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Target Consultation Fee (₹)</label>
-                <input
-                  id="consultant-fee"
-                  type="number"
-                  name="consultationFee"
-                  min="100"
-                  max="10000"
-                  value={formData.consultationFee}
-                  onChange={handleFieldChange}
-                  className="w-full text-xs bg-white border border-light-border rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-            </div>
-          )}
-
-          <div className="pt-4 border-t border-light-border/40 flex justify-between">
-            <button
-              type="button"
-              onClick={handlePrevStep}
-              className="text-xs font-black text-stone-gray hover:text-stone-black uppercase tracking-wider cursor-pointer"
-            >
-              Back
-            </button>
-            <button
-              type="button"
-              onClick={handleNextStep}
-              className="dbc-btn dbc-btn-primary py-2 px-5 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
-            >
-              Next Step
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 4: Review and Submit */}
-      {step === 4 && (
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="space-y-1">
-            <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Review Details</h3>
-            <p className="text-[10px] text-stone-gray font-semibold">Confirm your details before activation.</p>
-          </div>
-
-          <div className="space-y-2.5 p-4 rounded-2xl border border-light-border bg-light-stone/30 text-stone-gray text-[10px] font-semibold">
-            <p className="flex justify-between">
-              <span>Account Type:</span>
-              <strong className="text-stone-black">{role}</strong>
-            </p>
-            <p className="flex justify-between">
-              <span>Full Name:</span>
-              <strong className="text-stone-black">{formData.firstName} {formData.lastName}</strong>
-            </p>
-            <p className="flex justify-between">
-              <span>Email:</span>
-              <strong className="text-stone-black">{formData.email}</strong>
-            </p>
-            <p className="flex justify-between">
-              <span>Contact:</span>
-              <strong className="text-stone-black">{formData.phone}</strong>
-            </p>
-            {role === 'CUSTOMER' ? (
-              <p className="flex justify-between">
-                <span>Preferred Region:</span>
-                <strong className="text-stone-black">{formData.preferredCity}</strong>
-              </p>
-            ) : role === 'PROVIDER' ? (
-              <p className="flex justify-between">
-                <span>Skillset:</span>
-                <strong className="text-stone-black">{formData.skills}</strong>
-              </p>
-            ) : (
-              <p className="flex justify-between">
-                <span>Specialization:</span>
-                <strong className="text-stone-black">{formData.specialization}</strong>
-              </p>
-            )}
-          </div>
-
-          <div className="pt-4 border-t border-light-border/40 flex justify-between">
-            <button
-              type="button"
-              onClick={handlePrevStep}
-              className="text-xs font-black text-stone-gray hover:text-stone-black uppercase tracking-wider cursor-pointer"
-            >
-              Back
-            </button>
-            <button
-              type="submit"
-              className="dbc-btn dbc-btn-primary py-2 px-5 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
-            >
-              Submit & Register
-            </button>
-          </div>
-        </form>
-      )}
-
-      {/* STEP 5: Success Verification Screen */}
-      {step === 5 && (
-        <div className="space-y-6 text-center py-6">
-          <div className="flex justify-center">
-            <span className="text-4xl p-2 bg-brand-emerald/10 text-brand-emerald rounded-full">✓</span>
-          </div>
-          <div className="space-y-2">
-            <h3 className="text-sm font-black uppercase tracking-wider text-stone-black">Verification Email Sent</h3>
-            <p className="text-xs text-stone-gray font-semibold leading-relaxed max-w-[280px] mx-auto">
-              We have dispatched a validation link to <span className="font-extrabold text-stone-black">{formData.email}</span>. Click the link inside to secure your workspace setup.
-            </p>
-          </div>
+          {/* Submit */}
           <button
-            onClick={onBackToLogin}
-            className="dbc-btn dbc-btn-outline py-2 px-6 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer bg-white"
+            type="submit"
+            className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition disabled:opacity-50 cursor-pointer"
           >
-            Back to Login
+            Register
           </button>
+        </form>
+      ) : (
+        <div className="space-y-3 py-6 text-center">
+          <div className="flex justify-center">
+            <span className="w-10 h-10 flex items-center justify-center bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-bold text-lg">
+              ✓
+            </span>
+          </div>
+          <h4 className="text-sm font-bold text-stone-900 uppercase tracking-wide">Registration Successful</h4>
+          <p className="text-xs text-stone-600 leading-relaxed max-w-[280px] mx-auto">
+            {channel === 'email' ? (
+              <>We have dispatched a validation link to <strong className="text-stone-900">{email}</strong>. Check your inbox to secure your workspace setup.</>
+            ) : (
+              <>We have dispatched a verification code SMS to <strong className="text-stone-900">{phone}</strong>. Verify it to activate your workspace setup.</>
+            )}
+          </p>
         </div>
       )}
 
+      {/* Switch back link */}
+      <div className="pt-2 text-center border-t border-stone-100">
+        <button
+          type="button"
+          onClick={onBackToLogin}
+          className="text-xs font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer"
+        >
+          Already have an account? Login
+        </button>
+      </div>
     </div>
   );
 }

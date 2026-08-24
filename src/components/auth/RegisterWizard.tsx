@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 
 /** Typed payload emitted when registration is complete. */
@@ -17,21 +17,59 @@ interface RegisterWizardProps {
   onBackToLogin: () => void;
 }
 
+// Privacy masking utility functions
+function maskEmail(emailStr: string): string {
+  const [user, domain] = emailStr.split('@');
+  if (!user || !domain) return emailStr;
+  if (user.length <= 2) {
+    return `${user[0]}*@${domain}`;
+  }
+  const visible = user.slice(0, 2);
+  const masked = '*'.repeat(user.length - 2);
+  return `${visible}${masked}@${domain}`;
+}
+
+function maskPhone(phoneStr: string): string {
+  if (phoneStr.length <= 4) return phoneStr;
+  const visible = phoneStr.slice(-4);
+  const masked = '*'.repeat(phoneStr.length - 4);
+  return `${masked}${visible}`;
+}
+
 export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWizardProps) {
+  // Navigation step state (1 = Register Form, 2 = Verify Screen, 3 = Success)
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+
+  // Form Field States
   const [fullName, setFullName] = useState('');
   const [channel, setChannel] = useState<'email' | 'phone'>('email');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  
+  // OTP Verification States
+  const [otp, setOtp] = useState('');
+  const [resendCooldown, setResendCooldown] = useState(30);
 
-  const handleSubmit = (e: FormEvent) => {
+  // Error state
+  const [error, setError] = useState<string | null>(null);
+
+  // Countdown timer effect for resend cooldown
+  useEffect(() => {
+    if (step === 2 && resendCooldown > 0) {
+      const timer = setTimeout(() => {
+        setResendCooldown((prev) => prev - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, resendCooldown]);
+
+  const handleRegisterSubmit = (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // Validation
+    // Form validation checks
     if (!fullName.trim()) {
       setError('Full Name is required.');
       return;
@@ -61,184 +99,289 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       return;
     }
 
-    // Success - trigger completion
+    // Pass verification check step transition
+    setStep(2);
+    setResendCooldown(30); // reset timer
+  };
+
+  const handleVerifySubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    const otpRegex = /^\d{6}$/;
+    if (!otpRegex.test(otp)) {
+      setError('Please enter a valid 6-digit verification code.');
+      return;
+    }
+
+    // Call layout integration hook (Frontend mock payload)
     const [first, ...rest] = fullName.trim().split(' ');
     const finalPayload: RegisterPayload = {
       role: 'ROLE_CUSTOMER',
       firstName: first || '',
       lastName: rest.join(' '),
-      email: channel === 'email' ? email : `${phone}@dbc.com`, // dummy email fallback if registered with phone
+      email: channel === 'email' ? email : `${phone}@dbc.com`,
       phoneNumber: channel === 'phone' ? phone : undefined,
     };
 
     onRegisterComplete(finalPayload);
-    setSuccess(true);
+    setStep(3); // success view
+  };
+
+  const handleResendClick = () => {
+    if (resendCooldown === 0) {
+      setResendCooldown(30);
+      alert('A new verification code has been dispatched (frontend simulation).');
+    }
   };
 
   return (
     <div className="space-y-4 text-left">
-      <div className="space-y-1">
-        <h3 className="text-xl font-bold font-serif text-stone-900">Create Your Account</h3>
-        <p className="text-xs text-stone-500">Sign up as a customer to get started with your projects.</p>
-      </div>
-
-      {!success ? (
-        <form onSubmit={handleSubmit} className="space-y-3.5 pt-2">
-          {/* Full Name */}
-          <div>
-            <label htmlFor="reg-fullname" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
-              Full Name
-            </label>
-            <input
-              id="reg-fullname"
-              type="text"
-              name="fullName"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="John Doe"
-              required
-              className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
-            />
+      
+      {/* STEP 1: Registration form */}
+      {step === 1 && (
+        <>
+          <div className="space-y-1">
+            <h3 className="text-xl font-bold font-serif text-stone-900">Create Your Account</h3>
+            <p className="text-xs text-stone-500">Sign up as a customer to get started with your projects.</p>
           </div>
 
-          {/* Toggle Choice */}
-          <div>
-            <span className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
-              Registration Channel
-            </span>
-            <div className="grid grid-cols-2 gap-2 p-1 bg-stone-100 rounded-xl border border-stone-200">
-              <button
-                type="button"
-                onClick={() => {
-                  setChannel('email');
-                  setError(null);
-                }}
-                className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
-                  channel === 'email'
-                    ? 'bg-white text-stone-900 shadow-sm'
-                    : 'text-stone-500 hover:text-stone-800'
-                }`}
-              >
-                Email Address
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setChannel('phone');
-                  setError(null);
-                }}
-                className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
-                  channel === 'phone'
-                    ? 'bg-white text-stone-900 shadow-sm'
-                    : 'text-stone-500 hover:text-stone-800'
-                }`}
-              >
-                Phone Number
-              </button>
+          <form onSubmit={handleRegisterSubmit} className="space-y-3.5 pt-2">
+            {/* Full Name */}
+            <div>
+              <label htmlFor="reg-fullname" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                Full Name
+              </label>
+              <input
+                id="reg-fullname"
+                type="text"
+                name="fullName"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="John Doe"
+                required
+                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+              />
             </div>
+
+            {/* Choice */}
+            <div>
+              <span className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+                Registration Channel
+              </span>
+              <div className="grid grid-cols-2 gap-2 p-1 bg-stone-100 rounded-xl border border-stone-200">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setChannel('email');
+                    setError(null);
+                  }}
+                  className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
+                    channel === 'email'
+                      ? 'bg-white text-stone-900 shadow-sm'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  Email Address
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setChannel('phone');
+                    setError(null);
+                  }}
+                  className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
+                    channel === 'phone'
+                      ? 'bg-white text-stone-900 shadow-sm'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  Phone Number
+                </button>
+              </div>
+            </div>
+
+            {/* Email Field */}
+            {channel === 'email' && (
+              <div>
+                <label htmlFor="reg-email" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                  Email Address
+                </label>
+                <input
+                  id="reg-email"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@example.com"
+                  required
+                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                />
+              </div>
+            )}
+
+            {/* Phone Field */}
+            {channel === 'phone' && (
+              <div>
+                <label htmlFor="reg-phone" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                  Phone Number
+                </label>
+                <input
+                  id="reg-phone"
+                  type="tel"
+                  name="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="9876543210"
+                  required
+                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                />
+              </div>
+            )}
+
+            {/* Password */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                  Password
+                </label>
+                <input
+                  id="reg-password"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                />
+              </div>
+              <div>
+                <label htmlFor="reg-confirm-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                  Confirm Password
+                </label>
+                <input
+                  id="reg-confirm-password"
+                  type="password"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                />
+              </div>
+            </div>
+
+            {/* Error alerts */}
+            {error && (
+              <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 leading-relaxed" role="alert">
+                ⚠️ {error}
+              </div>
+            )}
+
+            {/* Action */}
+            <button
+              type="submit"
+              className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition cursor-pointer"
+            >
+              Continue
+            </button>
+          </form>
+        </>
+      )}
+
+      {/* STEP 2: Verification screen */}
+      {step === 2 && (
+        <>
+          <div className="space-y-1">
+            <h3 className="text-xl font-bold font-serif text-stone-900">Verify Your Account</h3>
+            <p className="text-xs text-stone-500">
+              {channel === 'email' ? (
+                <>We've sent a verification code to your email address: <strong className="text-stone-700">{maskEmail(email)}</strong>.</>
+              ) : (
+                <>We've sent a verification code to your phone number: <strong className="text-stone-700">{maskPhone(phone)}</strong>.</>
+              )}
+            </p>
           </div>
 
-          {/* Email Input */}
-          {channel === 'email' && (
+          <form onSubmit={handleVerifySubmit} className="space-y-3.5 pt-2">
+            {/* OTP input */}
             <div>
-              <label htmlFor="reg-email" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
-                Email Address
+              <label htmlFor="reg-otp" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+                Verification Code
               </label>
               <input
-                id="reg-email"
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@example.com"
+                id="reg-otp"
+                type="text"
+                name="otp"
+                maxLength={6}
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                placeholder="000000"
                 required
-                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400 tracking-widest text-center font-bold"
               />
             </div>
-          )}
 
-          {/* Phone Input */}
-          {channel === 'phone' && (
-            <div>
-              <label htmlFor="reg-phone" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
-                Phone Number
-              </label>
-              <input
-                id="reg-phone"
-                type="tel"
-                name="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="9876543210"
-                required
-                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
-              />
-            </div>
-          )}
+            {/* Error alerts */}
+            {error && (
+              <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 leading-relaxed" role="alert">
+                ⚠️ {error}
+              </div>
+            )}
 
-          {/* Passwords */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
-                Password
-              </label>
-              <input
-                id="reg-password"
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
-              />
-            </div>
-            <div>
-              <label htmlFor="reg-confirm-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
-                Confirm Password
-              </label>
-              <input
-                id="reg-confirm-password"
-                type="password"
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
-              />
-            </div>
+            {/* Action */}
+            <button
+              type="submit"
+              className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition cursor-pointer"
+            >
+              Verify
+            </button>
+          </form>
+
+          {/* Resend actions block */}
+          <div className="pt-2 text-center text-xs text-stone-500 flex flex-col gap-1 items-center">
+            <span>Didn't receive the code?</span>
+            <button
+              type="button"
+              disabled={resendCooldown > 0}
+              onClick={handleResendClick}
+              className={`font-bold text-emerald-700 hover:underline transition cursor-pointer ${
+                resendCooldown > 0 ? 'opacity-50 cursor-not-allowed' : 'hover:text-emerald-800'
+              }`}
+            >
+              Resend Code {resendCooldown > 0 ? `(in ${resendCooldown}s)` : ''}
+            </button>
           </div>
 
-          {/* Error Notification */}
-          {error && (
-            <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 leading-relaxed" role="alert">
-              ⚠️ {error}
-            </div>
-          )}
+          {/* Correct detail action links */}
+          <div className="pt-2 text-center text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                setStep(1);
+                setError(null);
+              }}
+              className="font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer hover:underline"
+            >
+              {channel === 'email' ? '← Change email' : '← Change phone number'}
+            </button>
+          </div>
+        </>
+      )}
 
-          {/* Submit */}
-          <button
-            type="submit"
-            className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition disabled:opacity-50 cursor-pointer"
-          >
-            Register
-          </button>
-        </form>
-      ) : (
+      {/* STEP 3: Verification success screen */}
+      {step === 3 && (
         <div className="space-y-3 py-6 text-center">
           <div className="flex justify-center">
             <span className="w-10 h-10 flex items-center justify-center bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-bold text-lg">
               ✓
             </span>
           </div>
-          <h4 className="text-sm font-bold text-stone-900 uppercase tracking-wide">Registration Successful</h4>
+          <h4 className="text-sm font-bold text-stone-900 uppercase tracking-wide">Verification Successful</h4>
           <p className="text-xs text-stone-600 leading-relaxed max-w-[280px] mx-auto">
-            {channel === 'email' ? (
-              <>We have dispatched a validation link to <strong className="text-stone-900">{email}</strong>. Check your inbox to secure your workspace setup.</>
-            ) : (
-              <>We have dispatched a verification code SMS to <strong className="text-stone-900">{phone}</strong>. Verify it to activate your workspace setup.</>
-            )}
+            Your verification has been completed successfully! You can now log into your workspace console.
           </p>
         </div>
       )}

@@ -5,5 +5,6 @@ export function getDashboardPathForRole(role: UserRole | undefined) {
   const norm = role.toUpperCase();
   if (norm.includes('ADMIN')) return '/admin/dashboard';
   if (norm.includes('PROVIDER')) return '/workspace/dashboard';
-  return '/workspace/overview';
+  // Customers are redirected to the public homepage (marketplace) after login
+  return '/';
 }

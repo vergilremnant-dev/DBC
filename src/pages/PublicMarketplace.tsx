@@ -425,13 +425,13 @@ export function PublicMarketplace() {
             <div className="flex flex-wrap gap-3 pt-2">
               <button
                 onClick={() => setQuizStep(1)}
-                className="dbc-btn dbc-btn-primary h-12 px-6 rounded-lg shadow-apple-sm text-xs font-bold uppercase tracking-wider cursor-pointer"
+                className="dbc-btn dbc-btn-xl dbc-btn-primary shadow-apple-sm"
               >
                 Start Your Project
               </button>
               <button
                 onClick={() => handleConsultantClick('Architects')}
-                className="dbc-btn dbc-btn-outline h-12 px-6 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer bg-white"
+                className="dbc-btn dbc-btn-xl dbc-btn-outline bg-white"
               >
                 Browse Professionals
               </button>
@@ -715,7 +715,7 @@ export function PublicMarketplace() {
                     setQuizBudget('');
                     setQuizTimeline('');
                   }}
-                  className="dbc-btn dbc-btn-secondary py-2 px-4 rounded-lg text-xs cursor-pointer"
+                  className="dbc-btn dbc-btn-md dbc-btn-secondary"
                 >
                   Restart Assistant
                 </button>
@@ -791,7 +791,7 @@ export function PublicMarketplace() {
                 </div>
                 <button
                   onClick={() => navigate('/request-callback')}
-                  className="dbc-btn dbc-btn-primary h-10 px-5 rounded-lg text-[10px] font-bold uppercase tracking-wider cursor-pointer whitespace-nowrap"
+                  className="dbc-btn dbc-btn-lg dbc-btn-primary whitespace-nowrap"
                 >
                   Coordinate Now
                 </button>
@@ -1081,13 +1081,13 @@ export function PublicMarketplace() {
             <div className="flex justify-center gap-3 pt-2">
               <button
                 onClick={() => setQuizStep(1)}
-                className="dbc-btn dbc-btn-primary h-11 px-6 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
+                className="dbc-btn dbc-btn-xl dbc-btn-primary"
               >
                 Get Started
               </button>
               <button
                 onClick={() => navigate('/search')}
-                className="dbc-btn dbc-btn-outline h-11 px-6 rounded-lg text-xs font-bold uppercase tracking-wider border-stone-700 text-white hover:bg-stone-850 cursor-pointer"
+                className="dbc-btn dbc-btn-xl dbc-btn-outline border-stone-750 text-white hover:bg-stone-850"
               >
                 Browse Professionals
               </button>
@@ -1154,7 +1154,7 @@ export function PublicMarketplace() {
               />
               <button
                 type="submit"
-                className="dbc-btn dbc-btn-primary px-3 rounded-lg text-[9px] uppercase font-bold tracking-wider"
+                className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Join
               </button>

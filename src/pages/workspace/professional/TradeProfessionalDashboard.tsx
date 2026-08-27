@@ -140,7 +140,7 @@ export default function TradeProfessionalDashboard() {
           </div>
           <button
             onClick={() => navigate('/workspace/leads')}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black uppercase tracking-wider transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Browse Leads
           </button>
@@ -260,11 +260,11 @@ export default function TradeProfessionalDashboard() {
                       <strong className="text-stone-900 block">{req.title}</strong>
                       <span className="block text-[10px] text-stone-500 font-bold mt-0.5">Budget: {req.budget} &bull; Location: {req.location} &bull; {req.postedDate}</span>
                     </div>
-                    <div className="flex gap-2 text-[9px] font-black uppercase tracking-wider shrink-0">
-                      <button onClick={() => handleSaveReq(req.id)} className="px-3 py-1.5 bg-white border border-stone-200 rounded-lg text-stone-750 cursor-pointer">
+                    <div className="flex gap-2 shrink-0">
+                      <button onClick={() => handleSaveReq(req.id)} className="dbc-btn dbc-btn-sm dbc-btn-outline bg-white">
                         Save Lead
                       </button>
-                      <button onClick={() => handleExpressInterest(req.id)} className="px-3 py-1.5 bg-brand-emerald text-white rounded-lg cursor-pointer">
+                      <button onClick={() => handleExpressInterest(req.id)} className="dbc-btn dbc-btn-sm dbc-btn-primary">
                         Submit Quote
                       </button>
                     </div>

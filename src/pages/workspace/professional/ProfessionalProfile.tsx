@@ -193,7 +193,7 @@ export default function ProfessionalProfile() {
         <div className="flex gap-2 text-xs">
           <button
             onClick={() => alert('Public view modal coming soon!')}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-750 hover:bg-stone-550 rounded-xl font-bold transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-outline bg-white border border-stone-200 hover:bg-stone-50"
           >
             Preview Public Profile
           </button>
@@ -217,7 +217,7 @@ export default function ProfessionalProfile() {
                   type="text"
                   value={profileData.businessName}
                   onChange={e => setProfileData({ ...profileData, businessName: e.target.value })}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -227,7 +227,7 @@ export default function ProfessionalProfile() {
                   type="text"
                   value={profileData.ownerName}
                   onChange={e => setProfileData({ ...profileData, ownerName: e.target.value })}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -240,7 +240,7 @@ export default function ProfessionalProfile() {
                   type="text"
                   value={profileData.phone}
                   onChange={e => setProfileData({ ...profileData, phone: e.target.value })}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -250,7 +250,7 @@ export default function ProfessionalProfile() {
                   type="email"
                   value={profileData.email}
                   onChange={e => setProfileData({ ...profileData, email: e.target.value })}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -261,12 +261,12 @@ export default function ProfessionalProfile() {
               <textarea
                 value={profileData.description}
                 onChange={e => setProfileData({ ...profileData, description: e.target.value })}
-                className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3 text-xs font-semibold text-stone-850 h-24 focus:outline-none resize-none"
+                className="dbc-input h-24 resize-none"
                 required
               />
             </div>
 
-            <button type="submit" className="px-4 py-2 bg-brand-emerald text-white rounded-xl font-black uppercase tracking-wider hover:bg-emerald-800">
+            <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary">
               Save Identity Settings
             </button>
           </form>
@@ -417,7 +417,7 @@ export default function ProfessionalProfile() {
                   type="checkbox"
                   checked={vacationMode}
                   onChange={e => setVacationMode(e.target.checked)}
-                  className="w-4 h-4 text-brand-emerald rounded border-stone-300 focus:ring-brand-emerald cursor-pointer"
+                  className="dbc-checkbox"
                 />
               </div>
             </div>
@@ -448,7 +448,7 @@ export default function ProfessionalProfile() {
                   type="checkbox"
                   checked={notifications.alerts}
                   onChange={e => setNotifications({ ...notifications, alerts: e.target.checked })}
-                  className="w-4 h-4 text-brand-emerald rounded border-stone-300 focus:ring-brand-emerald cursor-pointer"
+                  className="dbc-checkbox"
                 />
               </div>
               <div className="flex justify-between items-center">
@@ -457,7 +457,7 @@ export default function ProfessionalProfile() {
                   type="checkbox"
                   checked={notifications.updates}
                   onChange={e => setNotifications({ ...notifications, updates: e.target.checked })}
-                  className="w-4 h-4 text-brand-emerald rounded border-stone-300 focus:ring-brand-emerald cursor-pointer"
+                  className="dbc-checkbox"
                 />
               </div>
             </div>
@@ -472,13 +472,13 @@ export default function ProfessionalProfile() {
                   const p = prompt('Enter new password:');
                   if (p) alert('Password updated.');
                 }}
-                className="w-full py-2 bg-stone-50 border border-stone-200 hover:bg-stone-100 transition rounded-xl text-[10px] font-bold text-stone-750"
+                className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Change password
               </button>
               <button
                 onClick={() => alert('Two-factor authentication placeholder configured.')}
-                className="w-full py-2 bg-stone-50 border border-stone-200 hover:bg-stone-100 transition rounded-xl text-[10px] font-bold text-stone-750"
+                className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Enable Two-Factor auth
               </button>

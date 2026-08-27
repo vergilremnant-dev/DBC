@@ -202,7 +202,7 @@ export default function ProfessionalInbox() {
               setThreads(prev => prev.map(t => ({ ...t, unreadCount: 0 })));
               alert('All messages marked read.');
             }}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-750 hover:bg-stone-50 rounded-xl font-bold transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             Mark all read
           </button>
@@ -238,7 +238,7 @@ export default function ProfessionalInbox() {
               placeholder="Search chat list..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1 px-3 text-xs text-stone-850"
+              className="dbc-input text-xs"
             />
             <div className="flex gap-1.5 flex-wrap text-[9px] font-black uppercase tracking-wider">
               <button onClick={() => setStatusFilter('ALL')} className={`px-2 py-0.5 rounded ${statusFilter === 'ALL' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>
@@ -336,7 +336,7 @@ export default function ProfessionalInbox() {
                       setSelectedTemplate(e.target.value);
                       setTypedMessage(e.target.value);
                     }}
-                    className="bg-stone-50 border border-stone-200 rounded-lg py-0.5 px-2 text-[9.5px] text-stone-700 focus:outline-none"
+                    className="dbc-input text-[9.5px] bg-white py-0.5 px-2 w-auto"
                   >
                     <option value="">Select a template...</option>
                     {templates.map((t, idx) => (
@@ -351,12 +351,12 @@ export default function ProfessionalInbox() {
                     placeholder="Type a communication update..."
                     value={typedMessage}
                     onChange={e => setTypedMessage(e.target.value)}
-                    className="flex-1 bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850 focus:outline-none"
+                    className="flex-1 dbc-input text-xs"
                   />
-                  <button type="button" onClick={handleAttachFile} className="p-2 border border-stone-200 rounded-xl text-xs hover:bg-stone-50 cursor-pointer">
+                  <button type="button" onClick={handleAttachFile} className="dbc-btn dbc-btn-md dbc-btn-secondary p-2 bg-white border border-stone-200 hover:bg-stone-50">
                     📎
                   </button>
-                  <button type="submit" className="px-4 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl text-xs font-black uppercase cursor-pointer">
+                  <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary">
                     Send
                   </button>
                 </div>

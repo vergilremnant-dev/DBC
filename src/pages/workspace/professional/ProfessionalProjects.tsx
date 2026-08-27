@@ -225,7 +225,7 @@ export default function ProfessionalProjects() {
                       placeholder="Add recommendation (e.g. increase structural column width)..."
                       value={recInput}
                       onChange={(e) => setRecInput(e.target.value)}
-                      className="flex-1 text-xs border border-light-border rounded-lg px-2.5 py-1 focus:outline-none"
+                      className="flex-1 dbc-input text-xs"
                     />
                     <button type="submit" className="dbc-btn dbc-btn-primary py-1 px-3 text-[9px] font-bold uppercase tracking-wider cursor-pointer">
                       Add
@@ -277,7 +277,7 @@ export default function ProfessionalProjects() {
             </div>
             <button
               onClick={() => alert('Project Calendar coming soon!')}
-              className="rounded-lg border border-stone-200 bg-white hover:bg-stone-50 px-4 py-2 text-xs font-bold text-stone-600 hover:text-stone-900 transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               📅 Project Calendar
             </button>

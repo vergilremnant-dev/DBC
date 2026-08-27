@@ -238,15 +238,15 @@ export default function RequirementMarketplace() {
         <div className="flex gap-2 text-xs">
           <button
             onClick={() => setSavedOnly(!savedOnly)}
-            className={`px-3.5 py-2 border rounded-xl font-bold transition cursor-pointer ${
-              savedOnly ? 'bg-stone-black border-stone-black text-white' : 'border-stone-200 bg-white text-stone-750 hover:bg-stone-50'
+            className={`dbc-btn dbc-btn-md ${
+              savedOnly ? 'dbc-btn-primary' : 'dbc-btn-secondary bg-white text-stone-750 border-stone-200 hover:bg-stone-50'
             }`}
           >
             {savedOnly ? '★ Showing Bookmarks' : '☆ View Saved'}
           </button>
           <button
             onClick={handleRefresh}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black uppercase tracking-wider transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Refresh Feed
           </button>
@@ -280,13 +280,13 @@ export default function RequirementMarketplace() {
             placeholder="Search matching blueprints, civil excavating..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850"
+            className="dbc-input text-xs"
           />
 
           <select
             value={selectedCategory}
             onChange={e => setSelectedCategory(e.target.value)}
-            className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700"
+            className="dbc-input text-xs bg-white"
           >
             <option value="ALL">All Categories</option>
             <option value="Architecture">Architecture</option>
@@ -299,7 +299,7 @@ export default function RequirementMarketplace() {
           <select
             value={selectedLocation}
             onChange={e => setSelectedLocation(e.target.value)}
-            className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700"
+            className="dbc-input text-xs bg-white"
           >
             <option value="ALL">All Locations</option>
             <option value="Gachibowli">Gachibowli</option>
@@ -311,7 +311,7 @@ export default function RequirementMarketplace() {
           <select
             value={selectedSort}
             onChange={e => setSelectedSort(e.target.value)}
-            className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700"
+            className="dbc-input text-xs bg-white"
           >
             <option value="Newest">Newest first</option>
             <option value="Highest Budget">Highest budget first</option>
@@ -386,14 +386,14 @@ export default function RequirementMarketplace() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => navigate(`/workspace/requirement/${req.id}`)}
-                    className="px-3.5 py-2 border border-stone-200 bg-white hover:bg-stone-50 text-[9px] font-black uppercase tracking-wider rounded-xl transition cursor-pointer"
+                    className="dbc-btn dbc-btn-sm dbc-btn-outline bg-white"
                   >
                     View Details
                   </button>
 
                   <button
                     onClick={() => handleSaveToggle(req.id)}
-                    className="p-2 border border-stone-200 bg-white hover:bg-stone-50 text-xs rounded-xl transition cursor-pointer"
+                    className="dbc-btn dbc-btn-sm dbc-btn-secondary p-2 bg-white border border-stone-200 hover:bg-stone-50"
                     title="Save bookmark"
                   >
                     {req.isSaved ? '★' : '☆'}
@@ -402,8 +402,8 @@ export default function RequirementMarketplace() {
                   <button
                     onClick={() => handleExpressInterestClick(req.id)}
                     disabled={req.interestSubmitted}
-                    className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer ${
-                      req.interestSubmitted ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed' : 'bg-brand-emerald text-white hover:bg-emerald-800'
+                    className={`dbc-btn dbc-btn-sm ${
+                      req.interestSubmitted ? 'bg-stone-105 text-stone-400 border border-stone-200 cursor-not-allowed' : 'dbc-btn-primary'
                     }`}
                   >
                     {req.interestSubmitted ? '✓ Interest Submitted' : 'Express Interest'}
@@ -473,16 +473,16 @@ export default function RequirementMarketplace() {
             <p className="text-xs text-stone-600 font-semibold leading-relaxed">
               Are you sure you want to express interest in this requirement? Your verification credentials and business profile details will be shared with the client.
             </p>
-            <div className="flex gap-3 justify-end text-[10px] font-black uppercase tracking-wider">
+            <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setInterestModalId(null)}
-                className="px-4 py-2 border border-stone-200 bg-white text-stone-750 hover:bg-stone-50 rounded-xl"
+                className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirmInterest}
-                className="px-4 py-2 bg-brand-emerald text-white rounded-xl"
+                className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Confirm Interest
               </button>

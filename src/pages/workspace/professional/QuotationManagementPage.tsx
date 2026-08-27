@@ -241,7 +241,7 @@ export default function QuotationManagementPage() {
               resetForm();
               setActiveTab('EDITOR');
             }}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black uppercase tracking-wider transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Create New Quotation
           </button>
@@ -278,12 +278,12 @@ export default function QuotationManagementPage() {
                 placeholder="Search quotes, clients..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="bg-stone-50 border border-stone-200 rounded-xl py-1 px-3 text-xs text-stone-850"
+                className="dbc-input text-xs"
               />
               <select
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
-                className="bg-stone-50 border border-stone-200 rounded-xl py-1 px-3 text-xs text-stone-700"
+                className="dbc-input text-xs bg-white"
               >
                 <option value="ALL">All Status</option>
                 <option value="Draft">Draft</option>
@@ -381,7 +381,7 @@ export default function QuotationManagementPage() {
                   type="text"
                   value={reqTitle}
                   disabled
-                  className="w-full bg-stone-100 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-500 cursor-not-allowed"
+                  className="dbc-input bg-stone-100 text-stone-500 cursor-not-allowed"
                 />
               </div>
               <div className="space-y-1.5">
@@ -390,7 +390,7 @@ export default function QuotationManagementPage() {
                   type="text"
                   value={clientName}
                   disabled
-                  className="w-full bg-stone-100 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-500 cursor-not-allowed"
+                  className="dbc-input bg-stone-100 text-stone-500 cursor-not-allowed"
                 />
               </div>
             </div>
@@ -402,7 +402,7 @@ export default function QuotationManagementPage() {
                   type="text"
                   value={quoteAmount}
                   onChange={e => setQuoteAmount(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850 font-extrabold"
+                  className="dbc-input font-extrabold"
                   required
                 />
               </div>
@@ -412,7 +412,7 @@ export default function QuotationManagementPage() {
                   type="text"
                   value={quoteDuration}
                   onChange={e => setQuoteDuration(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -424,7 +424,7 @@ export default function QuotationManagementPage() {
                 value={quoteScope}
                 onChange={e => setQuoteScope(e.target.value)}
                 placeholder="List services, measurements coordination, and structural layouts checks..."
-                className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3 text-xs font-semibold text-stone-850 h-24 focus:outline-none resize-none"
+                className="dbc-input h-24 resize-none"
                 required
               />
             </div>
@@ -435,7 +435,7 @@ export default function QuotationManagementPage() {
                 value={quoteExclusions}
                 onChange={e => setQuoteExclusions(e.target.value)}
                 placeholder="List exclusions details (e.g. material bills, site transport fees)..."
-                className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3 text-xs font-semibold text-stone-850 h-24 focus:outline-none resize-none"
+                className="dbc-input h-24 resize-none"
                 required
               />
             </div>
@@ -445,7 +445,7 @@ export default function QuotationManagementPage() {
               <textarea
                 value={quoteTerms}
                 onChange={e => setQuoteTerms(e.target.value)}
-                className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3 text-xs font-semibold text-stone-850 h-20 focus:outline-none resize-none"
+                className="dbc-input h-20 resize-none"
                 required
               />
             </div>
@@ -456,7 +456,7 @@ export default function QuotationManagementPage() {
             <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-3">
               <button
                 type="submit"
-                className="w-full py-3 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider hover:bg-emerald-800 cursor-pointer text-center"
+                className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Save Draft
               </button>
@@ -467,7 +467,7 @@ export default function QuotationManagementPage() {
                     setPreviewQuoteId(editingQuoteId);
                     setActiveTab('PREVIEW');
                   }}
-                  className="w-full py-3 border border-stone-200 bg-white hover:bg-stone-50 text-stone-750 rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer text-center"
+                  className="w-full dbc-btn dbc-btn-md dbc-btn-outline bg-white border border-stone-200 hover:bg-stone-50"
                 >
                   Preview Proposal
                 </button>
@@ -478,7 +478,7 @@ export default function QuotationManagementPage() {
                   resetForm();
                   setActiveTab('LIST');
                 }}
-                className="w-full py-3 text-stone-400 hover:text-stone-700 text-xs font-black uppercase tracking-wider text-center"
+                className="w-full dbc-btn dbc-btn-md dbc-btn-secondary text-stone-500"
               >
                 Cancel Changes
               </button>
@@ -566,7 +566,7 @@ export default function QuotationManagementPage() {
                 <button
                   type="button"
                   onClick={handleSubmitQuotation}
-                  className="w-full py-3 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider hover:bg-emerald-800 cursor-pointer text-center"
+                  className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
                 >
                   Submit Proposal
                 </button>
@@ -581,7 +581,7 @@ export default function QuotationManagementPage() {
                   setPreviewQuoteId(null);
                   setActiveTab('LIST');
                 }}
-                className="w-full py-3 border border-stone-200 bg-white hover:bg-stone-550 text-stone-750 rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer text-center"
+                className="w-full dbc-btn dbc-btn-md dbc-btn-outline bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Back to Quotations List
               </button>

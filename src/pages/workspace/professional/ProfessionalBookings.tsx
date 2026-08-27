@@ -396,14 +396,14 @@ export default function ProfessionalBookings() {
                               <button
                                 onClick={() => handleAccept(b.id)}
                                 disabled={actionLoadingId === b.id}
-                                className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition disabled:opacity-50 cursor-pointer"
+                                className="dbc-btn dbc-btn-sm dbc-btn-primary"
                               >
                                 Accept Request
                               </button>
                               <button
                                 onClick={() => handleReject(b.id)}
                                 disabled={actionLoadingId === b.id}
-                                className="px-3 py-1.5 border border-rose-200 text-rose-700 hover:bg-rose-50 rounded-lg text-[10px] font-bold uppercase tracking-wider transition disabled:opacity-50 cursor-pointer"
+                                className="dbc-btn dbc-btn-sm dbc-btn-danger"
                               >
                                 Decline
                               </button>
@@ -414,7 +414,7 @@ export default function ProfessionalBookings() {
                             <button
                               onClick={() => handleStart(b.id)}
                               disabled={actionLoadingId === b.id}
-                              className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition disabled:opacity-50 cursor-pointer"
+                              className="dbc-btn dbc-btn-sm dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none"
                             >
                               Start Project
                             </button>
@@ -424,7 +424,7 @@ export default function ProfessionalBookings() {
                             <button
                               onClick={() => handleComplete(b.id)}
                               disabled={actionLoadingId === b.id}
-                              className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition disabled:opacity-50 cursor-pointer"
+                              className="dbc-btn dbc-btn-sm dbc-btn-primary"
                             >
                               Mark Completed
                             </button>
@@ -536,14 +536,14 @@ export default function ProfessionalBookings() {
                     <button
                       onClick={() => handleAccept(selectedBooking.id)}
                       disabled={actionLoadingId === selectedBooking.id}
-                      className="py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold uppercase text-[10px] tracking-wider transition disabled:opacity-50"
+                      className="dbc-btn dbc-btn-md dbc-btn-primary"
                     >
                       Accept
                     </button>
                     <button
                       onClick={() => handleReject(selectedBooking.id)}
                       disabled={actionLoadingId === selectedBooking.id}
-                      className="py-2.5 border border-rose-200 text-rose-700 hover:bg-rose-50 rounded-xl font-bold uppercase text-[10px] tracking-wider transition disabled:opacity-50"
+                      className="dbc-btn dbc-btn-md dbc-btn-danger"
                     >
                       Decline
                     </button>
@@ -554,7 +554,7 @@ export default function ProfessionalBookings() {
                   <button
                     onClick={() => handleStart(selectedBooking.id)}
                     disabled={actionLoadingId === selectedBooking.id}
-                    className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold uppercase text-[10px] tracking-wider transition disabled:opacity-50"
+                    className="w-full dbc-btn dbc-btn-md dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none"
                   >
                     Start Project
                   </button>
@@ -564,7 +564,7 @@ export default function ProfessionalBookings() {
                   <button
                     onClick={() => handleComplete(selectedBooking.id)}
                     disabled={actionLoadingId === selectedBooking.id}
-                    className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold uppercase text-[10px] tracking-wider transition disabled:opacity-50"
+                    className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
                   >
                     Mark as Completed
                   </button>
@@ -608,7 +608,7 @@ export default function ProfessionalBookings() {
                   type="text"
                   value={workingHours}
                   onChange={e => setWorkingHours(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-800"
+                  className="dbc-input text-xs"
                 />
               </div>
 
@@ -621,7 +621,7 @@ export default function ProfessionalBookings() {
                   type="checkbox"
                   checked={vacationMode}
                   onChange={e => setVacationMode(e.target.checked)}
-                  className="w-4 h-4 text-emerald-700 rounded border-stone-300 focus:ring-emerald-700 cursor-pointer"
+                  className="dbc-checkbox"
                 />
               </div>
             </div>

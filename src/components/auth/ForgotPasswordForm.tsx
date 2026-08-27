@@ -36,14 +36,14 @@ export function ForgotPasswordForm({ onBackToLogin }: ForgotPasswordFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+              className="dbc-input text-xs placeholder:text-stone-400"
               placeholder="name@example.com"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition cursor-pointer"
+            className="w-full dbc-btn dbc-btn-xl dbc-btn-primary"
           >
             Send Recovery Link
           </button>

@@ -44,7 +44,7 @@ export function LoginForm({
             onChange={onChange}
             required
             autoComplete="email"
-            className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+            className="dbc-input text-xs placeholder:text-stone-400"
           />
         </div>
 
@@ -74,12 +74,12 @@ export function LoginForm({
               onChange={onChange}
               required
               autoComplete="current-password"
-              className="w-full text-xs bg-white border border-stone-200 rounded-xl pl-3.5 pr-12 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+              className="dbc-input text-xs pl-3.5 pr-12 placeholder:text-stone-400"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase tracking-wider text-stone-400 hover:text-stone-700 cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase tracking-wider text-stone-400 hover:text-stone-700 cursor-pointer focus:outline-none"
             >
               {showPassword ? 'Hide' : 'Show'}
             </button>
@@ -94,7 +94,7 @@ export function LoginForm({
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              className="h-3.5 w-3.5 rounded border-stone-300 text-emerald-700 focus:ring-emerald-700 cursor-pointer"
+              className="dbc-checkbox"
             />
             <span className="text-[11px] font-medium text-stone-600">Remember this device</span>
           </label>
@@ -111,7 +111,7 @@ export function LoginForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition disabled:opacity-50 cursor-pointer"
+          className="w-full dbc-btn dbc-btn-xl dbc-btn-primary"
         >
           {loading ? 'Signing in...' : 'Sign In to Account'}
         </button>

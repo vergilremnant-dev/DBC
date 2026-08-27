@@ -43,7 +43,7 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+              className="dbc-input text-xs placeholder:text-stone-400"
             />
           </div>
 
@@ -57,13 +57,13 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+              className="dbc-input text-xs placeholder:text-stone-400"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition cursor-pointer"
+            className="w-full dbc-btn dbc-btn-xl dbc-btn-primary"
           >
             Update Password
           </button>
@@ -83,7 +83,7 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
               onResetComplete();
               onBackToLogin();
             }}
-            className="rounded-xl bg-emerald-700 hover:bg-emerald-800 py-2.5 px-6 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition cursor-pointer"
+            className="dbc-btn dbc-btn-lg dbc-btn-primary px-6"
           >
             Back to Login
           </button>

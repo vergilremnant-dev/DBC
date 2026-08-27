@@ -160,7 +160,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="John Doe"
                 required
-                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                className="dbc-input text-xs placeholder:text-stone-400"
               />
             </div>
 
@@ -215,7 +215,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
                   required
-                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                  className="dbc-input text-xs placeholder:text-stone-400"
                 />
               </div>
             )}
@@ -234,7 +234,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="9876543210"
                   required
-                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                  className="dbc-input text-xs placeholder:text-stone-400"
                 />
               </div>
             )}
@@ -253,7 +253,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                  className="dbc-input text-xs placeholder:text-stone-400"
                 />
               </div>
               <div>
@@ -268,7 +268,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400"
+                  className="dbc-input text-xs placeholder:text-stone-400"
                 />
               </div>
             </div>
@@ -283,7 +283,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             {/* Action */}
             <button
               type="submit"
-              className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition cursor-pointer"
+              className="w-full dbc-btn dbc-btn-xl dbc-btn-primary"
             >
               Continue
             </button>
@@ -320,7 +320,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                 placeholder="000000"
                 required
-                className="w-full text-xs bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none transition focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700/30 placeholder:text-stone-400 tracking-widest text-center font-bold"
+                className="dbc-input text-xs placeholder:text-stone-400 tracking-widest text-center font-bold"
               />
             </div>
 
@@ -334,7 +334,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             {/* Action */}
             <button
               type="submit"
-              className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-800 py-3 text-xs font-bold text-white uppercase tracking-wider shadow-sm transition cursor-pointer"
+              className="w-full dbc-btn dbc-btn-xl dbc-btn-primary"
             >
               Verify
             </button>

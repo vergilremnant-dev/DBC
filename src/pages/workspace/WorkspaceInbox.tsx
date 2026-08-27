@@ -238,7 +238,7 @@ function CustomerInbox() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => alert(`Calling ${activeChat.proName} via secure voice coordinator.`)}
-                    className="p-2 border border-light-border bg-white hover:bg-light-stone rounded-xl text-xs transition cursor-pointer"
+                    className="dbc-btn dbc-btn-sm dbc-btn-secondary"
                   >
                     📞 Call
                   </button>
@@ -279,7 +279,7 @@ function CustomerInbox() {
                 <button
                   type="button"
                   onClick={handleAttachFile}
-                  className="p-2 border border-light-border rounded-xl hover:bg-light-stone text-xs transition cursor-pointer"
+                  className="p-2.5 border border-light-border rounded-full hover:bg-light-stone text-xs transition cursor-pointer"
                   title="Attach blueprints/images"
                 >
                   📎
@@ -289,11 +289,11 @@ function CustomerInbox() {
                   placeholder="Type message details..."
                   value={messageText}
                   onChange={(e) => setMessageText(e.target.value)}
-                  className="flex-1 bg-light-stone/40 border border-light-border focus:border-brand-emerald focus:ring-1 focus:ring-brand-emerald rounded-full px-4 py-2.5 text-xs text-stone-black focus:outline-none"
+                  className="flex-1 dbc-input text-xs placeholder:text-stone-400 rounded-full"
                 />
                 <button
                   type="submit"
-                  className="dbc-btn dbc-btn-primary px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider cursor-pointer"
+                  className="dbc-btn dbc-btn-md dbc-btn-primary rounded-full"
                 >
                   Send
                 </button>

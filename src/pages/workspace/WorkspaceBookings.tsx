@@ -212,14 +212,14 @@ function CustomerBookings() {
         <div className="flex gap-2">
           <button
             onClick={fetchBookings}
-            className="border border-stone-200 hover:bg-stone-50 text-stone-700 font-bold text-xs px-3 py-2 rounded-xl transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary"
             title="Refresh requests"
           >
             🔄 Refresh
           </button>
           <button
             onClick={() => navigate('/')}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Find a Professional
           </button>

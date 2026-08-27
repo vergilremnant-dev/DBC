@@ -166,7 +166,7 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
           <div className="flex gap-2">
             <button
               onClick={onReschedule}
-              className="flex-1 bg-stone-900 hover:bg-stone-850 text-white font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center"
+              className="flex-1 dbc-btn dbc-btn-md dbc-btn-secondary"
             >
               Update Start Date
             </button>
@@ -176,7 +176,7 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
                   onCancel();
                 }
               }}
-              className="bg-rose-55/10 hover:bg-rose-55/20 text-rose-600 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center border border-rose-100"
+              className="dbc-btn dbc-btn-md dbc-btn-danger"
             >
               Cancel Request
             </button>
@@ -185,7 +185,7 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
         
         <button
           onClick={() => alert('Download request summary feature is a mockup indicator.')}
-          className="w-full bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center"
+          className="w-full dbc-btn dbc-btn-md dbc-btn-outline"
         >
           Download Request Summary (PDF)
         </button>

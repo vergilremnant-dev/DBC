@@ -464,7 +464,7 @@ export default function WorkspaceSettings() {
             <div className="flex justify-end pt-2">
               <button
                 onClick={handleLogoutClick}
-                className="rounded-xl border border-stone-200 hover:border-red-200 bg-white hover:bg-red-50 text-stone-700 hover:text-red-700 font-bold text-xs uppercase tracking-wider px-5 py-2.5 transition duration-200 cursor-pointer shadow-sm"
+                className="dbc-btn dbc-btn-md dbc-btn-danger"
               >
                 Log Out Account
               </button>

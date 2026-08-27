@@ -96,7 +96,7 @@ export function AddressCard({
         </div>
         <button
           onClick={handleOpenAdd}
-          className="rounded-lg bg-stone-900 hover:bg-stone-850 px-3.5 py-1.5 text-[10px] font-black text-white uppercase tracking-wider transition cursor-pointer shadow"
+          className="dbc-btn dbc-btn-sm dbc-btn-primary"
         >
           + Add Address
         </button>
@@ -113,7 +113,7 @@ export function AddressCard({
           </div>
           <button
             onClick={handleOpenAdd}
-            className="rounded-lg border border-stone-200 bg-white hover:bg-stone-50 text-[10px] font-bold px-3 py-1.5 transition cursor-pointer text-stone-700"
+            className="dbc-btn dbc-btn-sm dbc-btn-outline"
           >
             Add Address
           </button>
@@ -203,7 +203,7 @@ export function AddressCard({
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. My Plot / Home Residency"
                 required
-                className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                className="mt-1 dbc-input"
               />
             </div>
 
@@ -215,7 +215,7 @@ export function AddressCard({
                 placeholder="Plot no, Street details, Area info..."
                 rows={2}
                 required
-                className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none resize-none"
+                className="mt-1 dbc-input resize-none"
               />
             </div>
 
@@ -226,7 +226,7 @@ export function AddressCard({
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                  className="mt-1 dbc-input"
                 />
               </div>
               <div className="space-y-1">
@@ -235,7 +235,7 @@ export function AddressCard({
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                  className="mt-1 dbc-input"
                 />
               </div>
             </div>
@@ -249,7 +249,7 @@ export function AddressCard({
                   onChange={(e) => setPincode(e.target.value)}
                   placeholder="e.g. 500081"
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                  className="mt-1 dbc-input"
                 />
               </div>
               <div className="space-y-1">
@@ -257,7 +257,7 @@ export function AddressCard({
                 <select
                   value={tag}
                   onChange={(e) => setTag(e.target.value as 'Home' | 'Work' | 'Site' | 'Other')}
-                  className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+                  className="mt-1 dbc-input bg-white"
                 >
                   <option value="Home">Home</option>
                   <option value="Work">Work</option>
@@ -271,13 +271,13 @@ export function AddressCard({
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="rounded-lg border border-stone-200 bg-white px-3.5 py-1.5 text-stone-600 hover:bg-stone-50 cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-secondary"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-stone-900 hover:bg-stone-850 px-4 py-1.5 text-white font-bold cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Save Address
               </button>

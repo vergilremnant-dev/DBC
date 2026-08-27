@@ -81,7 +81,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="••••••••"
-              className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+              className="mt-1 dbc-input"
             />
           </div>
 
@@ -93,7 +93,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Minimum 8 characters"
-                className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+                className="mt-1 dbc-input"
               />
             </div>
 
@@ -104,7 +104,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+                className="mt-1 dbc-input"
               />
             </div>
           </div>
@@ -112,7 +112,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
           <button
             type="submit"
             disabled={pwLoading}
-            className="rounded-xl bg-stone-900 hover:bg-stone-850 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 transition duration-200 cursor-pointer shadow-sm disabled:opacity-50"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             {pwLoading ? 'Saving...' : 'Update Password'}
           </button>
@@ -131,7 +131,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
               type="checkbox"
               checked={visibleInSearch}
               onChange={(e) => setVisibleInSearch(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+              className="dbc-checkbox mt-0.5"
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Show Profile in Marketplace Search</span>
@@ -146,7 +146,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
               type="checkbox"
               checked={telemetry}
               onChange={(e) => setTelemetry(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+              className="dbc-checkbox mt-0.5"
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Share Anonymous Telemetry</span>
@@ -186,7 +186,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
                 {!sess.current && (
                   <button
                     onClick={() => handleTerminateSession(sess.id)}
-                    className="text-[10px] text-stone-400 hover:text-red-700 font-bold border border-stone-200 hover:border-red-200 bg-stone-50 px-2.5 py-1 rounded-lg transition cursor-pointer"
+                    className="dbc-btn dbc-btn-sm dbc-btn-secondary"
                   >
                     Log Out
                   </button>
@@ -209,14 +209,14 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
         <div className="flex gap-2">
           <button
             onClick={onExportData}
-            className="rounded-lg border border-stone-200 bg-white hover:bg-stone-50 px-4 py-2 text-[10px] font-bold text-stone-700 transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-outline"
           >
             Export Data
           </button>
           
           <button
             onClick={onDeleteAccount}
-            className="rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-4 py-2 text-[10px] font-bold transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-danger"
           >
             Delete Account
           </button>

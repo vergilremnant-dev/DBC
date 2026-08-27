@@ -63,7 +63,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
             onChange={handleChange}
             placeholder="e.g. Sanjay"
             required
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 outline-none focus:border-stone-450 transition"
+            className="mt-1 dbc-input"
           />
         </div>
 
@@ -76,7 +76,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
             onChange={handleChange}
             placeholder="e.g. Chagantipati"
             required
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 outline-none focus:border-stone-450 transition"
+            className="mt-1 dbc-input"
           />
         </div>
       </div>
@@ -90,7 +90,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
             value={values.displayName}
             onChange={handleChange}
             placeholder="e.g. Sanjay C"
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 outline-none focus:border-stone-450 transition"
+            className="mt-1 dbc-input"
           />
         </div>
 
@@ -100,7 +100,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
             name="gender"
             value={values.gender}
             onChange={handleChange}
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+            className="mt-1 dbc-input bg-white"
           >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
@@ -117,7 +117,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
           name="dob"
           value={values.dob}
           onChange={handleChange}
-          className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 outline-none focus:outline-none"
+          className="mt-1 dbc-input"
         />
       </div>
 
@@ -129,7 +129,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
           onChange={handleChange}
           placeholder="Brief description about yourself..."
           rows={3}
-          className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 outline-none focus:border-stone-450 transition resize-none"
+          className="mt-1 dbc-input resize-none"
         />
       </div>
 
@@ -137,7 +137,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
         <button
           type="submit"
           disabled={saving}
-          className="rounded-xl bg-stone-900 hover:bg-stone-850 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 transition duration-200 cursor-pointer shadow-sm disabled:opacity-50"
+          className="dbc-btn dbc-btn-md dbc-btn-primary"
         >
           {saving ? 'Saving Changes...' : 'Save Changes'}
         </button>
@@ -145,7 +145,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-xl bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-700 font-bold text-xs uppercase tracking-wider px-6 py-3 transition duration-200 cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary"
           >
             Cancel
           </button>

@@ -186,7 +186,7 @@ export default function WorkspaceOverview() {
                 </div>
                 <button
                   onClick={() => setActiveTab('payments')}
-                  className="bg-amber-850 hover:bg-amber-900 active:bg-amber-950 text-white font-black text-[9px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition shadow-xs cursor-pointer select-none"
+                  className="dbc-btn dbc-btn-md dbc-btn-primary bg-amber-800 hover:bg-amber-900 text-white border-none"
                 >
                   Release Funds
                 </button>
@@ -214,13 +214,13 @@ export default function WorkspaceOverview() {
               <div className="flex justify-center gap-3">
                 <button
                   onClick={() => navigate('/')}
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-sm transition cursor-pointer"
+                  className="dbc-btn dbc-btn-lg dbc-btn-primary"
                 >
                   Find a Professional
                 </button>
                 <button
                   onClick={() => navigate('/workspace/requirements')}
-                  className="border border-stone-200 hover:bg-stone-50 text-stone-700 font-bold text-xs px-5 py-2.5 rounded-xl transition cursor-pointer"
+                  className="dbc-btn dbc-btn-lg dbc-btn-secondary"
                 >
                   Post Requirements
                 </button>
@@ -286,7 +286,7 @@ export default function WorkspaceOverview() {
                     </p>
                     <button
                       onClick={() => navigate('/workspace/requirements')}
-                      className="dbc-btn dbc-btn-primary py-2 px-4 text-[10px] font-black uppercase tracking-wider cursor-pointer"
+                      className="dbc-btn dbc-btn-md dbc-btn-primary"
                     >
                       Create Requirement
                     </button>
@@ -380,7 +380,7 @@ export default function WorkspaceOverview() {
             
             <button
               onClick={() => alert('Mock document upload interface active. Ready to store CAD blueprints.')}
-              className="dbc-btn dbc-btn-primary py-2 px-4 text-xs font-bold uppercase tracking-wider cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Upload Document +
             </button>
@@ -494,7 +494,7 @@ export default function WorkspaceOverview() {
                       {pay.status === 'Pending' ? (
                         <button
                           onClick={() => alert('Mock payment gateway checkout session initiated.')}
-                          className="dbc-btn dbc-btn-primary py-1 px-3 text-[9px] font-bold uppercase tracking-wider cursor-pointer"
+                          className="dbc-btn dbc-btn-sm dbc-btn-primary"
                         >
                           Release Funds
                         </button>

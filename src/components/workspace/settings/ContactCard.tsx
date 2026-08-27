@@ -70,7 +70,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
               type="email"
               value={values.email}
               disabled
-              className="mt-1 w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-stone-400 outline-none cursor-not-allowed"
+              className="mt-1 dbc-input bg-stone-50 text-stone-400 cursor-not-allowed"
             />
           </div>
 
@@ -84,7 +84,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
                 onChange={handleChange}
                 placeholder="e.g. 9876543210"
                 required
-                className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 outline-none focus:border-stone-450 transition"
+                className="mt-1 dbc-input"
               />
             </div>
 
@@ -96,7 +96,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
                 value={values.altPhone}
                 onChange={handleChange}
                 placeholder="e.g. 9876543211"
-                className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 outline-none focus:border-stone-450 transition"
+                className="mt-1 dbc-input"
               />
             </div>
           </div>
@@ -107,7 +107,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
               name="preferredMethod"
               value={values.preferredMethod}
               onChange={handleChange}
-              className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+              className="mt-1 dbc-input bg-white"
             >
               <option value="WhatsApp">WhatsApp Message</option>
               <option value="Call">Direct Phone Call</option>
@@ -118,7 +118,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
           <button
             type="submit"
             disabled={saving}
-            className="rounded-xl bg-stone-900 hover:bg-stone-850 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 transition duration-200 cursor-pointer shadow-sm"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Update Contact Info
           </button>

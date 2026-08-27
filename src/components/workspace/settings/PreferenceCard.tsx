@@ -59,7 +59,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             name="theme"
             value={values.theme}
             onChange={handleChange}
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+            className="mt-1 dbc-input bg-white"
           >
             <option value="Light">Light Slate Mode</option>
             <option value="Dark">Premium Dark Mode (Coming Soon)</option>
@@ -73,7 +73,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             name="language"
             value={values.language}
             onChange={handleChange}
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+            className="mt-1 dbc-input bg-white"
           >
             <option value="English">English (IN)</option>
             <option value="Telugu">Telugu (తెలుగు)</option>
@@ -88,7 +88,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             name="timeZone"
             value={values.timeZone}
             onChange={handleChange}
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+            className="mt-1 dbc-input bg-white"
           >
             <option value="IST">Kolkata, India (IST - UTC+5:30)</option>
             <option value="GMT">Greenwich Mean Time (GMT - UTC+0:00)</option>
@@ -102,7 +102,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             name="dateFormat"
             value={values.dateFormat}
             onChange={handleChange}
-            className="mt-1 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-stone-900 focus:outline-none"
+            className="mt-1 dbc-input bg-white"
           >
             <option value="DD/MM/YYYY">DD/MM/YYYY (e.g. 30/07/2026)</option>
             <option value="MM/DD/YYYY">MM/DD/YYYY (e.g. 07/30/2026)</option>
@@ -124,7 +124,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
               name="notifyOnBids"
               checked={values.notifyOnBids}
               onChange={handleChange}
-              className="mt-0.5 h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+              className="dbc-checkbox mt-0.5"
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Bid Alerts</span>
@@ -138,7 +138,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
               name="notifyOnBookings"
               checked={values.notifyOnBookings}
               onChange={handleChange}
-              className="mt-0.5 h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+              className="dbc-checkbox mt-0.5"
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Booking Confirmations</span>
@@ -152,7 +152,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
               name="notifyOnMessages"
               checked={values.notifyOnMessages}
               onChange={handleChange}
-              className="mt-0.5 h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+              className="dbc-checkbox mt-0.5"
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Messages & Replies</span>
@@ -166,7 +166,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
               name="notifyOnPromotions"
               checked={values.notifyOnPromotions}
               onChange={handleChange}
-              className="mt-0.5 h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+              className="dbc-checkbox mt-0.5"
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Promotion Alerts</span>
@@ -184,7 +184,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             name="marketingEmails"
             checked={values.marketingEmails}
             onChange={handleChange}
-            className="h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+            className="dbc-checkbox"
           />
           <span className="text-[10px] uppercase font-bold text-stone-400">Subscribe to monthly construction guides</span>
         </label>
@@ -192,7 +192,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
         <button
           type="submit"
           disabled={saving}
-          className="rounded-xl bg-stone-900 hover:bg-stone-850 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 transition duration-200 cursor-pointer shadow-sm"
+          className="dbc-btn dbc-btn-md dbc-btn-primary"
         >
           {saving ? 'Saving...' : 'Save Preferences'}
         </button>

@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# DesignBuildConnect (DBC) Documentation Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the centralized documentation portal for the **DesignBuildConnect (DBC)** marketplace platform.
 
-Currently, two official plugins are available:
+This portal is structured to provide developers, system administrators, and product managers a comprehensive understanding of DBC's technical architecture, workflows, and current status.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 NEW DEVELOPER START HERE
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Follow this sequential reading path to onboard quickly:
 
-## Expanding the ESLint configuration
+1. **[Project Overview](01_Project_Overview/Project_Overview.md)** - What is DBC and who are its users?
+2. **[Business Model](01_Project_Overview/Business_Model.md)** - Understanding matching, subscription passes, and execution workflows.
+3. **[Glossary & Terminology](01_Project_Overview/Glossary.md)** - Mapping customer-facing words to backend database entities.
+4. **[User Roles](02_Product_Requirements/User_Roles.md)** - System boundaries for Customers, Providers, and Admins.
+5. **[System Architecture](05_Technical_Architecture/System_Architecture.md)** - Frontend, backend, database, and hosting topology.
+6. **[Database Schema Reference](07_Database/Database_Schema.md)** - Schema tables, relations, and enums.
+7. **[API Reference](06_API/API_Reference.md)** - List of all Express/Vercel endpoints.
+8. **[Development Setup](11_Development/Development_Setup.md)** - Step-by-step local workspace launch instructions.
+9. **[Current Project Status](14_Project_Management/Current_Status.md)** - What is completed, in progress, and planned.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📁 Documentation Folder Directory Map
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+documentation/
+├── 01_Project_Overview/        # Context, business rules, glossary, and glossary mappings
+├── 02_Product_Requirements/    # PRD, user roles, feature details, and MVP scope
+├── 03_User_Flows/              # Role-specific flows, timeline state transitions
+├── 04_UI_UX/                   # Navigation architecture, design system parameters, and screens
+├── 05_Technical_Architecture/  # Frameworks, database engines, security, and integrations
+├── 06_API/                     # API routes, endpoint mappings, and parameters
+├── 07_Database/                # Prisma schemas, relations, and data dictionary
+├── 08_Security/                # RBAC checks, authorization patterns, and checklist
+├── 09_Payments/                # Razorpay subscriptions, order creation, and webhooks
+├── 10_Mobile_App/              # Mobile readiness check, ReactNative architectural recommendations
+├── 11_Development/             # Commands, environment keys, coding styles
+├── 12_Testing/                 # Vitest runner specs and checklists
+├── 13_Deployment/              # Vercel routing rules and production config
+└── 14_Project_Management/      # Roadmaps, status matrix, technical debt
 ```

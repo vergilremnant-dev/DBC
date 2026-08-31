@@ -38,7 +38,7 @@ export default function QuickActions({ onTabSelect, onExport }: QuickActionsProp
 
         <button
           onClick={onExport}
-          className="col-span-2 py-2.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl text-[9px] font-black uppercase tracking-wider transition text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
+          className="col-span-2 w-full dbc-btn dbc-btn-md dbc-btn-primary"
         >
           📤 Export platform activity summary report
         </button>

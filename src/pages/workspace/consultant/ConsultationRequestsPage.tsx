@@ -251,11 +251,11 @@ export default function ConsultationRequestsPage() {
               setIsLoading(true);
               setTimeout(() => setIsLoading(false), 500);
             }}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer focus:outline-none"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             <span>🔄</span> Refresh
           </button>
-          <button className="px-3.5 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer focus:outline-none">
+          <button className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50">
             <span>📤</span> Export
           </button>
         </div>
@@ -292,7 +292,7 @@ export default function ConsultationRequestsPage() {
               placeholder="Search customer, location, ID..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-200 focus:border-brand-emerald/40 rounded-xl py-2 px-10 text-xs text-stone-800 font-semibold focus:outline-none transition"
+              className="dbc-input py-2 px-10"
             />
           </div>
 
@@ -304,7 +304,7 @@ export default function ConsultationRequestsPage() {
               placeholder="Filter by city/location..."
               value={locationQuery}
               onChange={e => setLocationQuery(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-200 focus:border-brand-emerald/40 rounded-xl py-2 px-10 text-xs text-stone-800 font-semibold focus:outline-none transition"
+              className="dbc-input py-2 px-10"
             />
           </div>
 
@@ -313,7 +313,7 @@ export default function ConsultationRequestsPage() {
             <select
               value={categoryFilter}
               onChange={e => setCategoryFilter(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-2 px-3 text-xs text-stone-700 font-semibold focus:outline-none transition cursor-pointer"
+              className="dbc-input bg-white py-2 px-3"
             >
               <option value="ALL">All Categories</option>
               <option value="Architecture">Architecture</option>
@@ -425,7 +425,7 @@ export default function ConsultationRequestsPage() {
                           e.stopPropagation();
                           navigate(`/workspace/consultation/${req.id}`);
                         }}
-                        className="px-3.5 py-1.5 bg-emerald-650 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer"
+                        className="dbc-btn dbc-btn-sm dbc-btn-primary"
                       >
                         Workspace &rarr;
                       </button>
@@ -436,7 +436,7 @@ export default function ConsultationRequestsPage() {
                         handleAction(req.id, 'Accept');
                       }}
                       disabled={req.status === 'Accepted' || req.status === 'Scheduled' || req.status === 'Completed'}
-                      className="px-3.5 py-1.5 bg-brand-emerald hover:bg-emerald-800 disabled:opacity-50 disabled:pointer-events-none text-white rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer"
+                      className="dbc-btn dbc-btn-sm dbc-btn-primary"
                     >
                       Accept
                     </button>
@@ -446,7 +446,7 @@ export default function ConsultationRequestsPage() {
                         handleAction(req.id, 'Schedule');
                       }}
                       disabled={req.status === 'Scheduled' || req.status === 'Completed'}
-                      className="px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 disabled:opacity-50 disabled:pointer-events-none text-stone-700 border border-stone-300/40 rounded-lg text-[9px] font-bold uppercase tracking-wider transition cursor-pointer"
+                      className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-100 border border-stone-300/40"
                     >
                       Schedule
                     </button>
@@ -456,7 +456,7 @@ export default function ConsultationRequestsPage() {
                         handleAction(req.id, 'Reject');
                       }}
                       disabled={req.status === 'Rejected' || req.status === 'Completed'}
-                      className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 disabled:opacity-50 disabled:pointer-events-none text-rose-700 border border-rose-200/40 rounded-lg text-[9px] font-bold uppercase tracking-wider transition cursor-pointer"
+                      className="dbc-btn dbc-btn-sm dbc-btn-danger"
                     >
                       Decline
                     </button>
@@ -558,7 +558,7 @@ export default function ConsultationRequestsPage() {
               {(selectedRequest.status === 'Accepted' || selectedRequest.status === 'Scheduled' || selectedRequest.status === 'Completed') && (
                 <button
                   onClick={() => navigate(`/workspace/consultation/${selectedRequest.id}`)}
-                  className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition cursor-pointer"
+                  className="dbc-btn dbc-btn-md dbc-btn-primary"
                 >
                   Go to Workspace
                 </button>
@@ -566,14 +566,14 @@ export default function ConsultationRequestsPage() {
               <button
                 onClick={() => handleAction(selectedRequest.id, 'Accept')}
                 disabled={selectedRequest.status === 'Accepted' || selectedRequest.status === 'Scheduled' || selectedRequest.status === 'Completed'}
-                className="px-4 py-2 bg-brand-emerald hover:bg-emerald-800 disabled:opacity-50 disabled:pointer-events-none text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Accept
               </button>
               <button
                 onClick={() => handleAction(selectedRequest.id, 'Reject')}
                 disabled={selectedRequest.status === 'Rejected' || selectedRequest.status === 'Completed'}
-                className="px-4 py-2 bg-rose-50 hover:bg-rose-100 disabled:opacity-50 disabled:pointer-events-none text-rose-700 border border-rose-200 rounded-xl text-[10px] font-bold uppercase tracking-wider transition cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-danger"
               >
                 Decline
               </button>
@@ -593,14 +593,14 @@ export default function ConsultationRequestsPage() {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setConfirmDialog(null)}
-                className="px-4 py-2 border border-stone-200 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-50 cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmAction}
-                className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider text-white cursor-pointer ${
-                  confirmDialog.action === 'Reject' ? 'bg-rose-600 hover:bg-rose-800' : 'bg-brand-emerald hover:bg-emerald-800'
+                className={`dbc-btn dbc-btn-md ${
+                  confirmDialog.action === 'Reject' ? 'dbc-btn-danger' : 'dbc-btn-primary'
                 }`}
               >
                 Confirm

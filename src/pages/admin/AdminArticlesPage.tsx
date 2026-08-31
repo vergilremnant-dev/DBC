@@ -181,7 +181,7 @@ export function AdminArticlesPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/blog')}
-              className="text-xs font-bold text-stone-600 hover:text-stone-900 transition"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Go to Blog Hub
             </button>
@@ -226,7 +226,7 @@ export function AdminArticlesPage() {
             </h2>
             <button
               onClick={() => setShowCatModal(true)}
-              className="rounded-lg border border-stone-200 bg-white hover:bg-stone-50 px-3 py-1.5 text-xs font-bold text-stone-700 transition cursor-pointer"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               + Create Category
             </button>
@@ -245,7 +245,7 @@ export function AdminArticlesPage() {
                   }}
                   placeholder="e.g. How to Choose a Contractor"
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:border-stone-450 focus:outline-none"
+                  className="mt-1 dbc-input text-stone-900"
                 />
               </div>
 
@@ -255,7 +255,7 @@ export function AdminArticlesPage() {
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                  className="mt-1 dbc-input bg-white text-stone-900"
                 >
                   <option value="">Select Topic Category</option>
                   {categories.map((c) => (
@@ -277,7 +277,7 @@ export function AdminArticlesPage() {
                 }}
                 placeholder="Brief excerpt summarising article content (100-200 characters)..."
                 rows={2}
-                className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                className="mt-1 dbc-input text-stone-900"
               />
             </div>
 
@@ -289,7 +289,7 @@ export function AdminArticlesPage() {
                 placeholder="Compose full markdown or plaintext educational guidelines..."
                 rows={10}
                 required
-                className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none resize-y"
+                className="mt-1 dbc-input text-stone-900 resize-y"
               />
             </div>
 
@@ -301,7 +301,7 @@ export function AdminArticlesPage() {
                   value={featuredImage}
                   onChange={(e) => setFeaturedImage(e.target.value)}
                   placeholder="https://example.com/image.jpg"
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 focus:outline-none"
+                  className="mt-1 dbc-input"
                 />
               </div>
 
@@ -312,7 +312,7 @@ export function AdminArticlesPage() {
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
                   placeholder="budget, contractor, tips"
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 focus:outline-none"
+                  className="mt-1 dbc-input"
                 />
               </div>
 
@@ -323,7 +323,7 @@ export function AdminArticlesPage() {
                   value={readTime}
                   onChange={(e) => setReadTime(e.target.value)}
                   min="1"
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 focus:outline-none"
+                  className="mt-1 dbc-input"
                 />
               </div>
             </div>
@@ -339,7 +339,7 @@ export function AdminArticlesPage() {
                     value={seoTitle}
                     onChange={(e) => setSeoTitle(e.target.value)}
                     placeholder="Search Engine Optimized Title"
-                    className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 focus:outline-none"
+                    className="mt-1 dbc-input"
                   />
                 </div>
                 <div>
@@ -349,7 +349,7 @@ export function AdminArticlesPage() {
                     value={seoDescription}
                     onChange={(e) => setSeoDescription(e.target.value)}
                     placeholder="Search Engine Meta Description"
-                    className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 focus:outline-none"
+                    className="mt-1 dbc-input"
                   />
                 </div>
               </div>
@@ -361,7 +361,7 @@ export function AdminArticlesPage() {
                   type="checkbox"
                   checked={isPublished}
                   onChange={(e) => setIsPublished(e.target.checked)}
-                  className="h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+                  className="dbc-checkbox"
                 />
                 Publish immediately (Draft if unchecked)
               </label>
@@ -371,7 +371,7 @@ export function AdminArticlesPage() {
                   <button
                     type="button"
                     onClick={handleCancelEdit}
-                    className="rounded-lg border border-stone-200 bg-white px-4 py-2 text-stone-600 hover:bg-stone-50 cursor-pointer"
+                    className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
                   >
                     Cancel Edit
                   </button>
@@ -379,7 +379,7 @@ export function AdminArticlesPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="rounded-lg bg-stone-900 hover:bg-stone-850 px-6 py-2 text-white font-bold disabled:opacity-50 cursor-pointer"
+                  className="dbc-btn dbc-btn-md dbc-btn-primary"
                 >
                   {isEditing ? 'Save Updates' : 'Compose Article'}
                 </button>
@@ -467,7 +467,7 @@ export function AdminArticlesPage() {
                 onChange={(e) => setNewCatName(e.target.value)}
                 placeholder="e.g. Electrical Planning"
                 required
-                className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                className="mt-1 dbc-input text-stone-900"
               />
             </div>
 
@@ -478,7 +478,7 @@ export function AdminArticlesPage() {
                 onChange={(e) => setNewCatDesc(e.target.value)}
                 placeholder="Short description of the topic..."
                 rows={3}
-                className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-stone-900 focus:outline-none"
+                className="mt-1 dbc-input text-stone-900"
               />
             </div>
 
@@ -486,14 +486,14 @@ export function AdminArticlesPage() {
               <button
                 type="button"
                 onClick={() => setShowCatModal(false)}
-                className="rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-stone-600 hover:bg-stone-50 cursor-pointer"
+                className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded-lg bg-stone-900 hover:bg-stone-850 px-4 py-1.5 text-white font-bold cursor-pointer"
+                className="dbc-btn dbc-btn-sm dbc-btn-primary"
               >
                 Create Category
               </button>

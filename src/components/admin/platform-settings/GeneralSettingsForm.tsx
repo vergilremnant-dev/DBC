@@ -47,8 +47,8 @@ const DATE_FORMATS = ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD', 'DD-MMM-YYYY'];
 const TIME_FORMATS = ['12-Hour (AM/PM)', '24-Hour'];
 
 export default function GeneralSettingsForm({ values, onChange }: GeneralSettingsProps) {
-  const inputCls = "w-full text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl px-3 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition placeholder:text-stone-400";
-  const selectCls = `${inputCls} cursor-pointer`;
+  const inputCls = "dbc-input text-xs";
+  const selectCls = "dbc-input bg-white text-xs cursor-pointer";
 
   return (
     <SectionCard title="General Settings" subtitle="Core platform identity and regional defaults." icon="🏢">

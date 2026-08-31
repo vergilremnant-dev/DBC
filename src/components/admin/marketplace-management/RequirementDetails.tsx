@@ -131,7 +131,7 @@ export default function RequirementDetails({
             {onDismissReports && (
               <button
                 onClick={() => onDismissReports(requirement.id, requirement.title)}
-                className="w-full mt-1.5 py-1 bg-white hover:bg-stone-50 border border-rose-200 rounded-lg text-[9px] font-black text-rose-700 uppercase tracking-wider transition text-center"
+                className="w-full mt-1.5 dbc-btn dbc-btn-sm dbc-btn-secondary border border-rose-200 text-rose-700 hover:bg-stone-50"
               >
                 Dismiss Flag Reports
               </button>
@@ -146,18 +146,18 @@ export default function RequirementDetails({
           Marketplace Moderation Commands
         </span>
 
-        <div className="flex flex-col gap-2 text-[9px] font-black uppercase tracking-wider text-center">
+        <div className="flex flex-col gap-2">
           {requirement.status === 'Hidden' ? (
             <button
               onClick={() => onUnhide(requirement.id, requirement.title)}
-              className="w-full py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl transition text-center focus:outline-none"
+              className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Unhide &amp; Publish Listing
             </button>
           ) : (
             <button
               onClick={() => onHide(requirement.id, requirement.title)}
-              className="w-full py-2 bg-rose-50 hover:bg-rose-100 text-rose-750 border border-rose-200 rounded-xl transition text-center focus:outline-none"
+              className="w-full dbc-btn dbc-btn-md dbc-btn-danger"
             >
               Hide Listing (Moderate Visibility)
             </button>
@@ -166,14 +166,14 @@ export default function RequirementDetails({
           {requirement.status === 'Closed' ? (
             <button
               onClick={() => onReopen(requirement.id, requirement.title)}
-              className="w-full py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl transition text-center focus:outline-none"
+              className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Reopen Requirement Listing
             </button>
           ) : (
             <button
               onClick={() => onCloseRequirement(requirement.id, requirement.title)}
-              className="w-full py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 rounded-xl transition text-center focus:outline-none"
+              className="w-full dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Close Requirement Listing
             </button>

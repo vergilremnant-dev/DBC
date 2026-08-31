@@ -139,8 +139,8 @@ export default function RequirementWorkspacePage() {
         <div className="flex flex-wrap gap-2 text-xs shrink-0">
           <button
             onClick={() => setIsSaved(!isSaved)}
-            className={`px-3.5 py-2 border rounded-xl font-bold transition cursor-pointer ${
-              isSaved ? 'bg-amber-50 border-amber-300 text-amber-800' : 'border-stone-200 bg-white text-stone-700 hover:bg-stone-50'
+            className={`dbc-btn dbc-btn-md dbc-btn-secondary ${
+              isSaved ? 'bg-amber-50 border-amber-300 text-amber-800' : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
             }`}
           >
             {isSaved ? '★ Saved' : '☆ Save Requirement'}
@@ -149,8 +149,8 @@ export default function RequirementWorkspacePage() {
           <button
             onClick={handleExpressInterest}
             disabled={interestSubmitted}
-            className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer ${
-              interestSubmitted ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed' : 'bg-brand-emerald text-white hover:bg-emerald-800'
+            className={`dbc-btn dbc-btn-md ${
+              interestSubmitted ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed' : 'dbc-btn-primary'
             }`}
           >
             {interestSubmitted ? '✓ Interest Logged' : 'Express Interest'}

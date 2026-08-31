@@ -27,25 +27,25 @@ export default function ProjectQuickActions({
       <div className="grid gap-2 grid-cols-2 text-[9px] font-black uppercase tracking-wider text-center">
         <button
           onClick={onShowFlaggedOnly}
-          className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-850 font-extrabold transition focus:outline-none"
+          className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
         >
           ⚠️ Review Flagged
         </button>
         <button
           onClick={() => onTabChange('marketplace')}
-          className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-850 font-extrabold transition focus:outline-none"
+          className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
         >
           🛒 Marketplace
         </button>
         <button
           onClick={() => onTabChange('users')}
-          className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-850 font-extrabold transition focus:outline-none"
+          className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
         >
           👤 Manage Users
         </button>
         <button
           onClick={() => onTabChange('dashboard')}
-          className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-850 font-extrabold transition focus:outline-none"
+          className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
         >
           ⚡ Executive view
         </button>
@@ -53,7 +53,7 @@ export default function ProjectQuickActions({
         {project && !project.flagged && (
           <button
             onClick={() => onFlagProject(project.id, project.name)}
-            className="col-span-2 p-2.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-extrabold transition focus:outline-none"
+            className="col-span-2 w-full dbc-btn dbc-btn-sm dbc-btn-danger border border-rose-200 hover:bg-rose-100"
           >
             ⚠️ Flag Selected Project: {project.id}
           </button>

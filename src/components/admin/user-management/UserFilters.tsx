@@ -40,7 +40,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
           <select
             value={filters.role}
             onChange={(e) => handleChange('role', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">All Roles</option>
             <option value="Customer">Customer</option>
@@ -58,7 +58,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
           <select
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">All Statuses</option>
             <option value="Active">Active</option>
@@ -76,7 +76,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
           <select
             value={filters.verificationStatus}
             onChange={(e) => handleChange('verificationStatus', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">All Verification Statuses</option>
             <option value="Verified">Verified</option>
@@ -93,7 +93,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
           <select
             value={filters.registrationDate}
             onChange={(e) => handleChange('registrationDate', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">Anytime</option>
             <option value="TODAY">Registered Today</option>
@@ -112,7 +112,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
             placeholder="e.g. Hyderabad..."
             value={filters.location}
             onChange={(e) => handleChange('location', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none focus:border-brand-emerald"
+            className="dbc-input text-stone-750 font-semibold"
           />
         </div>
       </div>

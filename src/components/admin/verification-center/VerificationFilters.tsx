@@ -48,7 +48,7 @@ export default function VerificationFilters({
           <select
             value={filters.role}
             onChange={(e) => handleChange('role', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">All Roles</option>
             {roles.map((r) => (
@@ -67,7 +67,7 @@ export default function VerificationFilters({
           <select
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">All Statuses</option>
             <option value="Pending">Pending</option>
@@ -86,7 +86,7 @@ export default function VerificationFilters({
           <select
             value={filters.documentType}
             onChange={(e) => handleChange('documentType', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">All Document Types</option>
             <option value="Identity Proof">Identity Proof</option>
@@ -104,7 +104,7 @@ export default function VerificationFilters({
           <select
             value={filters.submissionDate}
             onChange={(e) => handleChange('submissionDate', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">Anytime</option>
             <option value="TODAY">Submitted Today</option>
@@ -121,7 +121,7 @@ export default function VerificationFilters({
           <select
             value={filters.location}
             onChange={(e) => handleChange('location', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">All Locations</option>
             {locations.map((loc) => (

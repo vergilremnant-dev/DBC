@@ -196,7 +196,7 @@ export default function ConsultantCrmPage() {
               const notesPrompt = prompt('Enter a quick note for selected customer:');
               if (notesPrompt) setActiveNotes(prev => prev + '\n- ' + notesPrompt);
             }}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl font-bold transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             Add Customer Note
           </button>
@@ -207,7 +207,7 @@ export default function ConsultantCrmPage() {
                 setFollowups(prev => [...prev, { id: `fup-${Date.now()}`, customerName: fupName, type: 'Call', date: '08-Aug-2026', status: 'Upcoming' }]);
               }
             }}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black uppercase tracking-wider transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Create Follow-up
           </button>
@@ -243,7 +243,7 @@ export default function ConsultantCrmPage() {
               placeholder="Search by name, ID, project, location..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-200 focus:border-brand-emerald/40 rounded-xl py-2 px-10 text-xs text-stone-800 font-semibold focus:outline-none transition"
+              className="dbc-input py-2 px-10"
             />
           </div>
 
@@ -251,7 +251,7 @@ export default function ConsultantCrmPage() {
             <select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-2 px-3 text-xs text-stone-700 font-semibold focus:outline-none transition cursor-pointer"
+              className="dbc-input bg-white py-2 px-3"
             >
               <option value="ALL">All Statuses</option>
               <option value="Active">Active</option>
@@ -265,7 +265,7 @@ export default function ConsultantCrmPage() {
             <select
               value={healthFilter}
               onChange={e => setHealthFilter(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-2 px-3 text-xs text-stone-700 font-semibold focus:outline-none transition cursor-pointer"
+              className="dbc-input bg-white py-2 px-3"
             >
               <option value="ALL">All Health Statuses</option>
               <option value="Healthy">Healthy</option>
@@ -389,7 +389,7 @@ export default function ConsultantCrmPage() {
                 value={activeNotes}
                 onChange={e => setActiveNotes(e.target.value)}
                 placeholder="Draft relationship notes here..."
-                className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-4 text-xs font-medium text-stone-850 h-32 focus:outline-none focus:border-brand-emerald/40 transition resize-none"
+                className="dbc-input h-32 resize-none"
               />
             </div>
 

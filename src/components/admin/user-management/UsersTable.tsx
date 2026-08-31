@@ -159,14 +159,14 @@ export default function UsersTable({
             <button
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 border border-stone-200 bg-white disabled:opacity-40 disabled:pointer-events-none hover:bg-stone-50 rounded-xl transition cursor-pointer focus:outline-none"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               &larr; Prev
             </button>
             <button
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 border border-stone-200 bg-white disabled:opacity-40 disabled:pointer-events-none hover:bg-stone-50 rounded-xl transition cursor-pointer focus:outline-none"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Next &rarr;
             </button>

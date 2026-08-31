@@ -88,13 +88,13 @@ export default function ConsultantFinancePage() {
         <div className="flex flex-wrap gap-2 text-xs">
           <button
             onClick={() => alert('Exporting monthly statement ledger to CSV.')}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl font-bold transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             Export Statement
           </button>
           <button
             onClick={() => alert('Downloading tax summary report.')}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black uppercase tracking-wider transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Download Summary
           </button>
@@ -187,12 +187,12 @@ export default function ConsultantFinancePage() {
                   placeholder="Search customer, invoice ID..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1 px-3 text-xs text-stone-800"
+                  className="dbc-input text-xs py-1 px-3"
                 />
                 <select
                   value={statusFilter}
                   onChange={e => setStatusFilter(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1 px-3 text-xs text-stone-700"
+                  className="dbc-input bg-white text-xs py-1 px-3 w-auto"
                 >
                   <option value="ALL">All Status</option>
                   <option value="Paid">Paid</option>
@@ -294,7 +294,7 @@ export default function ConsultantFinancePage() {
                 onClick={() => {
                   alert('Withdrawal request submitted. Expected settlement to linked bank in 24 hours.');
                 }}
-                className="w-full px-4 py-2 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider hover:bg-emerald-800 cursor-pointer"
+                className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Withdraw Funds
               </button>

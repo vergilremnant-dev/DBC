@@ -308,19 +308,21 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
           <form onSubmit={handleVerifySubmit} className="space-y-3.5 pt-2">
             {/* OTP input */}
             <div>
-              <label htmlFor="reg-otp" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
+              <label htmlFor="reg-otp" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5 text-center">
                 Verification Code
               </label>
               <input
                 id="reg-otp"
                 type="text"
                 name="otp"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 maxLength={6}
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                placeholder="000000"
+                placeholder="· · · · · ·"
                 required
-                className="dbc-input text-xs placeholder:text-stone-400 tracking-widest text-center font-bold"
+                className="dbc-input text-2xl font-mono tracking-[0.75em] text-center py-2.5 placeholder:text-stone-300 select-all"
               />
             </div>
 

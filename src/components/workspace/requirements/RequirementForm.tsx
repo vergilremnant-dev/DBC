@@ -133,7 +133,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g. Modern Villa Design Layout, Tiles Repair"
-                className="w-full text-xs border border-stone-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                className="dbc-input"
                 required
               />
             </div>
@@ -145,7 +145,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 onChange={handleChange}
                 rows={4}
                 placeholder="Describe your project size, timelines, specifications, and files required..."
-                className="w-full text-xs border border-stone-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                className="dbc-input"
                 required
               />
             </div>
@@ -162,7 +162,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full text-xs border border-stone-200 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                className="dbc-input bg-white"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -190,7 +190,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                   value={formData.budgetMin}
                   onChange={handleChange}
                   min={1000}
-                  className="w-full text-xs border border-stone-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                  className="dbc-input"
                 />
               </div>
               <div className="space-y-1.5">
@@ -201,7 +201,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                   value={formData.budgetMax}
                   onChange={handleChange}
                   min={formData.budgetMin}
-                  className="w-full text-xs border border-stone-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                  className="dbc-input"
                 />
               </div>
             </div>
@@ -223,7 +223,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="w-full text-xs border border-stone-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                  className="dbc-input"
                 />
               </div>
               <div className="col-span-2 space-y-1.5">
@@ -234,7 +234,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                   value={formData.address}
                   onChange={handleChange}
                   placeholder="e.g. Plot 404, Banjara Hills, Hyderabad"
-                  className="w-full text-xs border border-stone-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -268,14 +268,14 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
           <div className="flex gap-2">
             <button
               onClick={onCancel}
-              className="bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700"
             >
               Cancel
             </button>
             {step === 5 && (
               <button
                 onClick={() => handleFinalSubmit('Draft')}
-                className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider"
+                className="dbc-btn dbc-btn-md dbc-btn-secondary bg-emerald-50 hover:bg-emerald-100 border border-emerald-250 text-emerald-800"
               >
                 Save Draft
               </button>
@@ -286,7 +286,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
             {step > 1 && (
               <button
                 onClick={prevStep}
-                className="bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider"
+                className="dbc-btn dbc-btn-md dbc-btn-secondary bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700"
               >
                 Back
               </button>
@@ -296,14 +296,14 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
               <button
                 onClick={nextStep}
                 disabled={step === 1 && !formData.title.trim()}
-                className="bg-stone-900 hover:bg-stone-850 disabled:opacity-50 text-white font-bold text-[10px] px-4 py-2.5 rounded-xl transition uppercase tracking-wider"
+                className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Continue
               </button>
             ) : (
               <button
                 onClick={() => handleFinalSubmit('Open')}
-                className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[10px] px-4 py-2.5 rounded-xl transition uppercase tracking-wider shadow-sm"
+                className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Publish Requirement
               </button>

@@ -53,7 +53,7 @@ function ToggleField({
   );
 }
 
-const inputCls = "text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl px-3 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition w-24";
+const inputCls = "dbc-input text-xs w-24";
 
 export default function SecuritySettings({ values, onChange }: SecuritySettingsProps) {
   return (

@@ -14,7 +14,7 @@ export default function VerificationSearch({ value, onChange }: VerificationSear
         placeholder="Search verification requests by applicant name, business name, verification ID, email, or registration number..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-stone-50 border border-stone-200 focus:border-brand-emerald focus:ring-1 focus:ring-brand-emerald rounded-xl py-2 pl-9 pr-4 text-xs font-semibold text-stone-850 placeholder-stone-400 focus:outline-none transition-colors"
+        className="dbc-input pl-9 text-xs"
         aria-label="Search verification center backlog"
       />
     </div>

@@ -270,13 +270,13 @@ export function AdminAnalyticsDashboard() {
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="text-[10px] font-bold text-stone-500 hover:text-stone-850 px-2 py-1"
+                className="dbc-btn dbc-btn-sm dbc-btn-ghost"
               >
                 Clear Filters
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-stone-900 hover:bg-stone-850 px-4 py-1.5 text-[10px] font-bold text-white transition cursor-pointer"
+                className="dbc-btn dbc-btn-sm dbc-btn-primary"
               >
                 Apply Filters
               </button>
@@ -290,7 +290,7 @@ export function AdminAnalyticsDashboard() {
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full rounded-lg border border-stone-200 px-3 py-1.5 focus:outline-none"
+                className="dbc-input"
               />
             </div>
             <div>
@@ -299,7 +299,7 @@ export function AdminAnalyticsDashboard() {
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full rounded-lg border border-stone-200 px-3 py-1.5 focus:outline-none"
+                className="dbc-input"
               />
             </div>
             <div>
@@ -309,7 +309,7 @@ export function AdminAnalyticsDashboard() {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 placeholder="e.g. Hyderabad"
-                className="w-full rounded-lg border border-stone-200 px-3 py-1.5 focus:outline-none"
+                className="dbc-input"
               />
             </div>
             <div>
@@ -317,7 +317,7 @@ export function AdminAnalyticsDashboard() {
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="w-full rounded-lg border border-stone-200 px-3 py-1.5 focus:outline-none bg-white"
+                className="dbc-input bg-white"
               >
                 <option value="">All categories</option>
                 {categories.map((cat) => (

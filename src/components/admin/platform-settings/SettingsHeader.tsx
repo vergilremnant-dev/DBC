@@ -29,7 +29,7 @@ export default function SettingsHeader({ onSave, onReset, isSaving, hasUnsavedCh
         <button
           onClick={onReset}
           disabled={isSaving}
-          className="px-3.5 py-2 border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 rounded-xl transition flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald disabled:opacity-50 disabled:cursor-not-allowed"
+          className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           aria-label="Reset settings to last saved state"
         >
           ↺ Reset Changes
@@ -37,7 +37,7 @@ export default function SettingsHeader({ onSave, onReset, isSaving, hasUnsavedCh
         <button
           onClick={onSave}
           disabled={isSaving}
-          className="px-4 py-2 bg-brand-emerald text-white rounded-xl hover:bg-brand-emerald/90 transition flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald disabled:opacity-60 disabled:cursor-not-allowed font-bold text-xs"
+          className="dbc-btn dbc-btn-md dbc-btn-primary"
           aria-label="Save all platform settings"
         >
           {isSaving ? (

@@ -47,7 +47,7 @@ export default function MarketplaceFilters({
           <select
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">All Statuses</option>
             <option value="Open">Open</option>
@@ -66,7 +66,7 @@ export default function MarketplaceFilters({
           <select
             value={filters.category}
             onChange={(e) => handleChange('category', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">All Categories</option>
             {categories.map((cat) => (
@@ -85,7 +85,7 @@ export default function MarketplaceFilters({
           <select
             value={filters.budgetRange}
             onChange={(e) => handleChange('budgetRange', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">All Budgets</option>
             <option value="UNDER_50K">Under ₹50,000</option>
@@ -102,7 +102,7 @@ export default function MarketplaceFilters({
           <select
             value={filters.propertyType}
             onChange={(e) => handleChange('propertyType', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">All Properties</option>
             <option value="Residential">Residential</option>
@@ -119,7 +119,7 @@ export default function MarketplaceFilters({
           <select
             value={filters.postedDate}
             onChange={(e) => handleChange('postedDate', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-700 font-semibold"
           >
             <option value="ALL">Anytime</option>
             <option value="TODAY">Posted Today</option>
@@ -138,7 +138,7 @@ export default function MarketplaceFilters({
             placeholder="e.g. Hyderabad..."
             value={filters.location}
             onChange={(e) => handleChange('location', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none focus:border-brand-emerald"
+            className="dbc-input text-stone-750 font-semibold"
           />
         </div>
       </div>

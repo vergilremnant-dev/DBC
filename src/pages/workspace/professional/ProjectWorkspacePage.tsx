@@ -169,13 +169,13 @@ export default function ProjectWorkspacePage() {
         <div className="flex flex-wrap gap-2 text-xs shrink-0">
           <button
             onClick={() => setShowProgressModal(true)}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black uppercase tracking-wider transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             Update Progress
           </button>
           <button
             onClick={handleUploadDoc}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-750 hover:bg-stone-50 rounded-xl font-bold transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 text-stone-750 hover:bg-stone-50"
           >
             Upload Document
           </button>
@@ -264,13 +264,13 @@ export default function ProjectWorkspacePage() {
                   placeholder="Task Name..."
                   value={newTaskName}
                   onChange={e => setNewTaskName(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
                 <select
                   value={newTaskAssigned}
                   onChange={e => setNewTaskAssigned(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700"
+                  className="dbc-input bg-white"
                 >
                   <option value="John Anderson">John Anderson</option>
                   <option value="Vikram Singh">Vikram Singh</option>
@@ -278,7 +278,7 @@ export default function ProjectWorkspacePage() {
               </div>
               <button
                 type="submit"
-                className="px-3.5 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-[9px] font-black uppercase tracking-wider rounded-xl transition"
+                className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Add Task
               </button>

@@ -162,7 +162,7 @@ export default function UserDetailsPanel({
           {user.status !== 'Active' ? (
             <button
               onClick={() => onStatusChange(user.id, 'Active')}
-              className="w-full py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition cursor-pointer text-center focus:outline-none"
+              className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Reactivate / Activate Account
             </button>
@@ -171,14 +171,14 @@ export default function UserDetailsPanel({
               <button
                 onClick={handleDeactivate}
                 disabled={isSelf}
-                className="flex-1 py-2 border border-stone-200 bg-white hover:bg-stone-50 disabled:opacity-40 disabled:pointer-events-none text-stone-700 rounded-xl text-[9.5px] font-bold uppercase transition cursor-pointer text-center focus:outline-none"
+                className="flex-1 dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Deactivate
               </button>
               <button
                 onClick={handleSuspend}
                 disabled={isSelf}
-                className="flex-1 py-2 bg-rose-50 border border-rose-200 hover:bg-rose-100 disabled:opacity-40 disabled:pointer-events-none text-rose-700 rounded-xl text-[9.5px] font-bold uppercase transition cursor-pointer text-center focus:outline-none"
+                className="flex-1 dbc-btn dbc-btn-md dbc-btn-danger"
               >
                 Suspend
               </button>
@@ -189,13 +189,13 @@ export default function UserDetailsPanel({
             <div className="flex gap-2">
               <button
                 onClick={() => onApprove(user.id, user.name)}
-                className="flex-1 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl text-[9.5px] font-black uppercase tracking-wider transition cursor-pointer text-center focus:outline-none"
+                className="flex-1 dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Approve Verify
               </button>
               <button
                 onClick={() => onReject(user.id, user.name)}
-                className="flex-1 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-[9.5px] font-bold uppercase transition cursor-pointer text-center focus:outline-none"
+                className="flex-1 dbc-btn dbc-btn-md dbc-btn-danger bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-700"
               >
                 Decline Request
               </button>
@@ -204,14 +204,14 @@ export default function UserDetailsPanel({
 
           <button
             onClick={() => alert(`Password reset coordinates link generated for: ${user.email}`)}
-            className="w-full py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-[9.5px] font-bold uppercase transition cursor-pointer text-center focus:outline-none"
+            className="w-full dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             Reset password link
           </button>
           
           <button
             onClick={() => alert('Opening public provider catalog page preview...')}
-            className="w-full py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-[9.5px] font-bold uppercase transition cursor-pointer text-center focus:outline-none"
+            className="w-full dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             View Public Profile Preview &rarr;
           </button>

@@ -39,27 +39,27 @@ export default function MarketplaceQuickActions({
       <div className="grid gap-2 grid-cols-2 text-[9px] font-black uppercase tracking-wider text-center">
         <button
           onClick={() => onSelectRequirement(requirement)}
-          className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-800 font-extrabold transition focus:outline-none"
+          className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
         >
           🔍 Inspect Details
         </button>
         <button
           onClick={onShowReportedOnly}
-          className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-800 font-extrabold transition focus:outline-none"
+          className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
         >
           🚨 Review Reports
         </button>
         {requirement.status === 'Hidden' ? (
           <button
-            onClick={() => alert(`Please use Details drawer to unhide and publish.`)}
-            className="p-2.5 bg-stone-50 disabled:opacity-50 border border-light-border rounded-xl text-stone-400 font-extrabold transition focus:outline-none"
+            disabled
+            className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary border border-light-border opacity-50 cursor-not-allowed"
           >
             ✓ Hidden Status
           </button>
         ) : (
           <button
             onClick={() => onHide(requirement.id, requirement.title)}
-            className="p-2.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-extrabold transition focus:outline-none"
+            className="w-full dbc-btn dbc-btn-sm dbc-btn-danger border border-rose-200 hover:bg-rose-100"
           >
             🛑 Hide Listing
           </button>
@@ -67,21 +67,21 @@ export default function MarketplaceQuickActions({
         {requirement.status === 'Closed' ? (
           <button
             onClick={() => onReopen(requirement.id, requirement.title)}
-            className="p-2.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-250 text-emerald-800 font-extrabold transition focus:outline-none"
+            className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary text-emerald-800 bg-emerald-50 border border-emerald-250 hover:bg-emerald-100"
           >
             🔓 Reopen Listing
           </button>
         ) : (
           <button
             onClick={() => onCloseRequirement(requirement.id, requirement.title)}
-            className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-800 font-extrabold transition focus:outline-none"
+            className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
           >
             🔒 Close Listing
           </button>
         )}
         <button
           onClick={() => alert(`Opening customer account info profile: ${requirement.customerName}`)}
-          className="col-span-2 p-2.5 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-800 font-extrabold transition focus:outline-none"
+          className="col-span-2 w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
         >
           👤 View Customer Profile
         </button>

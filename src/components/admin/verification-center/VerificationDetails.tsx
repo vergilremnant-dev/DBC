@@ -127,11 +127,11 @@ export default function VerificationDetails({
             value={internalNotes}
             onChange={(e) => setInternalNotes(e.target.value)}
             placeholder="Add compliance notes, document validation checklists, structural checks records..."
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl p-3 text-[10px] font-semibold text-stone-800 placeholder-stone-400 focus:outline-none focus:border-brand-emerald min-h-[80px]"
+            className="dbc-input text-[10px] min-h-[80px]"
           />
           <button
             onClick={handleSaveNotesClick}
-            className="w-full py-1.5 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg text-[9px] font-black text-stone-700 uppercase tracking-wider transition text-center focus:outline-none"
+            className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
           >
             Save Internal Review Notes
           </button>
@@ -144,18 +144,18 @@ export default function VerificationDetails({
           Compliance Command Actions
         </span>
 
-        <div className="flex flex-col gap-2 text-[9px] font-black uppercase tracking-wider text-center">
+        <div className="flex flex-col gap-2">
           {request.status === 'Pending' && (
             <div className="flex gap-2">
               <button
                 onClick={() => onApprove(request.id, request.name)}
-                className="flex-1 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl transition text-center focus:outline-none"
+                className="flex-1 dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Approve Verify
               </button>
               <button
                 onClick={() => onReject(request.id, request.name)}
-                className="flex-1 py-2 bg-rose-50 hover:bg-rose-100 text-rose-750 border border-rose-200 rounded-xl transition text-center focus:outline-none"
+                className="flex-1 dbc-btn dbc-btn-md dbc-btn-danger"
               >
                 Reject Verify
               </button>
@@ -165,7 +165,7 @@ export default function VerificationDetails({
           {request.status !== 'Approved' && (
             <button
               onClick={() => onRequestInfo(request.id, request.name)}
-              className="w-full py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 rounded-xl transition text-center focus:outline-none"
+              className="w-full dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Request Additional Documents
             </button>
@@ -173,7 +173,7 @@ export default function VerificationDetails({
 
           <button
             onClick={() => alert(`Opening public applicant profile catalog preview for: ${request.name}`)}
-            className="w-full py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 rounded-xl transition text-center focus:outline-none"
+            className="w-full dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             View Public Profile &rarr;
           </button>

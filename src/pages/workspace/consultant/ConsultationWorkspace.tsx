@@ -189,20 +189,20 @@ export default function ConsultationWorkspace() {
             <button
               onClick={() => setStatus('In Progress')}
               disabled={status === 'In Progress' || status === 'Completed'}
-              className="px-4 py-2 bg-brand-emerald hover:bg-emerald-800 disabled:opacity-40 disabled:pointer-events-none text-white rounded-xl text-xs font-black uppercase tracking-wider transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Start Consultation
             </button>
             <button
               onClick={() => setStatus('Completed')}
               disabled={status === 'Completed'}
-              className="px-4 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 disabled:opacity-40 disabled:pointer-events-none rounded-xl text-xs font-bold transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Complete Consultation
             </button>
             <button
               onClick={() => navigate('/workspace/leads')}
-              className="px-4 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Exit Workspace
             </button>
@@ -361,14 +361,14 @@ export default function ConsultationWorkspace() {
                     placeholder="Search within notes..."
                     value={notesSearch}
                     onChange={e => setNotesSearch(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700 focus:outline-none focus:border-brand-emerald/40 transition"
+                    className="dbc-input text-xs"
                   />
                 </div>
                 <textarea
                   value={notes}
                   onChange={e => setNotes(e.target.value)}
                   placeholder="Draft structured advice here..."
-                  className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-4 text-xs font-mono text-stone-850 h-48 focus:outline-none focus:border-brand-emerald/40 transition resize-none"
+                  className="dbc-input font-mono h-48 resize-none"
                 />
               </div>
             )}
@@ -391,7 +391,7 @@ export default function ConsultationWorkspace() {
                     <select
                       value={newRecCategory}
                       onChange={e => setNewRecCategory(e.target.value)}
-                      className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700 cursor-pointer"
+                      className="dbc-input bg-white py-1.5 px-3"
                     >
                       <option value="Design Suggestion">Design Suggestion</option>
                       <option value="Material Suggestion">Material Suggestion</option>
@@ -402,11 +402,11 @@ export default function ConsultationWorkspace() {
                       placeholder="e.g. Relocate kitchen entryway..."
                       value={newRecommendation}
                       onChange={e => setNewRecommendation(e.target.value)}
-                      className="col-span-2 bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850"
+                      className="col-span-2 dbc-input"
                       required
                     />
                   </div>
-                  <button type="submit" className="px-4 py-2 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer">
+                  <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary">
                     Add Advice
                   </button>
                 </form>
@@ -420,7 +420,7 @@ export default function ConsultationWorkspace() {
                   <span className="text-[10px] text-stone-400 font-bold uppercase">{documents.length} Attachments</span>
                   <button
                     onClick={handleFileUpload}
-                    className="px-3.5 py-1.5 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition cursor-pointer"
+                    className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
                   >
                     Upload Document
                   </button>
@@ -472,7 +472,7 @@ export default function ConsultationWorkspace() {
                   value={privateNotes}
                   onChange={e => setPrivateNotes(e.target.value)}
                   placeholder="Write internal review thoughts..."
-                  className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-4 text-xs font-medium text-stone-850 h-32 focus:outline-none focus:border-brand-emerald/40 transition resize-none"
+                  className="dbc-input h-32 resize-none"
                 />
               </div>
             )}
@@ -494,7 +494,7 @@ export default function ConsultationWorkspace() {
                         type="checkbox"
                         checked={item.completed}
                         onChange={() => toggleChecklist(item.id)}
-                        className="rounded border-stone-300 text-brand-emerald focus:ring-brand-emerald cursor-pointer"
+                        className="dbc-checkbox"
                       />
                       <span className={item.completed ? 'line-through text-stone-400' : ''}>{item.label}</span>
                     </label>

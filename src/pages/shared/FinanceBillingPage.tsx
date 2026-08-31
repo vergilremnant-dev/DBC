@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { LogoutButton } from '../../components/auth/LogoutButton';
 import { BrandLogo } from '../../components/common/BrandLogo';
 import ConsultantFinancePage from '../workspace/consultant/ConsultantFinancePage';
+import { PaymentCheckoutModal } from '../../components/workspace/payments/PaymentCheckoutModal';
 
 type FinanceTab = 'dashboard' | 'estimates' | 'invoices' | 'expenses' | 'refunds';
 
@@ -83,6 +84,10 @@ export function FinanceBillingPage() {
   const [invoices, setInvoices] = useState<InvoiceRecord[]>(INITIAL_INVOICES);
   const [expenses, setExpenses] = useState<ExpenseRecord[]>(INITIAL_EXPENSES);
   const [refunds, setRefunds] = useState<RefundRequest[]>(INITIAL_REFUNDS);
+
+  // Interactive Payment modal states
+  const [isPayModalOpen, setIsPayModalOpen] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceRecord | null>(null);
 
   // Estimate composer variables
   const [estName, setEstName] = useState('');
@@ -208,11 +213,17 @@ export function FinanceBillingPage() {
   };
 
   // Resolve invoice state override
-  const handlePayInvoice = (id: string) => {
-    setInvoices(prev =>
-      prev.map(inv => (inv.id === id ? { ...inv, status: 'Paid' } : inv))
-    );
-    alert('Invoice paid successfully. Receipts generated.');
+  const handlePayInvoice = (inv: InvoiceRecord) => {
+    setSelectedInvoice(inv);
+    setIsPayModalOpen(true);
+  };
+
+  const handlePaySuccess = () => {
+    if (selectedInvoice) {
+      setInvoices(prev =>
+        prev.map(inv => (inv.id === selectedInvoice.id ? { ...inv, status: 'Paid' } : inv))
+      );
+    }
   };
 
   if (currentUserRole === 'PROVIDER' && workspaceView === 'CONSULTANT') {
@@ -458,7 +469,7 @@ export function FinanceBillingPage() {
                           <td className="text-right">
                             {inv.status === 'Sent' && currentUserRole === 'CUSTOMER' ? (
                               <button
-                                onClick={() => handlePayInvoice(inv.id)}
+                                onClick={() => handlePayInvoice(inv)}
                                 className="dbc-btn dbc-btn-primary py-1 px-3 text-[9px] font-bold uppercase cursor-pointer"
                               >
                                 Pay Invoice
@@ -675,6 +686,16 @@ export function FinanceBillingPage() {
         )}
 
       </main>
+
+      {selectedInvoice && (
+        <PaymentCheckoutModal
+          isOpen={isPayModalOpen}
+          onClose={() => setIsPayModalOpen(false)}
+          onSuccess={handlePaySuccess}
+          amount={selectedInvoice.amount}
+          milestoneName={selectedInvoice.milestone}
+        />
+      )}
     </div>
   );
 }

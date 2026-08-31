@@ -231,7 +231,7 @@ export default function MessagesCommunicationCenter() {
         <div className="flex gap-2 text-xs">
           <button
             onClick={handleMarkAllRead}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl font-bold transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             Mark All Read
           </button>
@@ -245,7 +245,7 @@ export default function MessagesCommunicationCenter() {
                 ]);
               }
             }}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black uppercase tracking-wider transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             New Conversation
           </button>
@@ -280,7 +280,7 @@ export default function MessagesCommunicationCenter() {
             placeholder="Search discussions..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 focus:border-brand-emerald/40 rounded-xl py-1.5 px-3 text-xs text-stone-800"
+            className="dbc-input text-xs"
           />
 
           <div className="flex gap-1 border-b border-light-border pb-2 text-[9.5px] font-black uppercase tracking-wider">
@@ -345,7 +345,7 @@ export default function MessagesCommunicationCenter() {
                 </div>
                 <button
                   onClick={() => alert(`Voice session coordinator initialized.`)}
-                  className="px-3 py-1.5 bg-white border border-stone-200 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-50 cursor-pointer"
+                  className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
                 >
                   📞 Voice Call
                 </button>
@@ -418,7 +418,7 @@ export default function MessagesCommunicationCenter() {
                   <button
                     type="button"
                     onClick={handleAttachFile}
-                    className="p-2.5 border border-stone-200 bg-white hover:bg-stone-50 rounded-xl text-xs cursor-pointer focus:outline-none"
+                    className="dbc-btn dbc-btn-md dbc-btn-secondary px-3.5 bg-white border border-stone-200 hover:bg-stone-50"
                   >
                     📎
                   </button>
@@ -427,11 +427,11 @@ export default function MessagesCommunicationCenter() {
                     placeholder="Type reply message details..."
                     value={composeText}
                     onChange={e => setComposeText(e.target.value)}
-                    className="flex-1 bg-white border border-stone-200 focus:border-brand-emerald focus:ring-1 focus:ring-brand-emerald rounded-xl px-4 py-2 text-xs text-stone-850 focus:outline-none"
+                    className="flex-1 dbc-input"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer"
+                    className="dbc-btn dbc-btn-md dbc-btn-primary"
                   >
                     Send
                   </button>
@@ -486,7 +486,7 @@ export default function MessagesCommunicationCenter() {
               value={internalNotes}
               onChange={e => setInternalNotes(e.target.value)}
               placeholder="Write chat logs notes here..."
-              className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3 text-xs font-medium text-stone-850 h-24 focus:outline-none focus:border-brand-emerald/40 transition resize-none"
+              className="dbc-input h-24 resize-none"
             />
           </section>
 

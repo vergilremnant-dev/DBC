@@ -156,7 +156,7 @@ export default function ProjectDetails({
         <div className="pt-4 border-t border-light-border">
           <button
             onClick={() => onFlagProject(project.id, project.name)}
-            className="w-full py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-250 rounded-xl text-[9px] font-black uppercase tracking-wider transition text-center focus:outline-none"
+            className="w-full dbc-btn dbc-btn-md dbc-btn-danger border border-rose-200 hover:bg-rose-100"
           >
             ⚠️ Flag Project for Admin Review
           </button>

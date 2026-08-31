@@ -439,7 +439,7 @@ export default function RequirementMarketplace() {
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-2.5 py-1 bg-white border border-stone-200 rounded hover:bg-stone-50 disabled:opacity-50"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Prev
             </button>
@@ -447,8 +447,8 @@ export default function RequirementMarketplace() {
               <button
                 key={idx}
                 onClick={() => setCurrentPage(idx + 1)}
-                className={`px-2.5 py-1 rounded transition ${
-                  currentPage === idx + 1 ? 'bg-stone-black text-white' : 'bg-white border border-stone-200 hover:bg-stone-50'
+                className={`dbc-btn dbc-btn-sm ${
+                  currentPage === idx + 1 ? 'dbc-btn-primary' : 'dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50'
                 }`}
               >
                 {idx + 1}
@@ -457,7 +457,7 @@ export default function RequirementMarketplace() {
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-2.5 py-1 bg-white border border-stone-200 rounded hover:bg-stone-50 disabled:opacity-50"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Next
             </button>

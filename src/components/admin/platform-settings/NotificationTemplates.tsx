@@ -28,7 +28,7 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { label, icon } = TEMPLATE_LABELS[template.key];
 
-  const inputCls = "w-full text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl px-3 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition";
+  const inputCls = "dbc-input text-xs";
 
   return (
     <div className="border border-light-border rounded-2xl overflow-hidden">

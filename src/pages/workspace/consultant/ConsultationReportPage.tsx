@@ -211,26 +211,26 @@ export default function ConsultationReportPage() {
               onClick={() => {
                 alert('Draft report changes saved.');
               }}
-              className="px-4 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Save Draft
             </button>
             <button
               onClick={handlePublish}
               disabled={status === 'Published'}
-              className="px-4 py-2 bg-brand-emerald hover:bg-emerald-800 disabled:opacity-50 disabled:pointer-events-none text-white rounded-xl text-xs font-black uppercase tracking-wider transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Publish Report
             </button>
             <button
               onClick={() => alert('PDF generation scheduled. Report layout catalog download placeholder.')}
-              className="px-4 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Download PDF
             </button>
             <button
               onClick={() => navigate(-1)}
-              className="px-4 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Exit Editor
             </button>
@@ -255,7 +255,7 @@ export default function ConsultationReportPage() {
                   <textarea
                     value={sec.content}
                     onChange={e => handleUpdateSection(sec.id, e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-4 text-xs font-medium text-stone-850 h-28 focus:outline-none focus:border-brand-emerald/40 transition resize-none"
+                    className="dbc-input h-28 resize-none"
                   />
                 </div>
               ))}
@@ -281,7 +281,7 @@ export default function ConsultationReportPage() {
                 <select
                   value={newDesignCat}
                   onChange={e => setNewDesignCat(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700 cursor-pointer"
+                  className="dbc-input bg-white py-1.5 px-3"
                 >
                   <option value="Space Optimization">Space Optimization</option>
                   <option value="Layout Suggestions">Layout Suggestions</option>
@@ -293,11 +293,11 @@ export default function ConsultationReportPage() {
                   placeholder="e.g. Expand laundry corridor offsets..."
                   value={newDesignText}
                   onChange={e => setNewDesignText(e.target.value)}
-                  className="col-span-2 bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850"
+                  className="col-span-2 dbc-input"
                   required
                 />
               </div>
-              <button type="submit" className="px-4 py-2 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer">
+              <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary">
                 Add Design Recommendation
               </button>
             </form>
@@ -329,13 +329,13 @@ export default function ConsultationReportPage() {
                   placeholder="Material name..."
                   value={newMatName}
                   onChange={e => setNewMatName(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850"
+                  className="dbc-input"
                   required
                 />
                 <select
                   value={newMatTier}
                   onChange={e => setNewMatTier(e.target.value as 'Premium' | 'Balanced' | 'Budget' | 'Eco-Friendly')}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700 cursor-pointer"
+                  className="dbc-input bg-white py-1.5 px-3"
                 >
                   <option value="Premium">Premium</option>
                   <option value="Balanced">Balanced</option>
@@ -347,10 +347,11 @@ export default function ConsultationReportPage() {
                   placeholder="Usage description..."
                   value={newMatDesc}
                   onChange={e => setNewMatDesc(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850"
+                  className="dbc-input"
+                  required
                 />
               </div>
-              <button type="submit" className="px-4 py-2 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer">
+              <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary">
                 Add Material
               </button>
             </form>
@@ -415,7 +416,7 @@ export default function ConsultationReportPage() {
           </section>
 
           {/* Budget Analysis Card */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
+          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm">
             <div>
               <h2 className="text-sm font-black text-stone-900">Budget Analysis</h2>
               <p className="text-[11px] text-stone-450 font-medium">Estimate review parameters</p>
@@ -428,7 +429,7 @@ export default function ConsultationReportPage() {
                     type="text"
                     value={estBudget}
                     onChange={e => setEstBudget(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850 font-black"
+                    className="dbc-input font-black"
                   />
                 </div>
                 <div>
@@ -437,7 +438,7 @@ export default function ConsultationReportPage() {
                     type="text"
                     value={suggestedSavings}
                     onChange={e => setSuggestedSavings(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850 font-black text-brand-emerald"
+                    className="dbc-input font-black text-brand-emerald"
                   />
                 </div>
               </div>
@@ -447,7 +448,7 @@ export default function ConsultationReportPage() {
                   type="text"
                   value={costBreakdown}
                   onChange={e => setCostBreakdown(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-750 font-semibold"
+                  className="dbc-input font-semibold"
                 />
               </div>
             </div>
@@ -484,14 +485,14 @@ export default function ConsultationReportPage() {
                 placeholder="Register new risk..."
                 value={newRiskText}
                 onChange={e => setNewRiskText(e.target.value)}
-                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850"
+                className="dbc-input"
                 required
               />
               <div className="grid grid-cols-2 gap-2">
                 <select
                   value={newRiskSev}
                   onChange={e => setNewRiskSev(e.target.value as 'High' | 'Medium' | 'Low')}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700 cursor-pointer"
+                  className="dbc-input bg-white py-1.5 px-3"
                 >
                   <option value="High">High</option>
                   <option value="Medium">Medium</option>
@@ -502,11 +503,11 @@ export default function ConsultationReportPage() {
                   placeholder="Mitigation strategy..."
                   value={newRiskMit}
                   onChange={e => setNewRiskMit(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
-              <button type="submit" className="w-full px-4 py-2 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer">
+              <button type="submit" className="w-full dbc-btn dbc-btn-md dbc-btn-primary">
                 Add Risk mitigation
               </button>
             </form>

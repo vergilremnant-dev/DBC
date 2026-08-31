@@ -9,6 +9,7 @@ import { SectionHeader } from '../../components/workspace/SectionHeader';
 import { bookingApi } from '../../services/booking/bookingService';
 import { subscriptionApi } from '../../services/subscription/subscriptionService';
 import type { UserSubscription } from '../../types/subscription/subscriptionTypes';
+import { PaymentCheckoutModal } from '../../components/workspace/payments/PaymentCheckoutModal';
 
 // Custom tab type for Customer Dashboard subsections
 type DashboardTab = 'dashboard' | 'projects' | 'documents' | 'payments' | 'activity';
@@ -78,6 +79,19 @@ export default function WorkspaceOverview() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<DashboardTab>('dashboard');
   const [selectedDocCategory, setSelectedDocCategory] = useState('ALL');
+
+  // Interactive Payment states
+  const [payments, setPayments] = useState(MOCK_PAYMENTS);
+  const [isPayModalOpen, setIsPayModalOpen] = useState(false);
+  const [selectedPayItem, setSelectedPayItem] = useState<(typeof MOCK_PAYMENTS)[0] | null>(null);
+
+  const handlePaymentSuccess = () => {
+    if (selectedPayItem) {
+      setPayments(prev =>
+        prev.map(p => (p.id === selectedPayItem.id ? { ...p, status: 'Paid', date: `Paid ${new Date().toLocaleDateString('en-IN')}` } : p))
+      );
+    }
+  };
 
   const [requirements, setRequirements] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
@@ -173,19 +187,25 @@ export default function WorkspaceOverview() {
           {/* ACTION CENTER */}
           <div className="space-y-3">
             <h3 className="text-[10px] font-black uppercase tracking-wider text-stone-400">Action Required</h3>
-            {MOCK_PAYMENTS.filter(p => p.status === 'Pending').length > 0 ? (
+            {payments.filter(p => p.status === 'Pending').length > 0 ? (
               <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left">
                 <div className="flex items-start sm:items-center gap-3">
                   <span className="text-xl">⚠️</span>
                   <div>
                     <h4 className="text-xs font-black text-amber-900 uppercase tracking-wide">Milestone Payment Pending</h4>
                     <p className="text-[10.5px] text-amber-700 font-semibold mt-0.5">
-                      Release funds for "{MOCK_PAYMENTS.find(p => p.status === 'Pending')?.milestone}" to proceed with structural work.
+                      Release funds for "{payments.find(p => p.status === 'Pending')?.milestone}" to proceed with structural work.
                     </p>
                   </div>
                 </div>
                 <button
-                  onClick={() => setActiveTab('payments')}
+                  onClick={() => {
+                    const item = payments.find(p => p.status === 'Pending');
+                    if (item) {
+                      setSelectedPayItem(item);
+                      setIsPayModalOpen(true);
+                    }
+                  }}
                   className="dbc-btn dbc-btn-md dbc-btn-primary bg-amber-800 hover:bg-amber-900 text-white border-none"
                 >
                   Release Funds
@@ -260,7 +280,7 @@ export default function WorkspaceOverview() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <StatCard title="Active Projects" value={MOCK_PROJECTS.length} icon="🏗️" label="In progress" />
             <StatCard title="Open Bids" value={requirements.length} icon="📋" label="Bidding active" />
-            <StatCard title="Pending Payments" value={MOCK_PAYMENTS.filter(p => p.status === 'Pending').length} icon="💳" label="Action required" />
+            <StatCard title="Pending Payments" value={payments.filter(p => p.status === 'Pending').length} icon="💳" label="Action required" />
             <StatCard title="Blueprints File" value={MOCK_DOCUMENTS.length} icon="📁" label="Uploaded docs" />
           </div>
 
@@ -331,7 +351,11 @@ export default function WorkspaceOverview() {
           
           <div className="grid gap-6 sm:grid-cols-2">
             {MOCK_PROJECTS.map((p) => (
-              <div key={p.id} className="dbc-card overflow-hidden flex flex-col justify-between p-0 border border-light-border">
+              <div
+                key={p.id}
+                onClick={() => navigate(`/projects/${p.id}`)}
+                className="dbc-card overflow-hidden flex flex-col justify-between p-0 border border-light-border cursor-pointer transition hover:shadow-md"
+              >
                 <div className="h-44 relative bg-light-stone">
                   <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
                   <div className="absolute bottom-3 left-3 bg-stone-900/80 backdrop-blur-sm text-white text-[8.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded border border-stone-850">
@@ -456,11 +480,15 @@ export default function WorkspaceOverview() {
             </div>
             <div className="dbc-card text-center p-5">
               <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Paid Amount</span>
-              <h3 className="text-base font-extrabold text-brand-emerald mt-1">₹15,000</h3>
+              <h3 className="text-base font-extrabold text-brand-emerald mt-1">
+                ₹{payments.filter(p => p.status === 'Paid').reduce((acc, curr) => acc + curr.amount, 0).toLocaleString()}
+              </h3>
             </div>
             <div className="dbc-card text-center p-5">
               <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Pending Release</span>
-              <h3 className="text-base font-extrabold text-amber-700 mt-1">₹25,000</h3>
+              <h3 className="text-base font-extrabold text-amber-700 mt-1">
+                ₹{payments.filter(p => p.status === 'Pending').reduce((acc, curr) => acc + curr.amount, 0).toLocaleString()}
+              </h3>
             </div>
           </div>
 
@@ -477,7 +505,7 @@ export default function WorkspaceOverview() {
                 </tr>
               </thead>
               <tbody>
-                {MOCK_PAYMENTS.map((pay) => (
+                {payments.map((pay) => (
                   <tr key={pay.id}>
                     <td className="font-semibold text-stone-black">{pay.invoiceId}</td>
                     <td>{pay.milestone}</td>
@@ -493,7 +521,10 @@ export default function WorkspaceOverview() {
                     <td className="text-right">
                       {pay.status === 'Pending' ? (
                         <button
-                          onClick={() => alert('Mock payment gateway checkout session initiated.')}
+                          onClick={() => {
+                            setSelectedPayItem(pay);
+                            setIsPayModalOpen(true);
+                          }}
                           className="dbc-btn dbc-btn-sm dbc-btn-primary"
                         >
                           Release Funds
@@ -521,6 +552,16 @@ export default function WorkspaceOverview() {
           <SectionHeader title="Chronological Activity History" subtitle="DBC system and coordinator event logs." />
           <ActivityTimeline activities={MOCK_ACTIVITIES} />
         </div>
+      )}
+
+      {selectedPayItem && (
+        <PaymentCheckoutModal
+          isOpen={isPayModalOpen}
+          onClose={() => setIsPayModalOpen(false)}
+          onSuccess={handlePaymentSuccess}
+          amount={selectedPayItem.amount}
+          milestoneName={selectedPayItem.milestone}
+        />
       )}
 
     </div>

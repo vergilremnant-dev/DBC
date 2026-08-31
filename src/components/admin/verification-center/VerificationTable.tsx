@@ -161,10 +161,10 @@ export default function VerificationTable({
               <span>Submitted: {req.submittedDate}</span>
               <span>Updated: {req.lastUpdated}</span>
             </div>
-            <div className="flex gap-2 justify-end text-[9px] font-black uppercase tracking-wider border-t border-light-border/40 pt-2">
+            <div className="flex gap-2 justify-end">
               <button
                 onClick={() => onSelectRequest(req)}
-                className="px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-700 font-bold focus:outline-none"
+                className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
               >
                 Review
               </button>
@@ -172,13 +172,13 @@ export default function VerificationTable({
                 <>
                   <button
                     onClick={() => onApprove(req.id, req.name)}
-                    className="px-2.5 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg font-black focus:outline-none"
+                    className="dbc-btn dbc-btn-sm dbc-btn-primary"
                   >
                     Approve
                   </button>
                   <button
                     onClick={() => onReject(req.id, req.name)}
-                    className="px-2.5 py-1.5 border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-bold focus:outline-none"
+                    className="dbc-btn dbc-btn-sm dbc-btn-danger"
                   >
                     Reject
                   </button>
@@ -199,14 +199,14 @@ export default function VerificationTable({
             <button
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 border border-stone-200 bg-white disabled:opacity-40 disabled:pointer-events-none hover:bg-stone-50 rounded-xl transition cursor-pointer focus:outline-none"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               &larr; Prev
             </button>
             <button
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 border border-stone-200 bg-white disabled:opacity-40 disabled:pointer-events-none hover:bg-stone-50 rounded-xl transition cursor-pointer focus:outline-none"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Next &rarr;
             </button>

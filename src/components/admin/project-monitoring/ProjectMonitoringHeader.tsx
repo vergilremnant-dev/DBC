@@ -21,14 +21,14 @@ export default function ProjectMonitoringHeader({ onRefresh, onExport }: Project
       <div className="flex gap-2 text-xs font-bold text-stone-700">
         <button
           onClick={onRefresh}
-          className="px-3.5 py-2 border border-stone-200 bg-white hover:bg-stone-50 rounded-xl transition flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald"
+          className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           aria-label="Refresh project monitoring listings"
         >
           🔄 Refresh
         </button>
         <button
           onClick={onExport}
-          className="px-3.5 py-2 border border-stone-200 bg-white hover:bg-stone-50 rounded-xl transition flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald"
+          className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           aria-label="Export project monitoring CSV data"
         >
           📤 Export CSV

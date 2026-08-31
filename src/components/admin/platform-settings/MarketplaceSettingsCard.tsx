@@ -53,7 +53,7 @@ function SelectRow({ id, label, description, value, options, onChange }: SelectR
         id={id}
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl px-3 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition cursor-pointer sm:w-56 shrink-0"
+        className="dbc-input bg-white text-xs cursor-pointer sm:w-56 shrink-0"
       >
         {options.map(o => <option key={o} value={o}>{o}</option>)}
       </select>

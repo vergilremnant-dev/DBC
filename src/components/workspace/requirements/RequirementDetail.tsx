@@ -156,13 +156,13 @@ export function RequirementDetail({
           <div className="flex gap-2 w-full">
             <button
               onClick={onEdit}
-              className="flex-1 bg-stone-900 hover:bg-stone-850 text-white font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-primary flex-1"
             >
               Continue Editing Draft
             </button>
             <button
               onClick={onDelete}
-              className="bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center border border-rose-100 cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-danger bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-100 flex-1"
             >
               Delete Draft
             </button>
@@ -173,20 +173,20 @@ export function RequirementDetail({
           <div className="flex flex-col gap-2 w-full">
             <button
               onClick={() => navigate(`/search?q=${encodeURIComponent(requirement.category)}`)}
-              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-primary w-full"
             >
               Explore Matching Partners
             </button>
             <div className="flex gap-2 w-full">
               <button
                 onClick={onCancel}
-                className="flex-1 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center border border-rose-100 cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-danger bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-100 flex-1"
               >
                 Cancel Requirement
               </button>
               <button
                 onClick={onDuplicate}
-                className="flex-1 bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-secondary bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 flex-1"
               >
                 Duplicate
               </button>
@@ -198,13 +198,13 @@ export function RequirementDetail({
           <div className="flex flex-col gap-2 w-full">
             <button
               onClick={onDuplicate}
-              className="w-full bg-stone-900 hover:bg-stone-850 text-white font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-primary w-full"
             >
               Reopen / Duplicate Specifications
             </button>
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 font-bold text-[10px] px-3.5 py-2.5 rounded-xl transition uppercase tracking-wider text-center cursor-pointer"
+              className="dbc-btn dbc-btn-md dbc-btn-secondary bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 w-full"
             >
               Explore Professionals
             </button>

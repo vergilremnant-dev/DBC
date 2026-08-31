@@ -51,7 +51,7 @@ export default function ProjectFilters({
           <select
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">All Statuses</option>
             <option value="Planning">Planning</option>
@@ -70,7 +70,7 @@ export default function ProjectFilters({
           <select
             value={filters.category}
             onChange={(e) => handleChange('category', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">All Categories</option>
             {categories.map((cat) => (
@@ -89,7 +89,7 @@ export default function ProjectFilters({
           <select
             value={filters.progressRange}
             onChange={(e) => handleChange('progressRange', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-750 font-semibold"
           >
             <option value="ALL">All Percentages</option>
             <option value="0_25">0% - 25%</option>
@@ -107,7 +107,7 @@ export default function ProjectFilters({
           <select
             value={filters.professional}
             onChange={(e) => handleChange('professional', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-755 font-semibold"
           >
             <option value="ALL">All Professionals</option>
             {professionals.map((pro) => (
@@ -126,7 +126,7 @@ export default function ProjectFilters({
           <select
             value={filters.customer}
             onChange={(e) => handleChange('customer', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-755 font-semibold focus:outline-none"
+            className="dbc-input bg-white text-stone-755 font-semibold"
           >
             <option value="ALL">All Customers</option>
             {customers.map((cust) => (
@@ -147,7 +147,7 @@ export default function ProjectFilters({
             placeholder="e.g. Hyderabad..."
             value={filters.location}
             onChange={(e) => handleChange('location', e.target.value)}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none focus:border-brand-emerald"
+            className="dbc-input text-stone-750 font-semibold"
           />
         </div>
       </div>

@@ -1438,7 +1438,7 @@ export function AdminDashboard() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/admin/analytics')}
-              className="text-xs font-bold text-stone-600 hover:text-stone-900 transition bg-light-stone/30 px-3 py-1.5 rounded-xl border border-light-border"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-light-stone/30"
             >
               📊 BI Analytics
             </button>
@@ -1531,7 +1531,7 @@ export function AdminDashboard() {
                     <select
                       value={reportFilters.dateRange}
                       onChange={(e) => setReportFilters({ ...reportFilters, dateRange: e.target.value })}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+                      className="dbc-input bg-white text-stone-755 font-semibold"
                     >
                       <option value="ALL">All Time</option>
                       <option value="TODAY">Today</option>
@@ -1548,7 +1548,7 @@ export function AdminDashboard() {
                     <select
                       value={reportFilters.role}
                       onChange={(e) => setReportFilters({ ...reportFilters, role: e.target.value })}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+                      className="dbc-input bg-white text-stone-755 font-semibold"
                     >
                       <option value="ALL">All Roles</option>
                       <option value="Customer">Customer</option>
@@ -1566,7 +1566,7 @@ export function AdminDashboard() {
                     <select
                       value={reportFilters.category}
                       onChange={(e) => setReportFilters({ ...reportFilters, category: e.target.value })}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+                      className="dbc-input bg-white text-stone-755 font-semibold"
                     >
                       <option value="ALL">All Categories</option>
                       {marketplaceCategories.map(cat => (
@@ -1585,7 +1585,7 @@ export function AdminDashboard() {
                       placeholder="e.g. Hyderabad"
                       value={reportFilters.location}
                       onChange={(e) => setReportFilters({ ...reportFilters, location: e.target.value })}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+                      className="dbc-input text-stone-750 font-semibold"
                     />
                   </div>
 
@@ -1597,7 +1597,7 @@ export function AdminDashboard() {
                     <select
                       value={reportFilters.status}
                       onChange={(e) => setReportFilters({ ...reportFilters, status: e.target.value })}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-750 font-semibold focus:outline-none"
+                      className="dbc-input bg-white text-stone-755 font-semibold"
                     >
                       <option value="ALL">All Statuses</option>
                       <option value="Active">Active</option>

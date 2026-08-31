@@ -43,7 +43,7 @@ function CategoryModal({ item, onSave, onClose }: CategoryModalProps) {
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
-              className="w-full text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl px-3 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition"
+              className="dbc-input text-xs"
               placeholder="e.g. Electrical, Plumbing"
               autoFocus
               maxLength={60}
@@ -55,7 +55,7 @@ function CategoryModal({ item, onSave, onClose }: CategoryModalProps) {
               id="cat-type"
               value={type}
               onChange={e => setType(e.target.value as CategoryItem['type'])}
-              className="w-full text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl px-3 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition cursor-pointer"
+              className="dbc-input bg-white text-xs cursor-pointer"
             >
               <option value="Service">Service Category</option>
               <option value="Project">Project Category</option>
@@ -65,10 +65,10 @@ function CategoryModal({ item, onSave, onClose }: CategoryModalProps) {
           </div>
         </div>
         <div className="flex gap-2 pt-2">
-          <button onClick={onClose} className="flex-1 py-2.5 px-4 border border-light-border bg-white text-stone-600 rounded-xl text-xs font-bold hover:bg-stone-50 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald">
+          <button onClick={onClose} className="flex-1 dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50">
             Cancel
           </button>
-          <button onClick={handleSave} disabled={!name.trim()} className="flex-1 py-2.5 px-4 bg-brand-emerald text-white rounded-xl text-xs font-bold hover:bg-brand-emerald/90 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald disabled:opacity-50 disabled:cursor-not-allowed">
+          <button onClick={handleSave} disabled={!name.trim()} className="flex-1 dbc-btn dbc-btn-sm dbc-btn-primary">
             {item?.id ? 'Save Changes' : 'Add Category'}
           </button>
         </div>
@@ -123,13 +123,13 @@ export default function CategoriesManager({ categories, onChange }: CategoriesMa
                 placeholder="Search categories…"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl pl-8 pr-3 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition"
+                className="dbc-input pl-8 text-xs"
                 aria-label="Search categories"
               />
             </div>
             <button
               onClick={() => setModal({})}
-              className="py-2 px-4 bg-brand-emerald text-white rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-brand-emerald/90 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald shrink-0"
+              className="dbc-btn dbc-btn-sm dbc-btn-primary shrink-0"
               aria-label="Add new category"
             >
               + Add Category

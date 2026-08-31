@@ -187,7 +187,7 @@ export default function ConsultantProfilePage() {
                   type="text"
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -198,7 +198,7 @@ export default function ConsultantProfilePage() {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -209,7 +209,7 @@ export default function ConsultantProfilePage() {
                   type="text"
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -220,7 +220,7 @@ export default function ConsultantProfilePage() {
                   type="text"
                   value={location}
                   onChange={e => setLocation(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                   required
                 />
               </div>
@@ -231,7 +231,7 @@ export default function ConsultantProfilePage() {
               <textarea
                 value={bio}
                 onChange={e => setBio(e.target.value)}
-                className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-4 text-xs font-medium text-stone-850 h-28 focus:outline-none focus:border-brand-emerald/40 transition resize-none"
+                className="dbc-input h-28 resize-none"
                 required
               />
             </div>
@@ -248,7 +248,7 @@ export default function ConsultantProfilePage() {
                   type="text"
                   value={licenseNumber}
                   onChange={e => setLicenseNumber(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                 />
               </div>
               <div className="space-y-1.5">
@@ -257,7 +257,7 @@ export default function ConsultantProfilePage() {
                   type="text"
                   value={experienceYears}
                   onChange={e => setExperienceYears(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                 />
               </div>
             </div>
@@ -284,27 +284,27 @@ export default function ConsultantProfilePage() {
                   placeholder="Organization..."
                   value={newOrg}
                   onChange={e => setNewOrg(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                 />
                 <input
                   type="text"
                   placeholder="Role/Title..."
                   value={newRole}
                   onChange={e => setNewRole(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                 />
                 <input
                   type="text"
                   placeholder="Duration (e.g. 2021)..."
                   value={newDuration}
                   onChange={e => setNewDuration(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                 />
               </div>
               <button
                 type="button"
                 onClick={handleAddExp}
-                className="px-3.5 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-stone-750 text-[9px] font-black uppercase tracking-wider rounded-xl transition"
+                className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Add Position
               </button>
@@ -332,20 +332,20 @@ export default function ConsultantProfilePage() {
                   placeholder="Certification Name..."
                   value={newCertName}
                   onChange={e => setNewCertName(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                 />
                 <input
                   type="text"
                   placeholder="Issuing Org..."
                   value={newCertOrg}
                   onChange={e => setNewCertOrg(e.target.value)}
-                  className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                  className="dbc-input"
                 />
               </div>
               <button
                 type="button"
                 onClick={handleAddCert}
-                className="px-3.5 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-stone-755 text-[9px] font-black uppercase tracking-wider rounded-xl transition"
+                className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Add Certification
               </button>
@@ -374,7 +374,7 @@ export default function ConsultantProfilePage() {
                   type="text"
                   value={consultationFee}
                   onChange={e => setConsultationFee(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850 font-black"
+                  className="dbc-input text-xs font-black"
                 />
               </div>
               
@@ -383,7 +383,7 @@ export default function ConsultantProfilePage() {
                 <select
                   value={preferredDuration}
                   onChange={e => setPreferredDuration(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-700"
+                  className="dbc-input bg-white text-xs py-1.5 px-3"
                 >
                   <option value="30 mins">30 mins</option>
                   <option value="60 mins">60 mins</option>
@@ -397,7 +397,7 @@ export default function ConsultantProfilePage() {
                   type="text"
                   value={workingHours}
                   onChange={e => setWorkingHours(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850 font-semibold"
+                  className="dbc-input text-xs"
                 />
               </div>
             </div>
@@ -408,7 +408,7 @@ export default function ConsultantProfilePage() {
                   type="checkbox"
                   checked={modes.online}
                   onChange={e => setModes({ ...modes, online: e.target.checked })}
-                  className="rounded border-stone-300 text-brand-emerald focus:ring-brand-emerald"
+                  className="dbc-checkbox"
                 />
                 Online consultations
               </label>
@@ -417,7 +417,7 @@ export default function ConsultantProfilePage() {
                   type="checkbox"
                   checked={modes.siteVisit}
                   onChange={e => setModes({ ...modes, siteVisit: e.target.checked })}
-                  className="rounded border-stone-300 text-brand-emerald focus:ring-brand-emerald"
+                  className="dbc-checkbox"
                 />
                 Site Visits
               </label>
@@ -446,20 +446,20 @@ export default function ConsultantProfilePage() {
                 placeholder="Project Title..."
                 value={newPortTitle}
                 onChange={e => setNewPortTitle(e.target.value)}
-                className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                className="dbc-input"
               />
               <input
                 type="text"
                 placeholder="Short Description..."
                 value={newPortDesc}
                 onChange={e => setNewPortDesc(e.target.value)}
-                className="bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-stone-850"
+                className="dbc-input"
               />
             </div>
             <button
               type="button"
               onClick={handleAddPortfolio}
-              className="px-3.5 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-stone-750 text-[9px] font-black uppercase tracking-wider rounded-xl transition"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
             >
               Add Project
             </button>
@@ -474,7 +474,7 @@ export default function ConsultantProfilePage() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-3">
             <button
               type="submit"
-              className="w-full py-3 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider hover:bg-emerald-800 cursor-pointer text-center"
+              className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Save Profile Changes
             </button>
@@ -504,7 +504,7 @@ export default function ConsultantProfilePage() {
                 placeholder="Add specialization..."
                 value={newSkill}
                 onChange={e => setNewSkill(e.target.value)}
-                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1 px-2 text-stone-850"
+                className="dbc-input"
               />
               <button
                 type="button"
@@ -532,7 +532,7 @@ export default function ConsultantProfilePage() {
                 type="checkbox"
                 checked={vacationMode}
                 onChange={e => setVacationMode(e.target.checked)}
-                className="w-8 h-4 rounded text-brand-emerald focus:ring-brand-emerald cursor-pointer"
+                className="dbc-checkbox"
               />
             </div>
           </section>
@@ -551,7 +551,7 @@ export default function ConsultantProfilePage() {
                   type="password"
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3"
+                  className="dbc-input"
                 />
               </div>
               <div className="space-y-1.5">
@@ -560,7 +560,7 @@ export default function ConsultantProfilePage() {
                   type="password"
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3"
+                  className="dbc-input"
                 />
               </div>
               
@@ -573,7 +573,7 @@ export default function ConsultantProfilePage() {
                     setNewPassword('');
                   }
                 }}
-                className="px-3.5 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-[9.5px] font-black uppercase tracking-wider rounded-xl transition"
+                className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Change Password
               </button>

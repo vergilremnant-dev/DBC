@@ -270,7 +270,7 @@ export default function WorkspaceRequirements() {
               setEditingRequirement(null);
               setIsFormOpen(true);
             }}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm transition cursor-pointer"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             + Create Requirement
           </button>
@@ -302,14 +302,14 @@ export default function WorkspaceRequirements() {
           <div className="bg-white border border-stone-200 p-4 rounded-2xl shadow-sm flex flex-col md:flex-row items-center gap-3 justify-between">
             
             {/* Search Input */}
-            <div className="relative flex items-center bg-stone-50 border border-stone-200 rounded-xl px-2.5 py-1.5 w-full md:max-w-xs focus-within:border-emerald-600 focus-within:bg-white transition">
-              <span className="text-stone-400 text-xs">🔍</span>
+            <div className="relative flex-1 max-w-sm w-full">
+              <span className="absolute inset-y-0 left-3 flex items-center text-stone-400 text-xs pointer-events-none">🔍</span>
               <input
                 type="text"
                 placeholder="Search specifications..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border-none text-xs text-stone-850 px-2 focus:outline-none"
+                className="dbc-input pl-8 text-xs w-full"
               />
             </div>
 
@@ -319,7 +319,7 @@ export default function WorkspaceRequirements() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-600 transition"
+                className="dbc-input text-xs bg-white py-1.5"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="OPEN">Open</option>
@@ -332,7 +332,7 @@ export default function WorkspaceRequirements() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-600 transition"
+                className="dbc-input text-xs bg-white py-1.5"
               >
                 <option value="ALL">All Categories</option>
                 {uniqueCategories.map((cat) => (
@@ -346,7 +346,7 @@ export default function WorkspaceRequirements() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-600 transition"
+                className="dbc-input text-xs bg-white py-1.5"
               >
                 <option value="NEWEST">Newest First</option>
                 <option value="OLDEST">Oldest First</option>

@@ -27,7 +27,7 @@ function UploadPlaceholder({ label, hint }: { label: string; hint: string }) {
         <p className="text-[10px] text-stone-400 font-medium mt-1">{hint}</p>
         <button
           type="button"
-          className="mt-3 py-1.5 px-3 bg-white border border-light-border text-stone-600 rounded-xl text-[10px] font-bold hover:bg-stone-50 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald"
+          className="mt-3 dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-light-border text-stone-600"
           aria-label={`Choose file for ${label}`}
         >
           Choose File
@@ -40,7 +40,7 @@ function UploadPlaceholder({ label, hint }: { label: string; hint: string }) {
   );
 }
 
-const inputCls = "w-full text-xs font-medium text-stone-800 bg-white border border-light-border rounded-xl px-3 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald transition placeholder:text-stone-400";
+const inputCls = "dbc-input text-xs";
 
 export default function BrandingPanel({ values, onChange }: BrandingPanelProps) {
   return (

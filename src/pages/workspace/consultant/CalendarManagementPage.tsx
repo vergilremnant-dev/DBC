@@ -159,13 +159,13 @@ export default function CalendarManagementPage() {
           <button
             onClick={handleSync}
             disabled={isSyncing}
-            className="px-3.5 py-2 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50 focus:outline-none"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             <span>🔄</span> {isSyncing ? 'Syncing...' : 'Sync Calendar'}
           </button>
           <button
             onClick={() => alert('Appointment manual scheduling wizard is placeholder.')}
-            className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl text-xs font-black uppercase tracking-wider transition cursor-pointer focus:outline-none"
+            className="dbc-btn dbc-btn-md dbc-btn-primary"
           >
             ➕ Create Appointment
           </button>
@@ -223,7 +223,7 @@ export default function CalendarManagementPage() {
               <select
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
-                className="bg-stone-50 border border-stone-200 rounded-lg py-1 px-2 text-stone-700"
+                className="dbc-input bg-white text-xs py-1 px-2 w-auto"
               >
                 <option value="ALL">All Status</option>
                 <option value="Confirmed">Confirmed</option>
@@ -235,7 +235,7 @@ export default function CalendarManagementPage() {
               <select
                 value={modeFilter}
                 onChange={e => setModeFilter(e.target.value)}
-                className="bg-stone-50 border border-stone-200 rounded-lg py-1 px-2 text-stone-700"
+                className="dbc-input bg-white text-xs py-1 px-2 w-auto"
               >
                 <option value="ALL">All Modes</option>
                 <option value="Video Call">Video Call</option>
@@ -331,21 +331,21 @@ export default function CalendarManagementPage() {
                       <div className="flex gap-2 w-full sm:w-auto justify-end">
                         <button
                           onClick={() => navigate('/workspace/consultation/CS-401')}
-                          className="px-3 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer"
+                          className="dbc-btn dbc-btn-sm dbc-btn-primary"
                         >
                           Workspace
                         </button>
                         <button
                           onClick={() => setRescheduleAppointmentId(apt.id)}
                           disabled={apt.status === 'Completed' || apt.status === 'Cancelled'}
-                          className="px-3 py-1.5 border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 disabled:opacity-40 rounded-lg text-[9px] font-bold uppercase transition cursor-pointer"
+                          className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
                         >
                           Reschedule
                         </button>
                         <button
                           onClick={() => cancelAppointment(apt.id)}
                           disabled={apt.status === 'Completed' || apt.status === 'Cancelled'}
-                          className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 disabled:opacity-40 text-rose-700 border border-rose-200 rounded-lg text-[9px] font-bold uppercase transition cursor-pointer"
+                          className="dbc-btn dbc-btn-sm dbc-btn-danger"
                         >
                           Cancel
                         </button>
@@ -397,7 +397,7 @@ export default function CalendarManagementPage() {
                     type="text"
                     value={workingHours}
                     onChange={e => setWorkingHours(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-850 font-semibold"
+                    className="dbc-input text-xs"
                   />
                 </div>
                 <div>
@@ -405,7 +405,7 @@ export default function CalendarManagementPage() {
                   <select
                     value={bufferTime}
                     onChange={e => setBufferTime(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs text-stone-700"
+                    className="dbc-input bg-white text-xs py-1.5 px-3"
                   >
                     <option value="5 mins">5 mins</option>
                     <option value="15 mins">15 mins</option>
@@ -463,7 +463,7 @@ export default function CalendarManagementPage() {
                   type="date"
                   value={newRescheduleDate}
                   onChange={e => setNewRescheduleDate(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs"
+                  className="dbc-input text-xs"
                 />
               </div>
               <div>
@@ -471,7 +471,7 @@ export default function CalendarManagementPage() {
                 <select
                   value={newRescheduleTime}
                   onChange={e => setNewRescheduleTime(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-1.5 px-3 text-xs"
+                  className="dbc-input bg-white text-xs py-1.5 px-3"
                 >
                   <option value="09:00 AM">09:00 AM</option>
                   <option value="11:00 AM">11:00 AM</option>
@@ -484,13 +484,13 @@ export default function CalendarManagementPage() {
             <div className="flex justify-end gap-2 pt-2">
               <button
                 onClick={() => setRescheduleAppointmentId(null)}
-                className="px-4 py-2 border border-stone-200 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-50 cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmReschedule}
-                className="px-4 py-2 bg-brand-emerald text-white rounded-xl text-xs font-black uppercase tracking-wider hover:bg-emerald-800 cursor-pointer"
+                className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Confirm
               </button>

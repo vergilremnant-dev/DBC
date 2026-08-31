@@ -59,7 +59,7 @@ export default function UserCard({
         <div className="flex gap-2">
           <button
             onClick={() => onSelectUser(user)}
-            className="px-3 py-1.5 bg-stone-50 border border-stone-200 hover:bg-stone-100 rounded-lg text-stone-700 font-bold focus:outline-none"
+            className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"
           >
             Details
           </button>
@@ -67,14 +67,14 @@ export default function UserCard({
           {user.status === 'Active' ? (
             <button
               onClick={() => onStatusChange(user.id, 'Suspended')}
-              className="px-3 py-1.5 border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-bold focus:outline-none"
+              className="dbc-btn dbc-btn-sm dbc-btn-danger"
             >
               Suspend
             </button>
           ) : (
             <button
               onClick={() => onStatusChange(user.id, 'Active')}
-              className="px-3 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg font-black tracking-wide focus:outline-none"
+              className="dbc-btn dbc-btn-sm dbc-btn-primary"
             >
               Activate
             </button>
@@ -83,7 +83,7 @@ export default function UserCard({
           {user.verificationStatus === 'Pending' && (
             <button
               onClick={() => onApprove(user.id, user.name)}
-              className="px-3 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg font-black tracking-wide focus:outline-none"
+              className="dbc-btn dbc-btn-sm dbc-btn-primary"
             >
               Verify
             </button>

@@ -125,7 +125,7 @@ export default function ConsultantDashboard() {
         <div className="relative">
           <button
             onClick={() => setAvailabilityOpen(!availabilityOpen)}
-            className="flex items-center gap-2 px-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 transition shadow-xs cursor-pointer focus:outline-none"
+            className="dbc-btn dbc-btn-md dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
           >
             <span className={`w-2 h-2 rounded-full ${
               availability === 'Available Today' ? 'bg-emerald-500' : availability === 'Busy' ? 'bg-amber-500' : 'bg-rose-500'
@@ -243,14 +243,14 @@ export default function ConsultantDashboard() {
                         {item.status === 'Active' ? (
                           <button
                             onClick={() => navigate('/workspace/consultation/CS-401')}
-                            className="px-3.5 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg text-[10px] font-black uppercase tracking-wider transition cursor-pointer"
+                            className="dbc-btn dbc-btn-sm dbc-btn-primary"
                           >
                             Join Call
                           </button>
                         ) : (
                           <button
                             onClick={() => navigate('/workspace/consultation/CS-401')}
-                            className="px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300/40 rounded-lg text-[10px] font-bold uppercase tracking-wider transition cursor-pointer"
+                            className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-100 border border-stone-300/40"
                           >
                             View Details
                           </button>
@@ -300,13 +300,13 @@ export default function ConsultantDashboard() {
                     <div className="flex items-center gap-2 justify-end">
                       <button
                         onClick={() => handleAccept(req.id)}
-                        className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg text-[10px] font-black uppercase tracking-wider transition cursor-pointer"
+                        className="dbc-btn dbc-btn-sm dbc-btn-primary"
                       >
                         Accept Request
                       </button>
                       <button
                         onClick={() => handleDecline(req.id)}
-                        className="px-3.5 py-2 bg-stone-100 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 text-stone-700 border border-stone-300/40 rounded-lg text-[10px] font-bold uppercase tracking-wider transition cursor-pointer"
+                        className="dbc-btn dbc-btn-sm dbc-btn-danger"
                       >
                         Decline Request
                       </button>
@@ -472,7 +472,7 @@ function EmptyState({ message, actionLabel, onAction }: { message: string; actio
       {actionLabel && onAction && (
         <button
           onClick={onAction}
-          className="mt-1 px-3.5 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer"
+          className="dbc-btn dbc-btn-sm dbc-btn-primary mt-1"
         >
           {actionLabel}
         </button>

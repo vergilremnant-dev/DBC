@@ -240,7 +240,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             )}
 
             {/* Password */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1">
                   Password
@@ -390,14 +390,16 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
       {/* Switch back link */}
       <div className="pt-2 text-center border-t border-stone-100">
-        <span className="text-xs text-stone-500 font-medium">Already have an account? </span>
-        <button
-          type="button"
-          onClick={onBackToLogin}
-          className="text-xs font-bold text-emerald-800 hover:underline cursor-pointer"
-        >
-          Sign In
-        </button>
+        <p className="text-xs text-stone-500">
+          Already have an account?{' '}
+          <button
+            type="button"
+            onClick={onBackToLogin}
+            className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer"
+          >
+            Sign In
+          </button>
+        </p>
       </div>
     </div>
   );

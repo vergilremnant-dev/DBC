@@ -92,13 +92,15 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
 
       {!success && (
         <div className="pt-2 text-center border-t border-stone-100">
-          <button
-            type="button"
-            onClick={onBackToLogin}
-            className="text-xs font-bold text-emerald-800 hover:underline cursor-pointer"
-          >
-            ← Back to Sign In
-          </button>
+          <p className="text-xs text-stone-500">
+            <button
+              type="button"
+              onClick={onBackToLogin}
+              className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer"
+            >
+              ← Back to Sign In
+            </button>
+          </p>
         </div>
       )}
 

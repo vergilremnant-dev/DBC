@@ -31,13 +31,25 @@ export function LoginPage() {
   const { loading, error, isAuthenticated, user } = useAuthSelector((state) => state.auth);
   
   const [values, setValues] = useState<LoginRequest>(initialValues);
-  const [view, setView] = useState<AuthViewType>('login');
-  
   // Custom mock user for onboarding registration pathway
   const [registeredUser, setRegisteredUser] = useState<WelcomeUser | null>(null);
 
   const queryParams = new URLSearchParams(location.search);
   const redirectParam = queryParams.get('redirect');
+  const viewParam = queryParams.get('view') || queryParams.get('mode');
+
+  const [view, setView] = useState<AuthViewType>(() => {
+    if (viewParam === 'register') return 'register';
+    if (viewParam === 'forgot') return 'forgot';
+    if (viewParam === 'reset') return 'reset';
+    return 'login';
+  });
+  
+  // Sync view when URL query parameters update
+  useEffect(() => {
+    if (viewParam === 'register' && view !== 'register') setView('register');
+    if (viewParam === 'login' && view !== 'login') setView('login');
+  }, [viewParam, view]);
 
   // Triggered on active login redirect rules
   useEffect(() => {

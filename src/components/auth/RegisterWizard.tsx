@@ -142,7 +142,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       {step === 1 && (
         <>
           <div className="space-y-1">
-            <h3 className="text-xl font-bold font-serif text-stone-900">Create Your Account</h3>
+            <h2 className="text-2xl font-bold text-stone-900 font-serif">Create Your Account</h2>
             <p className="text-xs text-stone-500">Sign up as a customer to get started with your projects.</p>
           </div>
 
@@ -295,7 +295,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       {step === 2 && (
         <>
           <div className="space-y-1">
-            <h3 className="text-xl font-bold font-serif text-stone-900">Verify Your Account</h3>
+            <h2 className="text-2xl font-bold text-stone-900 font-serif">Verify Your Account</h2>
             <p className="text-xs text-stone-500">
               {channel === 'email' ? (
                 <>We've sent a verification code to your email address: <strong className="text-stone-700">{maskEmail(email)}</strong>.</>
@@ -390,12 +390,13 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
       {/* Switch back link */}
       <div className="pt-2 text-center border-t border-stone-100">
+        <span className="text-xs text-stone-500 font-medium">Already have an account? </span>
         <button
           type="button"
           onClick={onBackToLogin}
-          className="text-xs font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer"
+          className="text-xs font-bold text-emerald-800 hover:underline cursor-pointer"
         >
-          Already have an account? Login
+          Sign In
         </button>
       </div>
     </div>

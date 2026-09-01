@@ -10,7 +10,6 @@ import { chatApi } from '../../services/chat/chatService';
 import type { Conversation } from '../../types/chat/chatTypes';
 
 import { NavbarItem } from './NavbarItem';
-import { QuickActionButton } from './QuickActionButton';
 import { NotificationButton } from './NotificationButton';
 import { ProfileMenu } from './ProfileMenu';
 import { MobileDrawer } from './MobileDrawer';
@@ -167,9 +166,8 @@ export function Navbar() {
     return [
       { label: 'Find Services', to: '/' },
       { label: 'Browse Professionals', to: '/search' },
-      { label: 'Subscriptions', to: '/subscriptions' },
-      { label: 'About', to: '/know-more' },
-      { label: 'Blog', to: '/blog' },
+      { label: 'How It Works', to: '/know-more' },
+      { label: 'Premium Plans', to: '/subscriptions' },
     ];
   };
 
@@ -288,8 +286,19 @@ export function Navbar() {
               />
             </NavigationGroup>
           ) : (
-            <NavigationGroup className="gap-3">
-              <QuickActionButton role={user?.role} />
+            <NavigationGroup className="gap-2">
+              <Link
+                to="/login"
+                className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-stone-600 hover:text-stone-900 transition rounded-lg hover:bg-stone-100"
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/login?view=register"
+                className="dbc-btn dbc-btn-primary tracking-wider text-[10px] font-bold uppercase rounded-lg shadow-apple-sm px-3.5 py-1.5"
+              >
+                Join as Partner
+              </Link>
             </NavigationGroup>
           )}
         </div>

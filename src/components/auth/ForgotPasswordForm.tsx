@@ -19,7 +19,7 @@ export function ForgotPasswordForm({ onBackToLogin }: ForgotPasswordFormProps) {
     <div className="space-y-4 text-left">
       
       <div className="space-y-1">
-        <h3 className="text-xl font-bold font-serif text-stone-900">Recover Password</h3>
+        <h2 className="text-2xl font-bold text-stone-900 font-serif">Recover Password</h2>
         <p className="text-xs text-stone-500">Enter your registered email address to receive recovery instructions.</p>
       </div>
 
@@ -65,9 +65,9 @@ export function ForgotPasswordForm({ onBackToLogin }: ForgotPasswordFormProps) {
         <button
           type="button"
           onClick={onBackToLogin}
-          className="text-xs font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer"
+          className="text-xs font-bold text-emerald-800 hover:underline cursor-pointer"
         >
-          ← Back to Login
+          ← Back to Sign In
         </button>
       </div>
 

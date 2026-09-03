@@ -111,9 +111,9 @@ export function LoginPage() {
   return (
     <AuthLayout showBackToMarketplace={view !== 'welcome'}>
       {view === 'login' && (
-        <div className="space-y-3.5">
+        <div className="space-y-4 w-full max-w-sm mx-auto">
           <div className="text-left">
-            <h2 className="text-2xl font-bold text-stone-900 font-serif">Sign In</h2>
+            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Sign In</h2>
           </div>
           <LoginForm
             values={values}

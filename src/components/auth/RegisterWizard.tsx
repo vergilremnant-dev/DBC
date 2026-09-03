@@ -420,8 +420,15 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
           </div>
           <h4 className="text-sm font-bold text-stone-900 uppercase tracking-wide">Verification Successful</h4>
           <p className="text-xs text-stone-600 leading-relaxed max-w-[280px] mx-auto">
-            Your verification has been completed successfully! You can now log into your workspace console.
+            Your verification has been completed successfully! Please proceed to sign in with your credentials.
           </p>
+          <button
+            type="button"
+            onClick={onBackToLogin}
+            className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all cursor-pointer mt-2"
+          >
+            Proceed to Sign In
+          </button>
         </div>
       )}
 

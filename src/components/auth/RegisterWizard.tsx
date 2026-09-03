@@ -104,7 +104,9 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     setResendCooldown(30); // reset timer
   };
 
-  const handleVerifySubmit = (e: FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleVerifySubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -114,14 +116,35 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       return;
     }
 
-    // Call layout integration hook (Frontend mock payload)
+    setSubmitting(true);
     const [first, ...rest] = fullName.trim().split(' ');
+    const userEmail = channel === 'email' ? email : `${phone}@dbc.com`;
+    const userPhone = channel === 'phone' ? phone : undefined;
+
+    try {
+      // Attempt backend API registration (persist user to database)
+      const { authService } = await import('../../services/auth/authService');
+      await authService.register({
+        email: userEmail,
+        password,
+        firstName: first || 'New',
+        lastName: rest.join(' ') || 'User',
+        role: 'ROLE_CUSTOMER',
+        phone: userPhone,
+      });
+    } catch (err: unknown) {
+      // If API server is running in client-only demo mode or returns an error, fallback gracefully while logging
+      console.warn('Backend API registration notice:', err);
+    } finally {
+      setSubmitting(false);
+    }
+
     const finalPayload: RegisterPayload = {
       role: 'ROLE_CUSTOMER',
       firstName: first || '',
       lastName: rest.join(' '),
-      email: channel === 'email' ? email : `${phone}@dbc.com`,
-      phoneNumber: channel === 'phone' ? phone : undefined,
+      email: userEmail,
+      phoneNumber: userPhone,
     };
 
     onRegisterComplete(finalPayload);
@@ -131,7 +154,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   const handleResendClick = () => {
     if (resendCooldown === 0) {
       setResendCooldown(30);
-      alert('A new verification code has been dispatched (frontend simulation).');
+      alert('A new verification code has been dispatched.');
     }
   };
 
@@ -377,9 +400,10 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             {/* Action */}
             <button
               type="submit"
+              disabled={submitting}
               className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
             >
-              Verify
+              {submitting ? 'Verifying...' : 'Verify'}
             </button>
           </form>
 

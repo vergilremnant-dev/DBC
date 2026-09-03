@@ -34,6 +34,23 @@ export interface ApiResponse<T> {
   data: T
 }
 
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName?: string;
+  role: string;
+  phone?: string;
+  preferredCity?: string;
+  firebaseUid?: string;
+}
+
+export interface RegisterResponse {
+  success: boolean;
+  message: string;
+  verificationToken?: string;
+}
+
 export interface AuthState {
   accessToken: string | null
   user: AuthUser | null

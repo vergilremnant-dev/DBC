@@ -39,4 +39,10 @@ describe('Auth Utility Tests', () => {
     const decoded = verifyToken(mockRequest);
     expect(decoded).toBeNull();
   });
+
+  it('should load Firebase SDK configuration without throwing', async () => {
+    const { isFirebaseConfigured, auth } = await import('../../src/config/firebase.js');
+    expect(auth).toBeDefined();
+    expect(typeof isFirebaseConfigured).toBe('boolean');
+  });
 });

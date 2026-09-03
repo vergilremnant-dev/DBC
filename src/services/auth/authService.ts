@@ -19,6 +19,15 @@ function getErrorMessage(error: unknown, fallback: string) {
 }
 
 export const authService = {
+  async register(request: import('../../types/auth/authTypes').RegisterRequest): Promise<import('../../types/auth/authTypes').RegisterResponse> {
+    try {
+      const response = await axiosClient.post<{ success: boolean; message: string; verificationToken?: string }>('/api/auth/register', request);
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Unable to complete registration'), { cause: error });
+    }
+  },
+
   async login(request: LoginRequest): Promise<LoginResponse> {
     try {
       const response = await axiosClient.post<LoginPayload>('/api/auth/login', request);

@@ -45,7 +45,7 @@ export function AuthLayout({
         </div>
 
         {/* Right Side: Shared Authentication container with exact padding & alignment */}
-        <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-center bg-white relative overflow-y-auto max-h-full">
+        <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-start my-auto bg-white relative overflow-y-auto max-h-full">
           
           {/* Mobile Top Header (When left banner is hidden) */}
           <div className="lg:hidden flex items-center justify-between mb-4 pb-3 border-b border-stone-100">

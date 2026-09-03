@@ -35,17 +35,22 @@ export function LoginForm({
           <label htmlFor="login-email" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
             Email Address
           </label>
-          <input
-            id="login-email"
-            type="email"
-            name="email"
-            placeholder="name@example.com"
-            value={values.email}
-            onChange={onChange}
-            required
-            autoComplete="email"
-            className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 px-3.5 transition-all outline-none"
-          />
+          <div className="relative">
+            <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <input
+              id="login-email"
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={values.email}
+              onChange={onChange}
+              required
+              autoComplete="email"
+              className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+            />
+          </div>
         </div>
 
         {/* Password Field */}
@@ -65,16 +70,19 @@ export function LoginForm({
             )}
           </div>
           <div className="relative">
+            <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
             <input
               id="login-password"
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="••••••••"
+              placeholder="Enter your password"
               value={values.password}
               onChange={onChange}
               required
               autoComplete="current-password"
-              className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-3.5 pr-11 transition-all outline-none"
+              className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-11 transition-all outline-none"
             />
             <button
               type="button"

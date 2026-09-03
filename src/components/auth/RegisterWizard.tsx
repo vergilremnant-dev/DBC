@@ -152,16 +152,21 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
               <label htmlFor="reg-fullname" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
                 Full Name
               </label>
-              <input
-                id="reg-fullname"
-                type="text"
-                name="fullName"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="John Doe"
-                required
-                className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 px-3.5 transition-all outline-none"
-              />
+              <div className="relative">
+                <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                <input
+                  id="reg-fullname"
+                  type="text"
+                  name="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Enter your full name"
+                  required
+                  className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                />
+              </div>
             </div>
 
             {/* Choice */}
@@ -176,13 +181,16 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     setChannel('email');
                     setError(null);
                   }}
-                  className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
+                  className={`py-2 px-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 ${
                     channel === 'email'
-                      ? 'bg-white text-stone-900 shadow-xs'
+                      ? 'bg-white text-stone-900 shadow-xs border border-stone-200/60'
                       : 'text-stone-500 hover:text-stone-800'
                   }`}
                 >
-                  Email Address
+                  <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
+                  <span>Email Address</span>
                 </button>
                 <button
                   type="button"
@@ -190,13 +198,16 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     setChannel('phone');
                     setError(null);
                   }}
-                  className={`py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer ${
+                  className={`py-2 px-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 ${
                     channel === 'phone'
-                      ? 'bg-white text-stone-900 shadow-xs'
+                      ? 'bg-white text-stone-900 shadow-xs border border-stone-200/60'
                       : 'text-stone-500 hover:text-stone-800'
                   }`}
                 >
-                  Phone Number
+                  <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                  </svg>
+                  <span>Phone Number</span>
                 </button>
               </div>
             </div>
@@ -207,16 +218,21 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 <label htmlFor="reg-email" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
                   Email Address
                 </label>
-                <input
-                  id="reg-email"
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@example.com"
-                  required
-                  className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 px-3.5 transition-all outline-none"
-                />
+                <div className="relative">
+                  <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
+                  <input
+                    id="reg-email"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                  />
+                </div>
               </div>
             )}
 
@@ -226,16 +242,21 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 <label htmlFor="reg-phone" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
                   Phone Number
                 </label>
-                <input
-                  id="reg-phone"
-                  type="tel"
-                  name="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="9876543210"
-                  required
-                  className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 px-3.5 transition-all outline-none"
-                />
+                <div className="relative">
+                  <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                  </svg>
+                  <input
+                    id="reg-phone"
+                    type="tel"
+                    name="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter your phone number"
+                    required
+                    className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                  />
+                </div>
               </div>
             )}
 
@@ -245,31 +266,41 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
                   Password
                 </label>
-                <input
-                  id="reg-password"
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 px-3.5 transition-all outline-none"
-                />
+                <div className="relative">
+                  <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                  <input
+                    id="reg-password"
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Create password"
+                    required
+                    className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="reg-confirm-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
                   Confirm Password
                 </label>
-                <input
-                  id="reg-confirm-password"
-                  type="password"
-                  name="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 px-3.5 transition-all outline-none"
-                />
+                <div className="relative">
+                  <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                  <input
+                    id="reg-confirm-password"
+                    type="password"
+                    name="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm password"
+                    required
+                    className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                  />
+                </div>
               </div>
             </div>
 
@@ -395,7 +426,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       )}
 
       {/* Switch back link */}
-      <div className="pt-2 text-center border-t border-stone-100">
+      <div className="pt-3 pb-3 text-center border-t border-stone-100 mt-2">
         <p className="text-xs text-stone-500">
           Already have an account?{' '}
           <button

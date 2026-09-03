@@ -184,20 +184,13 @@ export function MobileDrawer({
                 Sign Out
               </button>
             ) : (
-              <div className="grid grid-cols-2 gap-2 text-center">
+              <div className="text-center">
                 <Link
                   to="/login"
                   onClick={onClose}
-                  className="py-2.5 px-3 border border-stone-200 bg-white rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-50 transition uppercase tracking-wider"
+                  className="block w-full text-center py-2.5 px-3 bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition hover:bg-emerald-800 shadow-xs"
                 >
-                  Sign In
-                </Link>
-                <Link
-                  to="/login?view=register"
-                  onClick={onClose}
-                  className="py-2.5 px-3 bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition hover:bg-emerald-800 shadow-xs"
-                >
-                  Register
+                  Become a Professional
                 </Link>
               </div>
             )}

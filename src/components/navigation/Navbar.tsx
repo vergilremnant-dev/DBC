@@ -286,18 +286,12 @@ export function Navbar() {
               />
             </NavigationGroup>
           ) : (
-            <NavigationGroup className="gap-2">
+            <NavigationGroup>
               <Link
                 to="/login"
-                className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-stone-600 hover:text-stone-900 transition rounded-lg hover:bg-stone-100"
+                className="dbc-btn dbc-btn-primary tracking-wider text-[10px] font-bold uppercase rounded-lg shadow-apple-sm px-4 py-2"
               >
-                Sign In
-              </Link>
-              <Link
-                to="/login?view=register"
-                className="dbc-btn dbc-btn-primary tracking-wider text-[10px] font-bold uppercase rounded-lg shadow-apple-sm px-3.5 py-1.5"
-              >
-                Join as Partner
+                Become a Professional
               </Link>
             </NavigationGroup>
           )}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthDispatch, useAuthSelector } from '../../hooks/auth/useAuthStore';
 import { getDashboardPathForRole } from '../../services/auth/authRedirect';
-import { loginThunk } from '../../store/auth/authSlice';
+import { clearError, loginThunk } from '../../store/auth/authSlice';
 import type { LoginRequest } from '../../types/auth/authTypes';
 import type { RegisterPayload } from '../../components/auth/RegisterWizard';
 
@@ -49,7 +49,9 @@ export function LoginPage() {
   // Sync view when URL query parameters update
   useEffect(() => {
     if (viewParam === 'register' && view !== 'register') setView('register');
-    if (viewParam === 'login' && view !== 'login') setView('login');
+    if (viewParam === 'forgot' && view !== 'forgot') setView('forgot');
+    if (viewParam === 'reset' && view !== 'reset') setView('reset');
+    if ((viewParam === 'login' || !viewParam) && view !== 'login' && view !== 'welcome') setView('login');
   }, [viewParam, view]);
 
   // Triggered on active login redirect rules
@@ -59,6 +61,16 @@ export function LoginPage() {
       navigate(target, { replace: true });
     }
   }, [isAuthenticated, navigate, user?.role, redirectParam, view]);
+
+  const handleSwitchView = (targetView: AuthViewType) => {
+    setView(targetView);
+    dispatch(clearError());
+    
+    // Preserve URL query params synchronously for browser navigation
+    const targetUrl = targetView === 'login' ? '/login' : `/login?view=${targetView}`;
+    const fullTarget = redirectParam ? `${targetUrl}${targetView === 'login' ? '?' : '&'}redirect=${redirectParam}` : targetUrl;
+    navigate(fullTarget, { replace: true });
+  };
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -121,30 +133,36 @@ export function LoginPage() {
             error={error}
             onChange={handleChange}
             onSubmit={handleSubmit}
-            onForgotPassword={() => setView('forgot')}
-            onSignUpClick={() => setView('register')}
+            onForgotPassword={() => handleSwitchView('forgot')}
+            onSignUpClick={() => handleSwitchView('register')}
           />
         </div>
       )}
 
       {view === 'register' && (
-        <RegisterWizard
-          onRegisterComplete={handleRegisterComplete}
-          onBackToLogin={() => setView('login')}
-        />
+        <div className="w-full max-w-sm mx-auto">
+          <RegisterWizard
+            onRegisterComplete={handleRegisterComplete}
+            onBackToLogin={() => handleSwitchView('login')}
+          />
+        </div>
       )}
 
       {view === 'forgot' && (
-        <ForgotPasswordForm
-          onBackToLogin={() => setView('login')}
-        />
+        <div className="w-full max-w-sm mx-auto">
+          <ForgotPasswordForm
+            onBackToLogin={() => handleSwitchView('login')}
+          />
+        </div>
       )}
 
       {view === 'reset' && (
-        <ResetPasswordForm
-          onResetComplete={() => setView('login')}
-          onBackToLogin={() => setView('login')}
-        />
+        <div className="w-full max-w-sm mx-auto">
+          <ResetPasswordForm
+            onResetComplete={() => handleSwitchView('login')}
+            onBackToLogin={() => handleSwitchView('login')}
+          />
+        </div>
       )}
 
       {view === 'welcome' && (

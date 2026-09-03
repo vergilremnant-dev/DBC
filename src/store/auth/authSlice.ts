@@ -90,6 +90,9 @@ const authSlice = createSlice({
       state.error = null
       state.isAuthenticated = false
     },
+    clearError(state) {
+      state.error = null
+    },
     clearAuth(state) {
       clearStoredAuth()
       setAccessToken(null)
@@ -151,5 +154,5 @@ const authSlice = createSlice({
   },
 })
 
-export const { clearAuth, logout } = authSlice.actions
+export const { clearAuth, logout, clearError } = authSlice.actions
 export const authReducer = authSlice.reducer

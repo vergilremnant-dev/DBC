@@ -363,25 +363,41 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
             {/* Phone Field */}
             {channel === 'phone' && (
-              <div>
-                <label htmlFor="reg-phone" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
-                  Phone Number
-                </label>
-                <div className="relative">
-                  <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                  </svg>
-                  <input
-                    id="reg-phone"
-                    type="tel"
-                    name="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Enter your 10-digit phone number"
-                    required
-                    className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
-                  />
+              <div className="space-y-2">
+                <div>
+                  <label htmlFor="reg-phone" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+                    Phone Number
+                  </label>
+                  <div className="relative">
+                    <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                    <input
+                      id="reg-phone"
+                      type="tel"
+                      name="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="Enter your 10-digit phone number"
+                      required
+                      className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                    />
+                  </div>
                 </div>
+
+                {!isFirebaseConfigured && (
+                  <div className="rounded-xl border border-amber-200 bg-amber-50/90 p-3 text-[11px] font-medium text-amber-800 leading-relaxed flex flex-col gap-1">
+                    <span className="font-bold flex items-center gap-1.5 text-amber-900">
+                      <svg className="w-4 h-4 shrink-0 text-amber-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Firebase Configuration Notice
+                    </span>
+                    <span>
+                      Real SMS OTP requires setting your Firebase Web App keys in <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-[10px]">.env.local</code>. Alternatively, select <strong>Email Address</strong> above to register instantly.
+                    </span>
+                  </div>
+                )}
               </div>
             )}
 

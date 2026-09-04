@@ -19,6 +19,24 @@ function getErrorMessage(error: unknown, fallback: string) {
 }
 
 export const authService = {
+  async sendEmailOtp(email: string): Promise<{ success: boolean; message: string }> {
+    try {
+      const response = await axiosClient.post<{ success: boolean; message: string }>('/api/auth/send-email-otp', { email });
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Failed to send email verification code'), { cause: error });
+    }
+  },
+
+  async verifyEmailOtp(email: string, otp: string): Promise<{ success: boolean; message: string }> {
+    try {
+      const response = await axiosClient.post<{ success: boolean; message: string }>('/api/auth/verify-email-otp', { email, otp });
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Invalid or expired verification code'), { cause: error });
+    }
+  },
+
   async register(request: import('../../types/auth/authTypes').RegisterRequest): Promise<import('../../types/auth/authTypes').RegisterResponse> {
     try {
       const response = await axiosClient.post<{ success: boolean; message: string; verificationToken?: string }>('/api/auth/register', request);

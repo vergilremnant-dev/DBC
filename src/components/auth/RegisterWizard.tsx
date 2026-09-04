@@ -38,6 +38,7 @@ function maskPhone(phoneStr: string): string {
 
 import { auth, isFirebaseConfigured, RecaptchaVerifier, signInWithPhoneNumber } from '../../config/firebase';
 import type { ConfirmationResult } from '../../config/firebase';
+import { authService } from '../../services/auth/authService';
 
 // Helper function to format phone numbers to E.164 (+91XXXXXXXXXX)
 function formatE164Phone(rawPhone: string): string {
@@ -97,6 +98,16 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       if (!emailRegex.test(email)) {
         setError('Please enter a valid email address.');
         return;
+      }
+      try {
+        setSendingOtp(true);
+        await authService.sendEmailOtp(email);
+      } catch (emailErr: any) {
+        setError(emailErr?.message || 'Failed to send email verification code.');
+        setSendingOtp(false);
+        return;
+      } finally {
+        setSendingOtp(false);
       }
     } else {
       const phoneRegex = /^\d{10}$/;
@@ -162,8 +173,16 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
     setVerifyingOtp(true);
 
-    // MANDATORY Firebase Phone OTP verification check
-    if (channel === 'phone') {
+    // MANDATORY Email / Firebase Phone OTP verification check
+    if (channel === 'email') {
+      try {
+        await authService.verifyEmailOtp(email, otp);
+      } catch (verifyErr: any) {
+        setError(verifyErr?.message || 'Invalid or expired verification code.');
+        setVerifyingOtp(false);
+        return;
+      }
+    } else if (channel === 'phone') {
       if (!confirmationResult) {
         setError('No active Firebase phone verification session found. Please click "Change phone number" to restart OTP request.');
         setVerifyingOtp(false);
@@ -206,7 +225,6 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     const userPhone = channel === 'phone' ? phone : undefined;
 
     try {
-      const { authService } = await import('../../services/auth/authService');
       await authService.register({
         email: userEmail,
         password,
@@ -237,7 +255,14 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   const handleResendClick = async () => {
     if (resendCooldown === 0) {
       setResendCooldown(30);
-      if (channel === 'phone' && isFirebaseConfigured && auth) {
+      if (channel === 'email') {
+        try {
+          await authService.sendEmailOtp(email);
+          alert('A new verification code has been sent to your email address.');
+        } catch (err: any) {
+          alert(err?.message || 'Failed to resend email verification code.');
+        }
+      } else if (channel === 'phone' && isFirebaseConfigured && auth) {
         try {
           const formattedPhone = formatE164Phone(phone);
           const verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier;

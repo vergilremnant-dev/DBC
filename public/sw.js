@@ -1,71 +1,62 @@
-const CACHE_NAME = 'dbc-cache-v1';
-const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-];
+const CACHE_NAME = 'dbc-cache-v2';
 
-self.addEventListener('install', (e) => {
+self.addEventListener('install', () => {
   self.skipWaiting();
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
 });
 
 self.addEventListener('activate', (e) => {
-  e.waitUntil(clients.claim());
+  // Purge all old caches on activation to prevent stale chunk lock
+  e.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
-  
-  // Navigation request or index.html/root paths -> Network First
-  if (e.request.mode === 'navigate' || url.pathname === '/' || url.pathname === '/index.html') {
+
+  // Ignore non-GET requests and API calls
+  if (e.request.method !== 'GET' || url.pathname.startsWith('/api')) {
+    return;
+  }
+
+  // Navigation requests (HTML pages) -> ALWAYS Network Only (Never cache HTML)
+  if (e.request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('.html')) {
     e.respondWith(
-      fetch(e.request)
-        .then((response) => {
-          // Cache the fresh copy of index.html/root
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(e.request, clone);
-          });
-          return response;
-        })
-        .catch(() => {
-          // If offline, fallback to cached index.html
-          return caches.match('/index.html') || caches.match('/');
-        })
+      fetch(e.request).catch(() => {
+        return caches.match('/index.html');
+      })
     );
     return;
   }
 
-  // All other requests -> Cache First with Network Fallback
-  e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(e.request)
-        .then((response) => {
-          // Cache GET requests for static assets (ignore API calls)
-          if (e.request.method === 'GET' && !url.pathname.startsWith('/api')) {
+  // Version-hashed static assets in /assets/ -> Cache First with Network Fallback
+  if (url.pathname.startsWith('/assets/')) {
+    e.respondWith(
+      caches.match(e.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(e.request).then((response) => {
+          if (response.ok && response.status === 200) {
             const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(e.request, clone);
-            });
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
           }
           return response;
-        })
-        .catch((err) => {
-          if (url.pathname.includes('/api/projects')) {
-            return new Response(JSON.stringify([]), {
-              headers: { 'Content-Type': 'application/json' }
-            });
-          }
+        }).catch((err) => {
+          // If asset fetch fails (404 / stale chunk), purge cache
+          caches.delete(CACHE_NAME);
           throw err;
         });
-    })
-  );
+      })
+    );
+    return;
+  }
 });

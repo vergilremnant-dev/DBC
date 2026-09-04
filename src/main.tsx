@@ -24,21 +24,9 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then((reg) => {
         reg.update();
-        reg.onupdatefound = () => {
-          const installingWorker = reg.installing;
-          if (installingWorker) {
-            installingWorker.onstatechange = () => {
-              if (installingWorker.state === 'installed') {
-                if (navigator.serviceWorker.controller) {
-                  window.location.reload();
-                }
-              }
-            };
-          }
-        };
       })
       .catch((err) => {
-        console.error('Service Worker registration failed:', err);
+        console.warn('Service Worker registration notice:', err);
       });
   });
 }

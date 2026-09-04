@@ -101,8 +101,23 @@ export async function loginUser(
     throw new Error('Email and password are required');
   }
 
-  const user = await db.user.findUnique({
-    where: { email },
+  const rawInput = email.trim();
+  const digits = rawInput.replace(/\D/g, '');
+  const isPhone = digits.length >= 10;
+
+  const user = await db.user.findFirst({
+    where: {
+      OR: [
+        { email: rawInput },
+        ...(isPhone
+          ? [
+              { email: `${digits}@dbc.com` },
+              { customerProfile: { phoneNumber: { contains: digits } } },
+              { providerProfile: { phoneNumber: { contains: digits } } },
+            ]
+          : []),
+      ],
+    },
     include: {
       customerProfile: true,
       providerProfile: true,
@@ -110,7 +125,7 @@ export async function loginUser(
   });
 
   if (!user) {
-    throw new Error('Invalid email or password');
+    throw new Error('Invalid email, phone number, or password');
   }
 
   if (user.status !== 'ACTIVE') {

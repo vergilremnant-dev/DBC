@@ -49,8 +49,8 @@ function formatE164Phone(rawPhone: string): string {
 }
 
 export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWizardProps) {
-  // Navigation step state (1 = Register Form, 2 = Verify Screen, 3 = Success)
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  // Navigation step state (1 = Details, 2 = Verify OTP, 3 = Setup Password, 4 = Success)
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
   // Form Field States
   const [fullName, setFullName] = useState('');
@@ -64,8 +64,10 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   const [otp, setOtp] = useState('');
   const [resendCooldown, setResendCooldown] = useState(30);
   const [sendingOtp, setSendingOtp] = useState(false);
+  const [verifyingOtp, setVerifyingOtp] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
+  const [verifiedUid, setVerifiedUid] = useState<string | undefined>(undefined);
 
   // Error state
   const [error, setError] = useState<string | null>(null);
@@ -80,11 +82,11 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     }
   }, [step, resendCooldown]);
 
-  const handleRegisterSubmit = async (e: FormEvent) => {
+  // STEP 1 HANDLER: Send OTP / Proceed to verification
+  const handleDetailsSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // Form validation checks
     if (!fullName.trim()) {
       setError('Full Name is required.');
       return;
@@ -102,16 +104,6 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         setError('Please enter a valid 10-digit phone number.');
         return;
       }
-    }
-
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long.');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
     }
 
     // Trigger Firebase Phone Authentication when channel is phone
@@ -153,12 +145,12 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       }
     }
 
-    // Pass verification check step transition
     setStep(2);
-    setResendCooldown(30); // reset timer
+    setResendCooldown(30);
   };
 
-  const handleVerifySubmit = async (e: FormEvent) => {
+  // STEP 2 HANDLER: Verify OTP
+  const handleVerifyOtpSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -168,35 +160,52 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       return;
     }
 
-    setSubmitting(true);
+    setVerifyingOtp(true);
 
-    let firebaseUid: string | undefined = undefined;
-
-    // MANDATORY Firebase Phone OTP verification check (NO BYPASS ALLOWED)
+    // MANDATORY Firebase Phone OTP verification check
     if (channel === 'phone') {
       if (!confirmationResult) {
         setError('No active Firebase phone verification session found. Please click "Change phone number" to restart OTP request.');
-        setSubmitting(false);
+        setVerifyingOtp(false);
         return;
       }
 
       try {
         const userCredential = await confirmationResult.confirm(otp);
-        firebaseUid = userCredential.user.uid;
+        setVerifiedUid(userCredential.user.uid);
       } catch (confErr: any) {
         console.error('Firebase OTP Verification Error:', confErr?.code, confErr?.message);
         setError('Invalid or expired verification code. The code you entered was rejected by Firebase.');
-        setSubmitting(false);
+        setVerifyingOtp(false);
         return;
       }
     }
 
+    setVerifyingOtp(false);
+    setStep(3); // Advance to Password Setup!
+  };
+
+  // STEP 3 HANDLER: Password Setup & Final Account Persistence
+  const handlePasswordSetupSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setSubmitting(true);
     const [first, ...rest] = fullName.trim().split(' ');
     const userEmail = channel === 'email' ? email : `${phone}@dbc.com`;
     const userPhone = channel === 'phone' ? phone : undefined;
 
     try {
-      // Attempt backend API registration (persist user to database)
       const { authService } = await import('../../services/auth/authService');
       await authService.register({
         email: userEmail,
@@ -205,10 +214,9 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         lastName: rest.join(' ') || 'User',
         role: 'ROLE_CUSTOMER',
         phone: userPhone,
-        firebaseUid,
+        firebaseUid: verifiedUid,
       });
     } catch (err: unknown) {
-      // If API server is running in client-only demo mode or returns an error, fallback gracefully while logging
       console.warn('Backend API registration notice:', err);
     } finally {
       setSubmitting(false);
@@ -223,7 +231,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     };
 
     onRegisterComplete(finalPayload);
-    setStep(3); // success view
+    setStep(4); // Success screen!
   };
 
   const handleResendClick = async () => {
@@ -251,15 +259,15 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   return (
     <div className="space-y-4 text-left">
       
-      {/* STEP 1: Registration form */}
+      {/* STEP 1: Registration details & channel selection */}
       {step === 1 && (
         <>
           <div className="space-y-1">
             <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Create Your Account</h2>
-            <p className="text-xs text-stone-500">Sign up as a customer to get started with your projects.</p>
+            <p className="text-xs text-stone-500">Enter your details to get started with your DBC account.</p>
           </div>
 
-          <form onSubmit={handleRegisterSubmit} className="space-y-3.5 pt-2">
+          <form onSubmit={handleDetailsSubmit} className="space-y-3.5 pt-2">
             {/* Full Name */}
             <div>
               <label htmlFor="reg-fullname" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
@@ -282,7 +290,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
               </div>
             </div>
 
-            {/* Choice */}
+            {/* Registration Channel Selector */}
             <div>
               <span className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
                 Registration Channel
@@ -345,7 +353,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
+                    placeholder="Enter your email address"
                     required
                     className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
                   />
@@ -369,57 +377,13 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     name="phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Enter your phone number"
+                    placeholder="Enter your 10-digit phone number"
                     required
                     className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
                   />
                 </div>
               </div>
             )}
-
-            {/* Password */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
-                  Password
-                </label>
-                <div className="relative">
-                  <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                  </svg>
-                  <input
-                    id="reg-password"
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Create password"
-                    required
-                    className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="reg-confirm-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                  </svg>
-                  <input
-                    id="reg-confirm-password"
-                    type="password"
-                    name="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm password"
-                    required
-                    className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
-                  />
-                </div>
-              </div>
-            </div>
 
             {/* Error alerts */}
             {error && (
@@ -446,35 +410,35 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  <span>Sending OTP...</span>
+                  <span>Sending Verification Code...</span>
                 </>
               ) : (
-                'Continue'
+                'Send Verification Code'
               )}
             </button>
           </form>
         </>
       )}
 
-      {/* STEP 2: Verification screen */}
+      {/* STEP 2: OTP Verification screen */}
       {step === 2 && (
         <>
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Verify Your Account</h2>
+            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Verify Verification Code</h2>
             <p className="text-xs text-stone-500">
               {channel === 'email' ? (
                 <>We've sent a verification code to your email address: <strong className="text-stone-700">{maskEmail(email)}</strong>.</>
               ) : (
-                <>We've sent a verification code to your phone number: <strong className="text-stone-700">{maskPhone(phone)}</strong>.</>
+                <>We've sent a 6-digit SMS code to your phone number: <strong className="text-stone-700">{maskPhone(phone)}</strong>.</>
               )}
             </p>
           </div>
 
-          <form onSubmit={handleVerifySubmit} className="space-y-3.5 pt-2">
+          <form onSubmit={handleVerifyOtpSubmit} className="space-y-3.5 pt-2">
             {/* OTP input */}
             <div>
               <label htmlFor="reg-otp" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5 text-center">
-                Verification Code
+                Enter 6-Digit Code
               </label>
               <input
                 id="reg-otp"
@@ -504,10 +468,10 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             {/* Action */}
             <button
               type="submit"
-              disabled={submitting}
+              disabled={verifyingOtp}
               className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
             >
-              {submitting ? 'Verifying...' : 'Verify'}
+              {verifyingOtp ? 'Verifying Code...' : 'Verify Code & Continue'}
             </button>
           </form>
 
@@ -536,28 +500,113 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
               }}
               className="font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer hover:underline"
             >
-              {channel === 'email' ? '← Change email' : '← Change phone number'}
+              {channel === 'email' ? '← Change email address' : '← Change phone number'}
             </button>
           </div>
         </>
       )}
 
-      {/* STEP 3: Verification success screen */}
+      {/* STEP 3: Setup Password */}
       {step === 3 && (
+        <>
+          <div className="space-y-1">
+            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Set Up Your Password</h2>
+            <p className="text-xs text-stone-500">Create a secure password to complete your account setup.</p>
+          </div>
+
+          <form onSubmit={handlePasswordSetupSubmit} className="space-y-3.5 pt-2">
+            {/* Password Field */}
+            <div>
+              <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+                New Password
+              </label>
+              <div className="relative">
+                <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <input
+                  id="reg-password"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="At least 6 characters"
+                  required
+                  className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Confirm Password Field */}
+            <div>
+              <label htmlFor="reg-confirm-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <input
+                  id="reg-confirm-password"
+                  type="password"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Re-enter your password"
+                  required
+                  className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Error alerts */}
+            {error && (
+              <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 leading-relaxed flex items-center gap-2" role="alert">
+                <svg className="w-4 h-4 shrink-0 text-rose-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+                <span>{error}</span>
+              </div>
+            )}
+
+            {/* Action */}
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {submitting ? (
+                <>
+                  <svg className="w-3.5 h-3.5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  <span>Creating Account...</span>
+                </>
+              ) : (
+                'Complete Registration & Create Account'
+              )}
+            </button>
+          </form>
+        </>
+      )}
+
+      {/* STEP 4: Registration Success screen */}
+      {step === 4 && (
         <div className="space-y-3 py-6 text-center">
           <div className="flex justify-center">
-            <span className="w-10 h-10 flex items-center justify-center bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-bold text-lg shadow-xs">
+            <span className="w-12 h-12 flex items-center justify-center bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-full font-bold text-xl shadow-xs">
               ✓
             </span>
           </div>
-          <h4 className="text-sm font-bold text-stone-900 uppercase tracking-wide">Verification Successful</h4>
-          <p className="text-xs text-stone-600 leading-relaxed max-w-[280px] mx-auto">
-            Your verification has been completed successfully! Please proceed to sign in with your credentials.
+          <h4 className="text-base font-bold text-stone-900 uppercase tracking-wide">Account Created Successfully</h4>
+          <p className="text-xs text-stone-600 leading-relaxed max-w-[300px] mx-auto">
+            Your verification and account setup are complete. Please proceed to sign in with your credentials.
           </p>
           <button
             type="button"
             onClick={onBackToLogin}
-            className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all cursor-pointer mt-2"
+            className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all cursor-pointer mt-3"
           >
             Proceed to Sign In
           </button>

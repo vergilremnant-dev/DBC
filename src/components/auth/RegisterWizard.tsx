@@ -36,6 +36,18 @@ function maskPhone(phoneStr: string): string {
   return `${masked}${visible}`;
 }
 
+import { auth, isFirebaseConfigured, RecaptchaVerifier, signInWithPhoneNumber } from '../../config/firebase';
+import type { ConfirmationResult } from '../../config/firebase';
+
+// Helper function to format phone numbers to E.164 (+91XXXXXXXXXX)
+function formatE164Phone(rawPhone: string): string {
+  const cleaned = rawPhone.replace(/[^\d+]/g, '');
+  if (cleaned.startsWith('+')) return cleaned;
+  const digits = cleaned.replace(/\D/g, '');
+  if (digits.length === 10) return `+91${digits}`;
+  return `+${digits}`;
+}
+
 export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWizardProps) {
   // Navigation step state (1 = Register Form, 2 = Verify Screen, 3 = Success)
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -48,9 +60,12 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   
-  // OTP Verification States
+  // OTP Verification & Firebase States
   const [otp, setOtp] = useState('');
   const [resendCooldown, setResendCooldown] = useState(30);
+  const [sendingOtp, setSendingOtp] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
 
   // Error state
   const [error, setError] = useState<string | null>(null);
@@ -65,7 +80,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     }
   }, [step, resendCooldown]);
 
-  const handleRegisterSubmit = (e: FormEvent) => {
+  const handleRegisterSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -99,12 +114,47 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       return;
     }
 
+    // Trigger Firebase Phone Authentication when channel is phone
+    if (channel === 'phone') {
+      const formattedPhone = formatE164Phone(phone);
+
+      if (isFirebaseConfigured && auth) {
+        try {
+          setSendingOtp(true);
+
+          let verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
+          if (!verifier) {
+            verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+              size: 'invisible',
+              callback: () => {},
+            });
+            (window as unknown as Record<string, unknown>).recaptchaVerifier = verifier;
+          }
+
+          const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
+          setConfirmationResult(result);
+        } catch (fbErr: any) {
+          console.error('Firebase Phone Auth Error:', fbErr?.code, fbErr?.message);
+          const errCode = fbErr?.code || '';
+          if (errCode === 'auth/invalid-phone-number') {
+            setError('The phone number format is invalid. Please check your 10-digit phone number.');
+          } else if (errCode === 'auth/operation-not-allowed') {
+            setError('Phone Authentication is not enabled in Firebase Console. Please enable Phone provider under Firebase Authentication settings.');
+          } else {
+            setError(fbErr?.message || 'Failed to send SMS OTP via Firebase. Please check your phone number and network.');
+          }
+          setSendingOtp(false);
+          return;
+        } finally {
+          setSendingOtp(false);
+        }
+      }
+    }
+
     // Pass verification check step transition
     setStep(2);
     setResendCooldown(30); // reset timer
   };
-
-  const [submitting, setSubmitting] = useState(false);
 
   const handleVerifySubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -117,6 +167,19 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     }
 
     setSubmitting(true);
+
+    // Verify Firebase Phone OTP if confirmationResult exists
+    if (channel === 'phone' && confirmationResult) {
+      try {
+        await confirmationResult.confirm(otp);
+      } catch (confErr: any) {
+        console.error('Firebase OTP Verification Error:', confErr?.code, confErr?.message);
+        setError('Invalid or expired verification code. Please check the code or click Resend.');
+        setSubmitting(false);
+        return;
+      }
+    }
+
     const [first, ...rest] = fullName.trim().split(' ');
     const userEmail = channel === 'email' ? email : `${phone}@dbc.com`;
     const userPhone = channel === 'phone' ? phone : undefined;
@@ -151,10 +214,25 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     setStep(3); // success view
   };
 
-  const handleResendClick = () => {
+  const handleResendClick = async () => {
     if (resendCooldown === 0) {
       setResendCooldown(30);
-      alert('A new verification code has been dispatched.');
+      if (channel === 'phone' && isFirebaseConfigured && auth) {
+        try {
+          const formattedPhone = formatE164Phone(phone);
+          const verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier;
+          if (verifier) {
+            const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
+            setConfirmationResult(result);
+            alert('A new SMS verification code has been dispatched via Firebase.');
+          }
+        } catch (err: any) {
+          console.error('Firebase Resend Error:', err);
+          alert('Failed to resend SMS OTP. ' + (err?.message || ''));
+        }
+      } else {
+        alert('A new verification code has been dispatched.');
+      }
     }
   };
 
@@ -341,12 +419,26 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
               </div>
             )}
 
+            {/* Invisible Firebase reCAPTCHA Container */}
+            <div id="recaptcha-container" className="flex justify-center my-1"></div>
+
             {/* Action */}
             <button
               type="submit"
+              disabled={sendingOtp}
               className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
             >
-              Continue
+              {sendingOtp ? (
+                <>
+                  <svg className="w-3.5 h-3.5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  <span>Sending OTP...</span>
+                </>
+              ) : (
+                'Continue'
+              )}
             </button>
           </form>
         </>

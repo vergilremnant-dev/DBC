@@ -116,38 +116,40 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
     // Trigger Firebase Phone Authentication when channel is phone
     if (channel === 'phone') {
+      if (!isFirebaseConfigured || !auth) {
+        setError('Firebase Phone Authentication is unavailable. Please ensure VITE_FIREBASE_* environment keys are configured.');
+        return;
+      }
+
       const formattedPhone = formatE164Phone(phone);
+      try {
+        setSendingOtp(true);
 
-      if (isFirebaseConfigured && auth) {
-        try {
-          setSendingOtp(true);
-
-          let verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
-          if (!verifier) {
-            verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-              size: 'invisible',
-              callback: () => {},
-            });
-            (window as unknown as Record<string, unknown>).recaptchaVerifier = verifier;
-          }
-
-          const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
-          setConfirmationResult(result);
-        } catch (fbErr: any) {
-          console.error('Firebase Phone Auth Error:', fbErr?.code, fbErr?.message);
-          const errCode = fbErr?.code || '';
-          if (errCode === 'auth/invalid-phone-number') {
-            setError('The phone number format is invalid. Please check your 10-digit phone number.');
-          } else if (errCode === 'auth/operation-not-allowed') {
-            setError('Phone Authentication is not enabled in Firebase Console. Please enable Phone provider under Firebase Authentication settings.');
-          } else {
-            setError(fbErr?.message || 'Failed to send SMS OTP via Firebase. Please check your phone number and network.');
-          }
-          setSendingOtp(false);
-          return;
-        } finally {
-          setSendingOtp(false);
+        let verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
+        if (!verifier) {
+          verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+            size: 'invisible',
+            callback: () => {},
+          });
+          (window as unknown as Record<string, unknown>).recaptchaVerifier = verifier;
         }
+
+        const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
+        setConfirmationResult(result);
+      } catch (fbErr: any) {
+        console.error('Firebase Phone Auth Error:', fbErr?.code, fbErr?.message);
+        const errCode = fbErr?.code || '';
+        if (errCode === 'auth/invalid-phone-number') {
+          setError('The phone number format is invalid. Please check your 10-digit phone number.');
+        } else if (errCode === 'auth/operation-not-allowed') {
+          setError('Phone Authentication is not enabled in Firebase Console. Please enable Phone provider under Firebase Authentication settings.');
+        } else {
+          setError(fbErr?.message || 'Failed to send SMS OTP via Firebase. Please check your phone number and network.');
+        }
+        setSendingOtp(false);
+        return;
+      } finally {
+        setSendingOtp(false);
       }
     }
 
@@ -168,13 +170,22 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
     setSubmitting(true);
 
-    // Verify Firebase Phone OTP if confirmationResult exists
-    if (channel === 'phone' && confirmationResult) {
+    let firebaseUid: string | undefined = undefined;
+
+    // MANDATORY Firebase Phone OTP verification check (NO BYPASS ALLOWED)
+    if (channel === 'phone') {
+      if (!confirmationResult) {
+        setError('No active Firebase phone verification session found. Please click "Change phone number" to restart OTP request.');
+        setSubmitting(false);
+        return;
+      }
+
       try {
-        await confirmationResult.confirm(otp);
+        const userCredential = await confirmationResult.confirm(otp);
+        firebaseUid = userCredential.user.uid;
       } catch (confErr: any) {
         console.error('Firebase OTP Verification Error:', confErr?.code, confErr?.message);
-        setError('Invalid or expired verification code. Please check the code or click Resend.');
+        setError('Invalid or expired verification code. The code you entered was rejected by Firebase.');
         setSubmitting(false);
         return;
       }
@@ -194,6 +205,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         lastName: rest.join(' ') || 'User',
         role: 'ROLE_CUSTOMER',
         phone: userPhone,
+        firebaseUid,
       });
     } catch (err: unknown) {
       // If API server is running in client-only demo mode or returns an error, fallback gracefully while logging

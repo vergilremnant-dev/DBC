@@ -26,10 +26,14 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
       return res.status(400).json({ success: false, message: 'Email address is already registered' });
     }
 
-    // Generate a secure 6-digit numeric OTP (or standard deterministic test OTP for test suite)
-    const rawOtp = normalizedEmail.startsWith('test')
+    // Generate a cryptographically secure 6-digit numeric OTP.
+    // Deterministic test OTP is STRICTLY gated to NODE_ENV === 'test' and test-prefixed emails.
+    const isTestEnvironment = process.env.NODE_ENV === 'test';
+    const isTestEmail = normalizedEmail.startsWith('test');
+
+    const rawOtp = isTestEnvironment && isTestEmail
       ? '123456'
-      : Math.floor(100000 + Math.random() * 900000).toString();
+      : crypto.randomInt(100000, 1000000).toString();
 
     // Hash OTP + email for session storage
     const tokenKey = `EMAIL_OTP:${normalizedEmail}:${rawOtp}`;
@@ -53,7 +57,11 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
       },
     });
 
-    console.log(`[Email OTP Dispatched] Email: ${normalizedEmail} | Verification Code: ${rawOtp}`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[Email OTP Dispatched] Email: ${normalizedEmail} | Verification Code: ${rawOtp}`);
+    } else {
+      console.log(`[Email OTP Dispatched] Email: ${normalizedEmail}`);
+    }
 
     return res.status(200).json({
       success: true,

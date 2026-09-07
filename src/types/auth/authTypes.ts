@@ -43,6 +43,8 @@ export interface RegisterRequest {
   phone?: string;
   preferredCity?: string;
   firebaseUid?: string;
+  verificationToken?: string;
+  firebaseIdToken?: string;
 }
 
 export interface RegisterResponse {

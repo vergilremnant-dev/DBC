@@ -28,9 +28,9 @@ export const authService = {
     }
   },
 
-  async verifyEmailOtp(email: string, otp: string): Promise<{ success: boolean; message: string }> {
+  async verifyEmailOtp(email: string, otp: string): Promise<{ success: boolean; message: string; verificationToken?: string }> {
     try {
-      const response = await axiosClient.post<{ success: boolean; message: string }>('/api/auth/verify-email-otp', { email, otp });
+      const response = await axiosClient.post<{ success: boolean; message: string; verificationToken?: string }>('/api/auth/verify-email-otp', { email, otp });
       return response.data;
     } catch (error) {
       throw new Error(getErrorMessage(error, 'Invalid or expired verification code'), { cause: error });

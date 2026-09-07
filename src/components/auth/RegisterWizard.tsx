@@ -70,6 +70,8 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   const [submitting, setSubmitting] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const [verifiedUid, setVerifiedUid] = useState<string | undefined>(undefined);
+  const [verificationToken, setVerificationToken] = useState<string | null>(null);
+  const [firebaseIdToken, setFirebaseIdToken] = useState<string | null>(null);
 
   // Status & Error states
   const [error, setError] = useState<string | null>(null);
@@ -178,7 +180,10 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     // MANDATORY Email / Firebase Phone OTP verification check
     if (channel === 'email') {
       try {
-        await authService.verifyEmailOtp(email, otp);
+        const verifyRes = await authService.verifyEmailOtp(email, otp);
+        if (verifyRes.verificationToken) {
+          setVerificationToken(verifyRes.verificationToken);
+        }
       } catch (verifyErr: any) {
         setError(verifyErr?.message || 'Invalid or expired verification code.');
         setVerifyingOtp(false);
@@ -194,6 +199,12 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       try {
         const userCredential = await confirmationResult.confirm(otp);
         setVerifiedUid(userCredential.user.uid);
+        try {
+          const idToken = await userCredential.user.getIdToken();
+          setFirebaseIdToken(idToken);
+        } catch {
+          // Fallback if ID token retrieval is unavailable
+        }
       } catch (confErr: any) {
         console.error('Firebase OTP Verification Error:', confErr?.code, confErr?.message);
         setError('Invalid or expired verification code. The code you entered was rejected by Firebase.');
@@ -235,6 +246,8 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         role: 'ROLE_CUSTOMER',
         phone: userPhone,
         firebaseUid: verifiedUid,
+        verificationToken: verificationToken || undefined,
+        firebaseIdToken: firebaseIdToken || undefined,
       });
     } catch (err: unknown) {
       console.warn('Backend API registration notice:', err);
@@ -334,6 +347,9 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   onClick={() => {
                     setChannel('email');
                     setError(null);
+                    setVerificationToken(null);
+                    setFirebaseIdToken(null);
+                    setVerifiedUid(undefined);
                   }}
                   className={`group relative py-2.5 px-3 text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
                     channel === 'email'
@@ -353,6 +369,9 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   onClick={() => {
                     setChannel('phone');
                     setError(null);
+                    setVerificationToken(null);
+                    setFirebaseIdToken(null);
+                    setVerifiedUid(undefined);
                   }}
                   className={`group relative py-2.5 px-3 text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
                     channel === 'phone'
@@ -385,7 +404,10 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     type="email"
                     name="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setVerificationToken(null);
+                    }}
                     placeholder="Enter your email address"
                     required
                     className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
@@ -410,7 +432,11 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                       type="tel"
                       name="phone"
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                        setFirebaseIdToken(null);
+                        setVerifiedUid(undefined);
+                      }}
                       placeholder="Enter your 10-digit phone number"
                       required
                       className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"

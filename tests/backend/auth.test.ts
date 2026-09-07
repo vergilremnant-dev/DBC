@@ -78,4 +78,77 @@ describe('Auth Utility Tests', () => {
       process.env.NODE_ENV = originalEnv;
     });
   });
+
+  describe('Server-Side Registration Proof Gating Tests', () => {
+    it('should reject unverified email registration attempts missing a verificationToken', async () => {
+      const { default: registerHandler } = await import('../../api-lib/routes/auth/register.js');
+      const mockReq = {
+        method: 'POST',
+        body: {
+          email: 'unverified_attacker@example.com',
+          password: 'Password123!',
+          firstName: 'Attacker',
+          lastName: 'User',
+          role: 'ROLE_CUSTOMER',
+        },
+      } as any;
+
+      let statusCode = 0;
+      let jsonPayload: any = {};
+
+      const mockRes = {
+        status: (code: number) => {
+          statusCode = code;
+          return {
+            json: (data: any) => {
+              jsonPayload = data;
+              return data;
+            },
+          };
+        },
+        setHeader: () => {},
+      } as any;
+
+      await registerHandler(mockReq, mockRes);
+      expect(statusCode).toBe(400);
+      expect(jsonPayload.success).toBe(false);
+      expect(jsonPayload.message).toContain('Please verify your email address');
+    });
+
+    it('should reject registration attempts with fabricated/invalid verification tokens', async () => {
+      const { default: registerHandler } = await import('../../api-lib/routes/auth/register.js');
+      const mockReq = {
+        method: 'POST',
+        body: {
+          email: 'fake_token_user@example.com',
+          password: 'Password123!',
+          firstName: 'FakeToken',
+          lastName: 'Tester',
+          role: 'ROLE_CUSTOMER',
+          verificationToken: 'fabricated_fake_token_12345',
+        },
+      } as any;
+
+      let statusCode = 0;
+      let jsonPayload: any = {};
+
+      const mockRes = {
+        status: (code: number) => {
+          statusCode = code;
+          return {
+            json: (data: any) => {
+              jsonPayload = data;
+              return data;
+            },
+          };
+        },
+        setHeader: () => {},
+      } as any;
+
+      await registerHandler(mockReq, mockRes);
+      expect(statusCode).toBe(400);
+      expect(jsonPayload.success).toBe(false);
+      expect(jsonPayload.message).toContain('invalid or has expired');
+    });
+  });
 });

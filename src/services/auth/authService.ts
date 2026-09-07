@@ -57,6 +57,105 @@ export const authService = {
     }
   },
 
+  async socialLoginBackend(idToken: string, providerName: string, email?: string | null, name?: string | null): Promise<LoginResponse> {
+    try {
+      const response = await axiosClient.post<LoginPayload>('/api/auth/social-login', {
+        idToken,
+        provider: providerName,
+        email: email || undefined,
+        name: name || undefined,
+      });
+      const data = unwrapLoginResponse(response.data);
+      setAccessToken(data.accessToken);
+      return data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, `Unable to complete ${providerName} sign-in`), { cause: error });
+    }
+  },
+
+  async signInWithGoogle(): Promise<LoginResponse> {
+    const { auth, GoogleAuthProvider, signInWithPopup, isFirebaseConfigured } = await import('../../config/firebase');
+    if (!isFirebaseConfigured || !auth) {
+      throw new Error('Firebase Authentication is unavailable. Please ensure VITE_FIREBASE_* environment keys are configured.');
+    }
+
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.addScope('email');
+      provider.addScope('profile');
+      const userCredential = await signInWithPopup(auth, provider);
+      const idToken = await userCredential.user.getIdToken();
+      return await this.socialLoginBackend(idToken, 'google', userCredential.user.email, userCredential.user.displayName);
+    } catch (fbErr: any) {
+      const errCode = fbErr?.code || '';
+      if (errCode === 'auth/popup-closed-by-user' || errCode === 'auth/cancelled-popup-request') {
+        throw new Error('Sign-in cancelled.');
+      } else if (errCode === 'auth/operation-not-allowed' || errCode === 'auth/configuration-not-found') {
+        throw new Error('Google sign-in is temporarily unavailable. Please enable Google provider in Firebase Console.');
+      } else if (errCode === 'auth/popup-blocked') {
+        throw new Error('Pop-up was blocked by browser. Please allow pop-ups for this website and try again.');
+      }
+      if (fbErr?.message && !fbErr.message.includes('Firebase:')) {
+        throw fbErr;
+      }
+      throw new Error('We couldn\'t sign you in with Google. Please try again.');
+    }
+  },
+
+  async signInWithMicrosoft(): Promise<LoginResponse> {
+    const { auth, OAuthProvider, signInWithPopup, isFirebaseConfigured } = await import('../../config/firebase');
+    if (!isFirebaseConfigured || !auth) {
+      throw new Error('Firebase Authentication is unavailable. Please ensure VITE_FIREBASE_* environment keys are configured.');
+    }
+
+    try {
+      const provider = new OAuthProvider('microsoft.com');
+      const userCredential = await signInWithPopup(auth, provider);
+      const idToken = await userCredential.user.getIdToken();
+      return await this.socialLoginBackend(idToken, 'microsoft', userCredential.user.email, userCredential.user.displayName);
+    } catch (fbErr: any) {
+      const errCode = fbErr?.code || '';
+      if (errCode === 'auth/popup-closed-by-user' || errCode === 'auth/cancelled-popup-request') {
+        throw new Error('Sign-in cancelled.');
+      } else if (errCode === 'auth/operation-not-allowed' || errCode === 'auth/configuration-not-found') {
+        throw new Error('Microsoft sign-in is temporarily unavailable. Please enable Microsoft provider in Firebase Console.');
+      } else if (errCode === 'auth/popup-blocked') {
+        throw new Error('Pop-up was blocked by browser. Please allow pop-ups for this website and try again.');
+      }
+      if (fbErr?.message && !fbErr.message.includes('Firebase:')) {
+        throw fbErr;
+      }
+      throw new Error('We couldn\'t sign you in with Microsoft. Please try again.');
+    }
+  },
+
+  async signInWithApple(): Promise<LoginResponse> {
+    const { auth, OAuthProvider, signInWithPopup, isFirebaseConfigured } = await import('../../config/firebase');
+    if (!isFirebaseConfigured || !auth) {
+      throw new Error('Firebase Authentication is unavailable. Please ensure VITE_FIREBASE_* environment keys are configured.');
+    }
+
+    try {
+      const provider = new OAuthProvider('apple.com');
+      const userCredential = await signInWithPopup(auth, provider);
+      const idToken = await userCredential.user.getIdToken();
+      return await this.socialLoginBackend(idToken, 'apple', userCredential.user.email, userCredential.user.displayName);
+    } catch (fbErr: any) {
+      const errCode = fbErr?.code || '';
+      if (errCode === 'auth/popup-closed-by-user' || errCode === 'auth/cancelled-popup-request') {
+        throw new Error('Sign-in cancelled.');
+      } else if (errCode === 'auth/operation-not-allowed' || errCode === 'auth/configuration-not-found') {
+        throw new Error('Apple sign-in is temporarily unavailable. Please enable Apple provider in Firebase Console.');
+      } else if (errCode === 'auth/popup-blocked') {
+        throw new Error('Pop-up was blocked by browser. Please allow pop-ups for this website and try again.');
+      }
+      if (fbErr?.message && !fbErr.message.includes('Firebase:')) {
+        throw fbErr;
+      }
+      throw new Error('We couldn\'t sign you in with Apple. Please try again.');
+    }
+  },
+
   async logout(): Promise<void> {
     try {
       await axiosClient.post('/api/auth/logout');

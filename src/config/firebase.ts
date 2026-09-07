@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import type { Auth, ConfirmationResult } from 'firebase/auth';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, OAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
+import type { Auth, ConfirmationResult, UserCredential } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env?.VITE_FIREBASE_API_KEY || import.meta.env?.FIREBASE_API_KEY || '',
@@ -28,5 +28,14 @@ if (isFirebaseConfigured) {
 
 export const auth: Auth | null = authInstance;
 
-export { RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, sendEmailVerification };
-export type { ConfirmationResult };
+export {
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  GoogleAuthProvider,
+  OAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+};
+export type { ConfirmationResult, UserCredential };

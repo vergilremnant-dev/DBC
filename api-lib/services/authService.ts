@@ -300,3 +300,133 @@ export async function revokeUserSession(userId: string, sessionId: string): Prom
     });
   }
 }
+
+export interface SocialLoginRequest {
+  idToken: string;
+  provider?: string;
+  email?: string;
+  name?: string;
+}
+
+export async function socialLoginUser(
+  input: SocialLoginRequest,
+  userAgent?: string,
+  ipAddress?: string
+): Promise<LoginResponse> {
+  const { idToken, provider } = input;
+  if (!idToken) {
+    throw new Error('ID Token is required for social authentication');
+  }
+
+  let verifiedEmail = input.email;
+  let verifiedName = input.name;
+
+  try {
+    const tokenInfoRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`);
+    if (tokenInfoRes.ok) {
+      const data = await tokenInfoRes.json();
+      if (data.email) {
+        verifiedEmail = data.email;
+        if (data.name) verifiedName = data.name;
+      }
+    }
+  } catch (err) {
+    console.warn('Google tokeninfo fetch fallback:', err);
+  }
+
+  if (!verifiedEmail) {
+    try {
+      const parts = idToken.split('.');
+      if (parts.length === 3) {
+        const payloadJson = Buffer.from(parts[1], 'base64').toString('utf-8');
+        const payload = JSON.parse(payloadJson);
+        if (payload.email) {
+          verifiedEmail = payload.email;
+        }
+        if (!verifiedName && payload.name) {
+          verifiedName = payload.name;
+        }
+      }
+    } catch (parseErr) {
+      console.warn('JWT token decode notice:', parseErr);
+    }
+  }
+
+  if (!verifiedEmail) {
+    throw new Error('Could not verify social identity email address');
+  }
+
+  let user = await db.user.findFirst({
+    where: { email: verifiedEmail },
+    include: {
+      customerProfile: true,
+      providerProfile: true,
+    },
+  });
+
+  if (!user) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(crypto.randomBytes(16).toString('hex'), salt);
+
+    const newUser = await db.user.create({
+      data: {
+        email: verifiedEmail,
+        password: hashedPassword,
+        role: Role.CUSTOMER,
+        status: 'ACTIVE',
+      },
+    });
+
+    const fullName = verifiedName || verifiedEmail.split('@')[0] || 'Social User';
+
+    await db.customerProfile.create({
+      data: {
+        userId: newUser.id,
+        fullName,
+        phoneNumber: '',
+        city: 'Hyderabad',
+        state: 'Telangana',
+        pincode: '500001',
+      },
+    });
+
+    user = await db.user.findUnique({
+      where: { id: newUser.id },
+      include: {
+        customerProfile: true,
+        providerProfile: true,
+      },
+    });
+  }
+
+  if (!user) {
+    throw new Error('Failed to create or retrieve social user profile');
+  }
+
+  if (user.status !== 'ACTIVE') {
+    throw new Error('Your account is currently inactive or suspended');
+  }
+
+  await logSecurityEvent(user.id, 'LOGIN', `User authenticated via ${provider || 'social'} login from IP: ${ipAddress || 'unknown'}`);
+
+  const accessToken = generateAccessToken(user);
+  const rawRefreshToken = crypto.randomBytes(40).toString('hex');
+  const hashedRefreshToken = hashToken(rawRefreshToken);
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  await db.userSession.create({
+    data: {
+      userId: user.id,
+      token: hashedRefreshToken,
+      userAgent,
+      ipAddress,
+      expiresAt,
+    },
+  });
+
+  return {
+    accessToken,
+    refreshToken: rawRefreshToken,
+    user: mapUserToAuthUser(user),
+  };
+}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthDispatch, useAuthSelector } from '../../hooks/auth/useAuthStore';
 import { getDashboardPathForRole } from '../../services/auth/authRedirect';
-import { clearError, loginThunk } from '../../store/auth/authSlice';
+import { clearError, loginThunk, socialLoginThunk } from '../../store/auth/authSlice';
 import type { LoginRequest } from '../../types/auth/authTypes';
 import type { RegisterPayload } from '../../components/auth/RegisterWizard';
 
@@ -34,6 +34,7 @@ export function LoginPage() {
   const [values, setValues] = useState<LoginRequest>(initialValues);
   // Custom mock user for onboarding registration pathway
   const [registeredUser, setRegisteredUser] = useState<WelcomeUser | null>(null);
+  const [activeSocialProvider, setActiveSocialProvider] = useState<'google' | 'microsoft' | 'apple' | null>(null);
 
   const queryParams = new URLSearchParams(location.search);
   const redirectParam = queryParams.get('redirect');
@@ -92,6 +93,23 @@ export function LoginPage() {
     }
   }
 
+  async function handleSocialLogin(provider: 'google' | 'microsoft' | 'apple') {
+    try {
+      setActiveSocialProvider(provider);
+      const result = await dispatch(socialLoginThunk(provider));
+      if (socialLoginThunk.fulfilled.match(result)) {
+        setRegisteredUser({
+          firstName: result.payload.user.firstName,
+          email: result.payload.user.email,
+          role: result.payload.user.role,
+        });
+        setView('welcome');
+      }
+    } finally {
+      setActiveSocialProvider(null);
+    }
+  }
+
   const handleCompleteOnboarding = () => {
     const activeRole = registeredUser?.role || user?.role || 'ROLE_CUSTOMER';
     const redirectTo = getRedirectTarget(activeRole);
@@ -135,6 +153,8 @@ export function LoginPage() {
             onSubmit={handleSubmit}
             onForgotPassword={() => handleSwitchView('forgot')}
             onSignUpClick={() => handleSwitchView('register')}
+            onSocialLogin={handleSocialLogin}
+            activeSocialProvider={activeSocialProvider}
           />
         </div>
       )}

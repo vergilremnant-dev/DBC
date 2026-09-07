@@ -47,6 +47,27 @@ export const loginThunk = createAsyncThunk<LoginResponse, LoginRequest, { reject
   },
 )
 
+export const socialLoginThunk = createAsyncThunk<
+  LoginResponse,
+  'google' | 'microsoft' | 'apple',
+  { rejectValue: string }
+>('auth/socialLogin', async (provider, { rejectWithValue }) => {
+  try {
+    let response: LoginResponse
+    if (provider === 'google') {
+      response = await authService.signInWithGoogle()
+    } else if (provider === 'microsoft') {
+      response = await authService.signInWithMicrosoft()
+    } else {
+      response = await authService.signInWithApple()
+    }
+    persistUser(response.user)
+    return response
+  } catch (error) {
+    return rejectWithValue(toErrorMessage(error, `Unable to sign in with ${provider}`))
+  }
+})
+
 export const logoutThunk = createAsyncThunk<void, void, { rejectValue: string }>(
   'auth/logout',
   async (_, { rejectWithValue }) => {
@@ -118,6 +139,21 @@ const authSlice = createSlice({
       .addCase(loginThunk.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload ?? 'Unable to login'
+        state.isAuthenticated = false
+      })
+      .addCase(socialLoginThunk.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(socialLoginThunk.fulfilled, (state, action) => {
+        state.loading = false
+        state.accessToken = action.payload.accessToken
+        state.user = action.payload.user
+        state.isAuthenticated = true
+      })
+      .addCase(socialLoginThunk.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload ?? 'Social authentication failed'
         state.isAuthenticated = false
       })
       .addCase(logoutThunk.pending, (state) => {

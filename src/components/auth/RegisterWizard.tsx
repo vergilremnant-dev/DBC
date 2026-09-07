@@ -65,13 +65,15 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   const [otp, setOtp] = useState('');
   const [resendCooldown, setResendCooldown] = useState(30);
   const [sendingOtp, setSendingOtp] = useState(false);
+  const [resendingOtp, setResendingOtp] = useState(false);
   const [verifyingOtp, setVerifyingOtp] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const [verifiedUid, setVerifiedUid] = useState<string | undefined>(undefined);
 
-  // Error state
+  // Status & Error states
   const [error, setError] = useState<string | null>(null);
+  const [resendSuccessMessage, setResendSuccessMessage] = useState<string | null>(null);
 
   // Countdown timer effect for resend cooldown
   useEffect(() => {
@@ -253,31 +255,37 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   };
 
   const handleResendClick = async () => {
-    if (resendCooldown === 0) {
-      setResendCooldown(30);
+    if (resendCooldown > 0 || resendingOtp) return;
+
+    setError(null);
+    setResendSuccessMessage(null);
+    setResendingOtp(true);
+
+    try {
       if (channel === 'email') {
-        try {
-          await authService.sendEmailOtp(email);
-          alert('A new verification code has been sent to your email address.');
-        } catch (err: any) {
-          alert(err?.message || 'Failed to resend email verification code.');
-        }
+        await authService.sendEmailOtp(email);
+        setResendSuccessMessage('A new verification code has been sent to your email address.');
+        setResendCooldown(30);
       } else if (channel === 'phone' && isFirebaseConfigured && auth) {
-        try {
-          const formattedPhone = formatE164Phone(phone);
-          const verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier;
-          if (verifier) {
-            const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
-            setConfirmationResult(result);
-            alert('A new SMS verification code has been dispatched via Firebase.');
-          }
-        } catch (err: any) {
-          console.error('Firebase Resend Error:', err);
-          alert('Failed to resend SMS OTP. ' + (err?.message || ''));
+        const formattedPhone = formatE164Phone(phone);
+        const verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier;
+        if (verifier) {
+          const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
+          setConfirmationResult(result);
+          setResendSuccessMessage('A new SMS verification code has been sent to your phone number.');
+          setResendCooldown(30);
+        } else {
+          setError('reCAPTCHA verification is missing. Please change your phone number and try again.');
         }
       } else {
-        alert('A new verification code has been dispatched.');
+        setError('Firebase Phone Authentication is unavailable. Please check your configuration.');
       }
+    } catch (err: any) {
+      console.error('Firebase Resend Error:', err);
+      const errMsg = err?.message || 'We couldn\'t send a new verification code. Please try again.';
+      setError(errMsg);
+    } finally {
+      setResendingOtp(false);
     }
   };
 
@@ -489,12 +497,25 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 pattern="[0-9]*"
                 maxLength={6}
                 value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                onChange={(e) => {
+                  setOtp(e.target.value.replace(/\D/g, ''));
+                  setResendSuccessMessage(null);
+                }}
                 placeholder="· · · · · ·"
                 required
                 className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-2xl font-mono tracking-[0.75em] text-center py-2.5 text-stone-900 placeholder:text-stone-300 transition-all outline-none select-all"
               />
             </div>
+
+            {/* Resend success notice */}
+            {resendSuccessMessage && (
+              <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-semibold text-emerald-800 leading-relaxed flex items-center gap-2" role="status">
+                <svg className="w-4 h-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span>{resendSuccessMessage}</span>
+              </div>
+            )}
 
             {/* Error alerts */}
             {error && (
@@ -521,13 +542,13 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             <span>Didn't receive the code?</span>
             <button
               type="button"
-              disabled={resendCooldown > 0}
+              disabled={resendCooldown > 0 || resendingOtp}
               onClick={handleResendClick}
               className={`font-bold text-emerald-700 hover:underline transition cursor-pointer ${
-                resendCooldown > 0 ? 'opacity-50 cursor-not-allowed' : 'hover:text-emerald-800'
+                resendCooldown > 0 || resendingOtp ? 'opacity-50 cursor-not-allowed' : 'hover:text-emerald-800'
               }`}
             >
-              Resend Code {resendCooldown > 0 ? `(in ${resendCooldown}s)` : ''}
+              {resendingOtp ? 'Sending Code...' : `Resend Code ${resendCooldown > 0 ? `(in ${resendCooldown}s)` : ''}`}
             </button>
           </div>
 
@@ -538,6 +559,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
               onClick={() => {
                 setStep(1);
                 setError(null);
+                setResendSuccessMessage(null);
               }}
               className="font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer hover:underline"
             >

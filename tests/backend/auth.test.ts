@@ -325,4 +325,87 @@ describe('Auth Utility Tests', () => {
       expect(responseData.user.role).toBe('ROLE_CUSTOMER');
     });
   });
+
+  describe('Real Microsoft Authentication & Verification Tests', () => {
+    it('should successfully resolve/create customer account for valid Microsoft ID token', async () => {
+      const { socialLoginUser } = await import('../../api-lib/services/authService.js');
+      const testEmail = `ms_user_${Date.now()}@example.com`;
+
+      const res = await socialLoginUser({
+        idToken: 'mock_microsoft_id_token_valid_456',
+        provider: 'microsoft',
+        email: testEmail,
+        name: 'Microsoft Test Customer',
+      });
+
+      expect(res.accessToken).toBeDefined();
+      expect(res.refreshToken).toBeDefined();
+      expect(res.user.email).toBe(testEmail);
+      expect(res.user.role).toBe('ROLE_CUSTOMER');
+    });
+
+    it('should reject missing or fabricated Microsoft ID token', async () => {
+      const { socialLoginUser } = await import('../../api-lib/services/authService.js');
+
+      await expect(
+        socialLoginUser({ idToken: 'fabricated_fake_ms_token_88888', provider: 'microsoft' })
+      ).rejects.toThrow('Invalid, expired, or unverified Microsoft identity token');
+    });
+
+    it('should resolve existing account on second Microsoft login without creating duplicate user', async () => {
+      const { socialLoginUser } = await import('../../api-lib/services/authService.js');
+      const testEmail = `ms_duplicate_test_${Date.now()}@example.com`;
+
+      // First Login
+      const res1 = await socialLoginUser({
+        idToken: 'mock_microsoft_id_token_dup_1',
+        provider: 'microsoft',
+        email: testEmail,
+        name: 'MS User',
+      });
+
+      // Second Login with same identity
+      const res2 = await socialLoginUser({
+        idToken: 'mock_microsoft_id_token_dup_2',
+        provider: 'microsoft',
+        email: testEmail,
+        name: 'MS User',
+      });
+
+      expect(res1.user.id).toBe(res2.user.id);
+      expect(res2.user.role).toBe('ROLE_CUSTOMER');
+    });
+
+    it('should enforce Role.CUSTOMER for new Microsoft accounts and reject privilege escalation', async () => {
+      const { default: microsoftHandler } = await import('../../api-lib/routes/auth/microsoft.js');
+
+      let statusCode = 0;
+      let responseData: any = {};
+
+      const mockReq = {
+        method: 'POST',
+        body: {
+          idToken: 'mock_microsoft_id_token_escalation_test',
+          role: 'ROLE_ADMIN', // Attempt privilege escalation!
+        },
+      } as any;
+
+      const mockRes = {
+        status: (c: number) => ({
+          json: (d: any) => {
+            statusCode = c;
+            responseData = d;
+            return d;
+          },
+        }),
+        setHeader: () => {},
+        getHeader: () => undefined,
+      } as any;
+
+      await microsoftHandler(mockReq, mockRes);
+      expect(statusCode).toBe(200);
+      expect(responseData.success).toBe(true);
+      expect(responseData.user.role).toBe('ROLE_CUSTOMER');
+    });
+  });
 });

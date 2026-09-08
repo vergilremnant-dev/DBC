@@ -3,8 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ProjectService } from '../../services/contractor/ProjectService.js';
 import { axiosClient } from '../../services/auth/axiosClient.js';
 import type { Project } from '../../types/contractor/ProjectTypes.js';
+import { PaymentCheckoutModal } from '../../components/workspace/payments/PaymentCheckoutModal';
 
-type PlmsTab = 'overview' | 'documents' | 'activity' | 'tasks' | 'changes' | 'logs' | 'gallery' | 'handover';
+type PlmsTab = 'overview' | 'financials' | 'documents' | 'activity' | 'tasks' | 'changes' | 'logs' | 'gallery' | 'handover';
+
 
 
 
@@ -114,6 +116,13 @@ export function ProjectWorkspacePage() {
   const [uploadDocUrl, setUploadDocUrl] = useState('');
   const [uploadDocType, setUploadDocType] = useState('Drawing');
   const [deletingDocId, setDeletingDocId] = useState<string | null>(null);
+
+  // Payment checkout state
+  const [isPayModalOpen, setIsPayModalOpen] = useState(false);
+  const [payingMilestone, setPayingMilestone] = useState<any | null>(null);
+  const [paidMilestoneIds, setPaidMilestoneIds] = useState<string[]>([]);
+
+
 
   // Form composer variables
   const [newLogText, setNewLogText] = useState('');
@@ -488,10 +497,18 @@ export function ProjectWorkspacePage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 w-full">
         
+        {noticeMessage && (
+          <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold shadow-xs animate-in fade-in flex items-center justify-between">
+            <span>{noticeMessage}</span>
+            <button onClick={() => setNoticeMessage('')} className="text-emerald-600 hover:text-emerald-900">✕</button>
+          </div>
+        )}
+
         {/* Navigation tabs switcher */}
         <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar mb-6">
           {([
             { id: 'overview', label: 'Dashboard & Milestones', icon: '📊' },
+            { id: 'financials', label: 'Financials & Payments', icon: '💳' },
             { id: 'documents', label: 'Project Documents', icon: '📁' },
             { id: 'activity', label: 'Activity Timeline', icon: '⚡' },
             { id: 'tasks', label: 'Kanban Tasks & Gantt', icon: '📋' },
@@ -763,6 +780,184 @@ export function ProjectWorkspacePage() {
             </div>
           );
         })()}
+
+        {/* FINANCIALS & PAYMENTS TAB */}
+        {activePlmsTab === 'financials' && (() => {
+          const totalProjectAmount = project.quotation?.totalAmount ||
+            (project.milestones || []).reduce((acc: number, m: any) => acc + (m.budgetAllocation || 0), 0) ||
+            2500000;
+          
+          const milestones = project.milestones || [];
+          
+          const paidMilestones = milestones.filter((m: any) => 
+            paidMilestoneIds.includes(m.id) || m.status === 'APPROVED' || m.status === 'COMPLETED'
+          );
+          const amountPaid = paidMilestones.reduce((sum: number, m: any) => sum + (m.budgetAllocation || 0), 0);
+          const amountDue = Math.max(0, totalProjectAmount - amountPaid);
+          
+          const platformFeeRate = 0.01;
+          const gstRate = 0.18;
+          const platformFeeAmount = Math.round(totalProjectAmount * platformFeeRate);
+          const gstAmount = Math.round(platformFeeAmount * gstRate);
+          const totalCustomerPayable = totalProjectAmount + platformFeeAmount + gstAmount;
+
+          return (
+            <div className="space-y-6 text-left">
+              
+              {/* Financial Summary Cards */}
+              <div className="grid gap-4 sm:grid-cols-4">
+                <div className="dbc-card p-5">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Total Project Value</span>
+                  <h4 className="text-xl font-extrabold text-stone-black mt-1">₹{totalProjectAmount.toLocaleString()}</h4>
+                  <span className="text-[9px] text-stone-500 font-semibold">Agreed Commercial Terms</span>
+                </div>
+
+                <div className="dbc-card p-5">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Total Customer Payable</span>
+                  <h4 className="text-xl font-extrabold text-stone-black mt-1">₹{totalCustomerPayable.toLocaleString()}</h4>
+                  <span className="text-[9px] text-stone-500 font-semibold">Incl. 1% Escrow + 18% GST</span>
+                </div>
+
+                <div className="dbc-card p-5">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Amount Paid</span>
+                  <h4 className="text-xl font-extrabold text-brand-emerald mt-1">₹{amountPaid.toLocaleString()}</h4>
+                  <span className="text-[9px] text-stone-500 font-semibold">{paidMilestones.length} Milestones Settled</span>
+                </div>
+
+                <div className="dbc-card p-5">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Remaining Balance</span>
+                  <h4 className="text-xl font-extrabold text-amber-700 mt-1">₹{amountDue.toLocaleString()}</h4>
+                  <span className="text-[9px] text-stone-500 font-semibold">Payable on Milestone Releases</span>
+                </div>
+              </div>
+
+              {/* Milestone Payments Breakdown */}
+              <div className="dbc-card space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
+                    Milestone Payment Schedule ({milestones.length})
+                  </h3>
+                  <span className="text-[9.5px] font-bold text-stone-500">
+                    Server-Controlled Billing Rules
+                  </span>
+                </div>
+
+                {milestones.length === 0 ? (
+                  <div className="p-6 bg-stone-50 border border-dashed border-stone-300 rounded-2xl text-center space-y-2">
+                    <span className="text-2xl">💳</span>
+                    <p className="text-xs font-semibold text-stone-700">No milestone payment schedule defined yet.</p>
+                    <p className="text-[11px] text-stone-500">
+                      Milestones will display payment allocations once added to the project.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {milestones.map((m: any, idx: number) => {
+                      const isPaid = paidMilestoneIds.includes(m.id) || m.status === 'APPROVED' || m.status === 'COMPLETED';
+                      const isDue = m.status === 'IN_PROGRESS' || m.status === 'COMPLETED';
+                      const allocAmount = m.budgetAllocation || 0;
+
+                      return (
+                        <div
+                          key={m.id || idx}
+                          className="p-4 bg-white border border-stone-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-emerald-300 transition"
+                        >
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-bold text-stone-400">#{idx + 1}</span>
+                              <h4 className="text-xs font-black text-stone-900">{m.name}</h4>
+                              <span
+                                className={`dbc-badge text-[7.5px] py-0.5 uppercase font-bold ${
+                                  isPaid
+                                    ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                                    : isDue
+                                    ? 'bg-amber-100 text-amber-800 border-amber-200'
+                                    : 'bg-stone-100 text-stone-600 border-stone-200'
+                                }`}
+                              >
+                                {isPaid ? 'Paid' : isDue ? 'Payment Due' : 'Scheduled'}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-stone-500 font-medium">
+                              Milestone Allocation: <strong className="text-stone-800">₹{allocAmount.toLocaleString()}</strong>
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
+                            <div className="text-right hidden sm:block">
+                              <span className="text-[9px] font-black uppercase text-stone-400 block">Status</span>
+                              <span className="text-xs font-bold text-stone-800">{isPaid ? 'Settled' : 'Unpaid'}</span>
+                            </div>
+
+                            {currentUserRole === 'CUSTOMER' && !isPaid && (
+                              <button
+                                onClick={() => {
+                                  setPayingMilestone(m);
+                                  setIsPayModalOpen(true);
+                                }}
+                                className="dbc-btn dbc-btn-sm dbc-btn-primary"
+                              >
+                                Pay Milestone ₹{allocAmount.toLocaleString()}
+                              </button>
+                            )}
+
+                            {isPaid && (
+                              <span className="px-3 py-1 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-lg border border-emerald-200 flex items-center gap-1">
+                                ✓ Paid
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Payment Transparency & Disclosure */}
+              <div className="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl space-y-2 text-xs">
+                <div className="flex items-center gap-2 text-emerald-900 font-bold">
+                  <span>🛡️</span>
+                  <span>Commercial & Fee Transparency</span>
+                </div>
+                <p className="text-[11px] text-emerald-800 font-medium leading-relaxed">
+                  Every milestone payment includes a transparent breakdown separating the core Project Milestone Value, the 1% DBC Platform Escrow & Verification Fee, and 18% GST on platform fees. Payment funds are processed per milestone completion sign-off.
+                </p>
+              </div>
+
+              {/* Transaction Ledger */}
+              <div className="dbc-card space-y-4">
+                <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
+                  Project Payment & Transaction History
+                </h3>
+                
+                {paidMilestones.length === 0 ? (
+                  <p className="text-xs text-stone-500 italic">No transaction records logged yet.</p>
+                ) : (
+                  <div className="space-y-2">
+                    {paidMilestones.map((m: any, idx: number) => (
+                      <div key={idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
+                        <div className="space-y-0.5">
+                          <span className="text-[8px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
+                            SUCCESS
+                          </span>
+                          <p className="font-bold text-stone-900 text-xs">Milestone Payment: "{m.name}"</p>
+                          <span className="text-[9px] font-mono text-stone-400">TXN-PROJ-{m.id ? m.id.slice(-6) : idx + 100}</span>
+                        </div>
+                        <div className="text-right">
+                          <strong className="text-stone-900 text-xs block">₹{(m.budgetAllocation || 0).toLocaleString()}</strong>
+                          <span className="text-[9px] text-stone-400 font-semibold">Verified</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+          );
+        })()}
+
 
         {/* PROJECT DOCUMENTS */}
         {activePlmsTab === 'documents' && (() => {
@@ -1605,8 +1800,30 @@ export function ProjectWorkspacePage() {
         </div>
       )}
 
+      {/* MILESTONE PAYMENT CHECKOUT MODAL */}
+      {isPayModalOpen && payingMilestone && (
+        <PaymentCheckoutModal
+          isOpen={isPayModalOpen}
+          onClose={() => {
+            setIsPayModalOpen(false);
+            setPayingMilestone(null);
+          }}
+          onSuccess={() => {
+            setPaidMilestoneIds(prev => [...prev, payingMilestone.id]);
+            showNotice(`Payment of ₹${(payingMilestone.budgetAllocation || 0).toLocaleString()} successfully processed for milestone "${payingMilestone.name}".`);
+            setIsPayModalOpen(false);
+            setPayingMilestone(null);
+          }}
+          amount={payingMilestone.budgetAllocation || 0}
+          milestoneName={payingMilestone.name}
+          projectName={project.requirement?.title || 'DBC Construction Project'}
+          professionalName={project.provider?.fullName || project.provider?.businessName || 'Professional Contractor'}
+        />
+      )}
+
     </div>
   );
 }
+
 
 

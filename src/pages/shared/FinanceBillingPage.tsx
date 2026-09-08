@@ -88,6 +88,12 @@ export function FinanceBillingPage() {
   // Interactive Payment modal states
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<InvoiceRecord | null>(null);
+  const [noticeMessage, setNoticeMessage] = useState('');
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(''), 4000);
+  };
 
   // Estimate composer variables
   const [estName, setEstName] = useState('');
@@ -147,7 +153,7 @@ export function FinanceBillingPage() {
     setEstMaterials('');
     setEstLabor('');
     setEstEquipment('');
-    alert(`Estimate draft created for ${totalAmount.toLocaleString()} INR.`);
+    showNotice(`Estimate draft created for ₹${totalAmount.toLocaleString()} INR.`);
   };
 
   // Add new Invoice
@@ -169,7 +175,7 @@ export function FinanceBillingPage() {
     setInvRef('');
     setInvMilestone('');
     setInvAmount('');
-    alert('Invoice generated and stored as Draft.');
+    showNotice('Invoice generated and stored as Draft.');
   };
 
   // Add new Expense
@@ -189,7 +195,7 @@ export function FinanceBillingPage() {
     setExpenses([newExp, ...expenses]);
     setExpAmount('');
     setExpNotes('');
-    alert('Expense recorded and submitted for approval.');
+    showNotice('Expense recorded and submitted for approval.');
   };
 
   // Submit Refund Request
@@ -209,7 +215,7 @@ export function FinanceBillingPage() {
     setRefunds([newRef, ...refunds]);
     setRefAmount('');
     setRefReason('');
-    alert('Refund request submitted for verification.');
+    showNotice('Refund request submitted for verification.');
   };
 
   // Resolve invoice state override
@@ -257,6 +263,13 @@ export function FinanceBillingPage() {
       {/* 2. Sub-Tab Switcher Row */}
       <main className="mx-auto max-w-6xl w-full px-4 py-8 sm:px-6 space-y-6 flex-1 text-left">
         
+        {noticeMessage && (
+          <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold shadow-xs animate-in fade-in flex items-center justify-between">
+            <span>{noticeMessage}</span>
+            <button onClick={() => setNoticeMessage('')} className="text-emerald-600 hover:text-emerald-900">✕</button>
+          </div>
+        )}
+
         <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar">
           {([
             { id: 'dashboard', label: 'Finance Dashboard', icon: '💳' },

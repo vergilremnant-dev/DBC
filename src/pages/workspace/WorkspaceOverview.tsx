@@ -85,6 +85,13 @@ export default function WorkspaceOverview() {
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
   const [selectedPayItem, setSelectedPayItem] = useState<(typeof MOCK_PAYMENTS)[0] | null>(null);
 
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(null), 4000);
+  };
+
   const handlePaymentSuccess = () => {
     if (selectedPayItem) {
       setPayments(prev =>
@@ -149,6 +156,17 @@ export default function WorkspaceOverview() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto text-left relative animate-gentle-fade">
       
+      {/* Toast / Notification Banner */}
+      {noticeMessage && (
+        <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-3 rounded-2xl text-xs font-semibold shadow-apple-sm flex items-center justify-between animate-fade-in">
+          <div className="flex items-center gap-2">
+            <span>ℹ️</span>
+            <span>{noticeMessage}</span>
+          </div>
+          <button onClick={() => setNoticeMessage(null)} className="text-emerald-700 hover:text-emerald-900 font-bold">×</button>
+        </div>
+      )}
+
       {/* 1. Sub-Tab Selector Navigation */}
       <div className="flex border-b border-light-border p-1 bg-white rounded-2xl shadow-apple-sm max-w-lg">
         {([
@@ -403,7 +421,7 @@ export default function WorkspaceOverview() {
             <SectionHeader title="Project Documents" subtitle="Centralized blueprints, contracts, and invoices." />
             
             <button
-              onClick={() => alert('Mock document upload interface active. Ready to store CAD blueprints.')}
+              onClick={() => showNotice('Document upload interface active. Ready to store CAD blueprints.')}
               className="dbc-btn dbc-btn-md dbc-btn-primary"
             >
               Upload Document +
@@ -454,7 +472,7 @@ export default function WorkspaceOverview() {
                     <td>{doc.date}</td>
                     <td className="text-right">
                       <button
-                        onClick={() => alert(`Downloading ${doc.name} (simulated link)...`)}
+                        onClick={() => showNotice(`Downloading ${doc.name} (simulated link)...`)}
                         className="text-brand-emerald font-black hover:underline cursor-pointer focus:outline-none"
                       >
                         Download
@@ -531,7 +549,7 @@ export default function WorkspaceOverview() {
                         </button>
                       ) : (
                         <button
-                          onClick={() => alert('Downloading milestone receipt PDF...')}
+                          onClick={() => showNotice('Downloading milestone receipt PDF...')}
                           className="text-stone-gray font-black hover:underline cursor-pointer focus:outline-none"
                         >
                           Receipt

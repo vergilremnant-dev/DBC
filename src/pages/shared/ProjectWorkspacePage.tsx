@@ -149,12 +149,19 @@ export function ProjectWorkspacePage() {
     }
   }, [id]);
 
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(null), 4000);
+  };
+
   // Handle change request resolutions
   const handleResolveChangeRequest = (id: string, approve: boolean) => {
     setChangeRequests(prev =>
       prev.map(cr => (cr.id === id ? { ...cr, status: approve ? 'Approved' : 'Declined' } : cr))
     );
-    alert(`Change request ${approve ? 'Approved' : 'Declined'}. Budget totals adjusted.`);
+    showNotice(`✓ Change request ${approve ? 'Approved' : 'Declined'}. Budget totals adjusted.`);
   };
 
   // Append change request
@@ -173,7 +180,7 @@ export function ProjectWorkspacePage() {
     setNewChangeTitle('');
     setNewChangeCost('');
     setNewChangeReason('');
-    alert('Change request submitted for client review.');
+    showNotice('✓ Change request submitted for client review.');
   };
 
   // Add daily log update
@@ -192,7 +199,7 @@ export function ProjectWorkspacePage() {
     setDailyLogs([newLog, ...dailyLogs]);
     setNewLogText('');
     setNewLogMaterials('');
-    alert('Daily construction log saved.');
+    showNotice('✓ Daily construction log saved.');
   };
 
   // Create Risk item
@@ -209,7 +216,7 @@ export function ProjectWorkspacePage() {
     };
     setRisks([...risks, item]);
     setRiskTitle('');
-    alert('Risk metric added to project ledger.');
+    showNotice('✓ Risk metric added to project ledger.');
   };
 
   // Kanban task status shifter
@@ -244,8 +251,16 @@ export function ProjectWorkspacePage() {
   }
 
   return (
-    <div className="min-h-screen bg-warm-cream text-stone-850 pb-16 flex flex-col font-sans">
+    <div className="min-h-screen bg-warm-cream text-stone-850 pb-16 flex flex-col font-sans relative">
       
+      {/* Toast Notice Banner */}
+      {noticeMessage && (
+        <div className="fixed top-4 right-4 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border border-stone-700 animate-gentle-fade flex items-center gap-2">
+          <span>{noticeMessage}</span>
+          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2">✕</button>
+        </div>
+      )}
+
       {/* Header Banner */}
       <div className="bg-white border-b border-light-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-left">
@@ -253,18 +268,30 @@ export function ProjectWorkspacePage() {
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span className="bg-stone-100 text-stone-700 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Project PLMS Engine
+                  Project Workspace
                 </span>
                 <span className="bg-emerald-50 text-emerald-800 border border-emerald-100 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                  {project.status}
+                  {project.status === 'ASSIGNED' ? 'Project Assigned' : project.status}
                 </span>
               </div>
               <h1 className="text-2xl font-bold text-stone-900 font-serif leading-tight">
                 {project.requirement?.title || 'Execution Work Agreement'}
               </h1>
               <p className="text-xs text-stone-500 font-medium">
-                Client: {project.customer?.fullName} &bull; Lead Partner: {project.provider?.fullName}
+                Client: {project.customer?.fullName} &bull; Lead Professional: {project.provider?.fullName}
               </p>
+            </div>
+            
+            {/* Origin Lineage Card */}
+            <div className="bg-stone-50 border border-stone-200 p-3 rounded-2xl text-xs text-left space-y-1 shrink-0">
+              <span className="text-[9px] font-black uppercase text-stone-400 block tracking-wider">Origin Lineage</span>
+              <div className="flex items-center gap-1.5 text-[11px] font-bold text-stone-800">
+                <span>Project Request</span>
+                <span className="text-stone-400">➔</span>
+                <span>Accepted Proposal</span>
+                <span className="text-stone-400">➔</span>
+                <span className="text-emerald-700">Project Created</span>
+              </div>
             </div>
             
             <button

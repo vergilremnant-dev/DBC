@@ -128,6 +128,13 @@ export default function ProfessionalProjects() {
   // Consultant functions
   const activeConsult = consults.find(c => c.id === selectedConsultId) || null;
 
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(null), 4000);
+  };
+
   const handleAddRec = (e: React.FormEvent) => {
     e.preventDefault();
     if (!recInput.trim() || !activeConsult) return;
@@ -140,17 +147,25 @@ export default function ProfessionalProjects() {
       )
     );
     setRecInput('');
-    alert('Recommendation added to advice board!');
+    showNotice('✓ Recommendation added to advice board!');
   };
 
   const handlePublishReport = (id: string) => {
     setConsults(prev => prev.map(c => c.id === id ? { ...c, status: 'Published' } : c));
-    alert('Technical report generated and published to customer inbox.');
+    showNotice('✓ Technical report generated and published to customer inbox.');
   };
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto text-left relative pb-10 animate-gentle-fade">
       
+      {/* Toast Notice Banner */}
+      {noticeMessage && (
+        <div className="fixed top-4 right-4 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border border-stone-700 animate-gentle-fade flex items-center gap-2">
+          <span>{noticeMessage}</span>
+          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2">✕</button>
+        </div>
+      )}
+
       {workspaceView === 'CONSULTANT' ? (
         // CONSULTANT VIEW: MY CONSULTATIONS
         <div className="space-y-6">

@@ -293,16 +293,22 @@ export async function transitionQuotationStatus(
         data: { status: QuotationStatus.REJECTED },
       });
 
-      // 3. Create the Project record
-      await tx.project.create({
-        data: {
-          requirementId: existing.requirementId,
-          customerId: existing.requirement.customerId,
-          providerId: existing.providerId,
-          quotationId: id,
-          status: 'ASSIGNED',
-        },
+      // 3. Create the Project record if not already created (duplicate protection)
+      const existingProject = await tx.project.findFirst({
+        where: { quotationId: id },
       });
+
+      if (!existingProject) {
+        await tx.project.create({
+          data: {
+            requirementId: existing.requirementId,
+            customerId: existing.requirement.customerId,
+            providerId: existing.providerId,
+            quotationId: id,
+            status: 'ASSIGNED',
+          },
+        });
+      }
     }
 
     return updated;

@@ -78,6 +78,13 @@ export default function TradeProfessionalDashboard() {
     { text: 'Reminder: Site visit scheduled tomorrow at Madhapur.', time: '4 hours ago' }
   ];
 
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(null), 4000);
+  };
+
   // Startup loader
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -87,11 +94,11 @@ export default function TradeProfessionalDashboard() {
   }, []);
 
   const handleExpressInterest = (id: string) => {
-    alert(`Interest expressed successfully for ${id}. Customer notified.`);
+    showNotice(`✓ Interest expressed successfully for ${id}. Customer notified.`);
   };
 
   const handleSaveReq = (id: string) => {
-    alert(`Requirement ${id} saved to bookmarks.`);
+    showNotice(`✓ Requirement ${id} saved to bookmarks.`);
   };
 
   if (isLoading) {
@@ -101,6 +108,13 @@ export default function TradeProfessionalDashboard() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-20 text-left animate-gentle-fade select-none">
       
+      {noticeMessage && (
+        <div className="fixed top-4 right-4 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border border-stone-700 animate-gentle-fade flex items-center gap-2">
+          <span>{noticeMessage}</span>
+          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2">✕</button>
+        </div>
+      )}
+
       {/* 1. Header Dashboard Overview */}
       <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-1">

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CalendarManagementPage from '../consultant/CalendarManagementPage';
 import { bookingApi } from '../../../services/booking/bookingService';
 import type { Booking as ApiBooking, BookingStatus } from '../../../types/booking/bookingTypes';
@@ -44,6 +45,7 @@ function mapApiToProviderBooking(b: ApiBooking): ProviderBooking {
 }
 
 export default function ProfessionalBookings() {
+  const navigate = useNavigate();
   const [workspaceView, setWorkspaceView] = useState<'PRO' | 'CONSULTANT'>(() => {
     return (localStorage.getItem('dbc_provider_view') as 'PRO' | 'CONSULTANT') || 'PRO';
   });
@@ -111,6 +113,14 @@ export default function ProfessionalBookings() {
     };
   }, [refreshKey]);
 
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+  const [declineConfirmId, setDeclineConfirmId] = useState<string | null>(null);
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(null), 4000);
+  };
+
   // Lifecycle Action Handlers
   const handleAccept = async (id: string) => {
     setActionLoadingId(id);
@@ -122,18 +132,18 @@ export default function ProfessionalBookings() {
       if (selectedBooking && selectedBooking.id === id) {
         setSelectedBooking(prev => prev ? { ...prev, status: 'ACCEPTED' as BookingStatus } : null);
       }
-      alert('✓ Project request accepted successfully.');
+      showNotice('✓ Project request accepted successfully.');
     } catch (err: any) {
       console.error('Failed to accept request', err);
       const serverMessage = err?.response?.data?.message || err?.message || 'Failed to accept project request.';
-      alert(`⚠️ ${serverMessage}`);
+      showNotice(`⚠️ ${serverMessage}`);
     } finally {
       setActionLoadingId(null);
     }
   };
 
-  const handleReject = async (id: string) => {
-    if (!confirm('Are you sure you want to decline this project request?')) return;
+  const confirmDecline = async (id: string) => {
+    setDeclineConfirmId(null);
     setActionLoadingId(id);
     try {
       await bookingApi.rejectBooking(id);
@@ -143,11 +153,11 @@ export default function ProfessionalBookings() {
       if (selectedBooking && selectedBooking.id === id) {
         setSelectedBooking(prev => prev ? { ...prev, status: 'REJECTED' as BookingStatus } : null);
       }
-      alert('Project request declined.');
+      showNotice('Project request declined.');
     } catch (err: any) {
       console.error('Failed to decline request', err);
       const serverMessage = err?.response?.data?.message || err?.message || 'Failed to decline project request.';
-      alert(`⚠️ ${serverMessage}`);
+      showNotice(`⚠️ ${serverMessage}`);
     } finally {
       setActionLoadingId(null);
     }
@@ -163,18 +173,17 @@ export default function ProfessionalBookings() {
       if (selectedBooking && selectedBooking.id === id) {
         setSelectedBooking(prev => prev ? { ...prev, status: 'IN_PROGRESS' as BookingStatus } : null);
       }
-      alert('✓ Project marked as Started.');
+      showNotice('✓ Project marked as Started.');
     } catch (err: any) {
       console.error('Failed to start project', err);
       const serverMessage = err?.response?.data?.message || err?.message || 'Failed to update project status.';
-      alert(`⚠️ ${serverMessage}`);
+      showNotice(`⚠️ ${serverMessage}`);
     } finally {
       setActionLoadingId(null);
     }
   };
 
   const handleComplete = async (id: string) => {
-    if (!confirm('Confirm marking this project as COMPLETED?')) return;
     setActionLoadingId(id);
     try {
       await bookingApi.completeBooking(id);
@@ -184,11 +193,11 @@ export default function ProfessionalBookings() {
       if (selectedBooking && selectedBooking.id === id) {
         setSelectedBooking(prev => prev ? { ...prev, status: 'COMPLETED' as BookingStatus } : null);
       }
-      alert('✓ Project marked as Completed.');
+      showNotice('✓ Project marked as Completed.');
     } catch (err: any) {
       console.error('Failed to complete project', err);
       const serverMessage = err?.response?.data?.message || err?.message || 'Failed to complete project.';
-      alert(`⚠️ ${serverMessage}`);
+      showNotice(`⚠️ ${serverMessage}`);
     } finally {
       setActionLoadingId(null);
     }
@@ -235,6 +244,42 @@ export default function ProfessionalBookings() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-20 text-left animate-gentle-fade select-none">
       
+      {/* Toast Notice Banner */}
+      {noticeMessage && (
+        <div className="fixed top-4 right-4 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border border-stone-700 animate-gentle-fade flex items-center gap-2">
+          <span>{noticeMessage}</span>
+          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2">✕</button>
+        </div>
+      )}
+
+      {/* Decline Confirmation Modal */}
+      {declineConfirmId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/50 backdrop-blur-xs p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-stone-200 space-y-4">
+            <h3 className="text-base font-bold text-stone-900">Decline Project Request</h3>
+            <p className="text-xs text-stone-600">
+              Are you sure you want to decline this project request? The customer will be notified, and this action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={() => setDeclineConfirmId(null)}
+                className="dbc-btn dbc-btn-sm dbc-btn-outline"
+                disabled={actionLoadingId === declineConfirmId}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => confirmDecline(declineConfirmId)}
+                className="dbc-btn dbc-btn-sm dbc-btn-danger"
+                disabled={actionLoadingId === declineConfirmId}
+              >
+                {actionLoadingId === declineConfirmId ? 'Declining...' : 'Confirm Decline'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-stone-200 p-6 rounded-3xl shadow-sm relative">
         <div className="space-y-1">
@@ -401,7 +446,7 @@ export default function ProfessionalBookings() {
                                 Accept Request
                               </button>
                               <button
-                                onClick={() => handleReject(b.id)}
+                                onClick={() => setDeclineConfirmId(b.id)}
                                 disabled={actionLoadingId === b.id}
                                 className="dbc-btn dbc-btn-sm dbc-btn-danger"
                               >
@@ -411,23 +456,39 @@ export default function ProfessionalBookings() {
                           )}
 
                           {b.status === 'ACCEPTED' && (
-                            <button
-                              onClick={() => handleStart(b.id)}
-                              disabled={actionLoadingId === b.id}
-                              className="dbc-btn dbc-btn-sm dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none"
-                            >
-                              Start Project
-                            </button>
+                            <>
+                              <button
+                                onClick={() => navigate('/workspace/inbox')}
+                                className="dbc-btn dbc-btn-sm border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
+                              >
+                                💬 Contact Customer
+                              </button>
+                              <button
+                                onClick={() => handleStart(b.id)}
+                                disabled={actionLoadingId === b.id}
+                                className="dbc-btn dbc-btn-sm dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none"
+                              >
+                                Start Project
+                              </button>
+                            </>
                           )}
 
                           {b.status === 'IN_PROGRESS' && (
-                            <button
-                              onClick={() => handleComplete(b.id)}
-                              disabled={actionLoadingId === b.id}
-                              className="dbc-btn dbc-btn-sm dbc-btn-primary"
-                            >
-                              Mark Completed
-                            </button>
+                            <>
+                              <button
+                                onClick={() => navigate('/workspace/inbox')}
+                                className="dbc-btn dbc-btn-sm border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
+                              >
+                                💬 Contact Customer
+                              </button>
+                              <button
+                                onClick={() => handleComplete(b.id)}
+                                disabled={actionLoadingId === b.id}
+                                className="dbc-btn dbc-btn-sm dbc-btn-primary"
+                              >
+                                Mark Completed
+                              </button>
+                            </>
                           )}
 
                           {b.status === 'COMPLETED' && (
@@ -541,7 +602,7 @@ export default function ProfessionalBookings() {
                       Accept
                     </button>
                     <button
-                      onClick={() => handleReject(selectedBooking.id)}
+                      onClick={() => setDeclineConfirmId(selectedBooking.id)}
                       disabled={actionLoadingId === selectedBooking.id}
                       className="dbc-btn dbc-btn-md dbc-btn-danger"
                     >
@@ -551,23 +612,39 @@ export default function ProfessionalBookings() {
                 )}
 
                 {selectedBooking.status === 'ACCEPTED' && (
-                  <button
-                    onClick={() => handleStart(selectedBooking.id)}
-                    disabled={actionLoadingId === selectedBooking.id}
-                    className="w-full dbc-btn dbc-btn-md dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none"
-                  >
-                    Start Project
-                  </button>
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => navigate('/workspace/inbox')}
+                      className="w-full dbc-btn dbc-btn-md border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
+                    >
+                      💬 Contact Customer
+                    </button>
+                    <button
+                      onClick={() => handleStart(selectedBooking.id)}
+                      disabled={actionLoadingId === selectedBooking.id}
+                      className="w-full dbc-btn dbc-btn-md dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none"
+                    >
+                      Start Project
+                    </button>
+                  </div>
                 )}
 
                 {selectedBooking.status === 'IN_PROGRESS' && (
-                  <button
-                    onClick={() => handleComplete(selectedBooking.id)}
-                    disabled={actionLoadingId === selectedBooking.id}
-                    className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
-                  >
-                    Mark as Completed
-                  </button>
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => navigate('/workspace/inbox')}
+                      className="w-full dbc-btn dbc-btn-md border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
+                    >
+                      💬 Contact Customer
+                    </button>
+                    <button
+                      onClick={() => handleComplete(selectedBooking.id)}
+                      disabled={actionLoadingId === selectedBooking.id}
+                      className="w-full dbc-btn dbc-btn-md dbc-btn-primary"
+                    >
+                      Mark as Completed
+                    </button>
+                  </div>
                 )}
               </div>
             </div>

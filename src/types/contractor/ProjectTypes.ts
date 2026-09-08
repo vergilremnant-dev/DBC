@@ -41,6 +41,10 @@ export interface Project {
     description: string;
     location: string;
   };
+  quotation?: {
+    id: number;
+    totalAmount: number;
+  };
   phases?: ProjectPhase[];
   milestones?: ProjectMilestone[];
   workOrders?: WorkOrder[];

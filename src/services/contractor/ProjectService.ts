@@ -95,6 +95,42 @@ export const ProjectService = {
     }
   },
 
+  async updateMilestone(
+    projectId: string,
+    payload: {
+      milestoneId: string;
+      name?: string;
+      description?: string;
+      budgetAllocation?: number;
+      plannedStart?: string;
+      plannedEnd?: string;
+      status?: string;
+      completionPercentage?: number;
+    }
+  ): Promise<ProjectMilestone> {
+    try {
+      const response = await axiosClient.put<ApiResponse<ProjectMilestone>>(
+        `/api/projects/${projectId}/milestones`,
+        payload
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Unable to update milestone'), { cause: error });
+    }
+  },
+
+  async deleteMilestone(projectId: string, milestoneId: string): Promise<{ success: boolean; id: string }> {
+    try {
+      const response = await axiosClient.delete<ApiResponse<{ success: boolean; id: string }>>(
+        `/api/projects/${projectId}/milestones`,
+        { data: { milestoneId } }
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Unable to delete milestone'), { cause: error });
+    }
+  },
+
   async assignResource(
     projectId: string,
     payload: {

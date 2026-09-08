@@ -128,6 +128,111 @@ export async function createProjectMilestone(
   return milestone;
 }
 
+export async function updateProjectMilestone(
+  projectId: string,
+  milestoneId: string,
+  userId: string,
+  updates: {
+    name?: string;
+    description?: string;
+    budgetAllocation?: number;
+    plannedStart?: Date;
+    plannedEnd?: Date;
+    status?: string;
+    completionPercentage?: number;
+  }
+) {
+  const existing = await db.projectMilestone.findUnique({
+    where: { id: milestoneId },
+  });
+
+  if (!existing) {
+    throw new Error('Milestone not found');
+  }
+
+  if (existing.projectId !== projectId) {
+    throw new Error('Milestone does not belong to this project');
+  }
+
+  // Validate state transitions if status is changing
+  if (updates.status && updates.status !== existing.status) {
+    if (existing.status === 'APPROVED' && updates.status !== 'APPROVED') {
+      throw new Error('Approved milestone status cannot be changed');
+    }
+  }
+
+  let actualStart = existing.actualStart;
+  let actualEnd = existing.actualEnd;
+  let completionPercentage = updates.completionPercentage ?? existing.completionPercentage;
+
+  if (updates.status === 'IN_PROGRESS') {
+    if (!actualStart) actualStart = new Date();
+    if (updates.completionPercentage === undefined && existing.completionPercentage === 0) {
+      completionPercentage = 50.0;
+    }
+  } else if (updates.status === 'COMPLETED' || updates.status === 'APPROVED') {
+    if (!actualEnd) actualEnd = new Date();
+    completionPercentage = 100.0;
+  } else if (updates.status === 'PENDING') {
+    completionPercentage = 0.0;
+  }
+
+  const updated = await db.projectMilestone.update({
+    where: { id: milestoneId },
+    data: {
+      name: updates.name ?? existing.name,
+      description: updates.description !== undefined ? updates.description : existing.description,
+      budgetAllocation: updates.budgetAllocation !== undefined ? updates.budgetAllocation : existing.budgetAllocation,
+      plannedStart: updates.plannedStart !== undefined ? updates.plannedStart : existing.plannedStart,
+      plannedEnd: updates.plannedEnd !== undefined ? updates.plannedEnd : existing.plannedEnd,
+      status: updates.status ?? existing.status,
+      completionPercentage,
+      actualStart,
+      actualEnd,
+    },
+  });
+
+  await addProjectTimelineEvent(
+    projectId,
+    userId,
+    'MILESTONE_UPDATE',
+    `Milestone "${updated.name}" updated (Status: ${updated.status}, Progress: ${updated.completionPercentage}%)`
+  );
+
+  return updated;
+}
+
+export async function deleteProjectMilestone(projectId: string, milestoneId: string, userId: string) {
+  const existing = await db.projectMilestone.findUnique({
+    where: { id: milestoneId },
+  });
+
+  if (!existing) {
+    throw new Error('Milestone not found');
+  }
+
+  if (existing.projectId !== projectId) {
+    throw new Error('Milestone does not belong to this project');
+  }
+
+  if (existing.status === 'APPROVED' || existing.status === 'COMPLETED') {
+    throw new Error('Cannot delete a milestone that is already completed or approved');
+  }
+
+  await db.projectMilestone.delete({
+    where: { id: milestoneId },
+  });
+
+  await addProjectTimelineEvent(
+    projectId,
+    userId,
+    'MILESTONE_DELETE',
+    `Milestone "${existing.name}" was deleted`
+  );
+
+  return { success: true, id: milestoneId };
+}
+
 export async function createWorkOrder(projectId: string, userId: string, input: CreateWorkOrderInput) {
   const wo = await db.workOrder.create({
     data: {

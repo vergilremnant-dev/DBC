@@ -5,14 +5,7 @@ import type { Project } from '../../types/contractor/ProjectTypes.js';
 
 type PlmsTab = 'overview' | 'tasks' | 'changes' | 'logs' | 'gallery' | 'handover';
 
-interface MilestoneItem {
-  id: string;
-  name: string;
-  dueDate: string;
-  progress: number;
-  status: 'Draft' | 'In Progress' | 'Completed' | 'Approved';
-  notes: string;
-}
+
 
 interface KanbanTask {
   id: string;
@@ -57,11 +50,6 @@ interface ProjectPhoto {
   caption: string;
 }
 
-const INITIAL_MILESTONES: MilestoneItem[] = [
-  { id: 'm-1', name: 'Foundation Masonry and Concrete Pouring', dueDate: '12 Aug 2026', progress: 100, status: 'Approved', notes: 'Core pillar support curing completed.' },
-  { id: 'm-2', name: 'Structural Framing and Beam Grid Setup', dueDate: '28 Aug 2026', progress: 40, status: 'In Progress', notes: 'Structural columns aligned. Beam grid installation in progress.' },
-  { id: 'm-3', name: 'MEP Conduiting and Sanitary Layout', dueDate: '15 Sep 2026', progress: 0, status: 'Draft', notes: 'Waiting for structural clearance.' },
-];
 
 const INITIAL_KANBAN: KanbanTask[] = [
   { id: 'k-1', title: 'Verify cement curing moisture levels', assignee: 'Bob Builder', priority: 'Medium', status: 'done' },
@@ -97,12 +85,27 @@ export function ProjectWorkspacePage() {
   const [activePlmsTab, setActivePlmsTab] = useState<PlmsTab>('overview');
 
   // Interactive Lists
-  const [milestones] = useState<MilestoneItem[]>(INITIAL_MILESTONES);
   const [kanbanTasks, setKanbanTasks] = useState<KanbanTask[]>(INITIAL_KANBAN);
   const [changeRequests, setChangeRequests] = useState<ChangeRequest[]>(INITIAL_CHANGES);
   const [risks, setRisks] = useState<RiskItem[]>(INITIAL_RISKS);
   const [dailyLogs, setDailyLogs] = useState<DailyLog[]>(INITIAL_LOGS);
   const [photos] = useState<ProjectPhoto[]>(INITIAL_PHOTOS);
+
+  // Milestone management state
+  const [isAddMsModalOpen, setIsAddMsModalOpen] = useState(false);
+  const [addMsName, setAddMsName] = useState('');
+  const [addMsDesc, setAddMsDesc] = useState('');
+  const [addMsBudget, setAddMsBudget] = useState('');
+  const [addMsEnd, setAddMsEnd] = useState('');
+
+  const [editingMilestone, setEditingMilestone] = useState<any | null>(null);
+  const [editMsName, setEditMsName] = useState('');
+  const [editMsDesc, setEditMsDesc] = useState('');
+  const [editMsBudget, setEditMsBudget] = useState('');
+  const [editMsEnd, setEditMsEnd] = useState('');
+  const [editMsStatus, setEditMsStatus] = useState('PENDING');
+
+  const [deletingMilestoneId, setDeletingMilestoneId] = useState<string | null>(null);
 
   // Form composer variables
   const [newLogText, setNewLogText] = useState('');
@@ -127,6 +130,13 @@ export function ProjectWorkspacePage() {
       console.error('Failed to parse token payload', e);
     }
   }
+
+  const reloadProject = async () => {
+    if (id) {
+      const data = await ProjectService.getProjectDetail(id);
+      setProject(data);
+    }
+  };
 
   useEffect(() => {
     async function loadProjectDetails() {
@@ -155,6 +165,86 @@ export function ProjectWorkspacePage() {
     setNoticeMessage(msg);
     setTimeout(() => setNoticeMessage(null), 4000);
   };
+
+  // Milestone actions
+  const handleAddMilestoneSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!project || !addMsName.trim()) return;
+    try {
+      await ProjectService.createMilestone(project.id, {
+        name: addMsName.trim(),
+        description: addMsDesc.trim() || undefined,
+        budgetAllocation: addMsBudget ? Number(addMsBudget) : 0,
+        plannedEnd: addMsEnd || undefined,
+      });
+      await reloadProject();
+      setIsAddMsModalOpen(false);
+      setAddMsName('');
+      setAddMsDesc('');
+      setAddMsBudget('');
+      setAddMsEnd('');
+      showNotice('✓ New project milestone created successfully.');
+    } catch (err: any) {
+      showNotice(`⚠️ ${err.message || 'Failed to create milestone'}`);
+    }
+  };
+
+  const handleOpenEditMilestone = (m: any) => {
+    setEditingMilestone(m);
+    setEditMsName(m.name || '');
+    setEditMsDesc(m.description || '');
+    setEditMsBudget(m.budgetAllocation ? String(m.budgetAllocation) : '');
+    setEditMsEnd(m.plannedEnd ? new Date(m.plannedEnd).toISOString().split('T')[0] : '');
+    setEditMsStatus(m.status || 'PENDING');
+  };
+
+  const handleUpdateMilestoneSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!project || !editingMilestone) return;
+    try {
+      await ProjectService.updateMilestone(project.id, {
+        milestoneId: editingMilestone.id,
+        name: editMsName.trim(),
+        description: editMsDesc.trim() || undefined,
+        budgetAllocation: editMsBudget ? Number(editMsBudget) : undefined,
+        plannedEnd: editMsEnd || undefined,
+        status: editMsStatus,
+      });
+      await reloadProject();
+      setEditingMilestone(null);
+      showNotice('✓ Project milestone updated successfully.');
+    } catch (err: any) {
+      showNotice(`⚠️ ${err.message || 'Failed to update milestone'}`);
+    }
+  };
+
+  const handleMarkMilestoneComplete = async (milestoneId: string) => {
+    if (!project) return;
+    try {
+      await ProjectService.updateMilestone(project.id, {
+        milestoneId,
+        status: 'COMPLETED',
+      });
+      await reloadProject();
+      showNotice('✓ Milestone marked as COMPLETED.');
+    } catch (err: any) {
+      showNotice(`⚠️ ${err.message || 'Failed to complete milestone'}`);
+    }
+  };
+
+  const handleDeleteMilestoneConfirm = async () => {
+    if (!project || !deletingMilestoneId) return;
+    try {
+      await ProjectService.deleteMilestone(project.id, deletingMilestoneId);
+      await reloadProject();
+      setDeletingMilestoneId(null);
+      showNotice('✓ Milestone removed from project plan.');
+    } catch (err: any) {
+      setDeletingMilestoneId(null);
+      showNotice(`⚠️ ${err.message || 'Failed to delete milestone'}`);
+    }
+  };
+
 
   // Handle change request resolutions
   const handleResolveChangeRequest = (id: string, approve: boolean) => {
@@ -368,71 +458,205 @@ export function ProjectWorkspacePage() {
         {/* Tab content rendering */}
 
         {/* OVERVIEW & MILESTONES */}
-        {activePlmsTab === 'overview' && (
-          <div className="space-y-6">
-            
-            {/* Quick Metrics row */}
-            <div className="grid gap-4 sm:grid-cols-4">
-              <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Approved Budget</span>
-                <h4 className="text-xl font-extrabold text-stone-black mt-1">₹25,00,000</h4>
-              </div>
-              <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Actual Spending</span>
-                <h4 className="text-xl font-extrabold text-stone-black mt-1">₹18,20,000</h4>
-              </div>
-              <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Remaining Balance</span>
-                <h4 className="text-xl font-extrabold text-brand-emerald mt-1">₹6,80,000</h4>
-              </div>
-              <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Overall Health</span>
-                <h4 className="text-xl font-extrabold text-brand-emerald mt-1">🟢 HEALTHY</h4>
-              </div>
-            </div>
+        {activePlmsTab === 'overview' && (() => {
+          const projectMilestones = project.milestones || [];
+          const totalMilestonesCount = projectMilestones.length;
+          const completedMilestonesCount = projectMilestones.filter(
+            (m) => m.status === 'COMPLETED' || m.status === 'APPROVED'
+          ).length;
+          const calculatedProgress = totalMilestonesCount > 0
+            ? Math.round((completedMilestonesCount / totalMilestonesCount) * 100)
+            : 0;
+          const activeMs = projectMilestones.find((m) => m.status === 'IN_PROGRESS') || projectMilestones.find((m) => m.status === 'PENDING');
 
-            {/* Stages overview */}
-            <div className="dbc-card space-y-4">
-              <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Project Lifecycle Stages</h3>
-              <div className="flex flex-wrap items-center gap-3 text-[9px] font-black uppercase tracking-wider">
-                {['Draft', 'Requirement Approved', 'Planning', 'Execution', 'Quality Review', 'Handover', 'Warranty'].map((stage, idx) => {
-                  const isCurrent = stage === 'Execution';
-                  return (
-                    <div key={idx} className="flex items-center gap-2">
-                      <span className={`px-2.5 py-1 rounded border ${
-                        isCurrent 
-                          ? 'bg-brand-emerald border-brand-emerald text-white' 
-                          : 'bg-light-stone/40 border-light-border text-stone-gray'
-                      }`}>
-                        {stage}
-                      </span>
-                      {idx < 6 && <span className="text-stone-400">&rarr;</span>}
-                    </div>
-                  );
-                })}
+          return (
+            <div className="space-y-6">
+              
+              {/* Quick Metrics row */}
+              <div className="grid gap-4 sm:grid-cols-4">
+                <div className="dbc-card p-5 text-left">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Approved Budget</span>
+                  <h4 className="text-xl font-extrabold text-stone-black mt-1">
+                    {project.quotation?.totalAmount ? `₹${project.quotation.totalAmount.toLocaleString()}` : '₹25,00,000'}
+                  </h4>
+                </div>
+                <div className="dbc-card p-5 text-left">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Milestone Progress</span>
+                  <h4 className="text-xl font-extrabold text-stone-black mt-1">{calculatedProgress}%</h4>
+                  <span className="text-[9px] text-stone-500 font-semibold">{completedMilestonesCount} of {totalMilestonesCount} completed</span>
+                </div>
+                <div className="dbc-card p-5 text-left">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Active Stage</span>
+                  <h4 className="text-sm font-extrabold text-brand-emerald mt-1 truncate">
+                    {activeMs ? activeMs.name : (totalMilestonesCount === 0 ? 'No active milestone' : 'All milestones completed')}
+                  </h4>
+                </div>
+                <div className="dbc-card p-5 text-left">
+                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Overall Health</span>
+                  <h4 className="text-xl font-extrabold text-brand-emerald mt-1">🟢 HEALTHY</h4>
+                </div>
               </div>
-            </div>
 
-            {/* Milestones list */}
-            <div className="dbc-card space-y-4 text-left">
-              <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Active Milestones</h3>
-              <div className="space-y-3">
-                {milestones.map((m) => (
-                  <div key={m.id} className="p-4 bg-light-stone/10 border border-light-border rounded-2xl flex justify-between items-center">
-                    <div>
-                      <h4 className="text-xs font-black text-stone-black">{m.name}</h4>
-                      <span className="block text-[8px] text-stone-gray font-bold mt-1">Target Date: {m.dueDate} &bull; Notes: {m.notes}</span>
-                    </div>
-                    <span className={`dbc-badge text-[7.5px] py-0.5 uppercase font-bold ${
-                      m.status === 'Approved' ? 'dbc-badge-completed' : 'dbc-badge-planning'
-                    }`}>{m.status}</span>
+              {/* Progress bar container */}
+              <div className="dbc-card p-5 text-left space-y-2">
+                <div className="flex justify-between items-center text-xs font-bold">
+                  <span className="text-stone-800 uppercase tracking-wider text-[10px]">Overall Execution Progress</span>
+                  <span className="text-emerald-700 font-black">{calculatedProgress}%</span>
+                </div>
+                <div className="w-full bg-stone-200 h-3 rounded-full overflow-hidden">
+                  <div
+                    className="bg-emerald-600 h-full rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min(100, Math.max(0, calculatedProgress))}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Stages overview */}
+              <div className="dbc-card space-y-4">
+                <h3 className="text-xs font-black uppercase tracking-wider text-stone-black text-left">Project Lifecycle Stages</h3>
+                <div className="flex flex-wrap items-center gap-3 text-[9px] font-black uppercase tracking-wider">
+                  {['Draft', 'Requirement Approved', 'Planning', 'Execution', 'Quality Review', 'Handover', 'Warranty'].map((stage, idx) => {
+                    const isCurrent = stage === 'Execution';
+                    return (
+                      <div key={idx} className="flex items-center gap-2">
+                        <span className={`px-2.5 py-1 rounded border ${
+                          isCurrent 
+                            ? 'bg-brand-emerald border-brand-emerald text-white' 
+                            : 'bg-light-stone/40 border-light-border text-stone-gray'
+                        }`}>
+                          {stage}
+                        </span>
+                        {idx < 6 && <span className="text-stone-400">&rarr;</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Milestones timeline list */}
+              <div className="dbc-card space-y-4 text-left">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
+                    Project Timeline & Milestones ({totalMilestonesCount})
+                  </h3>
+                  {currentUserRole === 'PROVIDER' && (
+                    <button
+                      onClick={() => setIsAddMsModalOpen(true)}
+                      className="dbc-btn dbc-btn-sm dbc-btn-primary"
+                    >
+                      + Add Milestone
+                    </button>
+                  )}
+                </div>
+
+                {totalMilestonesCount === 0 ? (
+                  <div className="p-6 bg-stone-50 border border-dashed border-stone-300 rounded-2xl text-center space-y-2">
+                    <span className="text-2xl">📌</span>
+                    <p className="text-xs font-semibold text-stone-600">
+                      {currentUserRole === 'PROVIDER'
+                        ? 'No milestones created for this project yet. Click "+ Add Milestone" above to establish your project deliverable schedule.'
+                        : 'No milestones have been added yet. Your professional will add project milestones as the project plan is established.'}
+                    </p>
                   </div>
-                ))}
-              </div>
-            </div>
+                ) : (
+                  <div className="space-y-4">
+                    {projectMilestones.map((m: any, index: number) => {
+                      const isDone = m.status === 'COMPLETED' || m.status === 'APPROVED';
+                      const isInProgress = m.status === 'IN_PROGRESS';
+                      const targetDateStr = m.plannedEnd ? new Date(m.plannedEnd).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : null;
+                      const completionDateStr = m.actualEnd ? new Date(m.actualEnd).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : null;
 
-          </div>
-        )}
+                      return (
+                        <div
+                          key={m.id || index}
+                          className={`p-4 rounded-2xl border transition ${
+                            isInProgress
+                              ? 'bg-emerald-50/50 border-emerald-300 ring-1 ring-emerald-200'
+                              : isDone
+                              ? 'bg-stone-50 border-stone-200 opacity-90'
+                              : 'bg-white border-stone-200'
+                          }`}
+                        >
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-bold text-stone-400">#{index + 1}</span>
+                                <h4 className="text-sm font-black text-stone-900">{m.name}</h4>
+                                <span
+                                  className={`dbc-badge text-[8px] py-0.5 uppercase font-extrabold ${
+                                    isDone
+                                      ? 'dbc-badge-completed'
+                                      : isInProgress
+                                      ? 'bg-emerald-600 text-white'
+                                      : 'dbc-badge-planning'
+                                  }`}
+                                >
+                                  {m.status}
+                                </span>
+                              </div>
+                              {m.description && (
+                                <p className="text-xs text-stone-600 leading-snug">{m.description}</p>
+                              )}
+                              <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-stone-500 font-medium pt-1">
+                                {m.budgetAllocation > 0 && (
+                                  <span>Allocation: <strong>₹{m.budgetAllocation.toLocaleString()}</strong></span>
+                                )}
+                                {targetDateStr && (
+                                  <span>Target Date: <strong>{targetDateStr}</strong></span>
+                                )}
+                                {completionDateStr && (
+                                  <span className="text-emerald-700">Completed: <strong>{completionDateStr}</strong></span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Actions for provider */}
+                            {currentUserRole === 'PROVIDER' && (
+                              <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
+                                {!isDone && (
+                                  <button
+                                    onClick={() => handleMarkMilestoneComplete(m.id)}
+                                    className="px-2.5 py-1 bg-emerald-700 text-white rounded-lg text-[10px] font-bold hover:bg-emerald-800 transition"
+                                  >
+                                    ✓ Complete
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => handleOpenEditMilestone(m)}
+                                  className="px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg text-[10px] font-bold hover:bg-stone-200 transition"
+                                >
+                                  ✏️ Edit
+                                </button>
+                                {!isDone && (
+                                  <button
+                                    onClick={() => setDeletingMilestoneId(m.id)}
+                                    className="px-2.5 py-1 bg-red-50 text-red-700 rounded-lg text-[10px] font-bold hover:bg-red-100 transition"
+                                  >
+                                    🗑️ Delete
+                                  </button>
+                                )}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Progress bar inside milestone item */}
+                          <div className="mt-3 w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full ${isDone ? 'bg-emerald-600' : isInProgress ? 'bg-emerald-500' : 'bg-stone-300'}`}
+                              style={{ width: `${m.completionPercentage || (isDone ? 100 : isInProgress ? 50 : 0)}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+            </div>
+          );
+        })()}
+
 
         {/* KANBAN TASKS & GANTT */}
         {activePlmsTab === 'tasks' && (
@@ -787,7 +1011,7 @@ export function ProjectWorkspacePage() {
                   All 3 milestones signed. Final inspection safety clearances uploaded.
                 </p>
                 <button
-                  onClick={() => alert('Handover certificate draft exported as PDF.')}
+                  onClick={() => showNotice('✓ Handover certificate draft exported as PDF.')}
                   className="w-full dbc-btn dbc-btn-primary py-2 text-xs font-bold uppercase tracking-wider cursor-pointer"
                 >
                   Generate Handover PDF
@@ -808,7 +1032,7 @@ export function ProjectWorkspacePage() {
                   Includes support covers on concrete frame pillars, foundation layout moisture levels, and primary beams load allocations.
                 </p>
                 <button
-                  onClick={() => alert('Warranty coverage catalog downloaded.')}
+                  onClick={() => showNotice('✓ Warranty coverage catalog downloaded.')}
                   className="w-full dbc-btn dbc-btn-outline py-2 text-xs font-bold uppercase tracking-wider bg-white cursor-pointer"
                 >
                   Download Warranty Policy
@@ -821,6 +1045,184 @@ export function ProjectWorkspacePage() {
 
       </div>
 
+      {/* ADD MILESTONE MODAL */}
+      {isAddMsModalOpen && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-stone-200 space-y-4 text-left">
+            <div className="flex justify-between items-center border-b pb-3">
+              <h3 className="text-base font-black text-stone-900">Add Project Milestone</h3>
+              <button onClick={() => setIsAddMsModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
+            </div>
+            <form onSubmit={handleAddMilestoneSubmit} className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Milestone Title *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Foundation Masonry and Concrete Pouring"
+                  value={addMsName}
+                  onChange={(e) => setAddMsName(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Scope Description</label>
+                <textarea
+                  placeholder="Details of deliverables for this milestone..."
+                  value={addMsDesc}
+                  onChange={(e) => setAddMsDesc(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-xl text-xs font-medium h-20 resize-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">Budget Allocation (INR)</label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 250000"
+                    value={addMsBudget}
+                    onChange={(e) => setAddMsBudget(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-xl text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">Planned Target Date</label>
+                  <input
+                    type="date"
+                    value={addMsEnd}
+                    onChange={(e) => setAddMsEnd(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-xl text-xs font-medium"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 pt-3 border-t">
+                <button
+                  type="button"
+                  onClick={() => setIsAddMsModalOpen(false)}
+                  className="px-4 py-2 border border-stone-300 text-stone-700 text-xs font-bold rounded-xl hover:bg-stone-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl hover:bg-emerald-800"
+                >
+                  Save Milestone
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT MILESTONE MODAL */}
+      {editingMilestone && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-stone-200 space-y-4 text-left">
+            <div className="flex justify-between items-center border-b pb-3">
+              <h3 className="text-base font-black text-stone-900">Edit Project Milestone</h3>
+              <button onClick={() => setEditingMilestone(null)} className="text-stone-400 hover:text-stone-700">✕</button>
+            </div>
+            <form onSubmit={handleUpdateMilestoneSubmit} className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Milestone Title *</label>
+                <input
+                  type="text"
+                  required
+                  value={editMsName}
+                  onChange={(e) => setEditMsName(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-xl text-xs font-medium"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Scope Description</label>
+                <textarea
+                  value={editMsDesc}
+                  onChange={(e) => setEditMsDesc(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-xl text-xs font-medium h-20 resize-none"
+                />
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">Status</label>
+                  <select
+                    value={editMsStatus}
+                    onChange={(e) => setEditMsStatus(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-xl text-xs font-medium bg-white"
+                  >
+                    <option value="PENDING">PENDING</option>
+                    <option value="IN_PROGRESS">IN_PROGRESS</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                    <option value="APPROVED">APPROVED</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">Budget Allocation</label>
+                  <input
+                    type="number"
+                    value={editMsBudget}
+                    onChange={(e) => setEditMsBudget(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-xl text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">Target Date</label>
+                  <input
+                    type="date"
+                    value={editMsEnd}
+                    onChange={(e) => setEditMsEnd(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-xl text-xs font-medium"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 pt-3 border-t">
+                <button
+                  type="button"
+                  onClick={() => setEditingMilestone(null)}
+                  className="px-4 py-2 border border-stone-300 text-stone-700 text-xs font-bold rounded-xl hover:bg-stone-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl hover:bg-emerald-800"
+                >
+                  Update Milestone
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {deletingMilestoneId && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-stone-200 space-y-4 text-center">
+            <span className="text-3xl">⚠️</span>
+            <h3 className="text-base font-black text-stone-900">Delete Milestone?</h3>
+            <p className="text-xs text-stone-600">
+              Are you sure you want to remove this milestone from the project plan? This action cannot be undone.
+            </p>
+            <div className="flex justify-center gap-3 pt-2">
+              <button
+                onClick={() => setDeletingMilestoneId(null)}
+                className="px-4 py-2 border border-stone-300 text-stone-700 text-xs font-bold rounded-xl hover:bg-stone-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteMilestoneConfirm}
+                className="px-4 py-2 bg-red-700 text-white text-xs font-bold rounded-xl hover:bg-red-800"
+              >
+                Delete Milestone
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
+

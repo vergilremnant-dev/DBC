@@ -275,6 +275,8 @@ app.get('/api/projects/:id/work-orders', adapt(projectsWorkOrdersHandler));
 app.post('/api/projects/:id/work-orders', adapt(projectsWorkOrdersHandler));
 app.get('/api/projects/:id/milestones', adapt(projectsMilestonesHandler));
 app.post('/api/projects/:id/milestones', adapt(projectsMilestonesHandler));
+app.put('/api/projects/:id/milestones', adapt(projectsMilestonesHandler));
+app.delete('/api/projects/:id/milestones', adapt(projectsMilestonesHandler));
 app.get('/api/projects/:id/resources', adapt(projectsResourcesHandler));
 app.post('/api/projects/:id/resources', adapt(projectsResourcesHandler));
 app.get('/api/projects/:id/progress', adapt(projectsProgressHandler));

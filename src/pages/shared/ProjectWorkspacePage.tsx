@@ -122,6 +122,16 @@ export function ProjectWorkspacePage() {
   const [payingMilestone, setPayingMilestone] = useState<any | null>(null);
   const [paidMilestoneIds, setPaidMilestoneIds] = useState<string[]>([]);
 
+  // Completion & Review Modal States
+  const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewTitle, setReviewTitle] = useState('');
+  const [reviewDesc, setReviewDesc] = useState('');
+  const [wouldRecommend, setWouldRecommend] = useState(true);
+  const [hasSubmittedReview, setHasSubmittedReview] = useState(false);
+
+
 
 
   // Form composer variables
@@ -316,6 +326,65 @@ export function ProjectWorkspacePage() {
     }
   };
 
+  const handleStartProject = async () => {
+    if (!project) return;
+    try {
+      await ProjectService.updateProjectStatus(project.id, 'IN_PROGRESS', 'Project execution started');
+      await reloadProject();
+      showNotice('⚡ Project status updated to IN_PROGRESS.');
+    } catch (err: any) {
+      showNotice(`⚠️ ${err.message || 'Failed to update project status'}`);
+    }
+  };
+
+  const handleMarkReadyForCompletion = async () => {
+    if (!project) return;
+    try {
+      await ProjectService.updateProjectStatus(project.id, 'UNDER_REVIEW', 'Professional marked project ready for completion review');
+      await reloadProject();
+      setIsCompletionModalOpen(false);
+      showNotice('🏁 Project marked ready for completion review (UNDER_REVIEW).');
+    } catch (err: any) {
+      setIsCompletionModalOpen(false);
+      showNotice(`⚠️ ${err.message || 'Failed to update project status'}`);
+    }
+  };
+
+  const handleConfirmCompletionAndClose = async () => {
+    if (!project) return;
+    try {
+      await ProjectService.updateProjectStatus(project.id, 'CLOSED', 'Customer confirmed project handover and completion');
+      await reloadProject();
+      setIsCompletionModalOpen(false);
+      showNotice('🟢 Project completion confirmed and handed over successfully!');
+      setIsReviewModalOpen(true);
+    } catch (err: any) {
+      setIsCompletionModalOpen(false);
+      showNotice(`⚠️ ${err.message || 'Failed to complete project'}`);
+    }
+  };
+
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!project || !reviewTitle.trim() || !reviewDesc.trim()) return;
+    try {
+      const providerId = project.provider?.id || project.providerId;
+      await axiosClient.post('/api/reviews', {
+        providerId,
+        rating: reviewRating,
+        reviewTitle: reviewTitle.trim(),
+        reviewDescription: reviewDesc.trim(),
+        wouldRecommend,
+      });
+      setHasSubmittedReview(true);
+      setIsReviewModalOpen(false);
+      showNotice('⭐ Thank you! Your review has been published.');
+    } catch (err: any) {
+      showNotice(`⚠️ ${err.message || 'Failed to submit review'}`);
+    }
+  };
+
+
 
   // Handle change request resolutions
   const handleResolveChangeRequest = (id: string, approve: boolean) => {
@@ -411,18 +480,6 @@ export function ProjectWorkspacePage() {
     );
   }
 
-  const handleStartProject = async () => {
-    if (!project) return;
-    try {
-      const updated = await ProjectService.updateProjectStatus(project.id, 'IN_PROGRESS', 'Professional started project execution');
-      setProject(updated);
-      showNotice('✓ Project execution started! Status updated to IN_PROGRESS.');
-    } catch (err: any) {
-      console.error('Failed to start project', err);
-      showNotice(`⚠️ ${err.message || 'Failed to start project.'}`);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-warm-cream text-stone-850 pb-16 flex flex-col font-sans relative">
       
@@ -475,6 +532,30 @@ export function ProjectWorkspacePage() {
                 >
                   ⚡ Start Project
                 </button>
+              )}
+
+              {currentUserRole === 'PROVIDER' && ['IN_PROGRESS', 'PLANNING'].includes(project.status) && (
+                <button
+                  onClick={() => setIsCompletionModalOpen(true)}
+                  className="dbc-btn dbc-btn-sm bg-amber-600 hover:bg-amber-700 text-white font-bold"
+                >
+                  🏁 Mark Ready for Completion
+                </button>
+              )}
+
+              {currentUserRole === 'CUSTOMER' && ['UNDER_REVIEW', 'COMPLETED'].includes(project.status) && (
+                <button
+                  onClick={() => setIsCompletionModalOpen(true)}
+                  className="dbc-btn dbc-btn-sm dbc-btn-primary font-bold"
+                >
+                  ✅ Confirm Completion & Handover
+                </button>
+              )}
+
+              {['COMPLETED', 'CUSTOMER_APPROVAL', 'CLOSED'].includes(project.status) && (
+                <span className="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-black rounded-xl border border-emerald-300">
+                  🟢 Project Completed & Handed Over
+                </span>
               )}
 
               <button
@@ -1486,7 +1567,7 @@ export function ProjectWorkspacePage() {
               <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-3">
                 <span className="dbc-badge dbc-badge-completed text-[7.5px] py-0.5">Ready for Handover</span>
                 <p className="text-xs text-stone-gray font-bold">
-                  All 3 milestones signed. Final inspection safety clearances uploaded.
+                  All milestones completed. Final inspection safety clearances uploaded.
                 </p>
                 <button
                   onClick={() => showNotice('✓ Handover certificate draft exported as PDF.')}
@@ -1517,6 +1598,46 @@ export function ProjectWorkspacePage() {
                 </button>
               </div>
             </div>
+
+            {/* Customer Post-Completion Review Card */}
+            {currentUserRole === 'CUSTOMER' && (
+              <div className="dbc-card space-y-4 sm:col-span-2">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
+                    Project Rating & Customer Feedback
+                  </h3>
+                  {hasSubmittedReview && (
+                    <span className="dbc-badge bg-emerald-100 text-emerald-800 text-[8px]">
+                      ⭐ Review Published
+                    </span>
+                  )}
+                </div>
+
+                {hasSubmittedReview ? (
+                  <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl space-y-1">
+                    <p className="text-xs font-bold text-emerald-900">Thank you for reviewing your project experience!</p>
+                    <p className="text-[11px] text-emerald-700 font-medium">
+                      Your feedback helps other clients discover trustworthy professionals on the DBC platform.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div>
+                      <h4 className="text-xs font-black text-stone-900">Share Your Experience</h4>
+                      <p className="text-[11px] text-stone-500 font-medium mt-0.5">
+                        Rate the quality, communication, and milestone execution of your lead professional.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setIsReviewModalOpen(true)}
+                      className="dbc-btn dbc-btn-sm dbc-btn-primary shrink-0"
+                    >
+                      ⭐ Write Customer Review
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
 
           </div>
         )}
@@ -1821,9 +1942,168 @@ export function ProjectWorkspacePage() {
         />
       )}
 
+      {/* PROJECT COMPLETION CONFIRMATION MODAL */}
+      {isCompletionModalOpen && project && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-stone-200 space-y-5 text-left">
+            <div className="flex justify-between items-center border-b pb-3">
+              <div className="space-y-0.5">
+                <span className="text-[9px] font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+                  Project Handover & Closure
+                </span>
+                <h3 className="text-base font-black text-stone-900 mt-1">
+                  {currentUserRole === 'PROVIDER' ? 'Mark Ready for Completion?' : 'Confirm Project Handover & Close Project'}
+                </h3>
+              </div>
+              <button onClick={() => setIsCompletionModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
+            </div>
+
+            <p className="text-xs text-stone-600 font-medium leading-relaxed">
+              {currentUserRole === 'PROVIDER'
+                ? 'Verify that all milestone deliverables, inspection clearances, and handover documentation have been completed before submitting for customer review.'
+                : 'Confirming project completion verifies that all milestone deliverables, structural works, and agreements have been satisfied.'}
+            </p>
+
+            {/* Execution Readiness Summary */}
+            <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-2 text-xs font-semibold">
+              <div className="flex justify-between text-stone-700">
+                <span>Total Milestones:</span>
+                <strong className="text-stone-900">{(project.milestones || []).length} Milestones</strong>
+              </div>
+              <div className="flex justify-between text-stone-700">
+                <span>Completed / Approved:</span>
+                <strong className="text-emerald-700">
+                  {(project.milestones || []).filter((m: any) => m.status === 'COMPLETED' || m.status === 'APPROVED').length} of {(project.milestones || []).length}
+                </strong>
+              </div>
+              <div className="flex justify-between text-stone-700">
+                <span>Uploaded Documents:</span>
+                <strong className="text-stone-900">{(project.documents || []).length} Documents</strong>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setIsCompletionModalOpen(false)}
+                className="px-4 py-2 border border-stone-300 text-stone-700 text-xs font-bold rounded-xl hover:bg-stone-50"
+              >
+                Cancel
+              </button>
+              {currentUserRole === 'PROVIDER' ? (
+                <button
+                  type="button"
+                  onClick={handleMarkReadyForCompletion}
+                  className="px-5 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl hover:bg-amber-700 font-bold"
+                >
+                  Submit for Customer Review
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleConfirmCompletionAndClose}
+                  className="px-5 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl hover:bg-emerald-800 font-bold"
+                >
+                  Confirm Completion & Handover
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* POST-COMPLETION REVIEW MODAL */}
+      {isReviewModalOpen && project && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-stone-200 space-y-5 text-left">
+            <div className="flex justify-between items-center border-b pb-3">
+              <div>
+                <span className="text-[9px] font-black uppercase text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+                  Customer Review
+                </span>
+                <h3 className="text-base font-black text-stone-900 mt-1">Rate Your Project Experience</h3>
+              </div>
+              <button onClick={() => setIsReviewModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
+            </div>
+
+            <form onSubmit={handleSubmitReview} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Overall Rating</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setReviewRating(star)}
+                      className={`text-2xl transition ${star <= reviewRating ? 'text-amber-400' : 'text-stone-300'}`}
+                    >
+                      ★
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Review Headline *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Outstanding quality, structural precision & timely handover"
+                  value={reviewTitle}
+                  onChange={(e) => setReviewTitle(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Detailed Feedback *</label>
+                <textarea
+                  required
+                  rows={3}
+                  placeholder="Share details about milestone adherence, communication, site safety, and overall satisfaction..."
+                  value={reviewDesc}
+                  onChange={(e) => setReviewDesc(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 resize-none"
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="wouldRecommend"
+                  checked={wouldRecommend}
+                  onChange={(e) => setWouldRecommend(e.target.checked)}
+                  className="h-4 w-4 rounded border-stone-300 text-emerald-600 focus:ring-emerald-500"
+                />
+                <label htmlFor="wouldRecommend" className="text-xs font-semibold text-stone-700">
+                  I recommend this professional to other clients on DBC
+                </label>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsReviewModalOpen(false)}
+                  className="px-4 py-2 border border-stone-300 text-stone-700 text-xs font-bold rounded-xl hover:bg-stone-50"
+                >
+                  Skip for Now
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl hover:bg-emerald-800"
+                >
+                  Submit Official Review
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
+
 
 
 

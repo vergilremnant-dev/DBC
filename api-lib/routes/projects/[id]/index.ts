@@ -38,6 +38,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (method === 'PUT') {
+      const project = await getProjectById(projectId);
+      if (!project) {
+        return res.status(404).json({ success: false, message: 'Project not found' });
+      }
+
+      const isCustomer = project.customer.userId === user.id;
+      const isProvider = project.provider.userId === user.id;
+      if (!isCustomer && !isProvider) {
+        return res.status(403).json({ success: false, message: 'Forbidden: Unauthorized project status transition' });
+      }
+
       const { status, reason } = req.body;
       if (!status) {
         return res.status(400).json({ success: false, message: 'Missing target status parameter' });

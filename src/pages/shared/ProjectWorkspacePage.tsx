@@ -250,6 +250,18 @@ export function ProjectWorkspacePage() {
     );
   }
 
+  const handleStartProject = async () => {
+    if (!project) return;
+    try {
+      const updated = await ProjectService.updateProjectStatus(project.id, 'IN_PROGRESS', 'Professional started project execution');
+      setProject(updated);
+      showNotice('✓ Project execution started! Status updated to IN_PROGRESS.');
+    } catch (err: any) {
+      console.error('Failed to start project', err);
+      showNotice(`⚠️ ${err.message || 'Failed to start project.'}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-warm-cream text-stone-850 pb-16 flex flex-col font-sans relative">
       
@@ -293,13 +305,31 @@ export function ProjectWorkspacePage() {
                 <span className="text-emerald-700">Project Created</span>
               </div>
             </div>
-            
-            <button
-              onClick={() => navigate('/')}
-              className="self-start md:self-auto px-4 py-2 border border-light-border text-stone-600 rounded-xl text-xs font-bold hover:bg-stone-50 transition"
-            >
-              Exit Workspace
-            </button>
+
+            <div className="flex items-center gap-2 self-start md:self-auto">
+              {currentUserRole === 'PROVIDER' && ['ASSIGNED', 'PLANNING', 'CREATED'].includes(project.status) && (
+                <button
+                  onClick={handleStartProject}
+                  className="dbc-btn dbc-btn-sm dbc-btn-primary"
+                >
+                  ⚡ Start Project
+                </button>
+              )}
+
+              <button
+                onClick={() => navigate('/workspace/inbox')}
+                className="dbc-btn dbc-btn-sm border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
+              >
+                💬 {currentUserRole === 'PROVIDER' ? 'Contact Customer' : 'Message Professional'}
+              </button>
+
+              <button
+                onClick={() => navigate('/')}
+                className="px-3.5 py-2 border border-light-border text-stone-600 rounded-xl text-xs font-bold hover:bg-stone-50 transition"
+              >
+                Exit Workspace
+              </button>
+            </div>
           </div>
         </div>
       </div>

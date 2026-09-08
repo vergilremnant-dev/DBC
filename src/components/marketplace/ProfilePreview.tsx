@@ -137,7 +137,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
                 onClick={onBook}
                 className="flex-1 h-11 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-xs font-bold uppercase tracking-wider transition shadow-sm cursor-pointer flex items-center justify-center gap-1.5"
               >
-                <span>Request Consultation / Booking</span>
+                <span>Start Project Request</span>
                 <span>→</span>
               </button>
             </div>

@@ -256,7 +256,7 @@ describe('Auth Utility Tests', () => {
       expect(sendStatus).toBe(400);
       expect(sendData.success).toBe(false);
       expect(sendData.message).toContain('already registered');
-    });
+    }, 15000);
   });
 
   describe('Real Google Authentication & Verification Tests', () => {

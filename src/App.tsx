@@ -34,6 +34,7 @@ import { CollaborationWorkspacePage } from './pages/shared/CollaborationWorkspac
 import { CategoryProvidersPage } from './pages/CategoryProvidersPage';
 import { SearchResultsPage } from './pages/SearchResultsPage';
 import { KnowMorePage } from './pages/KnowMorePage';
+import { PublicProfessionalProfilePage } from './pages/PublicProfessionalProfilePage';
 import { PublicLayout } from './layouts/PublicLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminAnalyticsDashboard } from './pages/admin/AdminAnalyticsDashboard';
@@ -99,6 +100,7 @@ function App() {
         <Route path="/" element={<PublicMarketplace />} />
         <Route path="/category/:id/providers" element={<CategoryProvidersPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
+        <Route path="/professional/:id" element={<PublicProfessionalProfilePage />} />
         <Route path="/know-more" element={<KnowMorePage />} />
         <Route path="/about" element={<KnowMorePage />} />
         <Route path="/request-callback" element={<RequestCallbackPage />} />

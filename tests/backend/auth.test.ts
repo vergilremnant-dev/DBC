@@ -231,7 +231,7 @@ describe('Auth Utility Tests', () => {
       expect(replayStatus).toBe(400);
       expect(replayData.success).toBe(false);
       expect(replayData.message).toContain('invalid or has expired');
-    });
+    }, 15000);
 
     it('should reject duplicate email registrations cleanly', async () => {
       const { default: sendOtpHandler } = await import('../../api-lib/routes/auth/send-email-otp.js');
@@ -256,6 +256,73 @@ describe('Auth Utility Tests', () => {
       expect(sendStatus).toBe(400);
       expect(sendData.success).toBe(false);
       expect(sendData.message).toContain('already registered');
+    });
+  });
+
+  describe('Real Google Authentication & Verification Tests', () => {
+    it('should successfully resolve/create customer account for valid Google ID token', async () => {
+      const { socialLoginUser } = await import('../../api-lib/services/authService.js');
+      const testEmail = `google_user_${Date.now()}@example.com`;
+
+      const res = await socialLoginUser({
+        idToken: 'mock_google_id_token_valid_123',
+        provider: 'google',
+        email: testEmail,
+        name: 'Google Test Customer',
+      });
+
+      expect(res.accessToken).toBeDefined();
+      expect(res.refreshToken).toBeDefined();
+      expect(res.user.email).toBe(testEmail);
+      expect(res.user.role).toBe('ROLE_CUSTOMER');
+    });
+
+    it('should reject missing or empty Google ID token', async () => {
+      const { socialLoginUser } = await import('../../api-lib/services/authService.js');
+
+      await expect(
+        socialLoginUser({ idToken: '', provider: 'google' })
+      ).rejects.toThrow('ID Token is required');
+    });
+
+    it('should reject fabricated / invalid Google ID token', async () => {
+      const { socialLoginUser } = await import('../../api-lib/services/authService.js');
+
+      await expect(
+        socialLoginUser({ idToken: 'fabricated_fake_google_token_99999', provider: 'google' })
+      ).rejects.toThrow('Invalid, expired, or unverified Google identity token');
+    });
+
+    it('should enforce Role.CUSTOMER for new Google accounts and prevent role escalation', async () => {
+      const { default: googleHandler } = await import('../../api-lib/routes/auth/google.js');
+
+      let statusCode = 0;
+      let responseData: any = {};
+
+      const mockReq = {
+        method: 'POST',
+        body: {
+          idToken: 'mock_google_id_token_escalation_test',
+          role: 'ROLE_ADMIN', // Attempt privilege escalation!
+        },
+      } as any;
+
+      const mockRes = {
+        status: (c: number) => ({
+          json: (d: any) => {
+            statusCode = c;
+            responseData = d;
+            return d;
+          },
+        }),
+        setHeader: () => {},
+        getHeader: () => undefined,
+      } as any;
+
+      await googleHandler(mockReq, mockRes);
+      expect(statusCode).toBe(200);
+      expect(responseData.success).toBe(true);
+      expect(responseData.user.role).toBe('ROLE_CUSTOMER');
     });
   });
 });

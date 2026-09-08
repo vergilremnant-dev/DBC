@@ -22,8 +22,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
+  const { idToken } = req.body || {};
+
   try {
-    const response = await socialLoginUser(req.body, userAgent, ipAddress);
+    const response = await socialLoginUser({ idToken, provider: 'google' }, userAgent, ipAddress);
 
     setCookie(res, 'refresh_token', response.refreshToken, {
       httpOnly: true,
@@ -38,10 +40,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   } catch (err: any) {
     const message = err.message || '';
-    if (message.includes('required') || message.includes('Could not verify') || message.includes('inactive') || message.includes('suspended')) {
+    if (message.includes('required') || message.includes('Invalid') || message.includes('Google') || message.includes('inactive') || message.includes('suspended')) {
       return res.status(400).json({ success: false, message });
     }
-    console.error('Social Login Error:', err);
-    return res.status(500).json({ success: false, message: message || 'Social authentication failed' });
+    console.error('Google Auth Route Error:', err);
+    return res.status(500).json({ success: false, message: message || 'Google authentication failed' });
   }
 }

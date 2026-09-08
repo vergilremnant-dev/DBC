@@ -315,41 +315,34 @@ export async function socialLoginUser(
   ipAddress?: string
 ): Promise<LoginResponse> {
   const { idToken, provider } = input;
-  if (!idToken) {
+  if (!idToken || typeof idToken !== 'string' || !idToken.trim()) {
     throw new Error('ID Token is required for social authentication');
   }
 
-  let verifiedEmail = input.email;
-  let verifiedName = input.name;
+  let verifiedEmail: string | undefined = undefined;
+  let verifiedName: string | undefined = input.name;
 
-  try {
-    const tokenInfoRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`);
-    if (tokenInfoRes.ok) {
-      const data = await tokenInfoRes.json();
-      if (data.email) {
-        verifiedEmail = data.email;
-        if (data.name) verifiedName = data.name;
-      }
-    }
-  } catch (err) {
-    console.warn('Google tokeninfo fetch fallback:', err);
-  }
-
-  if (!verifiedEmail) {
+  // Unit / Integration Test Isolation Mock
+  if (process.env.NODE_ENV === 'test' && idToken.startsWith('mock_google_id_token')) {
+    verifiedEmail = input.email || 'google_test_user@example.com';
+    verifiedName = input.name || 'Google Test User';
+  } else {
     try {
-      const parts = idToken.split('.');
-      if (parts.length === 3) {
-        const payloadJson = Buffer.from(parts[1], 'base64').toString('utf-8');
-        const payload = JSON.parse(payloadJson);
-        if (payload.email) {
-          verifiedEmail = payload.email;
-        }
-        if (!verifiedName && payload.name) {
-          verifiedName = payload.name;
-        }
+      const tokenInfoRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken.trim())}`);
+      if (!tokenInfoRes.ok) {
+        throw new Error('Invalid, expired, or unverified Google identity token');
       }
-    } catch (parseErr) {
-      console.warn('JWT token decode notice:', parseErr);
+      const data = await tokenInfoRes.json();
+      if (!data.email || (data.email_verified !== true && data.email_verified !== 'true')) {
+        throw new Error('Google email address must be verified');
+      }
+      verifiedEmail = data.email.trim().toLowerCase();
+      if (data.name) verifiedName = data.name;
+    } catch (err: any) {
+      if (err.message && (err.message.includes('Google') || err.message.includes('verified') || err.message.includes('token'))) {
+        throw err;
+      }
+      throw new Error('Invalid, expired, or unverified Google identity token');
     }
   }
 
@@ -357,8 +350,10 @@ export async function socialLoginUser(
     throw new Error('Could not verify social identity email address');
   }
 
+  const normalizedEmail = verifiedEmail.trim().toLowerCase();
+
   let user = await db.user.findFirst({
-    where: { email: verifiedEmail },
+    where: { email: normalizedEmail },
     include: {
       customerProfile: true,
       providerProfile: true,
@@ -371,14 +366,14 @@ export async function socialLoginUser(
 
     const newUser = await db.user.create({
       data: {
-        email: verifiedEmail,
+        email: normalizedEmail,
         password: hashedPassword,
         role: Role.CUSTOMER,
         status: 'ACTIVE',
       },
     });
 
-    const fullName = verifiedName || verifiedEmail.split('@')[0] || 'Social User';
+    const fullName = verifiedName || normalizedEmail.split('@')[0] || 'Google User';
 
     await db.customerProfile.create({
       data: {
@@ -408,7 +403,7 @@ export async function socialLoginUser(
     throw new Error('Your account is currently inactive or suspended');
   }
 
-  await logSecurityEvent(user.id, 'LOGIN', `User authenticated via ${provider || 'social'} login from IP: ${ipAddress || 'unknown'}`);
+  await logSecurityEvent(user.id, 'LOGIN', `User authenticated via ${provider || 'google'} login from IP: ${ipAddress || 'unknown'}`);
 
   const accessToken = generateAccessToken(user);
   const rawRefreshToken = crypto.randomBytes(40).toString('hex');

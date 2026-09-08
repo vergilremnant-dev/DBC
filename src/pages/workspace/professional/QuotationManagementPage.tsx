@@ -77,6 +77,15 @@ export default function QuotationManagementPage() {
   // Preview target quote state
   const [previewQuoteId, setPreviewQuoteId] = useState<string | null>(null);
 
+  // Notice & Modal Confirmation States
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(null), 4000);
+  };
+
   // Simulated Startup loader
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -106,7 +115,7 @@ export default function QuotationManagementPage() {
 
   const handleEdit = (quote: Quotation) => {
     if (quote.status !== 'Draft') {
-      alert('Submitted, accepted, or expired quotations are read-only and cannot be modified.');
+      showNotice('⚠️ Submitted, accepted, or expired quotations are read-only and cannot be modified.');
       return;
     }
     setEditingQuoteId(quote.id);
@@ -158,7 +167,7 @@ export default function QuotationManagementPage() {
         return q;
       }));
     }
-    alert('Quotation draft saved successfully.');
+    showNotice('✓ Quotation draft saved successfully.');
     setActiveTab('LIST');
     resetForm();
   };
@@ -180,7 +189,7 @@ export default function QuotationManagementPage() {
       }
       return q;
     }));
-    alert('Proposal quotation submitted successfully to client dashboard.');
+    showNotice('✓ Proposal quotation submitted successfully to customer dashboard.');
     setActiveTab('LIST');
   };
 
@@ -193,20 +202,22 @@ export default function QuotationManagementPage() {
       lastModified: 'Just now'
     };
     setQuotations([...quotations, duplicated]);
-    alert('Quotation duplicated as Draft.');
+    showNotice('✓ Quotation duplicated as Draft.');
   };
 
   const handleDeleteDraft = (id: string) => {
     const q = quotations.find(item => item.id === id);
     if (q?.status !== 'Draft') {
-      alert('Only draft quotations can be deleted.');
+      showNotice('⚠️ Only draft quotations can be deleted.');
       return;
     }
-    const confirm = window.confirm('Are you sure you want to delete this quotation draft?');
-    if (confirm) {
-      setQuotations(prev => prev.filter(item => item.id !== id));
-      alert('Draft deleted.');
-    }
+    setDeleteConfirmId(id);
+  };
+
+  const confirmDeleteDraft = (id: string) => {
+    setQuotations(prev => prev.filter(item => item.id !== id));
+    setDeleteConfirmId(null);
+    showNotice('Draft deleted successfully.');
   };
 
   const resetForm = () => {
@@ -226,6 +237,40 @@ export default function QuotationManagementPage() {
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-20 text-left animate-gentle-fade select-none">
+      
+      {/* Toast Notice Banner */}
+      {noticeMessage && (
+        <div className="fixed top-4 right-4 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border border-stone-700 animate-gentle-fade flex items-center gap-2">
+          <span>{noticeMessage}</span>
+          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2">✕</button>
+        </div>
+      )}
+
+      {/* Delete Draft Modal */}
+      {deleteConfirmId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/50 backdrop-blur-xs p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-stone-200 space-y-4 text-xs">
+            <h3 className="text-sm font-bold text-stone-900">Delete Quotation Draft</h3>
+            <p className="text-stone-600">
+              Are you sure you want to delete draft <strong>{deleteConfirmId}</strong>? This action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={() => setDeleteConfirmId(null)}
+                className="dbc-btn dbc-btn-sm dbc-btn-outline"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => confirmDeleteDraft(deleteConfirmId)}
+                className="dbc-btn dbc-btn-sm dbc-btn-danger"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">

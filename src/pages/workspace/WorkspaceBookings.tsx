@@ -107,6 +107,13 @@ function CustomerBookings() {
     };
   }, [refreshKey]);
 
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+
+  const showNotice = (msg: string) => {
+    setNoticeMessage(msg);
+    setTimeout(() => setNoticeMessage(null), 4000);
+  };
+
   const handleCancelBooking = async (id: string) => {
     try {
       await bookingApi.cancelBooking(id);
@@ -116,7 +123,7 @@ function CustomerBookings() {
       if (selectedBooking && selectedBooking.id === id) {
         setSelectedBooking((prev) => (prev ? { ...prev, status: 'Cancelled', rawStatus: 'CANCELLED' } : null));
       }
-      alert('Project request cancelled successfully.');
+      showNotice('✓ Project request cancelled successfully.');
     } catch (err: unknown) {
       console.error('Failed to cancel on server', err);
       let errorMsg = 'Failed to cancel project request. Please try again.';
@@ -128,7 +135,7 @@ function CustomerBookings() {
           errorMsg = `Failed to cancel project request: ${anyErr.message}`;
         }
       }
-      alert(errorMsg);
+      showNotice(`⚠️ ${errorMsg}`);
     }
   };
 
@@ -142,7 +149,7 @@ function CustomerBookings() {
     if (selectedBooking && selectedBooking.id === id) {
       setSelectedBooking((prev) => (prev ? { ...prev, status: 'Rescheduled', scheduledDate: nextWeek } : null));
     }
-    alert('Target start date successfully rescheduled for next week.');
+    showNotice('✓ Target start date successfully rescheduled for next week.');
   };
 
   const handleSelectBooking = async (bk: Booking) => {
@@ -164,7 +171,7 @@ function CustomerBookings() {
         }
       }
       if (isPermissionOrNotFound) {
-        alert('This project request is no longer available or you do not have permission to view it.');
+        showNotice('⚠️ This project request is no longer available or you do not have permission to view it.');
         setSelectedBooking(null);
         setBookings((prev) => prev.filter((b) => b.id !== bk.id));
       }
@@ -203,6 +210,14 @@ function CustomerBookings() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto text-left relative">
       
+      {/* Toast Notice Banner */}
+      {noticeMessage && (
+        <div className="fixed top-4 right-4 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border border-stone-700 animate-gentle-fade flex items-center gap-2">
+          <span>{noticeMessage}</span>
+          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2">✕</button>
+        </div>
+      )}
+
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-stone-200 pb-5">
         <div className="space-y-1">

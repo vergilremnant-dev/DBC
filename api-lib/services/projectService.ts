@@ -307,6 +307,22 @@ export async function addProgressLog(projectId: string, reporterId: string, inpu
   return log;
 }
 
+export async function getProjectDocuments(projectId: string) {
+  return await db.projectDocument.findMany({
+    where: { projectId },
+    include: {
+      uploadedBy: {
+        select: {
+          id: true,
+          email: true,
+          role: true,
+        },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
 export async function addProjectDocument(
   projectId: string,
   uploadedById: string,
@@ -314,24 +330,79 @@ export async function addProjectDocument(
   fileUrl: string,
   fileType: string
 ) {
+  // Filename & extension security validation
+  const lowerName = name.toLowerCase();
+  const forbiddenExts = ['.exe', '.bat', '.cmd', '.sh', '.vbs', '.js', '.scr', '.com', '.dll'];
+  if (forbiddenExts.some((ext) => lowerName.endsWith(ext))) {
+    throw new Error('Executable and script files are not permitted for security reasons');
+  }
+
+  // Path traversal & filename sanitization
+  const sanitizedName = name.replace(/[\/\\]/g, '_').trim() || 'Untitled_Document';
+
   const doc = await db.projectDocument.create({
     data: {
       projectId,
-      name,
+      name: sanitizedName,
       fileUrl,
-      fileType,
+      fileType: fileType || 'DOCUMENT',
       uploadedById,
+    },
+    include: {
+      uploadedBy: {
+        select: {
+          id: true,
+          email: true,
+          role: true,
+        },
+      },
     },
   });
 
   await addProjectTimelineEvent(
     projectId,
     uploadedById,
-    'DOCUMENT',
-    `Document "${name}" (${fileType}) uploaded`
+    'DOCUMENT_UPLOAD',
+    `Document "${sanitizedName}" (${fileType || 'DOCUMENT'}) uploaded`
   );
 
   return doc;
+}
+
+export async function deleteProjectDocument(projectId: string, documentId: string, userId: string) {
+  const existing = await db.projectDocument.findUnique({
+    where: { id: documentId },
+    include: { project: true },
+  });
+
+  if (!existing) {
+    throw new Error('Document not found');
+  }
+
+  if (existing.projectId !== projectId) {
+    throw new Error('Document does not belong to this project');
+  }
+
+  const isUploader = existing.uploadedById === userId;
+  const isCustomer = existing.project.customerId === userId;
+  const isProvider = existing.project.providerId === userId;
+
+  if (!isUploader && !isCustomer && !isProvider) {
+    throw new Error('Forbidden: You are not authorized to delete this document');
+  }
+
+  await db.projectDocument.delete({
+    where: { id: documentId },
+  });
+
+  await addProjectTimelineEvent(
+    projectId,
+    userId,
+    'DOCUMENT_DELETE',
+    `Document "${existing.name}" was deleted`
+  );
+
+  return { success: true, id: documentId };
 }
 
 export async function requestProjectApproval(

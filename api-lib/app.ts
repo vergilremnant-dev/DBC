@@ -55,6 +55,7 @@ import projectsMilestonesHandler from './routes/projects/[id]/milestones.js';
 import projectsResourcesHandler from './routes/projects/[id]/resources.js';
 import projectsProgressHandler from './routes/projects/[id]/progress.js';
 import projectsApprovalsHandler from './routes/projects/[id]/approvals.js';
+import projectsDocumentsHandler from './routes/projects/[id]/documents.js';
 import appointmentsIndexHandler from './routes/appointments/index.js';
 import appointmentsAvailabilityHandler from './routes/appointments/availability.js';
 import appointmentsDetailHandler from './routes/appointments/[id]/index.js';
@@ -282,6 +283,9 @@ app.post('/api/projects/:id/resources', adapt(projectsResourcesHandler));
 app.get('/api/projects/:id/progress', adapt(projectsProgressHandler));
 app.post('/api/projects/:id/progress', adapt(projectsProgressHandler));
 app.post('/api/projects/:id/approvals', adapt(projectsApprovalsHandler));
+app.get('/api/projects/:id/documents', adapt(projectsDocumentsHandler));
+app.post('/api/projects/:id/documents', adapt(projectsDocumentsHandler));
+app.delete('/api/projects/:id/documents', adapt(projectsDocumentsHandler));
 
 // Scheduling Routes
 app.post('/api/appointments', adapt(appointmentsIndexHandler));

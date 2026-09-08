@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { axiosClient } from '../auth/axiosClient.js';
-import type { Project, ProjectMilestone, WorkOrder, ProjectResource, ProgressLog } from '../../types/contractor/ProjectTypes.js';
+import type { Project, ProjectMilestone, WorkOrder, ProjectResource, ProgressLog, ProjectDocument } from '../../types/contractor/ProjectTypes.js';
 
 interface ApiResponse<T> {
   success: boolean;
@@ -128,6 +128,51 @@ export const ProjectService = {
       return response.data.data;
     } catch (error) {
       throw new Error(getErrorMessage(error, 'Unable to delete milestone'), { cause: error });
+    }
+  },
+
+  async getProjectDocuments(projectId: string): Promise<ProjectDocument[]> {
+    try {
+      const response = await axiosClient.get<ApiResponse<ProjectDocument[]>>(
+        `/api/projects/${projectId}/documents`
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Unable to load project documents'), { cause: error });
+    }
+  },
+
+  async uploadProjectDocument(
+    projectId: string,
+    payload: {
+      name: string;
+      fileUrl: string;
+      fileType?: string;
+    }
+  ): Promise<ProjectDocument> {
+    try {
+      const response = await axiosClient.post<ApiResponse<ProjectDocument>>(
+        `/api/projects/${projectId}/documents`,
+        payload
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Unable to upload project document'), { cause: error });
+    }
+  },
+
+  async deleteProjectDocument(
+    projectId: string,
+    documentId: string
+  ): Promise<{ success: boolean; id: string }> {
+    try {
+      const response = await axiosClient.delete<ApiResponse<{ success: boolean; id: string }>>(
+        `/api/projects/${projectId}/documents`,
+        { data: { documentId } }
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Unable to delete project document'), { cause: error });
     }
   },
 

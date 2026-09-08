@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ProjectService } from '../../services/contractor/ProjectService.js';
 import type { Project } from '../../types/contractor/ProjectTypes.js';
 
-type PlmsTab = 'overview' | 'tasks' | 'changes' | 'logs' | 'gallery' | 'handover';
+type PlmsTab = 'overview' | 'documents' | 'tasks' | 'changes' | 'logs' | 'gallery' | 'handover';
 
 
 
@@ -106,6 +106,13 @@ export function ProjectWorkspacePage() {
   const [editMsStatus, setEditMsStatus] = useState('PENDING');
 
   const [deletingMilestoneId, setDeletingMilestoneId] = useState<string | null>(null);
+
+  // Document management state
+  const [isUploadDocModalOpen, setIsUploadDocModalOpen] = useState(false);
+  const [uploadDocName, setUploadDocName] = useState('');
+  const [uploadDocUrl, setUploadDocUrl] = useState('');
+  const [uploadDocType, setUploadDocType] = useState('Drawing');
+  const [deletingDocId, setDeletingDocId] = useState<string | null>(null);
 
   // Form composer variables
   const [newLogText, setNewLogText] = useState('');
@@ -242,6 +249,39 @@ export function ProjectWorkspacePage() {
     } catch (err: any) {
       setDeletingMilestoneId(null);
       showNotice(`⚠️ ${err.message || 'Failed to delete milestone'}`);
+    }
+  };
+
+  const handleUploadDocumentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!project || !uploadDocName.trim() || !uploadDocUrl.trim()) return;
+    try {
+      await ProjectService.uploadProjectDocument(project.id, {
+        name: uploadDocName.trim(),
+        fileUrl: uploadDocUrl.trim(),
+        fileType: uploadDocType,
+      });
+      await reloadProject();
+      setIsUploadDocModalOpen(false);
+      setUploadDocName('');
+      setUploadDocUrl('');
+      setUploadDocType('Drawing');
+      showNotice('✓ Project document uploaded successfully.');
+    } catch (err: any) {
+      showNotice(`⚠️ ${err.message || 'Failed to upload document'}`);
+    }
+  };
+
+  const handleDeleteDocumentConfirm = async () => {
+    if (!project || !deletingDocId) return;
+    try {
+      await ProjectService.deleteProjectDocument(project.id, deletingDocId);
+      await reloadProject();
+      setDeletingDocId(null);
+      showNotice('✓ Document removed from project workspace.');
+    } catch (err: any) {
+      setDeletingDocId(null);
+      showNotice(`⚠️ ${err.message || 'Failed to delete document'}`);
     }
   };
 
@@ -430,6 +470,7 @@ export function ProjectWorkspacePage() {
         <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar mb-6">
           {([
             { id: 'overview', label: 'Dashboard & Milestones', icon: '📊' },
+            { id: 'documents', label: 'Project Documents', icon: '📁' },
             { id: 'tasks', label: 'Kanban Tasks & Gantt', icon: '📋' },
             { id: 'changes', label: 'Change Requests & Risks', icon: '⚖️' },
             { id: 'logs', label: 'Daily Scaffolding Logs', icon: '📝' },
@@ -653,6 +694,111 @@ export function ProjectWorkspacePage() {
                 )}
               </div>
 
+            </div>
+          );
+        })()}
+
+        {/* PROJECT DOCUMENTS */}
+        {activePlmsTab === 'documents' && (() => {
+          const projectDocs = project.documents || [];
+          const totalDocs = projectDocs.length;
+
+          return (
+            <div className="space-y-6 text-left">
+              <div className="dbc-card space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
+                      Project Documents & Attachments ({totalDocs})
+                    </h3>
+                    <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+                      Secure, project-scoped repository for drawings, specifications, agreements, and site photos.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setIsUploadDocModalOpen(true)}
+                    className="dbc-btn dbc-btn-sm dbc-btn-primary shrink-0 self-start sm:self-auto"
+                  >
+                    + Upload Document
+                  </button>
+                </div>
+
+                {totalDocs === 0 ? (
+                  <div className="p-8 bg-stone-50 border border-dashed border-stone-300 rounded-2xl text-center space-y-2">
+                    <span className="text-3xl">📁</span>
+                    <p className="text-xs font-semibold text-stone-700">No project documents yet.</p>
+                    <p className="text-[11px] text-stone-500 max-w-md mx-auto">
+                      Upload project documents to keep drawings, contracts, specifications, and site photos organized in one place.
+                    </p>
+                    <button
+                      onClick={() => setIsUploadDocModalOpen(true)}
+                      className="dbc-btn dbc-btn-sm dbc-btn-primary mt-2"
+                    >
+                      + Upload First Document
+                    </button>
+                  </div>
+                ) : (
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {projectDocs.map((doc: any) => {
+                      const uploaderName = doc.uploadedBy?.fullName || doc.uploadedBy?.email || 'User';
+                      const uploaderRole = doc.uploadedBy?.role === 'PROVIDER' ? 'Professional' : 'Customer';
+                      const formattedDate = doc.createdAt ? new Date(doc.createdAt).toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      }) : 'Recent';
+
+                      const fileIcon =
+                        doc.fileType === 'Drawing' ? '📐' :
+                        doc.fileType === 'Design' ? '🎨' :
+                        doc.fileType === 'Contract' ? '📜' :
+                        doc.fileType === 'Specification' ? '📋' :
+                        doc.fileType === 'Site Photo' ? '📷' :
+                        doc.fileType === 'Invoice' ? '🧾' : '📄';
+
+                      return (
+                        <div key={doc.id} className="p-4 bg-white border border-stone-200 rounded-2xl space-y-3 shadow-xs hover:border-emerald-300 transition flex flex-col justify-between">
+                          <div className="flex items-start gap-3">
+                            <span className="text-2xl p-2 bg-stone-100 rounded-xl shrink-0">{fileIcon}</span>
+                            <div className="space-y-1 overflow-hidden">
+                              <h4 className="text-xs font-black text-stone-900 leading-snug truncate" title={doc.name}>
+                                {doc.name}
+                              </h4>
+                              <div className="flex items-center gap-2">
+                                <span className="dbc-badge text-[7.5px] py-0.5 uppercase font-bold bg-stone-100 text-stone-700">
+                                  {doc.fileType || 'Document'}
+                                </span>
+                                <span className="text-[9px] text-stone-400 font-semibold">{formattedDate}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-between items-center pt-2 border-t border-stone-100 text-[10px]">
+                            <span className="text-stone-500 font-medium truncate max-w-[50%]">
+                              Uploaded by <strong className="text-stone-800">{uploaderRole} ({uploaderName})</strong>
+                            </span>
+
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <button
+                                onClick={() => window.open(doc.fileUrl, '_blank')}
+                                className="px-2.5 py-1 bg-emerald-50 text-emerald-800 font-bold rounded-lg border border-emerald-200 hover:bg-emerald-100 transition"
+                              >
+                                View / Download
+                              </button>
+                              <button
+                                onClick={() => setDeletingDocId(doc.id)}
+                                className="px-2 py-1 bg-red-50 text-red-700 font-bold rounded-lg border border-red-100 hover:bg-red-100 transition"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           );
         })()}
@@ -1222,7 +1368,108 @@ export function ProjectWorkspacePage() {
         </div>
       )}
 
+      {/* UPLOAD DOCUMENT MODAL */}
+      {isUploadDocModalOpen && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-stone-200 space-y-4 text-left">
+            <div className="flex justify-between items-center border-b pb-3">
+              <h3 className="text-base font-black text-stone-900">Upload Project Document</h3>
+              <button onClick={() => setIsUploadDocModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
+            </div>
+            <form onSubmit={handleUploadDocumentSubmit} className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">Document Title *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Approved Floor Plan Drawing v2"
+                  value={uploadDocName}
+                  onChange={(e) => setUploadDocName(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">Document Category</label>
+                  <select
+                    value={uploadDocType}
+                    onChange={(e) => setUploadDocType(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-xl text-xs font-medium bg-white"
+                  >
+                    <option value="Drawing">Drawing / CAD</option>
+                    <option value="Design">Design Mockup</option>
+                    <option value="Specification">Technical Specification</option>
+                    <option value="Contract">Agreement / Contract</option>
+                    <option value="Site Photo">Site Photo</option>
+                    <option value="Invoice">Invoice / Commercial</option>
+                    <option value="Approval">Approval Clearance</option>
+                    <option value="Other">Other Document</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">File URL / Storage Link *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="https://..."
+                    value={uploadDocUrl}
+                    onChange={(e) => setUploadDocUrl(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-xl text-xs font-medium"
+                  />
+                </div>
+              </div>
+              <p className="text-[10px] text-stone-500 italic">
+                Note: Standard document types (.pdf, .png, .jpg, .docx, .dwg) are supported. Executable (.exe, .sh, .bat) files are strictly prohibited for security reasons.
+              </p>
+              <div className="flex justify-end gap-2 pt-3 border-t">
+                <button
+                  type="button"
+                  onClick={() => setIsUploadDocModalOpen(false)}
+                  className="px-4 py-2 border border-stone-300 text-stone-700 text-xs font-bold rounded-xl hover:bg-stone-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl hover:bg-emerald-800"
+                >
+                  Upload Document
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* DELETE DOCUMENT CONFIRMATION MODAL */}
+      {deletingDocId && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-stone-200 space-y-4 text-center">
+            <span className="text-3xl">⚠️</span>
+            <h3 className="text-base font-black text-stone-900">Remove Document?</h3>
+            <p className="text-xs text-stone-600">
+              Are you sure you want to delete this document from the project workspace? This action cannot be undone.
+            </p>
+            <div className="flex justify-center gap-3 pt-2">
+              <button
+                onClick={() => setDeletingDocId(null)}
+                className="px-4 py-2 border border-stone-300 text-stone-700 text-xs font-bold rounded-xl hover:bg-stone-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteDocumentConfirm}
+                className="px-4 py-2 bg-red-700 text-white text-xs font-bold rounded-xl hover:bg-red-800"
+              >
+                Remove Document
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
+
 

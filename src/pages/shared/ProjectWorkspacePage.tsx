@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ProjectService } from '../../services/contractor/ProjectService.js';
+import { axiosClient } from '../../services/auth/axiosClient.js';
 import type { Project } from '../../types/contractor/ProjectTypes.js';
 
-type PlmsTab = 'overview' | 'documents' | 'tasks' | 'changes' | 'logs' | 'gallery' | 'handover';
+type PlmsTab = 'overview' | 'documents' | 'activity' | 'tasks' | 'changes' | 'logs' | 'gallery' | 'handover';
 
 
 
@@ -285,6 +286,27 @@ export function ProjectWorkspacePage() {
     }
   };
 
+  const handleOpenMessaging = async () => {
+    if (!project) return;
+    try {
+      const providerId = project.provider?.id || project.providerId;
+      const response = await axiosClient.post('/api/conversations', {
+        providerId,
+        projectId: project.id,
+        conversationType: 'DIRECT',
+      });
+      const convo = response.data?.data;
+      if (convo?.id) {
+        navigate(`/workspace/inbox?conversationId=${convo.id}`);
+      } else {
+        navigate('/workspace/inbox');
+      }
+    } catch (err: any) {
+      console.error('Failed to open project conversation', err);
+      navigate('/workspace/inbox');
+    }
+  };
+
 
   // Handle change request resolutions
   const handleResolveChangeRequest = (id: string, approve: boolean) => {
@@ -447,7 +469,7 @@ export function ProjectWorkspacePage() {
               )}
 
               <button
-                onClick={() => navigate('/workspace/inbox')}
+                onClick={handleOpenMessaging}
                 className="dbc-btn dbc-btn-sm border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
               >
                 💬 {currentUserRole === 'PROVIDER' ? 'Contact Customer' : 'Message Professional'}
@@ -471,6 +493,7 @@ export function ProjectWorkspacePage() {
           {([
             { id: 'overview', label: 'Dashboard & Milestones', icon: '📊' },
             { id: 'documents', label: 'Project Documents', icon: '📁' },
+            { id: 'activity', label: 'Activity Timeline', icon: '⚡' },
             { id: 'tasks', label: 'Kanban Tasks & Gantt', icon: '📋' },
             { id: 'changes', label: 'Change Requests & Risks', icon: '⚖️' },
             { id: 'logs', label: 'Daily Scaffolding Logs', icon: '📝' },
@@ -694,6 +717,49 @@ export function ProjectWorkspacePage() {
                 )}
               </div>
 
+              {/* Recent Activity summary card */}
+              <div className="dbc-card space-y-4 text-left">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
+                    Recent Project Activity
+                  </h3>
+                  <button
+                    onClick={() => setActivePlmsTab('activity')}
+                    className="text-xs font-bold text-emerald-800 hover:underline cursor-pointer"
+                  >
+                    View All Activity &rarr;
+                  </button>
+                </div>
+
+                {(!project.timeline || project.timeline.length === 0) ? (
+                  <p className="text-xs text-stone-500 italic">No project activity recorded yet.</p>
+                ) : (
+                  <div className="space-y-2.5">
+                    {project.timeline.slice(0, 3).map((event: any, idx: number) => {
+                      const actorEmail = event.actor?.email || 'System';
+                      const formattedTime = new Date(event.createdAt).toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      });
+                      return (
+                        <div key={event.id || idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
+                          <div className="space-y-0.5">
+                            <span className="text-[8px] font-black uppercase tracking-wider bg-stone-200 px-1.5 py-0.5 rounded text-stone-700">
+                              {event.eventType}
+                            </span>
+                            <p className="font-bold text-stone-900 text-xs mt-1">{event.description}</p>
+                            <span className="text-[9px] text-stone-500">By {actorEmail}</span>
+                          </div>
+                          <span className="text-[9px] text-stone-400 font-semibold shrink-0 ml-3">{formattedTime}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
             </div>
           );
         })()}
@@ -803,6 +869,77 @@ export function ProjectWorkspacePage() {
           );
         })()}
 
+        {/* ACTIVITY TIMELINE TAB */}
+        {activePlmsTab === 'activity' && (() => {
+          const projectTimeline = project.timeline || [];
+          const totalEvents = projectTimeline.length;
+
+          return (
+            <div className="space-y-6 text-left">
+              <div className="dbc-card space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
+                      Full Project Activity Timeline ({totalEvents})
+                    </h3>
+                    <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+                      Chronological history of milestone updates, document uploads, status changes, and approvals.
+                    </p>
+                  </div>
+                </div>
+
+                {totalEvents === 0 ? (
+                  <div className="p-8 bg-stone-50 border border-dashed border-stone-300 rounded-2xl text-center space-y-2">
+                    <span className="text-3xl">⚡</span>
+                    <p className="text-xs font-semibold text-stone-700">No project activity yet.</p>
+                    <p className="text-[11px] text-stone-500 max-w-md mx-auto">
+                      Events will automatically appear here as status updates, milestones, and project documents are recorded.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-3 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-stone-200">
+                    {projectTimeline.map((event: any) => {
+                      const actorEmail = event.actor?.email || 'System';
+                      const actorRole = event.actor?.role === 'PROVIDER' ? 'Professional' : event.actor?.role === 'CUSTOMER' ? 'Customer' : 'System';
+                      const formattedTime = new Date(event.createdAt).toLocaleString('en-IN', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      });
+
+                      const badgeStyle =
+                        event.type === 'STATUS_CHANGE' ? 'bg-blue-50 text-blue-800 border-blue-200' :
+                        event.type === 'MILESTONE' || event.type === 'MILESTONE_UPDATE' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
+                        event.type === 'DOCUMENT_UPLOAD' || event.type === 'DOCUMENT_DELETE' ? 'bg-purple-50 text-purple-800 border-purple-200' :
+                        event.type === 'APPROVAL' ? 'bg-amber-50 text-amber-800 border-amber-200' :
+                        'bg-stone-100 text-stone-700 border-stone-200';
+
+                      return (
+                        <div key={event.id} className="relative pl-8 flex items-start justify-between p-3.5 bg-white border border-stone-200 rounded-xl">
+                          <span className="absolute left-2 top-4.5 w-3 h-3 rounded-full bg-emerald-600 border-2 border-white ring-2 ring-stone-100" />
+                          <div className="space-y-1 overflow-hidden pr-2">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className={`px-2 py-0.5 border text-[9px] font-black uppercase rounded ${badgeStyle}`}>
+                                {event.type.replace(/_/g, ' ')}
+                              </span>
+                              <span className="text-[10px] text-stone-500 font-semibold">
+                                {actorRole} ({actorEmail})
+                              </span>
+                            </div>
+                            <p className="font-bold text-stone-900 text-xs mt-1 leading-snug">{event.description}</p>
+                          </div>
+                          <span className="text-[9.5px] text-stone-400 font-semibold shrink-0 ml-3">{formattedTime}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* KANBAN TASKS & GANTT */}
         {activePlmsTab === 'tasks' && (

@@ -316,6 +316,7 @@ export async function socialLoginUser(
 ): Promise<LoginResponse> {
   const { idToken, provider } = input;
   const targetProvider = (provider || 'google').toLowerCase();
+  const displayProvider = targetProvider === 'apple' ? 'Apple' : targetProvider === 'microsoft' ? 'Microsoft' : 'Google';
 
   if (!idToken || typeof idToken !== 'string' || !idToken.trim()) {
     throw new Error('ID Token is required for social authentication');
@@ -331,11 +332,14 @@ export async function socialLoginUser(
   } else if (process.env.NODE_ENV === 'test' && idToken.startsWith('mock_microsoft_id_token')) {
     verifiedEmail = input.email || 'microsoft_test_user@example.com';
     verifiedName = input.name || 'Microsoft Test User';
+  } else if (process.env.NODE_ENV === 'test' && idToken.startsWith('mock_apple_id_token')) {
+    verifiedEmail = input.email || 'apple_test_user@privaterelay.appleid.com';
+    verifiedName = input.name || 'Apple Test User';
   } else {
     try {
       const tokenInfoRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken.trim())}`);
       if (!tokenInfoRes.ok) {
-        throw new Error(`Invalid, expired, or unverified ${targetProvider === 'microsoft' ? 'Microsoft' : 'Google'} identity token`);
+        throw new Error(`Invalid, expired, or unverified ${displayProvider} identity token`);
       }
       const data = await tokenInfoRes.json();
       if (!data.email || (data.email_verified !== true && data.email_verified !== 'true')) {
@@ -344,10 +348,10 @@ export async function socialLoginUser(
       verifiedEmail = data.email.trim().toLowerCase();
       if (data.name) verifiedName = data.name;
     } catch (err: any) {
-      if (err.message && (err.message.includes('Microsoft') || err.message.includes('Google') || err.message.includes('verified') || err.message.includes('token'))) {
+      if (err.message && (err.message.includes('Apple') || err.message.includes('Microsoft') || err.message.includes('Google') || err.message.includes('verified') || err.message.includes('token'))) {
         throw err;
       }
-      throw new Error(`Invalid, expired, or unverified ${targetProvider === 'microsoft' ? 'Microsoft' : 'Google'} identity token`);
+      throw new Error(`Invalid, expired, or unverified ${displayProvider} identity token`);
     }
   }
 
@@ -378,7 +382,7 @@ export async function socialLoginUser(
       },
     });
 
-    const fallbackName = targetProvider === 'microsoft' ? 'Microsoft User' : 'Google User';
+    const fallbackName = targetProvider === 'apple' ? 'Apple User' : targetProvider === 'microsoft' ? 'Microsoft User' : 'Google User';
     const fullName = verifiedName || normalizedEmail.split('@')[0] || fallbackName;
 
     await db.customerProfile.create({

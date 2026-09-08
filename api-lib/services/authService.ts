@@ -102,13 +102,14 @@ export async function loginUser(
   }
 
   const rawInput = email.trim();
+  const lowerInput = rawInput.toLowerCase();
   const digits = rawInput.replace(/\D/g, '');
   const isPhone = digits.length >= 10;
 
   const user = await db.user.findFirst({
     where: {
       OR: [
-        { email: rawInput },
+        { email: lowerInput },
         ...(isPhone
           ? [
               { email: `${digits}@dbc.com` },

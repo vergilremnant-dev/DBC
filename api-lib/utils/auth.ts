@@ -41,3 +41,21 @@ export function verifyToken(req: VercelRequest): AuthenticatedUser | null {
 export function hasRole(user: AuthenticatedUser, allowedRoles: ('CUSTOMER' | 'PROVIDER' | 'ADMIN')[]): boolean {
   return allowedRoles.includes(user.role);
 }
+
+export async function getTempUserId(): Promise<string> {
+  const tempUserId = 'temp_unregistered';
+  const { db } = await import('./db.js');
+  let tempUser = await db.user.findUnique({ where: { id: tempUserId } });
+  if (!tempUser) {
+    tempUser = await db.user.create({
+      data: {
+        id: tempUserId,
+        email: 'system_temp_otp@dbc.com',
+        password: '$2a$10$UnregisteredSystemUserDummyHashForOTPStorageKey',
+        role: 'CUSTOMER',
+        status: 'ACTIVE',
+      },
+    });
+  }
+  return tempUser.id;
+}

@@ -44,10 +44,26 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
   const isPhoneRegistration = Boolean(phone || normalizedEmail.endsWith('@dbc.com'));
 
   try {
-    // Check if user already exists
+    // Check if user already exists by email
     const existingUser = await db.user.findUnique({ where: { email: normalizedEmail } });
     if (existingUser) {
       return res.status(400).json({ success: false, message: 'Email is already registered' });
+    }
+
+    // Check if user already exists by phone number if phone is provided
+    if (phone && typeof phone === 'string' && phone.trim()) {
+      const cleanPhone = phone.trim();
+      const existingPhoneUser = await db.user.findFirst({
+        where: {
+          OR: [
+            { customerProfile: { phoneNumber: { contains: cleanPhone } } },
+            { providerProfile: { phoneNumber: { contains: cleanPhone } } },
+          ],
+        },
+      });
+      if (existingPhoneUser) {
+        return res.status(400).json({ success: false, message: 'Phone number is already registered' });
+      }
     }
 
     // MANDATORY SERVER-SIDE VERIFICATION PROOF VALIDATION

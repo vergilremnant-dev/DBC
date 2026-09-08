@@ -54,9 +54,12 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
     });
 
     // Save registration proof token in DB session table
+    const { getTempUserId } = await import('../../utils/auth.js');
+    const tempUserId = await getTempUserId();
+
     await db.userSession.create({
       data: {
-        userId: 'temp_unregistered',
+        userId: tempUserId,
         token: proofTokenKey,
         expiresAt: proofExpiresAt,
       },

@@ -249,11 +249,14 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         verificationToken: verificationToken || undefined,
         firebaseIdToken: firebaseIdToken || undefined,
       });
-    } catch (err: unknown) {
-      console.warn('Backend API registration notice:', err);
-    } finally {
+    } catch (err: any) {
+      console.error('Backend API registration failure:', err);
+      setError(err?.message || 'Registration failed. Please check your details and try again.');
       setSubmitting(false);
+      return;
     }
+
+    setSubmitting(false);
 
     const finalPayload: RegisterPayload = {
       role: 'ROLE_CUSTOMER',

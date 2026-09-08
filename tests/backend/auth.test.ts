@@ -151,4 +151,111 @@ describe('Auth Utility Tests', () => {
       expect(jsonPayload.message).toContain('invalid or has expired');
     });
   });
+
+  describe('End-to-End Registration, Verification, Login & Security Tests', () => {
+    it('should complete end-to-end email verification -> registration -> login flow', async () => {
+      const { default: sendOtpHandler } = await import('../../api-lib/routes/auth/send-email-otp.js');
+      const { default: verifyOtpHandler } = await import('../../api-lib/routes/auth/verify-email-otp.js');
+      const { default: registerHandler } = await import('../../api-lib/routes/auth/register.js');
+      const { loginUser } = await import('../../api-lib/services/authService.js');
+
+      const email = `test_e2e_customer_${Date.now()}@example.com`;
+      const password = 'SecurePassword123!';
+
+      // Step 1: Send OTP
+      let sendStatus = 0;
+      let sendData: any = {};
+      await sendOtpHandler(
+        { method: 'POST', body: { email } } as any,
+        { status: (c: number) => ({ json: (d: any) => { sendStatus = c; sendData = d; } }), setHeader: () => {} } as any
+      );
+      expect(sendStatus).toBe(200);
+      expect(sendData.success).toBe(true);
+
+      // Step 2: Verify OTP
+      let verifyStatus = 0;
+      let verifyData: any = {};
+      await verifyOtpHandler(
+        { method: 'POST', body: { email, otp: '123456' } } as any,
+        { status: (c: number) => ({ json: (d: any) => { verifyStatus = c; verifyData = d; } }), setHeader: () => {} } as any
+      );
+      expect(verifyStatus).toBe(200);
+      expect(verifyData.success).toBe(true);
+      expect(verifyData.verificationToken).toBeDefined();
+
+      const proofToken = verifyData.verificationToken;
+
+      // Step 3: Register Account with Proof Token
+      let regStatus = 0;
+      let regData: any = {};
+      await registerHandler(
+        {
+          method: 'POST',
+          body: {
+            email,
+            password,
+            firstName: 'E2E',
+            lastName: 'Customer',
+            role: 'ROLE_ADMIN', // Attempt privilege escalation!
+            verificationToken: proofToken,
+          },
+        } as any,
+        { status: (c: number) => ({ json: (d: any) => { regStatus = c; regData = d; } }), setHeader: () => {} } as any
+      );
+      expect(regStatus).toBe(201);
+      expect(regData.success).toBe(true);
+
+      // Step 4: Login with newly created credentials
+      const loginRes = await loginUser({ email, password });
+      expect(loginRes.accessToken).toBeDefined();
+      expect(loginRes.refreshToken).toBeDefined();
+      expect(loginRes.user.email).toBe(email);
+      expect(loginRes.user.role).toBe('ROLE_CUSTOMER'); // Strict Role Enforcement verified!
+
+      // Step 5: Verify replay protection (reusing proofToken must fail)
+      let replayStatus = 0;
+      let replayData: any = {};
+      await registerHandler(
+        {
+          method: 'POST',
+          body: {
+            email: 'test_replay_user@example.com',
+            password,
+            firstName: 'Replay',
+            lastName: 'User',
+            verificationToken: proofToken,
+          },
+        } as any,
+        { status: (c: number) => ({ json: (d: any) => { replayStatus = c; replayData = d; } }), setHeader: () => {} } as any
+      );
+      expect(replayStatus).toBe(400);
+      expect(replayData.success).toBe(false);
+      expect(replayData.message).toContain('invalid or has expired');
+    });
+
+    it('should reject duplicate email registrations cleanly', async () => {
+      const { default: sendOtpHandler } = await import('../../api-lib/routes/auth/send-email-otp.js');
+      const { default: verifyOtpHandler } = await import('../../api-lib/routes/auth/verify-email-otp.js');
+      const { default: registerHandler } = await import('../../api-lib/routes/auth/register.js');
+
+      const email = `test_duplicate_${Date.now()}@example.com`;
+
+      // Register first account
+      await sendOtpHandler({ method: 'POST', body: { email } } as any, { status: () => ({ json: () => {} }), setHeader: () => {} } as any);
+      let vToken = '';
+      await verifyOtpHandler({ method: 'POST', body: { email, otp: '123456' } } as any, { status: () => ({ json: (d: any) => { vToken = d.verificationToken; } }), setHeader: () => {} } as any);
+      await registerHandler({ method: 'POST', body: { email, password: 'Password123!', firstName: 'Dup', lastName: 'User', verificationToken: vToken } } as any, { status: () => ({ json: () => {} }), setHeader: () => {} } as any);
+
+      // Now try to send OTP for the exact same email
+      let sendStatus = 0;
+      let sendData: any = {};
+      await sendOtpHandler(
+        { method: 'POST', body: { email } } as any,
+        { status: (c: number) => ({ json: (d: any) => { sendStatus = c; sendData = d; } }), setHeader: () => {} } as any
+      );
+      expect(sendStatus).toBe(400);
+      expect(sendData.success).toBe(false);
+      expect(sendData.message).toContain('already registered');
+    });
+  });
 });

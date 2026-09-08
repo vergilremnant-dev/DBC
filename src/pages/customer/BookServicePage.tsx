@@ -14,6 +14,10 @@ export function BookServicePage() {
 
   const urlProviderId = searchParams.get('providerId') || '';
   const urlCategoryId = Number(searchParams.get('categoryId') || 0);
+  const urlCity = searchParams.get('city');
+  const urlTimeline = searchParams.get('timeline');
+  const urlBudget = searchParams.get('budget');
+  const urlNotes = searchParams.get('notes') || searchParams.get('intent');
 
   const [providerId, setProviderId] = useState(urlProviderId);
   const [categoryId, setCategoryId] = useState(urlCategoryId);
@@ -26,24 +30,25 @@ export function BookServicePage() {
   const [date, setDate] = useState('');
   const [time] = useState('10:00 AM');
   const [address, setAddress] = useState('');
-  const [city, setCity] = useState(selectedCity || 'Hyderabad');
+  const [city, setCity] = useState(urlCity || selectedCity || 'Hyderabad');
   const [state, setState] = useState('Telangana');
-  const [notes, setNotes] = useState('');
-  const [timeline, setTimeline] = useState('1–3 months');
-  const [budgetRange, setBudgetRange] = useState('₹5L – ₹15L');
+  const [notes, setNotes] = useState(urlNotes || '');
+  const [timeline, setTimeline] = useState(urlTimeline || '1–3 months');
+  const [budgetRange, setBudgetRange] = useState(urlBudget || '₹5L – ₹15L');
 
   const [loading, setLoading] = useState(false);
+  const submittingRef = React.useRef(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [createdBookingNumber, setCreatedBookingNumber] = useState('');
 
-  // Sync city state when selectedCity changes
+  // Sync city state when selectedCity changes (if not explicitly overridden by URL)
   useEffect(() => {
     startTransition(() => {
-      if (selectedCity) setCity(selectedCity);
+      if (selectedCity && !urlCity) setCity(selectedCity);
     });
-  }, [selectedCity]);
+  }, [selectedCity, urlCity]);
 
   // Load provider details if providerId is in URL, or load options if missing
   useEffect(() => {
@@ -125,6 +130,9 @@ export function BookServicePage() {
 
   async function handleBookingSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (submittingRef.current || loading) return;
+
+    submittingRef.current = true;
     setLoading(true);
     setError('');
     setMessage('');
@@ -132,24 +140,28 @@ export function BookServicePage() {
     if (!providerId) {
       setError('Please select a professional before requesting a quote.');
       setLoading(false);
+      submittingRef.current = false;
       return;
     }
 
     if (!date) {
       setError('Please select a target start date.');
       setLoading(false);
+      submittingRef.current = false;
       return;
     }
 
     if (!address.trim()) {
       setError('Please provide the service location address.');
       setLoading(false);
+      submittingRef.current = false;
       return;
     }
 
     if (!notes.trim()) {
       setError('Please provide a project description explaining what you want to build or discuss.');
       setLoading(false);
+      submittingRef.current = false;
       return;
     }
 
@@ -181,6 +193,7 @@ export function BookServicePage() {
       setError(errMsg);
     } finally {
       setLoading(false);
+      submittingRef.current = false;
     }
   }
 
@@ -422,7 +435,7 @@ export function BookServicePage() {
                 </div>
               )}
 
-              {/* Section 1: When would you like the service? */}
+              {/* Section 1: Expected Project Start & Timeline */}
               <div className="bg-white rounded-2xl border border-stone-200 p-5 sm:p-6 shadow-xs space-y-4">
                 <div className="border-b border-stone-100 pb-3">
                   <div className="flex items-center gap-2">
@@ -430,11 +443,11 @@ export function BookServicePage() {
                       1
                     </span>
                     <h3 className="text-sm font-bold text-stone-900 tracking-tight">
-                      When would you like the service?
+                      Expected Project Start & Timeline
                     </h3>
                   </div>
                   <p className="text-xs text-stone-500 font-medium mt-1 ml-7">
-                    Select your target date and preferred arrival window.
+                    Select your expected project start date.
                   </p>
                 </div>
 
@@ -458,7 +471,7 @@ export function BookServicePage() {
                 </div>
               </div>
 
-              {/* Section 2: Where is the service required? */}
+              {/* Section 2: Project Location & Scope */}
               <div className="bg-white rounded-2xl border border-stone-200 p-5 sm:p-6 shadow-xs space-y-4">
                 <div className="border-b border-stone-100 pb-3">
                   <div className="flex items-center gap-2">
@@ -466,11 +479,11 @@ export function BookServicePage() {
                       2
                     </span>
                     <h3 className="text-sm font-bold text-stone-900 tracking-tight">
-                      Where is the service required?
+                      Project Location & Scope
                     </h3>
                   </div>
                   <p className="text-xs text-stone-500 font-medium mt-1 ml-7">
-                    Provide the property address and project details for on-site visit.
+                    Provide the property address, timeline, budget range, and project scope details.
                   </p>
                 </div>
 

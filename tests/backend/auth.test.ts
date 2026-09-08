@@ -491,4 +491,74 @@ describe('Auth Utility Tests', () => {
       expect(responseData.user.role).toBe('ROLE_CUSTOMER');
     });
   });
+
+  describe('Comprehensive Session Revocation, Account Status & Security Hardening Tests', () => {
+    it('should reject authentication for suspended/inactive user accounts across login channels', async () => {
+      const { db } = await import('../../api-lib/utils/db.js');
+      const { loginUser, socialLoginUser } = await import('../../api-lib/services/authService.js');
+      const email = `suspended_user_${Date.now()}@example.com`;
+
+      // Create suspended user
+      const user = await db.user.create({
+        data: {
+          email,
+          password: '$2a$10$dummyHashForSuspendedUserTesting12345678',
+          role: 'CUSTOMER',
+          status: 'SUSPENDED',
+        },
+      });
+
+      // Password Login attempt on suspended account
+      await expect(loginUser({ email, password: 'AnyPassword123!' })).rejects.toThrow('suspended');
+
+      // Social Login attempt on suspended account
+      await expect(socialLoginUser({ idToken: 'mock_google_id_token_suspended', provider: 'google', email })).rejects.toThrow('suspended');
+
+      // Clean up
+      await db.user.delete({ where: { id: user.id } });
+    });
+
+    it('should cleanly rotate refresh tokens and revoke old session tokens upon logout', async () => {
+      const { db } = await import('../../api-lib/utils/db.js');
+      const { refreshUserToken, logoutUserSession } = await import('../../api-lib/services/authService.js');
+
+      const email = `refresh_session_test_${Date.now()}@example.com`;
+      const user = await db.user.create({
+        data: {
+          email,
+          password: '$2a$10$dummyHashForSessionTesting1234567890123',
+          role: 'CUSTOMER',
+          status: 'ACTIVE',
+        },
+      });
+
+      // Create session
+      const crypto = await import('crypto');
+      const rawToken = crypto.randomBytes(40).toString('hex');
+      const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+
+      await db.userSession.create({
+        data: {
+          userId: user.id,
+          token: hashedToken,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+      });
+
+      // Rotate session token
+      const refreshRes = await refreshUserToken(rawToken);
+      expect(refreshRes.accessToken).toBeDefined();
+      expect(refreshRes.refreshToken).toBeDefined();
+      expect(refreshRes.refreshToken).not.toBe(rawToken);
+
+      // Revoke session via logout
+      await logoutUserSession(refreshRes.refreshToken);
+
+      // Attempting to refresh again with revoked token must fail
+      await expect(refreshUserToken(refreshRes.refreshToken)).rejects.toThrow('Invalid or revoked session');
+
+      // Clean up
+      await db.user.delete({ where: { id: user.id } });
+    });
+  });
 });

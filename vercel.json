@@ -49,7 +49,7 @@
       "destination": "/api/index"
     },
     {
-      "source": "/((?!api|assets|favicon.ico|manifest.json|sw.js).*)",
+      "source": "/((?!api|assets|favicon.ico|manifest.json|sw.js|\\.well-known).*)",
       "destination": "/index.html"
     }
   ]

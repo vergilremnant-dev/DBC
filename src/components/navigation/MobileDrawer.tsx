@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { QuickActionButton } from './QuickActionButton';
 import { BrandLogo } from '../common/BrandLogo';
 
@@ -54,8 +55,13 @@ export function MobileDrawer({
     return 'Customer Account';
   };
 
-  return (
-    <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] overflow-hidden lg:hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation menu"
+    >
       {/* Backdrop */}
       <div
         onClick={onClose}
@@ -64,7 +70,7 @@ export function MobileDrawer({
 
       {/* Drawer panel */}
       <div className="absolute inset-y-0 right-0 max-w-full flex">
-        <div className="w-76 max-w-xs bg-white border-l border-stone-200 p-5 flex flex-col justify-between shadow-2xl transform transition-transform duration-300 ease-in-out animate-in slide-in-from-right">
+        <div className="w-[min(20rem,100vw)] max-w-full bg-white border-l border-stone-200 p-5 flex flex-col justify-between shadow-2xl transform transition-transform duration-300 ease-in-out animate-in slide-in-from-right">
           
           <div className="space-y-5">
             {/* Header: Brand Logo + Close Button */}
@@ -130,11 +136,13 @@ export function MobileDrawer({
 
           {/* Bottom actions: Settings, Quick actions, Logout */}
           <div className="space-y-3 pt-4 border-t border-stone-100">
-            <QuickActionButton
-              role={user?.role}
-              className="w-full text-center py-2.5"
-              onClickCallback={onClose}
-            />
+            {user && (
+              <QuickActionButton
+                role={user.role}
+                className="w-full text-center py-2.5"
+                onClickCallback={onClose}
+              />
+            )}
 
             {user && (
               <div className="grid grid-cols-2 gap-2 text-center">
@@ -198,7 +206,8 @@ export function MobileDrawer({
 
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

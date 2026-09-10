@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.designbuildconnect.app",
+    "sha256_cert_fingerprints": [
+      "29:7A:35:3C:68:E6:1E:9B:73:E9:1A:80:CF:D4:FA:70:9B:C2:F5:5E:8E:1B:83:91:7B:BD:5A:41:11:8F:26:21"
+    ]
+  }
+}]

@@ -136,11 +136,13 @@ export function MobileDrawer({
 
           {/* Bottom actions: Settings, Quick actions, Logout */}
           <div className="space-y-3 pt-4 border-t border-stone-100">
-            <QuickActionButton
-              role={user?.role}
-              className="w-full text-center py-2.5"
-              onClickCallback={onClose}
-            />
+            {user && (
+              <QuickActionButton
+                role={user.role}
+                className="w-full text-center py-2.5"
+                onClickCallback={onClose}
+              />
+            )}
 
             {user && (
               <div className="grid grid-cols-2 gap-2 text-center">

@@ -62,13 +62,14 @@ export function PaymentCheckoutModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-xs p-4 select-none">
-      <div className="bg-white w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-stone-150 animate-in fade-in zoom-in-95 duration-200 text-left text-xs font-semibold text-stone-700">
+      <div className="bg-white w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-stone-150 animate-in fade-in zoom-in-95 duration-200 text-left text-xs font-semibold text-stone-700 max-h-[85vh] overflow-y-auto">
         
         {/* Close Icon (Only visible in checkout/success/failure stages) */}
         {(stage === 'CHECKOUT' || stage === 'SUCCESS' || stage === 'FAILURE') && (
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 h-7 w-7 flex items-center justify-center rounded-full bg-stone-50 text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition cursor-pointer"
+            className="absolute top-5 right-5 h-11 w-11 flex items-center justify-center rounded-full bg-stone-50 text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition cursor-pointer min-h-[44px] min-w-[44px]"
+            aria-label="Close modal"
           >
             ✕
           </button>

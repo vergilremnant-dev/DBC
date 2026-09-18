@@ -127,24 +127,24 @@ export default function RequirementsTable({
 
                 {/* Actions */}
                 <td className="py-3 px-4 text-right">
-                  <div className="flex gap-2.5 justify-end text-[9px] font-black uppercase tracking-wider">
+                  <div className="flex gap-2.5 justify-end text-[9px] font-black uppercase tracking-wider items-center">
                     <button
                       onClick={() => onSelectRequirement(req)}
-                      className="text-brand-emerald hover:underline focus:outline-none"
+                      className="text-brand-emerald hover:underline focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                     >
                       View
                     </button>
                     {req.status === 'Hidden' ? (
                       <button
                         onClick={() => onUnhide(req.id, req.title)}
-                        className="text-brand-emerald hover:underline focus:outline-none"
+                        className="text-brand-emerald hover:underline focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                       >
                         Unhide
                       </button>
                     ) : (
                       <button
                         onClick={() => onHide(req.id, req.title)}
-                        className="text-rose-600 hover:underline focus:outline-none"
+                        className="text-rose-600 hover:underline focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                       >
                         Hide
                       </button>
@@ -152,7 +152,7 @@ export default function RequirementsTable({
                     {req.status !== 'Closed' && (
                       <button
                         onClick={() => onCloseRequirement(req.id, req.title)}
-                        className="text-stone-600 hover:underline focus:outline-none"
+                        className="text-stone-600 hover:underline focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                       >
                         Close
                       </button>
@@ -171,18 +171,18 @@ export default function RequirementsTable({
           <span>
             Page {currentPage} of {totalPages}
           </span>
-          <div className="flex gap-1">
+          <div className="flex gap-2">
             <button
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50 min-h-[44px] px-3 cursor-pointer"
             >
               &larr; Prev
             </button>
             <button
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50 min-h-[44px] px-3 cursor-pointer"
             >
               Next &rarr;
             </button>

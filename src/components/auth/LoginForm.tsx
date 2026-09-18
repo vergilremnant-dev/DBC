@@ -52,7 +52,7 @@ export function LoginForm({
               onChange={onChange}
               required
               autoComplete="username"
-              className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
+              className="w-full min-h-[44px] bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-3.5 transition-all outline-none"
             />
           </div>
         </div>
@@ -67,7 +67,7 @@ export function LoginForm({
               <button
                 type="button"
                 onClick={onForgotPassword}
-                className="text-[10px] font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer focus:outline-none"
+                className="text-[10px] font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer focus:outline-none py-1"
               >
                 Forgot Password?
               </button>
@@ -86,12 +86,12 @@ export function LoginForm({
               onChange={onChange}
               required
               autoComplete="current-password"
-              className="w-full bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-11 transition-all outline-none"
+              className="w-full min-h-[44px] bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 pl-10 pr-11 transition-all outline-none"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-1 cursor-pointer focus:outline-none transition"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer focus:outline-none transition"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? (
@@ -110,13 +110,13 @@ export function LoginForm({
 
         {/* Remember Me Device Flag */}
         <div className="flex items-center pt-0.5">
-          <label className="flex items-center gap-2 cursor-pointer select-none">
+          <label className="flex items-center gap-2 cursor-pointer select-none min-h-[44px]">
             <input
               id="remember-me"
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              className="w-4 h-4 rounded text-emerald-700 border-stone-300 focus:ring-emerald-600 accent-emerald-700 cursor-pointer"
+              className="w-5 h-5 rounded text-emerald-700 border-stone-300 focus:ring-emerald-600 accent-emerald-700 cursor-pointer"
             />
             <span className="text-xs font-medium text-stone-600">Remember this device</span>
           </label>
@@ -136,7 +136,7 @@ export function LoginForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full min-h-[44px] py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
         >
           {loading ? (
             <>

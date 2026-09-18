@@ -56,7 +56,7 @@ export function MobileBottomNav() {
           <button
             key={item.label}
             onClick={() => navigate(item.path)}
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-xl transition duration-200 cursor-pointer focus:outline-none ${
+            className={`flex flex-col items-center justify-center gap-0.5 py-1 px-3 min-h-[44px] min-w-[44px] rounded-xl transition duration-200 cursor-pointer focus:outline-none ${
               isActive 
                 ? 'text-emerald-700 font-extrabold scale-105' 
                 : 'text-stone-400 hover:text-stone-700 font-bold'

@@ -62,6 +62,16 @@ body {
   margin: 0;
   background-color: #f5f5f4; /* Very Light Stone */
   color: #1a1a1a; /* Graphite Black */
+  overflow-x: hidden;
+}
+
+/* Hide scrollbars for clean touch horizontal tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 button,

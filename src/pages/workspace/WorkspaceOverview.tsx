@@ -168,7 +168,7 @@ export default function WorkspaceOverview() {
       )}
 
       {/* 1. Sub-Tab Selector Navigation */}
-      <div className="flex border-b border-light-border p-1 bg-white rounded-2xl shadow-apple-sm max-w-lg">
+      <div className="flex border-b border-light-border p-1 bg-white rounded-2xl shadow-apple-sm max-w-lg overflow-x-auto no-scrollbar">
         {([
           { id: 'dashboard', label: 'Dashboard', icon: '📊' },
           { id: 'projects', label: 'Projects', icon: '🏗️' },

@@ -57,6 +57,7 @@ function CustomerInbox() {
   const [chats, setChats] = useState<ChatThread[]>(INITIAL_CHATS);
   const [selectedChatId, setSelectedChatId] = useState<string>('ch-1');
   const [activeSubTab, setActiveSubTab] = useState<'chats' | 'pros'>('chats');
+  const [mobileView, setMobileView] = useState<'list' | 'chat'>('list');
   
   // Message Inputs
   const [messageText, setMessageText] = useState('');
@@ -137,7 +138,7 @@ function CustomerInbox() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-white border border-light-border rounded-3xl shadow-apple-sm overflow-hidden min-h-[500px]">
         
         {/* Left sidebar: Directory navigation (Col span 4) */}
-        <div className="md:col-span-4 border-r border-light-border flex flex-col bg-light-stone/10">
+        <div className={`md:col-span-4 border-r border-light-border flex flex-col bg-light-stone/10 ${mobileView === 'chat' ? 'hidden md:flex' : 'flex'}`}>
           
           {/* Sub tabs: Chats vs Professionals List */}
           <div className="flex border-b border-light-border p-1.5 bg-white">
@@ -181,6 +182,7 @@ function CustomerInbox() {
                     onClick={() => {
                       setSelectedChatId(c.id);
                       setChats(chats.map(chat => chat.id === c.id ? { ...chat, unread: false } : chat));
+                      setMobileView('chat');
                     }}
                     className={`p-3 rounded-2xl cursor-pointer flex gap-3 items-center border transition-all duration-200
                       ${isSelected 
@@ -207,6 +209,7 @@ function CustomerInbox() {
                   onClick={() => {
                     setSelectedChatId(c.id);
                     setActiveSubTab('chats');
+                    setMobileView('chat');
                   }}
                   className="p-3 bg-white border border-light-border rounded-2xl flex items-center justify-between hover:bg-light-stone/30 cursor-pointer transition"
                 >
@@ -225,15 +228,23 @@ function CustomerInbox() {
         </div>
 
         {/* Right side: Message details thread contents (Col span 8) */}
-        <div className="md:col-span-8 flex flex-col justify-between bg-white h-full min-h-[450px]">
+        <div className={`md:col-span-8 flex flex-col justify-between bg-white h-full min-h-[450px] ${mobileView === 'list' ? 'hidden md:flex' : 'flex'}`}>
           {activeChat ? (
             <div className="flex flex-col justify-between h-full flex-1">
               
               {/* Active chat header info */}
               <div className="p-4 border-b border-light-border flex justify-between items-center bg-light-stone/10">
-                <div>
-                  <h3 className="text-xs font-black text-stone-black leading-tight">{activeChat.proName}</h3>
-                  <span className="text-[8px] font-black uppercase text-brand-emerald tracking-wider">{activeChat.proRole}</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setMobileView('list')}
+                    className="md:hidden text-xs font-bold text-stone-600 hover:text-stone-900 mr-1 cursor-pointer"
+                  >
+                    ← Contacts
+                  </button>
+                  <div>
+                    <h3 className="text-xs font-black text-stone-black leading-tight">{activeChat.proName}</h3>
+                    <span className="text-[8px] font-black uppercase text-brand-emerald tracking-wider">{activeChat.proRole}</span>
+                  </div>
                 </div>
                 <div className="flex gap-2">
                   <button

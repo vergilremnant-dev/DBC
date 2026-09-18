@@ -149,7 +149,7 @@ export default function WorkspaceLayout() {
                 to={item.path}
                 onClick={() => setIsMobileOpen(false)}
                 className={({ isActive }) => `
-                  flex items-center gap-3 px-3 py-2.5 rounded-r-xl rounded-l-none text-xs font-bold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-brand-emerald focus:outline-none
+                  flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-r-xl rounded-l-none text-xs font-bold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-brand-emerald focus:outline-none
                   ${isActive 
                     ? 'bg-white text-stone-black font-extrabold shadow-sm border-l-4 border-brand-emerald' 
                     : 'text-stone-400 hover:text-stone-black hover:bg-warm-cream'
@@ -169,7 +169,7 @@ export default function WorkspaceLayout() {
             {/* Collapse toggle (Desktop/Tablet only) */}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="hidden lg:flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs font-bold text-stone-450 text-stone-400 hover:text-white hover:bg-stone-800 transition focus:outline-none"
+              className="hidden lg:flex items-center gap-3 w-full px-3 py-2 min-h-[44px] rounded-xl text-xs font-bold text-stone-400 hover:text-white hover:bg-stone-800 transition focus:outline-none"
             >
               <span>{isCollapsed ? '▶' : '◀'}</span>
               <span className={`transition-opacity ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
@@ -180,7 +180,7 @@ export default function WorkspaceLayout() {
             {/* Logout Trigger */}
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-xs font-black text-rose-455 text-rose-400 hover:bg-rose-950/40 transition cursor-pointer text-left focus-visible:ring-2 focus-visible:ring-rose-500 focus:outline-none"
+              className="flex items-center gap-3 w-full px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-black text-rose-400 hover:bg-rose-950/40 transition cursor-pointer text-left focus-visible:ring-2 focus-visible:ring-rose-500 focus:outline-none"
             >
               <span>🚪</span>
               <span className={`transition-opacity ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
@@ -191,7 +191,7 @@ export default function WorkspaceLayout() {
         </aside>
 
         {/* MAIN VIEWPORT */}
-        <main className="flex-1 bg-warm-cream p-4 sm:p-6 lg:p-8 pb-16 lg:pb-8 overflow-y-auto h-[calc(100vh-4rem)] flex flex-col justify-between">
+        <main className="flex-1 bg-warm-cream p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8 overflow-y-auto h-[calc(100vh-4rem)] flex flex-col justify-between">
           <div className="flex-1">
             <Outlet />
           </div>

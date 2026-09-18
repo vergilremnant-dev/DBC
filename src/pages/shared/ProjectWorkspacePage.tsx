@@ -1717,7 +1717,7 @@ export function ProjectWorkspacePage() {
       {/* ADD MILESTONE MODAL */}
       {isAddMsModalOpen && (
         <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-stone-200 space-y-4 text-left">
+          <div className="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="text-base font-black text-stone-900">Add Project Milestone</h3>
               <button onClick={() => setIsAddMsModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
@@ -1787,7 +1787,7 @@ export function ProjectWorkspacePage() {
       {/* EDIT MILESTONE MODAL */}
       {editingMilestone && (
         <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-stone-200 space-y-4 text-left">
+          <div className="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="text-base font-black text-stone-900">Edit Project Milestone</h3>
               <button onClick={() => setEditingMilestone(null)} className="text-stone-400 hover:text-stone-700">✕</button>
@@ -1867,7 +1867,7 @@ export function ProjectWorkspacePage() {
       {/* DELETE CONFIRMATION MODAL */}
       {deletingMilestoneId && (
         <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-stone-200 space-y-4 text-center">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-center">
             <span className="text-3xl">⚠️</span>
             <h3 className="text-base font-black text-stone-900">Delete Milestone?</h3>
             <p className="text-xs text-stone-600">
@@ -1894,7 +1894,7 @@ export function ProjectWorkspacePage() {
       {/* UPLOAD DOCUMENT MODAL */}
       {isUploadDocModalOpen && (
         <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-stone-200 space-y-4 text-left">
+          <div className="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="text-base font-black text-stone-900">Upload Project Document</h3>
               <button onClick={() => setIsUploadDocModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
@@ -2015,7 +2015,7 @@ export function ProjectWorkspacePage() {
       {/* PROJECT COMPLETION CONFIRMATION MODAL */}
       {isCompletionModalOpen && project && (
         <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-stone-200 space-y-5 text-left">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-5 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <div className="space-y-0.5">
                 <span className="text-[9px] font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
@@ -2085,7 +2085,7 @@ export function ProjectWorkspacePage() {
       {/* POST-COMPLETION REVIEW MODAL */}
       {isReviewModalOpen && project && (
         <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-stone-200 space-y-5 text-left">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-5 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <div>
                 <span className="text-[9px] font-black uppercase text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">

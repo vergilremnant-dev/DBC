@@ -44,6 +44,7 @@ export interface Project {
   quotation?: {
     id: number;
     totalAmount: number;
+    warrantyMonths?: number | null;
   };
   phases?: ProjectPhase[];
   milestones?: ProjectMilestone[];

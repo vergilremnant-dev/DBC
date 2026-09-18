@@ -585,6 +585,18 @@ export function ProjectWorkspacePage() {
           </div>
         )}
 
+        {['CLOSED', 'CUSTOMER_APPROVAL', 'COMPLETED'].includes(project.status) && (
+          <div className="mb-4 p-3.5 bg-stone-100 border border-stone-300 text-stone-800 rounded-2xl text-xs font-bold flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-base">🔒</span>
+              <span><strong>PROJECT CLOSED:</strong> This project workspace is a read-only historical record. All documents, financials, activity timeline, and messages remain accessible.</span>
+            </div>
+            <button onClick={handleOpenMessaging} className="text-emerald-800 hover:underline shrink-0 text-[11px] font-extrabold ml-3">
+              💬 Post-Completion Support &rarr;
+            </button>
+          </div>
+        )}
+
         {/* Navigation tabs switcher */}
         <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar mb-6">
           {([
@@ -1579,25 +1591,83 @@ export function ProjectWorkspacePage() {
             </div>
 
             {/* Warranty claim tracker */}
-            <div className="dbc-card space-y-4">
-              <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Warranty Tracker Period</h3>
-              
-              <div className="p-4 bg-light-stone/20 border border-light-border rounded-2xl space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-black text-stone-black">Structural Warranty Period</span>
-                  <span className="text-[9px] text-stone-gray font-bold">Expires: July 2029</span>
+            {(() => {
+              const warrantyMonths = project.quotation?.warrantyMonths;
+              if (!warrantyMonths) {
+                return (
+                  <div className="dbc-card space-y-4">
+                    <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Warranty & Post-Completion Support</h3>
+                    <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-2">
+                      <span className="text-xs font-bold text-stone-800">Standard Professional Support</span>
+                      <p className="text-[11px] text-stone-500 font-medium leading-relaxed">
+                        Specific warranty duration was not configured in the agreed quotation. Contact your lead professional directly for post-completion queries or defect support.
+                      </p>
+                      <button
+                        onClick={handleOpenMessaging}
+                        className="dbc-btn dbc-btn-sm dbc-btn-primary mt-1"
+                      >
+                        💬 Contact Professional for Support
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+
+              const startDate = project.updatedAt ? new Date(project.updatedAt) : new Date(project.createdAt);
+              const endDate = new Date(startDate);
+              endDate.setMonth(endDate.getMonth() + warrantyMonths);
+
+              const nowMs = Date.now();
+              const endMs = endDate.getTime();
+              const daysRemaining = Math.ceil((endMs - nowMs) / (1000 * 60 * 60 * 24));
+
+              const isExpired = daysRemaining < 0;
+              const isExpiringSoon = daysRemaining >= 0 && daysRemaining <= 30;
+
+              const badgeText = isExpired ? 'Expired Warranty' : isExpiringSoon ? 'Expiring Soon' : 'Active Warranty';
+              const badgeClass = isExpired
+                ? 'bg-red-100 text-red-800 border-red-200'
+                : isExpiringSoon
+                ? 'bg-amber-100 text-amber-800 border-amber-200'
+                : 'bg-emerald-100 text-emerald-800 border-emerald-200';
+
+              const formattedEnd = endDate.toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              });
+
+              return (
+                <div className="dbc-card space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Warranty Tracker Period</h3>
+                    <span className={`px-2 py-0.5 text-[8.5px] font-black uppercase rounded-full border ${badgeClass}`}>
+                      {badgeText}
+                    </span>
+                  </div>
+
+                  <div className="p-4 bg-light-stone/20 border border-light-border rounded-2xl space-y-3">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-bold text-stone-800">Covered Period: {warrantyMonths} Months</span>
+                      <span className="text-[10px] text-stone-500 font-bold">Expires: {formattedEnd}</span>
+                    </div>
+
+                    <p className="text-[10.5px] text-stone-600 font-medium leading-relaxed">
+                      {isExpired
+                        ? `Warranty period expired on ${formattedEnd}. You may still message your professional for post-completion maintenance.`
+                        : `Active structural and deliverable coverage with ${daysRemaining} days remaining.`}
+                    </p>
+
+                    <button
+                      onClick={handleOpenMessaging}
+                      className="w-full dbc-btn dbc-btn-primary py-2 text-xs font-bold uppercase tracking-wider cursor-pointer"
+                    >
+                      💬 Message Professional for Support
+                    </button>
+                  </div>
                 </div>
-                <p className="text-[10.5px] text-stone-gray font-semibold leading-relaxed">
-                  Includes support covers on concrete frame pillars, foundation layout moisture levels, and primary beams load allocations.
-                </p>
-                <button
-                  onClick={() => showNotice('✓ Warranty coverage catalog downloaded.')}
-                  className="w-full dbc-btn dbc-btn-outline py-2 text-xs font-bold uppercase tracking-wider bg-white cursor-pointer"
-                >
-                  Download Warranty Policy
-                </button>
-              </div>
-            </div>
+              );
+            })()}
 
             {/* Customer Post-Completion Review Card */}
             {currentUserRole === 'CUSTOMER' && (

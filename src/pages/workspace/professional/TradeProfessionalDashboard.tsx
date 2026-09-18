@@ -127,7 +127,7 @@ export default function TradeProfessionalDashboard() {
           <div className="relative">
             <button
               onClick={() => setAvailabilityOpen(!availabilityOpen)}
-              className="flex items-center gap-2 px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl font-bold text-stone-700 hover:bg-stone-100 transition shadow-xs cursor-pointer focus:outline-none"
+              className="flex items-center gap-2 px-3.5 py-2 min-h-[44px] bg-stone-50 border border-stone-200 rounded-xl font-bold text-stone-700 hover:bg-stone-100 transition shadow-xs cursor-pointer focus:outline-none"
             >
               <span className={`w-2 h-2 rounded-full ${
                 availability === 'Available' ? 'bg-emerald-500' : availability === 'Busy' ? 'bg-amber-500' : 'bg-rose-500'
@@ -144,7 +144,7 @@ export default function TradeProfessionalDashboard() {
                       setAvailability(opt);
                       setAvailabilityOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-stone-50 text-xs font-semibold text-stone-700 block"
+                    className="w-full text-left px-4 py-2.5 min-h-[44px] flex items-center hover:bg-stone-50 text-xs font-semibold text-stone-700 cursor-pointer"
                   >
                     {opt}
                   </button>
@@ -154,7 +154,7 @@ export default function TradeProfessionalDashboard() {
           </div>
           <button
             onClick={() => navigate('/workspace/leads')}
-            className="dbc-btn dbc-btn-md dbc-btn-primary"
+            className="dbc-btn dbc-btn-md dbc-btn-primary min-h-[44px] px-4 cursor-pointer"
           >
             Browse Leads
           </button>

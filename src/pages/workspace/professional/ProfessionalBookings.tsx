@@ -597,14 +597,14 @@ export default function ProfessionalBookings() {
                     <button
                       onClick={() => handleAccept(selectedBooking.id)}
                       disabled={actionLoadingId === selectedBooking.id}
-                      className="dbc-btn dbc-btn-md dbc-btn-primary"
+                      className="dbc-btn dbc-btn-md dbc-btn-primary min-h-[44px] cursor-pointer"
                     >
                       Accept
                     </button>
                     <button
                       onClick={() => setDeclineConfirmId(selectedBooking.id)}
                       disabled={actionLoadingId === selectedBooking.id}
-                      className="dbc-btn dbc-btn-md dbc-btn-danger"
+                      className="dbc-btn dbc-btn-md dbc-btn-danger min-h-[44px] cursor-pointer"
                     >
                       Decline
                     </button>
@@ -615,14 +615,14 @@ export default function ProfessionalBookings() {
                   <div className="space-y-2">
                     <button
                       onClick={() => navigate('/workspace/inbox')}
-                      className="w-full dbc-btn dbc-btn-md border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
+                      className="w-full dbc-btn dbc-btn-md border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white min-h-[44px] cursor-pointer"
                     >
                       💬 Contact Customer
                     </button>
                     <button
                       onClick={() => handleStart(selectedBooking.id)}
                       disabled={actionLoadingId === selectedBooking.id}
-                      className="w-full dbc-btn dbc-btn-md dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none"
+                      className="w-full dbc-btn dbc-btn-md dbc-btn-primary bg-blue-600 hover:bg-blue-750 text-white border-none min-h-[44px] cursor-pointer"
                     >
                       Start Project
                     </button>
@@ -633,7 +633,7 @@ export default function ProfessionalBookings() {
                   <div className="space-y-2">
                     <button
                       onClick={() => navigate('/workspace/inbox')}
-                      className="w-full dbc-btn dbc-btn-md border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white"
+                      className="w-full dbc-btn dbc-btn-md border border-emerald-600 text-emerald-800 hover:bg-emerald-50 bg-white min-h-[44px] cursor-pointer"
                     >
                       💬 Contact Customer
                     </button>

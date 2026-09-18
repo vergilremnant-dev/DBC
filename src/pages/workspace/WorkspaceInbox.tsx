@@ -237,7 +237,7 @@ function CustomerInbox() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setMobileView('list')}
-                    className="md:hidden text-xs font-bold text-stone-600 hover:text-stone-900 mr-1 cursor-pointer"
+                    className="md:hidden text-xs font-bold text-stone-600 hover:text-stone-900 px-3 py-2 min-h-[44px] border border-stone-200 rounded-xl bg-stone-50 flex items-center gap-1 cursor-pointer"
                   >
                     ← Contacts
                   </button>
@@ -249,7 +249,7 @@ function CustomerInbox() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => alert(`Calling ${activeChat.proName} via secure voice coordinator.`)}
-                    className="dbc-btn dbc-btn-sm dbc-btn-secondary"
+                    className="dbc-btn dbc-btn-sm dbc-btn-secondary min-h-[44px] px-3 cursor-pointer"
                   >
                     📞 Call
                   </button>
@@ -259,23 +259,25 @@ function CustomerInbox() {
               {/* Message scroll list feed */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[300px]">
                 {activeChat.messages.map((m) => {
-                  const isCustomer = m.sender === 'CUSTOMER';
+                  const isMe = m.sender === 'CUSTOMER';
                   return (
-                    <div key={m.id} className={`flex ${isCustomer ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-xs p-3 rounded-2xl text-xs leading-relaxed font-semibold shadow-apple-sm text-left
-                        ${isCustomer 
-                          ? 'bg-brand-emerald text-white rounded-tr-none' 
-                          : 'bg-light-stone text-stone-black rounded-tl-none border border-light-border'
-                        }
-                      `}>
-                        <p>{m.text}</p>
-                        
-                        {/* Download attachment */}
+                    <div key={m.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+                      <div
+                        className={`p-3 rounded-2xl max-w-xs text-xs font-medium space-y-1 shadow-xs ${
+                          isMe
+                            ? 'bg-brand-emerald text-white rounded-br-none'
+                            : 'bg-stone-50 border border-light-border text-stone-850 rounded-bl-none'
+                        }`}
+                      >
+                        <p className="leading-relaxed">{m.text}</p>
                         {m.attachment && (
-                          <div className="mt-2 pt-2 border-t border-white/20 flex justify-between items-center text-[9px]">
+                          <a
+                            href={m.attachment.url}
+                            className="inline-flex items-center gap-1 text-[10px] font-bold underline mt-1 text-emerald-200 hover:text-white"
+                          >
+                            <span>📎</span>
                             <span>{m.attachment.name}</span>
-                            <a href={m.attachment.url} className="underline font-black">Download</a>
-                          </div>
+                          </a>
                         )}
 
                         <span className="block text-[7.5px] opacity-75 mt-1 text-right">{m.timestamp}</span>
@@ -290,7 +292,7 @@ function CustomerInbox() {
                 <button
                   type="button"
                   onClick={handleAttachFile}
-                  className="p-2.5 border border-light-border rounded-full hover:bg-light-stone text-xs transition cursor-pointer"
+                  className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center border border-light-border rounded-full hover:bg-light-stone text-xs transition cursor-pointer"
                   title="Attach blueprints/images"
                 >
                   📎
@@ -300,11 +302,11 @@ function CustomerInbox() {
                   placeholder="Type message details..."
                   value={messageText}
                   onChange={(e) => setMessageText(e.target.value)}
-                  className="flex-1 dbc-input text-xs placeholder:text-stone-400 rounded-full"
+                  className="flex-1 dbc-input text-xs placeholder:text-stone-400 rounded-full min-h-[44px] px-4"
                 />
                 <button
                   type="submit"
-                  className="dbc-btn dbc-btn-md dbc-btn-primary rounded-full"
+                  className="dbc-btn dbc-btn-md dbc-btn-primary rounded-full min-h-[44px] px-5 cursor-pointer"
                 >
                   Send
                 </button>

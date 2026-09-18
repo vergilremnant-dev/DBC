@@ -181,7 +181,7 @@ export default function WorkspaceOverview() {
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex-1 text-center py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer select-none
+              className={`flex-1 text-center py-2 min-h-[44px] flex items-center justify-center gap-1 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer select-none
                 ${isActive ? 'bg-light-stone text-stone-black shadow-xs font-extrabold' : 'text-stone-gray'}
               `}
             >
@@ -224,7 +224,7 @@ export default function WorkspaceOverview() {
                       setIsPayModalOpen(true);
                     }
                   }}
-                  className="dbc-btn dbc-btn-md dbc-btn-primary bg-amber-800 hover:bg-amber-900 text-white border-none"
+                  className="dbc-btn dbc-btn-md dbc-btn-primary bg-amber-800 hover:bg-amber-900 text-white border-none min-h-[44px] px-4 cursor-pointer"
                 >
                   Release Funds
                 </button>

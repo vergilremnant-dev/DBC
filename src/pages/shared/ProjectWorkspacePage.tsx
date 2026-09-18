@@ -615,7 +615,7 @@ export function ProjectWorkspacePage() {
               <button
                 key={tab.id}
                 onClick={() => setActivePlmsTab(tab.id)}
-                className={`px-4 py-2.5 border-b-2 font-bold transition whitespace-nowrap cursor-pointer select-none
+                className={`px-4 py-2.5 min-h-[44px] flex items-center border-b-2 font-bold transition whitespace-nowrap cursor-pointer select-none
                   ${isActive 
                     ? 'border-emerald-600 text-emerald-800 font-extrabold' 
                     : 'border-transparent text-stone-500 hover:text-stone-900'

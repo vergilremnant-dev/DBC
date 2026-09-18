@@ -51,7 +51,10 @@ export function MobileBottomNav() {
       aria-label="Mobile bottom navigation"
     >
       {navItems.map((item) => {
-        const isActive = location.pathname === item.path;
+        const isActive =
+          location.pathname === item.path ||
+          (item.path !== '/' && item.path !== '/workspace/overview' && item.path !== '/workspace/dashboard' && location.pathname.startsWith(item.path)) ||
+          (item.label === 'Active' && (location.pathname.startsWith('/workspace/project/') || location.pathname.startsWith('/projects/')));
         return (
           <button
             key={item.label}

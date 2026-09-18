@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/auth/useAuth';
 import { BRAND } from '../config/branding';
@@ -43,6 +43,30 @@ export default function WorkspaceLayout() {
 
   const sidebarItems = user?.role === 'ROLE_PROVIDER' ? PROVIDER_SIDEBAR_ITEMS : CUSTOMER_SIDEBAR_ITEMS;
 
+  // Auto-close mobile drawer on route change
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll & listen for Escape key when mobile drawer is open
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMobileOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMobileOpen]);
+
   const getInitials = () => {
     if (!user) return 'U';
     const name = user.firstName || user.email;
@@ -55,8 +79,12 @@ export default function WorkspaceLayout() {
   };
 
   const getBreadcrumbLabel = () => {
-    const current = sidebarItems.find((item) => item.path === location.pathname);
-    return current ? current.name : 'Dashboard';
+    const current = sidebarItems.find(
+      (item) => location.pathname === item.path || (item.path !== '/workspace/overview' && item.path !== '/workspace/dashboard' && location.pathname.startsWith(item.path))
+    );
+    if (current) return current.name;
+    if (location.pathname.startsWith('/workspace/project/') || location.pathname.startsWith('/projects/')) return 'Project Workspace';
+    return 'Dashboard';
   };
 
   return (
@@ -143,25 +171,31 @@ export default function WorkspaceLayout() {
         >
           {/* Navigation Items list */}
           <div className="p-4 space-y-1 flex-1 overflow-y-auto no-scrollbar">
-            {sidebarItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                onClick={() => setIsMobileOpen(false)}
-                className={({ isActive }) => `
-                  flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-r-xl rounded-l-none text-xs font-bold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-brand-emerald focus:outline-none
-                  ${isActive 
-                    ? 'bg-white text-stone-black font-extrabold shadow-sm border-l-4 border-brand-emerald' 
-                    : 'text-stone-400 hover:text-stone-black hover:bg-warm-cream'
-                  }
-                `}
-              >
-                <span className="text-sm">{item.icon}</span>
-                <span className={`transition-opacity duration-200 ${isCollapsed ? 'lg:opacity-0 lg:w-0 overflow-hidden' : 'opacity-100'}`}>
-                  {item.name}
-                </span>
-              </NavLink>
-            ))}
+            {sidebarItems.map((item) => {
+              const isItemActive =
+                location.pathname === item.path ||
+                (item.path !== '/workspace/overview' && item.path !== '/workspace/dashboard' && location.pathname.startsWith(item.path)) ||
+                (item.path === '/workspace/projects' && (location.pathname.startsWith('/workspace/project/') || location.pathname.startsWith('/projects/')));
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsMobileOpen(false)}
+                  className={`
+                    flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-r-xl rounded-l-none text-xs font-bold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-brand-emerald focus:outline-none
+                    ${isItemActive 
+                      ? 'bg-white text-stone-black font-extrabold shadow-sm border-l-4 border-brand-emerald' 
+                      : 'text-stone-400 hover:text-stone-black hover:bg-warm-cream'
+                    }
+                  `}
+                >
+                  <span className="text-sm">{item.icon}</span>
+                  <span className={`transition-opacity duration-200 ${isCollapsed ? 'lg:opacity-0 lg:w-0 overflow-hidden' : 'opacity-100'}`}>
+                    {item.name}
+                  </span>
+                </NavLink>
+              );
+            })}
           </div>
 
           {/* Sidebar Footer: Toggle & Sign Out actions */}

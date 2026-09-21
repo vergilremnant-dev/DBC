@@ -168,7 +168,7 @@ export function PublicProfessionalProfilePage() {
           <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
             <button
               onClick={handleStartProjectRequest}
-              className="dbc-btn dbc-btn-lg dbc-btn-primary shadow-apple-sm py-3 px-6 rounded-xl text-xs font-bold uppercase tracking-wider"
+              className="dbc-btn dbc-btn-lg dbc-btn-primary shadow-apple-sm min-h-[44px] py-3 px-6 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer"
             >
               Start Project Request →
             </button>

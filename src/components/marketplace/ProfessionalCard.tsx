@@ -196,13 +196,13 @@ export function ProfessionalCard({
         <div className="grid grid-cols-2 gap-2 pt-3 border-t border-stone-100 mt-1">
           <button
             onClick={() => onViewProfile(professional.id)}
-            className="h-8.5 px-2 rounded-lg border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] font-bold uppercase tracking-wider transition cursor-pointer flex items-center justify-center"
+            className="min-h-[44px] px-2 rounded-xl border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] font-bold uppercase tracking-wider transition cursor-pointer flex items-center justify-center"
           >
             View Profile
           </button>
           <button
             onClick={() => onContact(professional)}
-            className="h-8.5 px-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-[11px] font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
+            className="min-h-[44px] px-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-[11px] font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
           >
             <span>Discuss Project</span>
             <span>→</span>

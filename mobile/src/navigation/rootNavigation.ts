@@ -1,13 +1,22 @@
 /**
  * DBC Mobile Navigation Architecture Foundation.
  * Follows ADR-005: React Navigation for Role-Aware Mobile Routing.
- * Supports AuthStack routes, Deep Link pending targets, and Role Resolution.
+ * Supports AuthStack routes, Marketplace public routes, Deep Link pending targets, and Role Resolution.
  */
 
 import { AuthState } from '../state/authStore';
 import { PendingNavigationTarget } from '../types/authMobileTypes';
 
-export type PublicRoute = 'Landing' | 'Services' | 'Directory' | 'ArticleList' | 'ArticleDetail';
+export type PublicRoute =
+  | 'Landing'
+  | 'Services'
+  | 'Directory'
+  | 'ArticleList'
+  | 'ArticleDetail'
+  | 'MarketplaceHome'
+  | 'CategorySearch'
+  | 'ProfessionalProfile';
+
 export type AuthRoute = 'Login' | 'Register' | 'OtpVerification' | 'AuthSuccess' | 'ForgotPassword' | 'VerifyOTP';
 export type CustomerTabRoute = 'Overview' | 'MyProjects' | 'Quotations' | 'Messages' | 'Profile';
 export type ProfessionalTabRoute = 'Dashboard' | 'Leads' | 'ActiveProjects' | 'Milestones' | 'Profile';
@@ -17,6 +26,11 @@ export type RootStackParamList = {
   Auth: { screen?: AuthRoute; email?: string };
   CustomerTab: { screen?: CustomerTabRoute };
   ProfessionalTab: { screen?: ProfessionalTabRoute };
+  MarketplaceHome: undefined;
+  CategorySearch: { categoryId?: number; categorySlug?: string; query?: string; city?: string };
+  ProfessionalProfile: { providerId: string };
+  ProjectAssistant: undefined;
+  ProjectRequestForm: { providerId?: string; categoryId?: number; city?: string; notes?: string };
   ProjectDetail: { projectId: string };
   QuotationDetail: { quotationId: string };
   ConsultationDetail: { consultationId: string };
@@ -55,7 +69,16 @@ export function resolvePostAuthNavigation(
 }
 
 export const mobileNavigationRoutes = {
-  public: ['Landing', 'Services', 'Directory', 'ArticleList', 'ArticleDetail'] as PublicRoute[],
+  public: [
+    'Landing',
+    'Services',
+    'Directory',
+    'ArticleList',
+    'ArticleDetail',
+    'MarketplaceHome',
+    'CategorySearch',
+    'ProfessionalProfile',
+  ] as PublicRoute[],
   auth: ['Login', 'Register', 'OtpVerification', 'AuthSuccess', 'ForgotPassword', 'VerifyOTP'] as AuthRoute[],
   customerTabs: [
     { route: 'Overview', label: 'Home', icon: 'home' },

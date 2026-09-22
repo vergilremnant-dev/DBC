@@ -8,6 +8,7 @@ The existing DBC architecture separates backend business logic, authentication t
 
 > For detailed endpoint specifications, payload shapes, error codes, and role matrices, see [MOBILE_API_CONTRACTS.md](file:///c:/Users/chagantipati/sanjay/Abhista/documentation/MOBILE_API_CONTRACTS.md).
 > For mobile Information Architecture (IA), role-scoped navigation stacks, and user flow journeys, see [MOBILE_PRODUCT_ARCHITECTURE.md](file:///c:/Users/chagantipati/sanjay/Abhista/documentation/MOBILE_PRODUCT_ARCHITECTURE.md).
+> For technical architecture, framework evaluation, and platform adapters, see [MOBILE_TECHNICAL_ARCHITECTURE.md](file:///c:/Users/chagantipati/sanjay/Abhista/documentation/MOBILE_TECHNICAL_ARCHITECTURE.md) and [MOBILE_ARCHITECTURE_DECISIONS.md](file:///c:/Users/chagantipati/sanjay/Abhista/documentation/MOBILE_ARCHITECTURE_DECISIONS.md).
 
 ---
 

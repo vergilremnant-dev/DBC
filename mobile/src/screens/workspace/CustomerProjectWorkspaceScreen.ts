@@ -12,7 +12,7 @@ export interface CustomerProjectWorkspaceState {
   projectId: string;
   project: Project | null;
   mobile: MobileCustomerProject | null;
-  activeTab: 'Overview' | 'Timeline' | 'Milestones' | 'Documents';
+  activeTab: 'Overview' | 'Timeline' | 'Milestones' | 'Documents' | 'Financials';
   isLoading: boolean;
   errorMessage: string | null;
 }
@@ -80,6 +80,7 @@ export const renderCustomerProjectWorkspaceScreenDescriptor = (state: CustomerPr
     { key: 'Timeline', label: 'Timeline' },
     { key: 'Milestones', label: 'Milestones' },
     { key: 'Documents', label: 'Documents' },
+    { key: 'Financials', label: 'Financials' },
   ],
   activeTab: state.activeTab,
   overviewContent: {

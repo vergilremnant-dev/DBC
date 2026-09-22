@@ -42,6 +42,10 @@ export type RootStackParamList = {
   CustomerMilestoneDetails: { projectId: string; milestoneId: string };
   CustomerProjectTimeline: { projectId: string };
   CustomerProjectDocuments: { projectId: string };
+  CustomerProjectFinancials: { projectId: string };
+  CustomerMilestonePayments: { projectId: string };
+  CustomerPaymentHistory: { projectId: string };
+  CustomerPaymentDetails: { transactionId: string };
   ProjectDetail: { projectId: string };
   ConsultationDetail: { consultationId: string };
 };

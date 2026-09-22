@@ -31,8 +31,9 @@ export type RootStackParamList = {
   ProfessionalProfile: { providerId: string };
   ProjectAssistant: undefined;
   ProjectRequestForm: { providerId?: string; categoryId?: number; city?: string; notes?: string };
+  ProjectRequestDetails: { requestId: string };
+  QuotationDetails: { quotationId: number };
   ProjectDetail: { projectId: string };
-  QuotationDetail: { quotationId: string };
   ConsultationDetail: { consultationId: string };
 };
 

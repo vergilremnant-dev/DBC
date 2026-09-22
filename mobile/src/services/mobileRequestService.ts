@@ -1,0 +1,183 @@
+/**
+ * DBC Mobile Request & Quotation Service.
+ * Integrates with existing bookingApi and quotationClientService for project requests and quotation reviews.
+ */
+
+import { bookingApi } from '../../../src/services/booking/bookingService';
+import { quotationClientService, QuotationStatus } from '../../../src/services/quotation/quotationClientService';
+import { Booking, BookingStatus, CreateBookingRequest } from '../../../src/types/booking/bookingTypes';
+import {
+  MobileProjectRequestDetails,
+  MobileProjectRequestForm,
+  MobileQuotationDetails,
+} from '../types/requestMobileTypes';
+
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
+export function formatRequestStatusLabel(status: BookingStatus): string {
+  switch (status) {
+    case 'REQUESTED': return 'Project Requested';
+    case 'ACCEPTED': return 'Accepted by Contractor';
+    case 'IN_PROGRESS': return 'Work In Progress';
+    case 'COMPLETED': return 'Completed';
+    case 'REJECTED': return 'Declined';
+    case 'CANCELLED': return 'Cancelled';
+    default: return String(status);
+  }
+}
+
+export function formatQuotationStatusLabel(status: QuotationStatus): string {
+  switch (status) {
+    case 'DRAFT': return 'Draft';
+    case 'SUBMITTED': return 'Quotation Submitted';
+    case 'VIEWED': return 'Viewed by Customer';
+    case 'UNDER_REVIEW': return 'Under Review';
+    case 'NEGOTIATION': return 'Under Negotiation';
+    case 'REVISED': return 'Revised Proposal';
+    case 'ACCEPTED': return 'Quotation Accepted';
+    case 'REJECTED': return 'Declined';
+    case 'WITHDRAWN': return 'Withdrawn';
+    case 'EXPIRED': return 'Expired';
+    case 'ARCHIVED': return 'Archived';
+    default: return String(status);
+  }
+}
+
+function mapBookingToMobileDetails(booking: Booking): MobileProjectRequestDetails {
+  return {
+    id: booking.id,
+    bookingNumber: booking.bookingNumber || `REQ-${booking.id}`,
+    customerId: booking.customerId,
+    providerId: booking.providerId,
+    providerName: booking.provider?.businessName || 'Professional Contractor',
+    providerCity: booking.provider?.city || booking.city,
+    providerRating: booking.provider?.rating || 4.8,
+    categoryId: booking.categoryId,
+    categoryName: booking.category?.name || 'General Construction',
+    status: booking.bookingStatus,
+    statusLabel: formatRequestStatusLabel(booking.bookingStatus),
+    preferredDate: booking.preferredDate,
+    preferredTime: booking.preferredTime,
+    customerAddress: booking.customerAddress,
+    city: booking.city,
+    state: booking.state,
+    notes: booking.notes || undefined,
+    estimatedBudget: booking.estimatedBudget || undefined,
+    createdAt: booking.createdAt,
+    updatedAt: booking.updatedAt,
+  };
+}
+
+export class MobileRequestService {
+  /**
+   * Creates a new Project Request via backend POST /api/bookings API.
+   */
+  async createProjectRequest(formData: MobileProjectRequestForm): Promise<MobileProjectRequestDetails> {
+    const payload: CreateBookingRequest = {
+      providerId: formData.providerId,
+      categoryId: Number(formData.categoryId),
+      preferredDate: formData.preferredDate,
+      preferredTime: formData.preferredTime,
+      customerAddress: formData.customerAddress,
+      city: formData.city,
+      state: formData.state || 'Telangana',
+      notes: formData.notes || null,
+      estimatedBudget: formData.estimatedBudget || null,
+    };
+
+    const booking = await bookingApi.createBooking(payload);
+    return mapBookingToMobileDetails(booking);
+  }
+
+  /**
+   * Retrieves specific Project Request details by ID.
+   */
+  async getProjectRequestDetails(id: string): Promise<MobileProjectRequestDetails> {
+    const booking = await bookingApi.getBookingDetails(id);
+    return mapBookingToMobileDetails(booking);
+  }
+
+  /**
+   * Retrieves all project requests submitted by logged-in customer.
+   */
+  async getMyRequests(): Promise<MobileProjectRequestDetails[]> {
+    const bookings = await bookingApi.getMyBookings();
+    return bookings.map(mapBookingToMobileDetails);
+  }
+
+  /**
+   * Cancels an active project request.
+   */
+  async cancelProjectRequest(id: string): Promise<MobileProjectRequestDetails> {
+    const booking = await bookingApi.cancelBooking(id);
+    return mapBookingToMobileDetails(booking);
+  }
+
+  /**
+   * Retrieves Quotation details by ID and maps financial breakdown.
+   */
+  async getQuotationDetails(quotationId: number): Promise<MobileQuotationDetails> {
+    const q = await quotationClientService.getQuotationById(quotationId);
+
+    const isActionable = q.status === 'SUBMITTED' || q.status === 'REVISED' || q.status === 'UNDER_REVIEW';
+
+    return {
+      id: q.id,
+      requirementId: q.requirementId,
+      providerId: q.providerId,
+      providerName: q.provider?.businessName || 'Contractor Partner',
+      providerRating: q.provider?.rating || 4.9,
+      priceModel: q.priceModel,
+      totalAmount: q.totalAmount,
+      formattedAmount: formatCurrency(q.totalAmount),
+      estimatedDurationDays: q.estimatedDurationDays,
+      warrantyMonths: q.warrantyMonths,
+      status: q.status,
+      statusLabel: formatQuotationStatusLabel(q.status),
+      createdAt: q.createdAt,
+      updatedAt: q.updatedAt,
+      proposal: {
+        title: q.proposal?.title || 'Project Proposal',
+        summary: q.proposal?.summary || 'Detailed construction and execution scope.',
+        scope: q.proposal?.scope || 'Complete material supply, labor, and execution.',
+        deliverables: q.proposal?.deliverables || 'Milestone handovers as specified.',
+        assumptions: q.proposal?.assumptions,
+        exclusions: q.proposal?.exclusions,
+        notes: q.proposal?.notes,
+      },
+      milestones: (q.milestones || []).map((m) => ({
+        id: m.id,
+        name: m.name,
+        description: m.description,
+        cost: m.cost,
+        durationDays: m.durationDays,
+        dueAt: m.dueAt,
+      })),
+      isCustomerActionable: isActionable,
+    };
+  }
+
+  /**
+   * Accepts a quotation proposal.
+   */
+  async acceptQuotation(quotationId: number): Promise<MobileQuotationDetails> {
+    await quotationClientService.updateStatus(quotationId, 'ACCEPTED');
+    return this.getQuotationDetails(quotationId);
+  }
+
+  /**
+   * Rejects a quotation proposal with optional reason.
+   */
+  async rejectQuotation(quotationId: number, reason?: string): Promise<MobileQuotationDetails> {
+    await quotationClientService.updateStatus(quotationId, 'REJECTED', reason);
+    return this.getQuotationDetails(quotationId);
+  }
+}
+
+export const mobileRequestService = new MobileRequestService();

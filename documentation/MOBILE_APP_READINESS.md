@@ -7,6 +7,7 @@ This report evaluates the architectural readiness of the DBC Phase 1 application
 The existing DBC architecture separates backend business logic, authentication token management, domain types, and HTTP API clients from browser presentation components. A future mobile application can consume the same backend microservices, database schemas, and business workflows without duplicating server logic.
 
 > For detailed endpoint specifications, payload shapes, error codes, and role matrices, see [MOBILE_API_CONTRACTS.md](file:///c:/Users/chagantipati/sanjay/Abhista/documentation/MOBILE_API_CONTRACTS.md).
+> For mobile Information Architecture (IA), role-scoped navigation stacks, and user flow journeys, see [MOBILE_PRODUCT_ARCHITECTURE.md](file:///c:/Users/chagantipati/sanjay/Abhista/documentation/MOBILE_PRODUCT_ARCHITECTURE.md).
 
 ---
 

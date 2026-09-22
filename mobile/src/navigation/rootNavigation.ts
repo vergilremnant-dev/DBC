@@ -1,7 +1,7 @@
 /**
  * DBC Mobile Navigation Architecture Foundation.
  * Follows ADR-005: React Navigation for Role-Aware Mobile Routing.
- * Supports AuthStack routes, Marketplace public routes, Deep Link pending targets, and Role Resolution.
+ * Supports AuthStack routes, Marketplace public routes, Customer Workspace tabs, Deep Link pending targets, and Role Resolution.
  */
 
 import { AuthState } from '../state/authStore';
@@ -18,7 +18,7 @@ export type PublicRoute =
   | 'ProfessionalProfile';
 
 export type AuthRoute = 'Login' | 'Register' | 'OtpVerification' | 'AuthSuccess' | 'ForgotPassword' | 'VerifyOTP';
-export type CustomerTabRoute = 'Overview' | 'MyProjects' | 'Quotations' | 'Messages' | 'Profile';
+export type CustomerTabRoute = 'Overview' | 'MyProjects' | 'Quotations' | 'Messages' | 'Profile' | 'CustomerHome' | 'CustomerRequests' | 'CustomerProjects';
 export type ProfessionalTabRoute = 'Dashboard' | 'Leads' | 'ActiveProjects' | 'Milestones' | 'Profile';
 
 export type RootStackParamList = {
@@ -33,6 +33,10 @@ export type RootStackParamList = {
   ProjectRequestForm: { providerId?: string; categoryId?: number; city?: string; notes?: string };
   ProjectRequestDetails: { requestId: string };
   QuotationDetails: { quotationId: number };
+  CustomerHome: undefined;
+  CustomerRequests: undefined;
+  CustomerProjects: { status?: string };
+  CustomerProjectWorkspace: { projectId: string };
   ProjectDetail: { projectId: string };
   ConsultationDetail: { consultationId: string };
 };

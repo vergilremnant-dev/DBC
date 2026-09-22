@@ -111,7 +111,9 @@ describe('Module 33 — Native Mobile Foundation & Architecture Verification', (
     it('should handle session expiration state', () => {
       authStore.markExpired();
       expect(authStore.getState().status).toBe('expired');
-      expect(authStore.getState().error).toContain('Session expired');
+      const err = authStore.getState().error;
+      const errMsg = typeof err === 'string' ? err : err?.message;
+      expect(errMsg).toContain('Session expired');
     });
   });
 

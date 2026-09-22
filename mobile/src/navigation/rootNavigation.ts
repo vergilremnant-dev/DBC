@@ -1,18 +1,20 @@
 /**
  * DBC Mobile Navigation Architecture Foundation.
  * Follows ADR-005: React Navigation for Role-Aware Mobile Routing.
+ * Supports AuthStack routes, Deep Link pending targets, and Role Resolution.
  */
 
-import { AuthState, MobileUser } from '../state/authStore';
+import { AuthState } from '../state/authStore';
+import { PendingNavigationTarget } from '../types/authMobileTypes';
 
 export type PublicRoute = 'Landing' | 'Services' | 'Directory' | 'ArticleList' | 'ArticleDetail';
-export type AuthRoute = 'Login' | 'Register' | 'ForgotPassword' | 'VerifyOTP';
+export type AuthRoute = 'Login' | 'Register' | 'OtpVerification' | 'AuthSuccess' | 'ForgotPassword' | 'VerifyOTP';
 export type CustomerTabRoute = 'Overview' | 'MyProjects' | 'Quotations' | 'Messages' | 'Profile';
 export type ProfessionalTabRoute = 'Dashboard' | 'Leads' | 'ActiveProjects' | 'Milestones' | 'Profile';
 
 export type RootStackParamList = {
   Public: { screen?: PublicRoute };
-  Auth: { screen?: AuthRoute };
+  Auth: { screen?: AuthRoute; email?: string };
   CustomerTab: { screen?: CustomerTabRoute };
   ProfessionalTab: { screen?: ProfessionalTabRoute };
   ProjectDetail: { projectId: string };
@@ -39,9 +41,22 @@ export function determineInitialNavigationStack(authState: AuthState): 'Public' 
   return 'Public';
 }
 
+export function resolvePostAuthNavigation(
+  authState: AuthState
+): { targetStack: 'CustomerTab' | 'ProfessionalTab'; pendingTarget?: PendingNavigationTarget } {
+  const defaultStack = authState.user?.role === 'contractor' ? 'ProfessionalTab' : 'CustomerTab';
+  if (authState.pendingTarget) {
+    return {
+      targetStack: defaultStack,
+      pendingTarget: authState.pendingTarget,
+    };
+  }
+  return { targetStack: defaultStack };
+}
+
 export const mobileNavigationRoutes = {
   public: ['Landing', 'Services', 'Directory', 'ArticleList', 'ArticleDetail'] as PublicRoute[],
-  auth: ['Login', 'Register', 'ForgotPassword', 'VerifyOTP'] as AuthRoute[],
+  auth: ['Login', 'Register', 'OtpVerification', 'AuthSuccess', 'ForgotPassword', 'VerifyOTP'] as AuthRoute[],
   customerTabs: [
     { route: 'Overview', label: 'Home', icon: 'home' },
     { route: 'MyProjects', label: 'Projects', icon: 'folder' },

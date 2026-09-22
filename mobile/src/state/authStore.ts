@@ -1,10 +1,16 @@
 /**
  * Mobile Authentication Store & State Machine for DBC Mobile Application.
- * Tracks session lifecycle (initializing, unauthenticated, authenticated, expired).
+ * Tracks session lifecycle (initializing, unauthenticated, authenticated, expired)
+ * and challenge states (IDLE, SUBMITTING, CHALLENGE_REQUIRED, VERIFYING, AUTHENTICATED).
  */
 
 import { mobileApiClient } from '../api/mobileApiClient';
 import { defaultStorageAdapter, StorageAdapter } from '../storage/StorageAdapter';
+import {
+  MobileAuthChallengeState,
+  MobileAuthError,
+  PendingNavigationTarget,
+} from '../types/authMobileTypes';
 
 export type AuthStatus = 'initializing' | 'unauthenticated' | 'authenticated' | 'expired';
 
@@ -19,7 +25,9 @@ export interface MobileUser {
 export interface AuthState {
   status: AuthStatus;
   user: MobileUser | null;
-  error: string | null;
+  error: MobileAuthError | string | null;
+  challengeState: MobileAuthChallengeState;
+  pendingTarget: PendingNavigationTarget | null;
 }
 
 type AuthListener = (state: AuthState) => void;
@@ -29,6 +37,8 @@ export class MobileAuthStore {
     status: 'initializing',
     user: null,
     error: null,
+    challengeState: 'IDLE',
+    pendingTarget: null,
   };
   private listeners: Set<AuthListener> = new Set();
   private storage: StorageAdapter;
@@ -54,8 +64,36 @@ export class MobileAuthStore {
     this.listeners.forEach((listener) => listener(currentState));
   }
 
+  setChallengeState(challengeState: MobileAuthChallengeState) {
+    this.state = { ...this.state, challengeState };
+    this.notify();
+  }
+
+  setPendingTarget(target: PendingNavigationTarget | null) {
+    this.state = { ...this.state, pendingTarget: target };
+    this.notify();
+  }
+
+  clearPendingTarget(): PendingNavigationTarget | null {
+    const target = this.state.pendingTarget;
+    this.state = { ...this.state, pendingTarget: null };
+    this.notify();
+    return target;
+  }
+
+  setAuthError(error: MobileAuthError | string | null) {
+    this.state = { ...this.state, error, challengeState: 'IDLE' };
+    this.notify();
+  }
+
   async initialize(): Promise<void> {
-    this.state = { status: 'initializing', user: null, error: null };
+    this.state = {
+      status: 'initializing',
+      user: null,
+      error: null,
+      challengeState: 'IDLE',
+      pendingTarget: this.state.pendingTarget,
+    };
     this.notify();
 
     try {
@@ -68,12 +106,16 @@ export class MobileAuthStore {
           status: 'authenticated',
           user,
           error: null,
+          challengeState: 'AUTHENTICATED',
+          pendingTarget: this.state.pendingTarget,
         };
       } else {
         this.state = {
           status: 'unauthenticated',
           user: null,
           error: null,
+          challengeState: 'IDLE',
+          pendingTarget: this.state.pendingTarget,
         };
       }
     } catch (err: unknown) {
@@ -81,6 +123,8 @@ export class MobileAuthStore {
         status: 'unauthenticated',
         user: null,
         error: err instanceof Error ? err.message : 'Initialization failed',
+        challengeState: 'IDLE',
+        pendingTarget: this.state.pendingTarget,
       };
     } finally {
       this.notify();
@@ -95,6 +139,8 @@ export class MobileAuthStore {
       status: 'authenticated',
       user,
       error: null,
+      challengeState: 'AUTHENTICATED',
+      pendingTarget: this.state.pendingTarget,
     };
     this.notify();
   }
@@ -107,6 +153,8 @@ export class MobileAuthStore {
       status: 'unauthenticated',
       user: null,
       error: null,
+      challengeState: 'IDLE',
+      pendingTarget: null,
     };
     this.notify();
   }
@@ -115,7 +163,9 @@ export class MobileAuthStore {
     this.state = {
       status: 'expired',
       user: this.state.user,
-      error: 'Session expired. Please log in again.',
+      error: { code: 'SESSION_ERROR', message: 'Session expired. Please log in again.' },
+      challengeState: 'IDLE',
+      pendingTarget: null,
     };
     this.notify();
   }

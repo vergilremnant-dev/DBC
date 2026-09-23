@@ -88,6 +88,10 @@ export type RootStackParamList = {
   AccountSettings: undefined;
   SecuritySettings: undefined;
   NotificationPreferences: undefined;
+  HelpCenter: undefined;
+  FAQ: { category?: string; query?: string };
+  ContactSupport: { projectId?: string; requestId?: string; quotationId?: number };
+  SupportIssueDetails: { issueId: string };
 };
 
 export function determineInitialNavigationStack(authState: AuthState): 'Public' | 'Auth' | 'CustomerTab' | 'ProfessionalTab' {

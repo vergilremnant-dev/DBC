@@ -150,6 +150,14 @@ export function renderAccountSettingsScreen(
           <span>🔔 Notification Preferences</span>
           <span>→</span>
         </button>
+
+        <button
+          onclick="${onNavigateTab ? `onNavigateTab('HelpCenter')` : ''}"
+          class="w-full min-h-[44px] px-3 py-2 flex items-center justify-between hover:bg-stone-50 rounded-xl text-xs font-bold text-stone-800 transition"
+        >
+          <span>🎧 Help & Support Center</span>
+          <span>→</span>
+        </button>
       </div>
     </div>
   `;

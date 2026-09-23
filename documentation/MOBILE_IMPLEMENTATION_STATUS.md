@@ -1,28 +1,26 @@
-# DBC Native Mobile Implementation Status — Professional Workspace Foundation & Dashboard (Modules 33–41)
+# DBC Native Mobile Implementation Status — Professional Quotation Management & Proposal Workflow (Modules 33–42)
 
 > [!NOTE]
-> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, Customer Financials & Payments, Customer Mobile Messaging, and Professional Mobile Workspace Foundation & Dashboard Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution (Milestones, Milestone Approvals, Activity Timeline, and Documents), Customer Financials (Project Financial Summary, Commercial Breakdown, Milestone Payments Schedule, Escrow Checkout, Transaction History, and Invoice/Receipt Access), Customer Mobile Messaging (Customer Inbox, Project/Request Contextual Conversation Threads, Real-time Message Composer), and Professional Mobile Workspace (Trade Partner Console, Compact Business Metrics, Action Required Feed, Requests Management, Open Leads Discovery, Active Builds Portfolio, and Role Protection) for future Android & iOS mobile applications.
+> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, Customer Financials & Payments, Customer Mobile Messaging, Professional Mobile Workspace Foundation & Dashboard, and Professional Mobile Quotation Management & Proposal Workflow Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution, Customer Financials, Customer Mobile Messaging, Professional Mobile Workspace, and Professional Quotation Management (Quotation List, Proposal Details, 5-Step Proposal Wizard, Draft Saving, and Withdrawal) for future Android & iOS mobile applications.
 
 ---
 
 ## 1. Executive Summary
 
-Modules 33 through 41 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, customer project financials & payments, customer project messaging, and professional mobile workspace foundation & dashboard for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend API contracts (`/api/bookings`, `/api/bookings/my`, `/api/bookings/:id`, `/api/provider/bookings`, `/api/provider/bookings/:id/accept`, `/api/provider/bookings/:id/reject`, `/api/quotations`, `/api/projects`, `/api/chat/conversations`), the professional mobile workspace system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
+Modules 33 through 42 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, customer project financials & payments, customer project messaging, professional mobile workspace foundation & dashboard, and professional quotation management & proposal workflow for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend API contracts (`/api/bookings`, `/api/bookings/my`, `/api/provider/bookings`, `/api/quotations`, `/api/quotations/:id`, `/api/quotations/:id/status`, `/api/projects`, `/api/chat/conversations`), the professional mobile quotation system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
 
-Key achievements in Module 41:
-* **Role Protection & Authentication Guard**: Restricted professional mobile workspace to authenticated users with a professional role (`contractor` or `admin`) via `determineInitialNavigationStack`, preserving `pendingTarget` for post-auth navigation.
-* **Professional Home Screen (Trade Console)**: Developed `ProfessionalHomeScreen.ts` featuring compact business metrics (Active Projects, Pending Requests, Open Leads, Pending Quotations), high-priority Action Required cards, Active Construction Builds progress bars, Recent Customer Requests, and Recent Activity log.
-* **Professional Requests Screen**: Developed `ProfessionalRequestsScreen.ts` presenting customer project requests with status filter tabs (`ALL`, `PENDING`, `ACCEPTED`, `REJECTED`), budget estimates, preferred timelines, and detail navigation.
-* **Professional Request Details Screen**: Developed `ProfessionalRequestDetailsScreen.ts` presenting full customer requirements, Accept action (calling `bookingApi.acceptBooking`), Decline action modal (calling `bookingApi.rejectBooking`), and "Prepare Commercial Quotation" transition CTA.
-* **Professional Leads Screen**: Developed `ProfessionalLeadsScreen.ts` displaying open public marketplace lead opportunities with budget, location, posted time, and "Express Interest" action.
-* **Professional Projects Screen**: Developed `ProfessionalProjectsScreen.ts` displaying contractor project portfolio with progress percentage, milestone details, and budget allocations.
-* **Navigation Integration**: Updated `rootNavigation.ts` with professional stack routes (`ProfessionalHome`, `ProfessionalRequests`, `ProfessionalRequestDetails`, `ProfessionalLeads`, `ProfessionalProjects`).
+Key achievements in Module 42:
+* **Mobile Professional Quotation Service**: Developed `mobileProfessionalQuotationService.ts` wrapping existing `quotationClientService.ts` methods (`getQuotations`, `getQuotationById`, `createQuotation`, `updateStatus`). Features local draft caching, status mapping, and 401/403 security error handling.
+* **Professional Quotations List Screen**: Developed `ProfessionalQuotationsScreen.ts` presenting quotation proposals with status filter tabs (`ALL`, `DRAFT`, `SUBMITTED`, `ACCEPTED`, `REJECTED`), contract total, pricing model, customer name, and requirement title.
+* **Professional Quotation Details Screen**: Developed `ProfessionalQuotationDetailsScreen.ts` rendering full technical proposal breakdown (Scope, Deliverables, Assumptions, Exclusions), financial overview card, milestone breakdown schedule, and lifecycle action buttons ("Edit Proposal", "Submit to Customer", "Withdraw Proposal" modal).
+* **5-Step Mobile Quotation Proposal Wizard**: Developed `ProfessionalQuotationEditorScreen.ts` guiding contractors through Step 1: Technical Scope & Proposal, Step 2: Timeline & Warranty, Step 3: Pricing Model & Budget, Step 4: Milestone Allocations (with total allocation match validation against contract total), and Step 5: Review Proposal Summary with "Save Draft" & "Submit Quotation" actions.
+* **Navigation & Domain Models**: Updated `rootNavigation.ts` with quotation routes (`ProfessionalQuotations`, `ProfessionalQuotationDetails`, `ProfessionalQuotationEditor`) and defined domain models in `professionalQuotationMobileTypes.ts`.
 
 ---
 
 ## 2. Completed Scope vs Future Work
 
-### Completed Features (Modules 33–41)
+### Completed Features (Modules 33–42)
 * ✅ Mobile project directory layout (`mobile/src/`)
 * ✅ Platform storage abstraction (`StorageAdapter.ts`)
 * ✅ Shared API integration (`mobileApiClient.ts` wrapping `axiosClient.ts`)
@@ -61,11 +59,14 @@ Key achievements in Module 41:
 * ✅ Professional Request Details & Accept/Decline Screen (`ProfessionalRequestDetailsScreen.ts`)
 * ✅ Professional Open Leads Screen (`ProfessionalLeadsScreen.ts`)
 * ✅ Professional Active Projects Screen (`ProfessionalProjectsScreen.ts`)
+* ✅ Professional Quotation List & Filter Tabs (`ProfessionalQuotationsScreen.ts`)
+* ✅ Professional Quotation Details & Proposal Breakdown (`ProfessionalQuotationDetailsScreen.ts`)
+* ✅ 5-Step Professional Mobile Quotation Wizard (`ProfessionalQuotationEditorScreen.ts`)
+* ✅ Draft Proposal Saving & Proposal Withdrawal with reason (`mobileProfessionalQuotationService.ts`)
 * ✅ Design system tokens & touch targets $\ge 44\text{px}$ (`themeTokens.ts`)
-* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`, `mobile_customer_messaging.test.ts`, `mobile_professional_workspace.test.ts`)
+* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`, `mobile_customer_messaging.test.ts`, `mobile_professional_workspace.test.ts`, `mobile_professional_quotations.test.ts`)
 
 ### Not Yet Implemented (Future Scope)
-* ⏳ Professional Mobile Quotation Management & Proposal Editor
 * ⏳ Professional Milestone Progress Submission & Execution UI
 * ⏳ Professional Financial Payout & Earnings Workspace
 * ⏳ Native push notifications (FCM / APNs)
@@ -106,7 +107,10 @@ mobile/
 │   │   │   ├── ProjectRequestDetailsScreen.ts # Request status & cancel action
 │   │   │   ├── QuotationDetailsScreen.ts     # Quotation details, milestones & accept/reject
 │   │   │   ├── ProfessionalRequestsScreen.ts  # Professional requests list & filter tabs
-│   │   │   └── ProfessionalRequestDetailsScreen.ts # Request details & accept/decline actions
+│   │   │   ├── ProfessionalRequestDetailsScreen.ts # Request details & accept/decline actions
+│   │   │   ├── ProfessionalQuotationsScreen.ts# Professional quotations list & filter tabs
+│   │   │   ├── ProfessionalQuotationDetailsScreen.ts # Proposal breakdown, submit & withdraw
+│   │   │   └── ProfessionalQuotationEditorScreen.ts # 5-step proposal wizard & draft save
 │   │   ├── workspace/
 │   │   │   ├── CustomerHomeScreen.ts       # Action-oriented dashboard overview with Messages count
 │   │   │   ├── CustomerRequestsScreen.ts   # My Requests list & status cards
@@ -134,7 +138,8 @@ mobile/
 │   │   ├── mobileProjectExecutionService.ts  # Mobile Project Execution service wrapping APIs
 │   │   ├── mobileCustomerFinancialService.ts # Mobile Customer Financial service wrapping APIs
 │   │   ├── mobileCustomerMessagingService.ts # Mobile Customer Messaging service wrapping APIs
-│   │   └── mobileProfessionalWorkspaceService.ts # Mobile Professional Workspace service wrapping APIs
+│   │   ├── mobileProfessionalWorkspaceService.ts # Mobile Professional Workspace service wrapping APIs
+│   │   └── mobileProfessionalQuotationService.ts # Mobile Professional Quotation service wrapping APIs
 │   ├── state/
 │   │   └── authStore.ts             # Auth session state machine & token sync
 │   ├── storage/
@@ -149,14 +154,15 @@ mobile/
 │       ├── projectExecutionMobileTypes.ts  # Mobile project execution & milestone types
 │       ├── customerFinancialMobileTypes.ts # Mobile customer financial & payment types
 │       ├── customerMessagingMobileTypes.ts # Mobile customer messaging & conversation types
-│       └── professionalWorkspaceMobileTypes.ts # Mobile professional workspace & request types
+│       ├── professionalWorkspaceMobileTypes.ts # Mobile professional workspace & request types
+│       └── professionalQuotationMobileTypes.ts # Mobile professional quotation & wizard types
 ```
 
 ---
 
 ## 4. Verification & Test Suite Results
 
-Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, customer financials, customer messaging, and professional workspace requirements:
+Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, customer financials, customer messaging, professional workspace, and professional quotation management requirements:
 * `tests/frontend/mobile_foundation.test.ts`: 15 passed tests
 * `tests/frontend/mobile_authentication.test.ts`: 17 passed tests
 * `tests/frontend/mobile_marketplace.test.ts`: 9 passed tests
@@ -166,5 +172,6 @@ Automated unit & integration test suites verify 100% of mobile foundation, authe
 * `tests/frontend/mobile_customer_financials.test.ts`: 8 passed tests
 * `tests/frontend/mobile_customer_messaging.test.ts`: 9 passed tests
 * `tests/frontend/mobile_professional_workspace.test.ts`: 11 passed tests
+* `tests/frontend/mobile_professional_quotations.test.ts`: 8 passed tests
 
-All 13 mobile test files (109 tests), full test suite (38 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.
+All 14 mobile test files (117 tests), full test suite (39 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.

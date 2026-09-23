@@ -83,6 +83,11 @@ export type RootStackParamList = {
   CustomerNotifications: undefined;
   ProfessionalNotifications: undefined;
   AdminNotifications: undefined;
+  Profile: undefined;
+  EditProfile: undefined;
+  AccountSettings: undefined;
+  SecuritySettings: undefined;
+  NotificationPreferences: undefined;
 };
 
 export function determineInitialNavigationStack(authState: AuthState): 'Public' | 'Auth' | 'CustomerTab' | 'ProfessionalTab' {

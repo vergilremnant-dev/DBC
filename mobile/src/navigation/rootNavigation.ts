@@ -62,6 +62,13 @@ export type RootStackParamList = {
   ProfessionalMilestoneDetails: { projectId: string; milestoneId: string };
   ProfessionalProjectTimeline: { projectId: string };
   ProfessionalProjectDocuments: { projectId: string };
+  ProfessionalFinance: { tab?: string };
+  ProfessionalProjectFinancials: { projectId?: string };
+  ProfessionalEarnings: undefined;
+  ProfessionalTransactionHistory: undefined;
+  ProfessionalTransactionDetails: { transactionId: string };
+  ProfessionalPayouts: undefined;
+  ProfessionalPayoutDetails: { payoutId: string };
   ProjectDetail: { projectId: string };
   ConsultationDetail: { consultationId: string };
 };

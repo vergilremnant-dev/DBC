@@ -16,8 +16,12 @@ import {
   renderProfessionalProjectDocumentsScreen,
   ProfessionalProjectDocumentsScreenController,
 } from './ProfessionalProjectDocumentsScreen.js';
+import {
+  renderProfessionalProjectFinancialsScreen,
+  ProfessionalProjectFinancialsScreenController,
+} from '../finance/ProfessionalProjectFinancialsScreen.js';
 
-export type ProfessionalWorkspaceTab = 'OVERVIEW' | 'MILESTONES' | 'TIMELINE' | 'DOCUMENTS' | 'COMPLETION';
+export type ProfessionalWorkspaceTab = 'OVERVIEW' | 'MILESTONES' | 'TIMELINE' | 'DOCUMENTS' | 'FINANCIALS' | 'COMPLETION';
 
 export interface ProfessionalProjectWorkspaceScreenProps {
   projectId: string;
@@ -40,6 +44,7 @@ export class ProfessionalProjectWorkspaceScreenController {
   private milestonesController: ProfessionalMilestonesScreenController | null = null;
   private timelineController: ProfessionalProjectTimelineScreenController | null = null;
   private documentsController: ProfessionalProjectDocumentsScreenController | null = null;
+  private financialsController: ProfessionalProjectFinancialsScreenController | null = null;
 
   constructor(props: ProfessionalProjectWorkspaceScreenProps) {
     this.props = props;
@@ -85,6 +90,11 @@ export class ProfessionalProjectWorkspaceScreenController {
         projectId: this.props.projectId,
       });
       await this.documentsController.init();
+
+      this.financialsController = new ProfessionalProjectFinancialsScreenController({
+        projectId: this.props.projectId,
+      });
+      await this.financialsController.init();
     } catch (err) {
       this.state.error = err instanceof Error ? err.message : 'Unable to load project workspace';
     } finally {
@@ -111,6 +121,9 @@ export class ProfessionalProjectWorkspaceScreenController {
   }
   getDocumentsController() {
     return this.documentsController;
+  }
+  getFinancialsController() {
+    return this.financialsController;
   }
 }
 
@@ -186,6 +199,7 @@ export function renderProfessionalProjectWorkspaceScreen(
           { id: 'MILESTONES', label: 'Milestones' },
           { id: 'TIMELINE', label: 'Timeline' },
           { id: 'DOCUMENTS', label: 'Documents' },
+          { id: 'FINANCIALS', label: 'Financials' },
         ]
           .map(
             (tab) => `
@@ -215,6 +229,8 @@ export function renderProfessionalProjectWorkspaceScreen(
             ? renderProfessionalProjectTimelineScreen(controller.getTimelineController()!)
             : activeTab === 'DOCUMENTS' && controller.getDocumentsController()
             ? renderProfessionalProjectDocumentsScreen(controller.getDocumentsController()!)
+            : activeTab === 'FINANCIALS' && controller.getFinancialsController()
+            ? renderProfessionalProjectFinancialsScreen(controller.getFinancialsController()!)
             : ''
         }
       </div>

@@ -56,6 +56,12 @@ export type RootStackParamList = {
   ProfessionalQuotationEditor: { requirementId: number; quotationId?: number };
   ProfessionalLeads: undefined;
   ProfessionalProjects: { status?: string };
+  ProfessionalProjectWorkspace: { projectId: string; initialTab?: string };
+  ProfessionalProjectOverview: { projectId: string };
+  ProfessionalMilestones: { projectId: string };
+  ProfessionalMilestoneDetails: { projectId: string; milestoneId: string };
+  ProfessionalProjectTimeline: { projectId: string };
+  ProfessionalProjectDocuments: { projectId: string };
   ProjectDetail: { projectId: string };
   ConsultationDetail: { consultationId: string };
 };

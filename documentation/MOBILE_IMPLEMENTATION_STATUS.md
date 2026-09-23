@@ -1,27 +1,26 @@
-# DBC Native Mobile Implementation Status — Customer Financials & Payments Phase (Modules 33–39)
+# DBC Native Mobile Implementation Status — Customer Messaging & Project Communication Phase (Modules 33–40)
 
 > [!NOTE]
-> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, and Customer Financials & Payments Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution (Milestones, Milestone Approvals, Activity Timeline, and Documents), and Customer Financials (Project Financial Summary, Commercial Breakdown, Milestone Payments Schedule, Escrow Checkout, Transaction History, and Invoice/Receipt Access) for future Android & iOS mobile applications.
+> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, Customer Financials & Payments, and Customer Mobile Messaging & Project Communication Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution (Milestones, Milestone Approvals, Activity Timeline, and Documents), Customer Financials (Project Financial Summary, Commercial Breakdown, Milestone Payments Schedule, Escrow Checkout, Transaction History, and Invoice/Receipt Access), and Customer Mobile Messaging (Customer Inbox, Project/Request Contextual Conversation Threads, Real-time Message Composer, Unread Count Indicators, Content Sanitization, and Project Workspace Handoff) for future Android & iOS mobile applications.
 
 ---
 
 ## 1. Executive Summary
 
-Modules 33 through 39 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, and customer project financials & payments for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend API contracts (`/api/bookings`, `/api/bookings/my`, `/api/bookings/:id`, `/api/quotations`, `/api/quotations/:id`, `/api/projects`, `/api/projects/:id`, `/api/projects/:id/milestones`, `/api/projects/:id/documents`, `/api/projects/:id/approvals`), the customer project financial system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
+Modules 33 through 40 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, customer project financials & payments, and customer project messaging & communication for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend API contracts (`/api/bookings`, `/api/bookings/my`, `/api/bookings/:id`, `/api/quotations`, `/api/quotations/:id`, `/api/projects`, `/api/projects/:id`, `/api/chat/conversations`, `/api/chat/messages`), the customer project messaging system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
 
-Key achievements in Module 39:
-* **Customer Project Financials Screen**: Developed `CustomerProjectFinancialsScreen.ts` displaying backend-authoritative total customer payable amount, amount paid, remaining balance, overall payment status badge (`UP_TO_DATE`, `PAYMENT_DUE`, `PARTIALLY_PAID`, `COMPLETED`), expandable Commercial Payment Breakdown (Base quotation value, 1% DBC Escrow fee, 18% GST tax), and DBC Escrow Trust guarantee disclosure card.
-* **Customer Milestone Payments Screen**: Developed `CustomerMilestonePaymentsScreen.ts` rendering full milestone payment schedule with status badges (`PAID`, `PAYMENT DUE`, `SCHEDULED`), fee breakdown, and "Pay Milestone" action buttons launching escrow checkout.
-* **Mobile Escrow Checkout Integration**: Integrated `PaymentCheckoutModal` flow with duplicate-submission protection, loading state, sandbox outcome simulation, payment status refresh, and auto-resolution of milestone approval.
-* **Customer Payment History Screen**: Developed `CustomerPaymentHistoryScreen.ts` cataloging past milestone payment transactions (reference ID, milestone target, amount, status badge, date) in a mobile-first list view.
-* **Customer Payment Details Screen**: Developed `CustomerPaymentDetailsScreen.ts` presenting transaction details (transaction reference, payment method, billing date, total paid) with secure Invoice/Receipt access.
-* **Workspace & Navigation Integration**: Registered financial screens in `rootNavigation.ts` (`CustomerProjectFinancials`, `CustomerMilestonePayments`, `CustomerPaymentHistory`, `CustomerPaymentDetails`) and integrated the `Financials` tab into `CustomerProjectWorkspaceScreen`.
+Key achievements in Module 40:
+* **Customer Messages Screen (Inbox)**: Developed `CustomerMessagesScreen.ts` presenting contextual conversation cards filtered for the authenticated customer, displaying contractor partner name/avatar, project/request context title, latest message preview, timestamp, and unread count badges.
+* **Customer Conversation Screen**: Developed `CustomerConversationScreen.ts` featuring project/request header details, message bubble stream with visual distinction between Customer (dark/accent bubble) and Professional (stone bubble) messages, real timestamps, sanitized text rendering preventing HTML/XSS injection, and attachment URL indicators.
+* **Mobile Message Composer**: Built keyboard-safe, mobile-first composer with multiline input, minimum $44\text{px}$ touch targets, sending state indicator, empty submission validation, and duplicate send prevention.
+* **Read / Unread State Management**: Automatically marks conversation threads read upon viewing, syncs unread counts with `chatApi.markMessageRead`, and exposes total unread count summary.
+* **Project Workspace & Navigation Integration**: Added "Message Professional" CTA button to project workspace and registered `CustomerMessages` and `CustomerConversation` in `rootNavigation.ts`.
 
 ---
 
 ## 2. Completed Scope vs Future Work
 
-### Completed Features (Modules 33–39)
+### Completed Features (Modules 33–40)
 * ✅ Mobile project directory layout (`mobile/src/`)
 * ✅ Platform storage abstraction (`StorageAdapter.ts`)
 * ✅ Shared API integration (`mobileApiClient.ts` wrapping `axiosClient.ts`)
@@ -39,10 +38,10 @@ Key achievements in Module 39:
 * ✅ Mobile Project Request Details screen & Cancellation (`ProjectRequestDetailsScreen.ts`)
 * ✅ Mobile Quotation Details screen & Milestone table (`QuotationDetailsScreen.ts`)
 * ✅ Quotation Accept & Reject action workflows
-* ✅ Customer Home dashboard with Action Required section (`CustomerHomeScreen.ts`)
+* ✅ Customer Home dashboard with Action Required section & Messages indicator (`CustomerHomeScreen.ts`)
 * ✅ Customer My Requests screen (`CustomerRequestsScreen.ts`)
 * ✅ Customer My Projects screen (`CustomerProjectsScreen.ts`)
-* ✅ Customer Project Workspace screen with Financials tab (`CustomerProjectWorkspaceScreen.ts`)
+* ✅ Customer Project Workspace screen with Financials tab & Message Professional CTA (`CustomerProjectWorkspaceScreen.ts`)
 * ✅ Customer Project Overview screen (`CustomerProjectOverviewScreen.ts`)
 * ✅ Customer Milestones list screen (`CustomerMilestonesScreen.ts`)
 * ✅ Customer Milestone Details & Approval Action screen (`CustomerMilestoneDetailsScreen.ts`)
@@ -52,14 +51,15 @@ Key achievements in Module 39:
 * ✅ Customer Milestone Payments schedule screen (`CustomerMilestonePaymentsScreen.ts`)
 * ✅ Customer Payment History screen (`CustomerPaymentHistoryScreen.ts`)
 * ✅ Customer Payment Details screen (`CustomerPaymentDetailsScreen.ts`)
+* ✅ Customer Messages Inbox screen (`CustomerMessagesScreen.ts`)
+* ✅ Customer Conversation screen (`CustomerConversationScreen.ts`)
 * ✅ Design system tokens & touch targets $\ge 44\text{px}$ (`themeTokens.ts`)
-* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`)
+* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`, `mobile_customer_messaging.test.ts`)
 
 ### Not Yet Implemented (Future Scope)
 * ⏳ Professional Workspace & Lead management
 * ⏳ Professional financial payout workspace
-* ⏳ Messaging UI & Document upload workflows
-* ⏳ Native push notifications & biometric auth
+* ⏳ Native push notifications (FCM / APNs)
 * ⏳ Native camera & file upload workflows
 
 ---
@@ -96,10 +96,12 @@ mobile/
 │   │   │   ├── ProjectRequestDetailsScreen.ts # Request status & cancel action
 │   │   │   └── QuotationDetailsScreen.ts   # Quotation details, milestones & accept/reject
 │   │   ├── workspace/
-│   │   │   ├── CustomerHomeScreen.ts       # Action-oriented dashboard overview
+│   │   │   ├── CustomerHomeScreen.ts       # Action-oriented dashboard overview with Messages count
 │   │   │   ├── CustomerRequestsScreen.ts   # My Requests list & status cards
 │   │   │   ├── CustomerProjectsScreen.ts   # My Projects list & progress %
-│   │   │   └── CustomerProjectWorkspaceScreen.ts # Customer workspace tab manager with Financials
+│   │   │   ├── CustomerProjectWorkspaceScreen.ts # Customer workspace tab manager with Financials
+│   │   │   ├── CustomerMessagesScreen.ts   # Customer Inbox conversation threads list
+│   │   │   └── CustomerConversationScreen.ts # Contextual message stream & composer
 │   │   └── execution/
 │   │       ├── CustomerProjectOverviewScreen.ts  # Detailed project overview & contractor info
 │   │       ├── CustomerMilestonesScreen.ts       # Project milestones list & budget breakdown
@@ -116,7 +118,8 @@ mobile/
 │   │   ├── mobileRequestService.ts           # Mobile Request & Quotation service wrapping APIs
 │   │   ├── mobileCustomerWorkspaceService.ts # Mobile Customer Workspace service wrapping APIs
 │   │   ├── mobileProjectExecutionService.ts  # Mobile Project Execution service wrapping APIs
-│   │   └── mobileCustomerFinancialService.ts # Mobile Customer Financial service wrapping APIs
+│   │   ├── mobileCustomerFinancialService.ts # Mobile Customer Financial service wrapping APIs
+│   │   └── mobileCustomerMessagingService.ts # Mobile Customer Messaging service wrapping APIs
 │   ├── state/
 │   │   └── authStore.ts             # Auth session state machine & token sync
 │   ├── storage/
@@ -129,14 +132,15 @@ mobile/
 │       ├── requestMobileTypes.ts    # Mobile request form, booking & quotation types
 │       ├── customerWorkspaceMobileTypes.ts # Mobile customer workspace & project types
 │       ├── projectExecutionMobileTypes.ts  # Mobile project execution & milestone types
-│       └── customerFinancialMobileTypes.ts # Mobile customer financial & payment types
+│       ├── customerFinancialMobileTypes.ts # Mobile customer financial & payment types
+│       └── customerMessagingMobileTypes.ts # Mobile customer messaging & conversation types
 ```
 
 ---
 
 ## 4. Verification & Test Suite Results
 
-Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, and customer financials requirements:
+Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, customer financials, and customer messaging requirements:
 * `tests/frontend/mobile_foundation.test.ts`: 15 passed tests
 * `tests/frontend/mobile_authentication.test.ts`: 17 passed tests
 * `tests/frontend/mobile_marketplace.test.ts`: 9 passed tests
@@ -144,5 +148,6 @@ Automated unit & integration test suites verify 100% of mobile foundation, authe
 * `tests/frontend/mobile_customer_workspace.test.ts`: 8 passed tests
 * `tests/frontend/mobile_customer_project_execution.test.ts`: 7 passed tests
 * `tests/frontend/mobile_customer_financials.test.ts`: 8 passed tests
+* `tests/frontend/mobile_customer_messaging.test.ts`: 9 passed tests
 
-All 11 mobile test files (89 tests), full test suite (38 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.
+All 12 mobile test files (98 tests), full test suite (38 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.

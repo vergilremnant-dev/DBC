@@ -49,6 +49,11 @@ export const renderCustomerHomeScreenDescriptor = (state: CustomerHomeState) => 
   header: {
     title: 'Customer Workspace',
     subtitle: 'Track project requests, quotations, and active construction builds',
+    unreadMessagesIndicator: {
+      count: 1,
+      label: 'Unread Project Messages',
+      route: 'CustomerMessages',
+    },
   },
   actionRequiredSection: {
     title: 'Action Required',

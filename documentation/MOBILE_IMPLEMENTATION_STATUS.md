@@ -1,26 +1,28 @@
-# DBC Native Mobile Implementation Status — Customer Messaging & Project Communication Phase (Modules 33–40)
+# DBC Native Mobile Implementation Status — Professional Workspace Foundation & Dashboard (Modules 33–41)
 
 > [!NOTE]
-> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, Customer Financials & Payments, and Customer Mobile Messaging & Project Communication Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution (Milestones, Milestone Approvals, Activity Timeline, and Documents), Customer Financials (Project Financial Summary, Commercial Breakdown, Milestone Payments Schedule, Escrow Checkout, Transaction History, and Invoice/Receipt Access), and Customer Mobile Messaging (Customer Inbox, Project/Request Contextual Conversation Threads, Real-time Message Composer, Unread Count Indicators, Content Sanitization, and Project Workspace Handoff) for future Android & iOS mobile applications.
+> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, Customer Financials & Payments, Customer Mobile Messaging, and Professional Mobile Workspace Foundation & Dashboard Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution (Milestones, Milestone Approvals, Activity Timeline, and Documents), Customer Financials (Project Financial Summary, Commercial Breakdown, Milestone Payments Schedule, Escrow Checkout, Transaction History, and Invoice/Receipt Access), Customer Mobile Messaging (Customer Inbox, Project/Request Contextual Conversation Threads, Real-time Message Composer), and Professional Mobile Workspace (Trade Partner Console, Compact Business Metrics, Action Required Feed, Requests Management, Open Leads Discovery, Active Builds Portfolio, and Role Protection) for future Android & iOS mobile applications.
 
 ---
 
 ## 1. Executive Summary
 
-Modules 33 through 40 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, customer project financials & payments, and customer project messaging & communication for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend API contracts (`/api/bookings`, `/api/bookings/my`, `/api/bookings/:id`, `/api/quotations`, `/api/quotations/:id`, `/api/projects`, `/api/projects/:id`, `/api/chat/conversations`, `/api/chat/messages`), the customer project messaging system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
+Modules 33 through 41 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, customer project financials & payments, customer project messaging, and professional mobile workspace foundation & dashboard for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend API contracts (`/api/bookings`, `/api/bookings/my`, `/api/bookings/:id`, `/api/provider/bookings`, `/api/provider/bookings/:id/accept`, `/api/provider/bookings/:id/reject`, `/api/quotations`, `/api/projects`, `/api/chat/conversations`), the professional mobile workspace system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
 
-Key achievements in Module 40:
-* **Customer Messages Screen (Inbox)**: Developed `CustomerMessagesScreen.ts` presenting contextual conversation cards filtered for the authenticated customer, displaying contractor partner name/avatar, project/request context title, latest message preview, timestamp, and unread count badges.
-* **Customer Conversation Screen**: Developed `CustomerConversationScreen.ts` featuring project/request header details, message bubble stream with visual distinction between Customer (dark/accent bubble) and Professional (stone bubble) messages, real timestamps, sanitized text rendering preventing HTML/XSS injection, and attachment URL indicators.
-* **Mobile Message Composer**: Built keyboard-safe, mobile-first composer with multiline input, minimum $44\text{px}$ touch targets, sending state indicator, empty submission validation, and duplicate send prevention.
-* **Read / Unread State Management**: Automatically marks conversation threads read upon viewing, syncs unread counts with `chatApi.markMessageRead`, and exposes total unread count summary.
-* **Project Workspace & Navigation Integration**: Added "Message Professional" CTA button to project workspace and registered `CustomerMessages` and `CustomerConversation` in `rootNavigation.ts`.
+Key achievements in Module 41:
+* **Role Protection & Authentication Guard**: Restricted professional mobile workspace to authenticated users with a professional role (`contractor` or `admin`) via `determineInitialNavigationStack`, preserving `pendingTarget` for post-auth navigation.
+* **Professional Home Screen (Trade Console)**: Developed `ProfessionalHomeScreen.ts` featuring compact business metrics (Active Projects, Pending Requests, Open Leads, Pending Quotations), high-priority Action Required cards, Active Construction Builds progress bars, Recent Customer Requests, and Recent Activity log.
+* **Professional Requests Screen**: Developed `ProfessionalRequestsScreen.ts` presenting customer project requests with status filter tabs (`ALL`, `PENDING`, `ACCEPTED`, `REJECTED`), budget estimates, preferred timelines, and detail navigation.
+* **Professional Request Details Screen**: Developed `ProfessionalRequestDetailsScreen.ts` presenting full customer requirements, Accept action (calling `bookingApi.acceptBooking`), Decline action modal (calling `bookingApi.rejectBooking`), and "Prepare Commercial Quotation" transition CTA.
+* **Professional Leads Screen**: Developed `ProfessionalLeadsScreen.ts` displaying open public marketplace lead opportunities with budget, location, posted time, and "Express Interest" action.
+* **Professional Projects Screen**: Developed `ProfessionalProjectsScreen.ts` displaying contractor project portfolio with progress percentage, milestone details, and budget allocations.
+* **Navigation Integration**: Updated `rootNavigation.ts` with professional stack routes (`ProfessionalHome`, `ProfessionalRequests`, `ProfessionalRequestDetails`, `ProfessionalLeads`, `ProfessionalProjects`).
 
 ---
 
 ## 2. Completed Scope vs Future Work
 
-### Completed Features (Modules 33–40)
+### Completed Features (Modules 33–41)
 * ✅ Mobile project directory layout (`mobile/src/`)
 * ✅ Platform storage abstraction (`StorageAdapter.ts`)
 * ✅ Shared API integration (`mobileApiClient.ts` wrapping `axiosClient.ts`)
@@ -53,12 +55,19 @@ Key achievements in Module 40:
 * ✅ Customer Payment Details screen (`CustomerPaymentDetailsScreen.ts`)
 * ✅ Customer Messages Inbox screen (`CustomerMessagesScreen.ts`)
 * ✅ Customer Conversation screen (`CustomerConversationScreen.ts`)
+* ✅ Professional Role Protection & Navigation Guard (`rootNavigation.ts`)
+* ✅ Professional Home Console (`ProfessionalHomeScreen.ts`)
+* ✅ Professional Customer Requests Screen (`ProfessionalRequestsScreen.ts`)
+* ✅ Professional Request Details & Accept/Decline Screen (`ProfessionalRequestDetailsScreen.ts`)
+* ✅ Professional Open Leads Screen (`ProfessionalLeadsScreen.ts`)
+* ✅ Professional Active Projects Screen (`ProfessionalProjectsScreen.ts`)
 * ✅ Design system tokens & touch targets $\ge 44\text{px}$ (`themeTokens.ts`)
-* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`, `mobile_customer_messaging.test.ts`)
+* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`, `mobile_customer_messaging.test.ts`, `mobile_professional_workspace.test.ts`)
 
 ### Not Yet Implemented (Future Scope)
-* ⏳ Professional Workspace & Lead management
-* ⏳ Professional financial payout workspace
+* ⏳ Professional Mobile Quotation Management & Proposal Editor
+* ⏳ Professional Milestone Progress Submission & Execution UI
+* ⏳ Professional Financial Payout & Earnings Workspace
 * ⏳ Native push notifications (FCM / APNs)
 * ⏳ Native camera & file upload workflows
 
@@ -90,18 +99,23 @@ mobile/
 │   │   │   ├── CategorySearchScreen.ts   # Category discovery & filter sheet
 │   │   │   ├── ProfessionalProfileScreen.ts # Public contractor profile & portfolio
 │   │   │   ├── ProjectAssistantModal.ts   # Guided project scope modal
-│   │   │   └── ProjectRequestHandoff.ts   # Request initiation & auth handoff
+│   │   │   ├── ProjectRequestHandoff.ts   # Request initiation & auth handoff
+│   │   │   └── ProfessionalLeadsScreen.ts # Open public marketplace leads
 │   │   ├── request/
-│   │   │   ├── ProjectRequestFormScreen.ts  # Mobile request form & review step
+│   │   │   ├── ProjectRequestFormScreen.ts    # Mobile request form & review step
 │   │   │   ├── ProjectRequestDetailsScreen.ts # Request status & cancel action
-│   │   │   └── QuotationDetailsScreen.ts   # Quotation details, milestones & accept/reject
+│   │   │   ├── QuotationDetailsScreen.ts     # Quotation details, milestones & accept/reject
+│   │   │   ├── ProfessionalRequestsScreen.ts  # Professional requests list & filter tabs
+│   │   │   └── ProfessionalRequestDetailsScreen.ts # Request details & accept/decline actions
 │   │   ├── workspace/
 │   │   │   ├── CustomerHomeScreen.ts       # Action-oriented dashboard overview with Messages count
 │   │   │   ├── CustomerRequestsScreen.ts   # My Requests list & status cards
 │   │   │   ├── CustomerProjectsScreen.ts   # My Projects list & progress %
 │   │   │   ├── CustomerProjectWorkspaceScreen.ts # Customer workspace tab manager with Financials
 │   │   │   ├── CustomerMessagesScreen.ts   # Customer Inbox conversation threads list
-│   │   │   └── CustomerConversationScreen.ts # Contextual message stream & composer
+│   │   │   ├── CustomerConversationScreen.ts # Contextual message stream & composer
+│   │   │   ├── ProfessionalHomeScreen.ts   # Professional console dashboard & metrics
+│   │   │   └── ProfessionalProjectsScreen.ts# Professional active projects portfolio
 │   │   └── execution/
 │   │       ├── CustomerProjectOverviewScreen.ts  # Detailed project overview & contractor info
 │   │       ├── CustomerMilestonesScreen.ts       # Project milestones list & budget breakdown
@@ -119,7 +133,8 @@ mobile/
 │   │   ├── mobileCustomerWorkspaceService.ts # Mobile Customer Workspace service wrapping APIs
 │   │   ├── mobileProjectExecutionService.ts  # Mobile Project Execution service wrapping APIs
 │   │   ├── mobileCustomerFinancialService.ts # Mobile Customer Financial service wrapping APIs
-│   │   └── mobileCustomerMessagingService.ts # Mobile Customer Messaging service wrapping APIs
+│   │   ├── mobileCustomerMessagingService.ts # Mobile Customer Messaging service wrapping APIs
+│   │   └── mobileProfessionalWorkspaceService.ts # Mobile Professional Workspace service wrapping APIs
 │   ├── state/
 │   │   └── authStore.ts             # Auth session state machine & token sync
 │   ├── storage/
@@ -133,14 +148,15 @@ mobile/
 │       ├── customerWorkspaceMobileTypes.ts # Mobile customer workspace & project types
 │       ├── projectExecutionMobileTypes.ts  # Mobile project execution & milestone types
 │       ├── customerFinancialMobileTypes.ts # Mobile customer financial & payment types
-│       └── customerMessagingMobileTypes.ts # Mobile customer messaging & conversation types
+│       ├── customerMessagingMobileTypes.ts # Mobile customer messaging & conversation types
+│       └── professionalWorkspaceMobileTypes.ts # Mobile professional workspace & request types
 ```
 
 ---
 
 ## 4. Verification & Test Suite Results
 
-Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, customer financials, and customer messaging requirements:
+Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, customer financials, customer messaging, and professional workspace requirements:
 * `tests/frontend/mobile_foundation.test.ts`: 15 passed tests
 * `tests/frontend/mobile_authentication.test.ts`: 17 passed tests
 * `tests/frontend/mobile_marketplace.test.ts`: 9 passed tests
@@ -149,5 +165,6 @@ Automated unit & integration test suites verify 100% of mobile foundation, authe
 * `tests/frontend/mobile_customer_project_execution.test.ts`: 7 passed tests
 * `tests/frontend/mobile_customer_financials.test.ts`: 8 passed tests
 * `tests/frontend/mobile_customer_messaging.test.ts`: 9 passed tests
+* `tests/frontend/mobile_professional_workspace.test.ts`: 11 passed tests
 
-All 12 mobile test files (98 tests), full test suite (38 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.
+All 13 mobile test files (109 tests), full test suite (38 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.

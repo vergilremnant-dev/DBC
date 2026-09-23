@@ -48,6 +48,11 @@ export type RootStackParamList = {
   CustomerPaymentDetails: { transactionId: string };
   CustomerMessages: undefined;
   CustomerConversation: { threadId: string };
+  ProfessionalHome: undefined;
+  ProfessionalRequests: { status?: string };
+  ProfessionalRequestDetails: { requestId: string };
+  ProfessionalLeads: undefined;
+  ProfessionalProjects: { status?: string };
   ProjectDetail: { projectId: string };
   ConsultationDetail: { consultationId: string };
 };

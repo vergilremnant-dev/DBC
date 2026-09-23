@@ -79,6 +79,10 @@ export type RootStackParamList = {
   AdminProjects: { status?: string };
   AdminAuditLog: undefined;
   AdminProfile: undefined;
+  Notifications: undefined;
+  CustomerNotifications: undefined;
+  ProfessionalNotifications: undefined;
+  AdminNotifications: undefined;
 };
 
 export function determineInitialNavigationStack(authState: AuthState): 'Public' | 'Auth' | 'CustomerTab' | 'ProfessionalTab' {

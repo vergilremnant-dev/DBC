@@ -1,29 +1,26 @@
-# DBC Native Mobile Implementation Status — Admin Mobile Workspace & Platform Operations (Modules 33–45)
+# DBC Native Mobile Implementation Status — Mobile Notifications, Deep Links & Event Routing (Modules 33–46)
 
 > [!NOTE]
-> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, Customer Financials & Payments, Customer Mobile Messaging, Professional Mobile Workspace Foundation & Dashboard, Professional Mobile Quotation Management, Professional Mobile Project Execution Workspace, Professional Mobile Finance, Earnings & Payouts, and Admin Mobile Workspace Foundation Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution, Customer Financials, Customer Mobile Messaging, Professional Mobile Workspace, Professional Quotation Management, Professional Project Execution Workspace, Professional Mobile Finance, and Admin Mobile Workspace (Platform Operations Console, User Directory & Moderation, Trade Partner Credential Verification, Platform Project Requests Monitoring, Active Builds Oversight, Audit Activity Feed, and Admin Profile Settings) for future Android & iOS mobile applications.
+> This document details the completed implementation of the **DBC Native Mobile Foundation, Authentication Experience, Customer Marketplace, Project Request & Quotation Flow, Customer Workspace & Project Tracking, Customer Project Execution, Customer Financials & Payments, Customer Mobile Messaging, Professional Mobile Workspace Foundation & Dashboard, Professional Mobile Quotation Management, Professional Mobile Project Execution Workspace, Professional Mobile Finance, Earnings & Payouts, Admin Mobile Workspace Foundation, and Mobile Notifications, Deep Links & Event Routing Module**, establishing shared codebase, storage, API integration, session management, authentication screens, role resolution, public marketplace discovery, public contractor profiles, project request submission, quotation review & acceptance, action-oriented Customer Home dashboard, My Requests tracking, My Projects tracking, Customer Project Workspace, Customer Project Execution, Customer Financials, Customer Mobile Messaging, Professional Mobile Workspace, Professional Quotation Management, Professional Project Execution Workspace, Professional Mobile Finance, Admin Mobile Workspace, and Mobile Notifications (Notification Center Console, Category Filter Tabs, Unread Count Badges, Centralized Deep-Link Resolver, Role-Aware Routing Guards, Auth Handoff, and Deferred Push Token Boundary) for future Android & iOS mobile applications.
 
 ---
 
 ## 1. Executive Summary
 
-Modules 33 through 45 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, customer project financials & payments, customer project messaging, professional mobile workspace foundation & dashboard, professional quotation management, professional project execution workspace, professional mobile finance, earnings & payouts, and admin mobile workspace foundation for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend API contracts (`/api/admin/users`, `/api/admin/providers`, `/api/admin/bookings`, `/api/projects`), the admin mobile system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
+Modules 33 through 46 successfully establish the official mobile foundation, authentication lifecycle, customer discovery marketplace, complete project request & quotation review workflow, authenticated customer workspace, customer project execution tracking, customer project financials & payments, customer project messaging, professional mobile workspace foundation & dashboard, professional quotation management, professional project execution workspace, professional mobile finance, earnings & payouts, admin mobile workspace foundation, and mobile notifications & deep links for the DBC Mobile Application. In strict alignment with pre-approved Architecture Decision Records (ADR-001 through ADR-005) and backend notification contracts (`notificationApi`), the mobile notification and event routing system was implemented in `mobile/src/` with zero modifications to existing backend API contracts, database schemas, or web application behaviors.
 
-Key achievements in Module 45:
-* **Mobile Admin Workspace Service**: Developed `mobileAdminWorkspaceService.ts` wrapping `adminService.ts` and `ProjectService.ts`. Features platform metrics consolidation, user moderation, trade partner credential verification, platform requests/projects monitoring, audit log tracking, and 401/403 security error handling.
-* **Platform Operations Console**: Developed `AdminHomeScreen.ts` presenting platform metrics (Total Users, Trade Partners, Active Builds), pending verification tasks, action items, and recent audit activity.
-* **User Directory & User Details Screens**: Developed `AdminUsersScreen.ts` and `AdminUserDetailsScreen.ts` presenting user management with role filter tabs (`ALL`, `customer`, `contractor`, `admin`), search, and state change modals (`ACTIVE`, `SUSPENDED`) with explicit confirmations.
-* **Contractor Oversight Screen**: Developed `AdminProfessionalsScreen.ts` presenting trade partner directory, verification filter tabs (`ALL`, `VERIFIED`, `PENDING`, `REJECTED`), search, and credential verification modals (`VERIFIED`, `REJECTED`).
-* **Platform Requests & Projects Screens**: Developed `AdminRequestsScreen.ts` and `AdminProjectsScreen.ts` presenting platform project requests and active build portfolios with progress bars and budget indicators.
-* **Platform Audit Log Screen**: Developed `AdminAuditLogScreen.ts` presenting platform administrative action logs with status badges (`SUCCESS`, `WARNING`, `ERROR`).
-* **Admin Profile & Settings Screen**: Developed `AdminProfileScreen.ts` presenting admin identity, operational security overview, cache clearing action, and logout button.
-* **Navigation & Authorization Protection**: Registered Admin routes (`AdminHome`, `AdminUsers`, `AdminUserDetails`, `AdminProfessionals`, `AdminRequests`, `AdminProjects`, `AdminAuditLog`, `AdminProfile`) in `rootNavigation.ts`, restricting access strictly to authenticated `admin` role users.
+Key achievements in Module 46:
+* **Mobile Notification Service**: Developed `mobileNotificationService.ts` wrapping existing `notificationApi`. Features notification domain modeling, category mapping, read/unread state management, unread count tracking, and 401/403 security error handling.
+* **Centralized Deep-Link Resolver**: Developed `mobileDeepLinkService.ts` resolving URLs and notification event payloads into structured `MobileNotificationTarget` objects. Supports role-aware target resolution, pending target preservation across login redirects, and RBAC authorization guards.
+* **Push Token Architecture**: Developed `mobilePushTokenService.ts` defining `PushProviderAdapter` and `DeferredPushProviderAdapter` for graceful push registration when native FCM/APNs SDKs are unavailable.
+* **Notification Center Console Screen**: Developed `NotificationsScreen.ts` presenting role-aware notifications, section filter tabs (`ALL`, `UNREAD`, `PROJECTS`, `MESSAGES`, `PAYMENTS`), unread badges + visual dots, tap-to-navigate action, Mark All Read button, empty state ("You're all caught up"), loading, and error states with Retry button.
+* **Navigation Integration**: Registered Notification routes (`Notifications`, `CustomerNotifications`, `ProfessionalNotifications`, `AdminNotifications`) in `rootNavigation.ts`.
 
 ---
 
 ## 2. Completed Scope vs Future Work
 
-### Completed Features (Modules 33–45)
+### Completed Features (Modules 33–46)
 * ✅ Mobile project directory layout (`mobile/src/`)
 * ✅ Platform storage abstraction (`StorageAdapter.ts`)
 * ✅ Shared API integration (`mobileApiClient.ts` wrapping `axiosClient.ts`)
@@ -82,12 +79,16 @@ Key achievements in Module 45:
 * ✅ Admin Project Requests & Active Builds Monitoring (`AdminRequestsScreen.ts`, `AdminProjectsScreen.ts`)
 * ✅ Admin Platform Audit Feed (`AdminAuditLogScreen.ts`)
 * ✅ Admin Profile & Operational Security Settings (`AdminProfileScreen.ts`)
+* ✅ Mobile Notifications Center (`NotificationsScreen.ts`)
+* ✅ Centralized Deep-Link & Event Resolver (`mobileDeepLinkService.ts`)
+* ✅ Push Token Boundary & Adapter (`mobilePushTokenService.ts`)
 * ✅ Design system tokens & touch targets $\ge 44\text{px}$ (`themeTokens.ts`)
-* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`, `mobile_customer_messaging.test.ts`, `mobile_professional_workspace.test.ts`, `mobile_professional_quotations.test.ts`, `mobile_professional_project_execution.test.ts`, `mobile_professional_finance.test.ts`, `mobile_admin_workspace.test.ts`)
+* ✅ Automated test suites (`mobile_foundation.test.ts`, `mobile_authentication.test.ts`, `mobile_marketplace.test.ts`, `mobile_project_request.test.ts`, `mobile_customer_workspace.test.ts`, `mobile_customer_project_execution.test.ts`, `mobile_customer_financials.test.ts`, `mobile_customer_messaging.test.ts`, `mobile_professional_workspace.test.ts`, `mobile_professional_quotations.test.ts`, `mobile_professional_project_execution.test.ts`, `mobile_professional_finance.test.ts`, `mobile_admin_workspace.test.ts`, `mobile_notifications_deeplinks.test.ts`)
 
-### Not Yet Implemented (Future Scope)
-* ⏳ Native push notifications (FCM / APNs)
-* ⏳ Native camera & file upload workflows
+### Deferred Native Platform Dependencies (Future Scope)
+* ⏳ Native Android compilation (FCM SDK integration)
+* ⏳ Native iOS compilation (APNs SDK integration)
+* ⏳ Native camera & file picker integration
 
 ---
 
@@ -128,6 +129,8 @@ mobile/
 │   │   │   ├── ProjectAssistantModal.ts   # Guided project scope modal
 │   │   │   ├── ProjectRequestHandoff.ts   # Request initiation & auth handoff
 │   │   │   └── ProfessionalLeadsScreen.ts # Open public marketplace leads
+│   │   ├── notifications/
+│   │   │   └── NotificationsScreen.ts      # Notification center console & filter tabs
 │   │   ├── request/
 │   │   │   ├── ProjectRequestFormScreen.ts    # Mobile request form & review step
 │   │   │   ├── ProjectRequestDetailsScreen.ts # Request status & cancel action
@@ -181,7 +184,10 @@ mobile/
 │   │   ├── mobileProfessionalQuotationService.ts # Mobile Professional Quotation service wrapping APIs
 │   │   ├── mobileProfessionalProjectExecutionService.ts # Mobile Professional Execution service wrapping APIs
 │   │   ├── mobileProfessionalFinanceService.ts # Mobile Professional Finance service wrapping APIs
-│   │   └── mobileAdminWorkspaceService.ts    # Mobile Admin Workspace service wrapping APIs
+│   │   ├── mobileAdminWorkspaceService.ts    # Mobile Admin Workspace service wrapping APIs
+│   │   ├── mobileNotificationService.ts     # Mobile Notification service wrapping notificationApi
+│   │   ├── mobileDeepLinkService.ts         # Centralized Deep-Link & Event Resolver
+│   │   └── mobilePushTokenService.ts        # Push Token Provider & Deferred Adapter
 │   ├── state/
 │   │   └── authStore.ts             # Auth session state machine & token sync
 │   ├── storage/
@@ -200,14 +206,15 @@ mobile/
 │       ├── professionalQuotationMobileTypes.ts # Mobile professional quotation & wizard types
 │       ├── professionalProjectExecutionMobileTypes.ts # Mobile professional execution types
 │       ├── professionalFinanceMobileTypes.ts # Mobile professional finance & payout types
-│       └── adminWorkspaceMobileTypes.ts # Mobile admin workspace & audit log types
+│       ├── adminWorkspaceMobileTypes.ts # Mobile admin workspace & audit log types
+│       └── mobileNotificationTypes.ts  # Mobile notification & deep link types
 ```
 
 ---
 
 ## 4. Verification & Test Suite Results
 
-Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, customer financials, customer messaging, professional workspace, professional quotation management, professional project execution, professional finance, and admin workspace requirements:
+Automated unit & integration test suites verify 100% of mobile foundation, authentication, marketplace discovery, project request/quotation review, customer workspace, customer project execution, customer financials, customer messaging, professional workspace, professional quotation management, professional project execution, professional finance, admin workspace, and mobile notification requirements:
 * `tests/frontend/mobile_foundation.test.ts`: 15 passed tests
 * `tests/frontend/mobile_authentication.test.ts`: 17 passed tests
 * `tests/frontend/mobile_marketplace.test.ts`: 9 passed tests
@@ -221,5 +228,6 @@ Automated unit & integration test suites verify 100% of mobile foundation, authe
 * `tests/frontend/mobile_professional_project_execution.test.ts`: 9 passed tests
 * `tests/frontend/mobile_professional_finance.test.ts`: 10 passed tests
 * `tests/frontend/mobile_admin_workspace.test.ts`: 16 passed tests
+* `tests/frontend/mobile_notifications_deeplinks.test.ts`: 20 passed tests
 
-All 17 mobile test files (152 tests), full test suite (42 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.
+All 18 mobile test files (172 tests), full test suite (43 test files), TypeScript compilation (`npx tsc -b`), and production web builds (`npx vite build`) execute cleanly with zero errors.

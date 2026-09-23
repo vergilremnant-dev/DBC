@@ -71,6 +71,14 @@ export type RootStackParamList = {
   ProfessionalPayoutDetails: { payoutId: string };
   ProjectDetail: { projectId: string };
   ConsultationDetail: { consultationId: string };
+  AdminHome: undefined;
+  AdminUsers: { role?: string; search?: string };
+  AdminUserDetails: { userId: string };
+  AdminProfessionals: { status?: string };
+  AdminRequests: { status?: string };
+  AdminProjects: { status?: string };
+  AdminAuditLog: undefined;
+  AdminProfile: undefined;
 };
 
 export function determineInitialNavigationStack(authState: AuthState): 'Public' | 'Auth' | 'CustomerTab' | 'ProfessionalTab' {

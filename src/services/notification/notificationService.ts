@@ -133,11 +133,36 @@ function seedNotifications(role: string) {
   }
 }
 
+const memoryStorage: Record<string, string> = {};
+
+function safeGetItem(key: string): string | null {
+  try {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      return localStorage.getItem(key);
+    }
+  } catch {
+    // Fallback
+  }
+  return memoryStorage[key] || null;
+}
+
+function safeSetItem(key: string, value: string): void {
+  try {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      localStorage.setItem(key, value);
+      return;
+    }
+  } catch {
+    // Fallback
+  }
+  memoryStorage[key] = value;
+}
+
 export const notificationApi = {
   getNotifications(role: string): AppNotification[] {
     const normRole = (role || '').toUpperCase();
     const storageKey = `dbc_notifications_${normRole.toLowerCase()}`;
-    const raw = localStorage.getItem(storageKey);
+    const raw = safeGetItem(storageKey);
     if (raw) {
       try {
         notificationList = JSON.parse(raw);
@@ -149,7 +174,7 @@ export const notificationApi = {
     }
     if (notificationList.length === 0 || normRole !== currentRoleState) {
       seedNotifications(role);
-      localStorage.setItem(storageKey, JSON.stringify(notificationList));
+      safeSetItem(storageKey, JSON.stringify(notificationList));
     }
     return notificationList;
   },
@@ -159,7 +184,7 @@ export const notificationApi = {
       item.id === id ? { ...item, isRead: true } : item
     );
     const storageKey = `dbc_notifications_${currentRoleState.toLowerCase()}`;
-    localStorage.setItem(storageKey, JSON.stringify(notificationList));
+    safeSetItem(storageKey, JSON.stringify(notificationList));
     notify();
   },
 
@@ -168,7 +193,7 @@ export const notificationApi = {
       item.id === id ? { ...item, isRead: false } : item
     );
     const storageKey = `dbc_notifications_${currentRoleState.toLowerCase()}`;
-    localStorage.setItem(storageKey, JSON.stringify(notificationList));
+    safeSetItem(storageKey, JSON.stringify(notificationList));
     notify();
   },
 
@@ -177,21 +202,21 @@ export const notificationApi = {
       item.id === id ? { ...item, archived: archiveState } : item
     );
     const storageKey = `dbc_notifications_${currentRoleState.toLowerCase()}`;
-    localStorage.setItem(storageKey, JSON.stringify(notificationList));
+    safeSetItem(storageKey, JSON.stringify(notificationList));
     notify();
   },
 
   deleteNotification(id: string): void {
     notificationList = notificationList.filter((item) => item.id !== id);
     const storageKey = `dbc_notifications_${currentRoleState.toLowerCase()}`;
-    localStorage.setItem(storageKey, JSON.stringify(notificationList));
+    safeSetItem(storageKey, JSON.stringify(notificationList));
     notify();
   },
 
   markAllAsRead(): void {
     notificationList = notificationList.map((item) => ({ ...item, isRead: true }));
     const storageKey = `dbc_notifications_${currentRoleState.toLowerCase()}`;
-    localStorage.setItem(storageKey, JSON.stringify(notificationList));
+    safeSetItem(storageKey, JSON.stringify(notificationList));
     notify();
   },
 

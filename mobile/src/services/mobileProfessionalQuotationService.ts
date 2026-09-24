@@ -350,6 +350,36 @@ export const mobileProfessionalQuotationService = {
     }
   },
 
+  async submitQuotationProposal(payload: {
+    requirementId: number;
+    totalPrice: number;
+    timelineWeeks: number;
+    scopeDeliverables: string[];
+    milestones: Array<{ title: string; amount: number; durationWeeks: number }>;
+  }): Promise<MobileQuotationItem & { quotationId: number }> {
+    const draft = await this.createQuotationDraft({
+      requirementId: payload.requirementId,
+      priceModel: 'MILESTONE_BASED',
+      totalAmount: payload.totalPrice,
+      estimatedDurationDays: payload.timelineWeeks * 7,
+      warrantyMonths: 12,
+      proposal: {
+        title: 'Technical Quotation Proposal',
+        summary: 'Detailed scope breakdown',
+        scope: payload.scopeDeliverables.join(', '),
+        deliverables: payload.scopeDeliverables.join(', '),
+      },
+      milestones: payload.milestones.map((m, idx) => ({
+        id: idx + 1,
+        name: m.title,
+        cost: m.amount,
+        durationDays: m.durationWeeks * 7,
+      })),
+    });
+    const submitted = await this.submitQuotation(draft.id);
+    return { ...submitted, quotationId: submitted.id };
+  },
+
   clearCache(): void {
     Object.keys(localQuotationStore).forEach((key) => delete localQuotationStore[Number(key)]);
   },

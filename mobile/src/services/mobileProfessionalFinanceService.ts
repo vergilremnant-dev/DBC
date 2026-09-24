@@ -311,4 +311,20 @@ export const mobileProfessionalFinanceService = {
     if (!found) throw new Error('PAYOUT_NOT_FOUND');
     return found;
   },
+
+  async getFinanceSummary(): Promise<ProfessionalFinanceSummary> {
+    return this.getProfessionalFinanceSummary();
+  },
+
+  async getMilestoneEarnings(): Promise<ProfessionalEarning[]> {
+    return this.getProfessionalEarnings();
+  },
+
+  async getPayoutDetails(): Promise<{ maskedBankAccount: string; payouts: ProfessionalPayout[] }> {
+    const list = await this.getProfessionalPayouts();
+    return {
+      maskedBankAccount: 'HDFC Bank ending in ****4921',
+      payouts: list,
+    };
+  },
 };

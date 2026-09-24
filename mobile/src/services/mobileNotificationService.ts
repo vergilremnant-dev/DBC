@@ -177,4 +177,8 @@ export const mobileNotificationService = {
       throw new Error(error instanceof Error ? error.message : 'Failed to mark all notifications as read');
     }
   },
+
+  async markAllAsRead(userRole: string = 'customer'): Promise<void> {
+    return this.markAllNotificationsRead(userRole);
+  },
 };

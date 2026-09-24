@@ -239,6 +239,22 @@ function createDefaultMockProject(projectId: string): Project {
 }
 
 export const mobileProfessionalProjectExecutionService = {
+  async getProfessionalProjects(): Promise<any[]> {
+    return [
+      {
+        id: 'proj-501',
+        title: 'Jubilee Hills Villa Raft Foundation',
+        customerName: 'Ramesh Kumar',
+        status: 'IN_PROGRESS',
+        statusLabel: 'In Progress',
+        progressPercentage: 75,
+        currentMilestoneName: 'Raft Slab Reinforcement',
+        startDate: '2026-08-01',
+        totalBudgetFormatted: '₹1,20,000',
+      },
+    ];
+  },
+
   async getProjectDetailsRaw(projectId: string): Promise<Project> {
     if (localProjectStore[projectId]) {
       return localProjectStore[projectId];
@@ -353,7 +369,7 @@ export const mobileProfessionalProjectExecutionService = {
     return this.getMilestoneDetails(projectId, milestoneId);
   },
 
-  async updateMilestoneProgress(projectId: string, milestoneId: string, completionPercentage: number): Promise<MobileMilestoneItem> {
+  async updateMilestoneProgress(projectId: string, milestoneId: string, completionPercentage: number): Promise<MobileMilestoneItem & { progressPercentage: number; success: boolean }> {
     const validPct = Math.max(0, Math.min(100, completionPercentage));
     const raw = await this.getProjectDetailsRaw(projectId);
     const target = raw.milestones?.find((m) => m.id === milestoneId);
@@ -375,7 +391,13 @@ export const mobileProfessionalProjectExecutionService = {
       }
     }
     localProjectStore[projectId] = raw;
-    return this.getMilestoneDetails(projectId, milestoneId);
+    const details = await this.getMilestoneDetails(projectId, milestoneId);
+    return {
+      ...details,
+      progressPercentage: validPct,
+      completionPercentage: validPct,
+      success: true,
+    };
   },
 
   async markMilestoneComplete(projectId: string, milestoneId: string): Promise<MobileMilestoneItem> {

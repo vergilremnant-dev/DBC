@@ -466,6 +466,23 @@ export const mobileAdminWorkspaceService = {
     return [...localAuditLogStore];
   },
 
+  async getOperationalStats(): Promise<{ totalUsers: number; activeProjects: number; pendingVerifications: number }> {
+    const overview = await this.getAdminDashboardOverview();
+    return {
+      totalUsers: overview.metrics.totalUsersCount,
+      activeProjects: overview.metrics.activeProjectsCount,
+      pendingVerifications: overview.metrics.pendingVerificationsCount,
+    };
+  },
+
+  async verifyTradePartner(providerId: string, status: 'VERIFIED' | 'PENDING' | 'REJECTED'): Promise<MobileAdminProfessional> {
+    return this.verifyProfessional(providerId, status);
+  },
+
+  async getTradePartners(status?: string): Promise<MobileAdminProfessional[]> {
+    return this.getProfessionals({ verificationStatus: status });
+  },
+
   async getAdminDashboardOverview(): Promise<AdminDashboardOverview> {
     const users = await this.getUsers();
     const providers = await this.getProfessionals();

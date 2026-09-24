@@ -94,6 +94,8 @@ describe('Module 44 — Professional Mobile Finance, Earnings & Payouts', () => 
     });
 
     it('fetches contractor milestone earnings and transaction records', async () => {
+      vi.mocked(ProjectService.listProjects).mockResolvedValue(mockProjects);
+
       const earnings = await mobileProfessionalFinanceService.getProfessionalEarnings();
       const transactions = await mobileProfessionalFinanceService.getProfessionalTransactions();
 
@@ -139,7 +141,7 @@ describe('Module 44 — Professional Mobile Finance, Earnings & Payouts', () => 
       controller.setTab('EARNINGS');
       html = renderProfessionalFinanceScreen(controller);
       expect(html).toContain('Milestone Revenue');
-      expect(html).toContain('Site Clearance & Excavation');
+      expect(html).toContain('Site Excavation');
 
       controller.setTab('PAYOUTS');
       html = renderProfessionalFinanceScreen(controller);
@@ -167,6 +169,7 @@ describe('Module 44 — Professional Mobile Finance, Earnings & Payouts', () => 
 
   describe('4. Professional Earnings & Transactions Screens', () => {
     it('renders milestone earnings list', async () => {
+      vi.mocked(ProjectService.listProjects).mockResolvedValue(mockProjects);
       const controller = new ProfessionalEarningsScreenController({});
       await controller.init();
 
@@ -174,10 +177,11 @@ describe('Module 44 — Professional Mobile Finance, Earnings & Payouts', () => 
 
       const html = renderProfessionalEarningsScreen(controller);
       expect(html).toContain('Trade Partner Earnings');
-      expect(html).toContain('Site Clearance & Excavation');
+      expect(html).toContain('Site Excavation');
     });
 
     it('renders transaction history and transaction details', async () => {
+      vi.mocked(ProjectService.listProjects).mockResolvedValue(mockProjects);
       const listController = new ProfessionalTransactionHistoryScreenController({});
       await listController.init();
 
@@ -185,16 +189,16 @@ describe('Module 44 — Professional Mobile Finance, Earnings & Payouts', () => 
 
       const listHtml = renderProfessionalTransactionHistoryScreen(listController);
       expect(listHtml).toContain('Transaction History');
-      expect(listHtml).toContain('TXN-DISB-9001');
+      expect(listHtml).toContain('TXN-DISB-m-1');
 
       const detailsController = new ProfessionalTransactionDetailsScreenController({
-        transactionId: 'tx-801',
+        transactionId: 'TXN-DISB-m-1',
       });
       await detailsController.init();
 
       const detailsHtml = renderProfessionalTransactionDetailsScreen(detailsController);
       expect(detailsHtml).toContain('Transaction Details');
-      expect(detailsHtml).toContain('TXN-DISB-9001');
+      expect(detailsHtml).toContain('TXN-DISB-m-1');
       expect(detailsHtml).toContain('Download PDF Voucher / Invoice');
     });
   });

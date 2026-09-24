@@ -20,6 +20,123 @@ import { mobileNotificationService } from '../../mobile/src/services/mobileNotif
 import { mobileProfileService } from '../../mobile/src/services/mobileProfileService.js';
 import { mobileSupportService } from '../../mobile/src/services/mobileSupportService.js';
 
+vi.mock('../../src/services/booking/bookingService.js', () => ({
+  bookingApi: {
+    createBooking: vi.fn().mockImplementation(async (req) => ({
+      id: 101,
+      bookingNumber: 'REQ-101',
+      serviceCategory: req.category || 'Construction',
+      customerName: 'Vamsi Krishna',
+      bookingStatus: 'REQUESTED',
+      createdAt: '2026-09-24T10:00:00Z',
+    })),
+    getMyBookings: vi.fn().mockResolvedValue([
+      {
+        id: 101,
+        bookingNumber: 'REQ-101',
+        serviceCategory: 'Construction',
+        customerName: 'Vamsi Krishna',
+        bookingStatus: 'REQUESTED',
+        createdAt: '2026-09-24T10:00:00Z',
+      },
+    ]),
+    getProviderBookings: vi.fn().mockResolvedValue([
+      {
+        id: 101,
+        bookingNumber: 'REQ-101',
+        serviceCategory: 'Construction',
+        customerName: 'Vamsi Krishna',
+        bookingStatus: 'REQUESTED',
+        createdAt: '2026-09-24T10:00:00Z',
+      },
+    ]),
+    acceptBooking: vi.fn().mockResolvedValue({
+      id: 101,
+      bookingNumber: 'REQ-101',
+      bookingStatus: 'ACCEPTED',
+    }),
+  },
+}));
+
+vi.mock('../../src/services/contractor/ProjectService.js', () => {
+  const mockProjects = [
+    {
+      id: 'proj-501',
+      status: 'IN_PROGRESS',
+      createdAt: '2026-08-01T10:00:00Z',
+      customer: { fullName: 'Vamsi Krishna' },
+      provider: { businessName: 'Srinivas Builds' },
+      requirement: { title: '3BHK Raft Foundation & Structural Build' },
+      quotation: { totalAmount: 450000 },
+      milestones: [
+        { id: 'm-1', name: 'Site Excavation', budgetAllocation: 150000, status: 'APPROVED', completionPercentage: 100 },
+        { id: 'm-2', name: 'Steel Mesh Binding', budgetAllocation: 150000, status: 'COMPLETED', completionPercentage: 85 },
+        { id: 'm-3', name: 'Concrete Casting', budgetAllocation: 150000, status: 'PENDING', completionPercentage: 0 },
+      ],
+    },
+  ];
+  return {
+    ProjectService: {
+      listProjects: vi.fn().mockResolvedValue(mockProjects),
+      getProjectDetail: vi.fn().mockImplementation(async (id) => mockProjects.find((p) => p.id === id) || mockProjects[0]),
+    },
+  };
+});
+
+vi.mock('../../src/services/quotation/quotationClientService.js', () => {
+  const mockQuote = {
+    id: 301,
+    requirementId: 101,
+    providerId: 'prov-101',
+    totalAmount: 450000,
+    status: 'SUBMITTED',
+    createdAt: '2026-09-24T10:00:00Z',
+    updatedAt: '2026-09-24T10:00:00Z',
+    provider: { businessName: 'Srinivas Builds', rating: 4.9 },
+    proposal: { title: 'Proposal', summary: 'Summary' },
+    milestones: [],
+  };
+  return {
+    quotationClientService: {
+      getQuotationsForRequirement: vi.fn().mockResolvedValue([mockQuote]),
+      getQuotationById: vi.fn().mockResolvedValue(mockQuote),
+      acceptQuotation: vi.fn().mockResolvedValue({ success: true, quotationId: 301, status: 'ACCEPTED' }),
+      updateStatus: vi.fn().mockResolvedValue({ ...mockQuote, status: 'ACCEPTED' }),
+      createQuotation: vi.fn().mockImplementation(async (payload) => ({
+        id: 301,
+        requirementId: payload.requirementId,
+        totalAmount: payload.totalPrice,
+        status: 'SUBMITTED',
+      })),
+    },
+  };
+});
+
+vi.mock('../../src/services/admin/adminService.js', () => ({
+  adminService: {
+    getUsers: vi.fn().mockResolvedValue({
+      users: [
+        { id: 'u-101', fullName: 'Vamsi Krishna', email: 'vamsi.k@example.com', role: 'customer', status: 'PENDING' },
+      ],
+    }),
+    getProviders: vi.fn().mockResolvedValue({
+      providers: [
+        {
+          id: 'prov-101',
+          businessName: 'Srinivas Builds',
+          contactPerson: 'Srinivas Rao',
+          email: 'srinivas@example.com',
+          category: { name: 'Construction' },
+          verificationStatus: 'PENDING',
+        },
+      ],
+    }),
+    updateUser: vi.fn().mockResolvedValue({ success: true }),
+    verifyProvider: vi.fn().mockResolvedValue({ success: true }),
+    getBookings: vi.fn().mockResolvedValue({ bookings: [] }),
+  },
+}));
+
 describe('Module 50 — Mobile End-to-End Workflow Validation & Business Logic Audit', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
@@ -54,7 +171,7 @@ describe('Module 50 — Mobile End-to-End Workflow Validation & Business Logic A
       expect(requestRes.id || requestRes.requestId).toBeDefined();
 
       // 4. Quotation Proposal Review
-      const quotes = await mobileRequestService.getQuotationsForRequest(requestRes.requestId);
+      const quotes = await mobileRequestService.getQuotationsForRequest(requestRes.id);
       expect(quotes.length).toBeGreaterThan(0);
       const targetQuote = quotes[0];
       expect(targetQuote.id).toBeDefined();

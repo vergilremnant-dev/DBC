@@ -148,49 +148,12 @@ export class MobileCustomerWorkspaceService {
   async getCustomerProjects(status?: string): Promise<MobileCustomerProject[]> {
     try {
       const projects = await ProjectService.listProjects(status);
-      if (projects && projects.length > 0) {
-        return projects.map(mapProjectToMobileCustomer);
-      }
-      return [
-        {
-          id: 'proj-501',
-          requirementId: 501,
-          quotationId: 801,
-          title: '3BHK Raft Foundation & Structural Build',
-          providerId: 'pro-1',
-          providerName: 'BuildCraft Engineering',
-          categoryName: 'General Construction',
-          status: 'IN_PROGRESS',
-          statusLabel: 'Execution In Progress',
-          progressPercentage: 45,
-          currentMilestoneName: 'Steel Mesh Binding & Shuttering',
-          totalBudgetFormatted: '₹4,50,000',
-          startDate: '2026-08-01',
-          updatedAt: '2026-09-20',
-        },
-      ];
+      return projects.map(mapProjectToMobileCustomer);
     } catch (err) {
-      if (err instanceof Error && (err.message.includes('Network error') || err.message.includes('401') || err.message.includes('403') || err.message.includes('Access denied'))) {
-        return [];
+      if (err instanceof Error && (err.message.includes('401') || err.message.includes('403') || err.message.includes('Access denied'))) {
+        throw err;
       }
-      return [
-        {
-          id: 'proj-501',
-          requirementId: 501,
-          quotationId: 801,
-          title: '3BHK Raft Foundation & Structural Build',
-          providerId: 'pro-1',
-          providerName: 'BuildCraft Engineering',
-          categoryName: 'General Construction',
-          status: 'IN_PROGRESS',
-          statusLabel: 'Execution In Progress',
-          progressPercentage: 45,
-          currentMilestoneName: 'Steel Mesh Binding & Shuttering',
-          totalBudgetFormatted: '₹4,50,000',
-          startDate: '2026-08-01',
-          updatedAt: '2026-09-20',
-        },
-      ];
+      return [];
     }
   }
 

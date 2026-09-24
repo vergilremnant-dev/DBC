@@ -84,57 +84,6 @@ export const mobileAdminWorkspaceService = {
         }
       });
 
-      // Default mock fallback if empty
-      if (list.length === 0) {
-        const defaultUsers: MobileAdminUser[] = [
-          {
-            id: 'u-101',
-            fullName: 'Ramesh Kumar',
-            email: 'ramesh.kumar@example.com',
-            phoneNumber: '+91 98765 43210',
-            role: 'customer',
-            status: 'ACTIVE',
-            createdAt: '2026-08-01',
-            isActionable: false,
-          },
-          {
-            id: 'u-102',
-            fullName: 'Sita Sharma',
-            email: 'sita.sharma@example.com',
-            phoneNumber: '+91 98765 43211',
-            role: 'customer',
-            status: 'ACTIVE',
-            createdAt: '2026-08-10',
-            isActionable: false,
-          },
-          {
-            id: 'u-103',
-            fullName: 'Venkatesh Rao (Contractor)',
-            email: 'venkatesh.rao@contractor.in',
-            phoneNumber: '+91 98765 43212',
-            role: 'contractor',
-            status: 'PENDING',
-            createdAt: '2026-09-15',
-            isActionable: true,
-          },
-          {
-            id: 'u-104',
-            fullName: 'Antigravity Super Admin',
-            email: 'admin@dbc.in',
-            phoneNumber: '+91 90000 00000',
-            role: 'admin',
-            status: 'ACTIVE',
-            createdAt: '2026-01-01',
-            isActionable: false,
-          },
-        ];
-
-        defaultUsers.forEach((u) => {
-          if (!localUserStore[u.id]) localUserStore[u.id] = u;
-          list.push(u);
-        });
-      }
-
       // Filter by params if provided
       let filtered = list;
       if (params?.search) {
@@ -243,43 +192,6 @@ export const mobileAdminWorkspaceService = {
         }
       });
 
-      // Default mock fallback if empty
-      if (list.length === 0) {
-        const defaultProviders: MobileAdminProfessional[] = [
-          {
-            id: 'prov-101',
-            businessName: 'Apex Civil Structures & Raft Solutions',
-            contactPerson: 'Venkatesh Rao',
-            email: 'venkatesh@apexcivil.in',
-            phone: '+91 98765 43212',
-            category: 'Civil Masonry & Foundation',
-            city: 'Hyderabad',
-            rating: 4.9,
-            verificationStatus: 'VERIFIED',
-            isFeatured: true,
-            registeredDate: '2026-07-15',
-          },
-          {
-            id: 'prov-102',
-            businessName: 'Precision MEP Electrical Systems',
-            contactPerson: 'Srinivas Reddy',
-            email: 'srinivas@mep-precision.in',
-            phone: '+91 98765 43213',
-            category: 'MEP Electrical Conduits',
-            city: 'Hyderabad',
-            rating: 4.8,
-            verificationStatus: 'PENDING',
-            isFeatured: false,
-            registeredDate: '2026-09-18',
-          },
-        ];
-
-        defaultProviders.forEach((p) => {
-          if (!localProviderStore[p.id]) localProviderStore[p.id] = p;
-          list.push(p);
-        });
-      }
-
       let filtered = list;
       if (params?.search) {
         const s = params.search.toLowerCase();
@@ -361,30 +273,7 @@ export const mobileAdminWorkspaceService = {
       }
 
       if (rawBookings.length === 0) {
-        return [
-          {
-            id: 'req-501',
-            bookingNumber: 'REQ-501',
-            customerName: 'Ramesh Kumar',
-            providerName: 'Apex Civil Structures',
-            serviceCategory: 'Civil Masonry & Foundation',
-            status: 'REQUESTED',
-            statusLabel: 'Pending Professional Review',
-            submittedDate: '2026-09-20',
-            budgetFormatted: '₹1,20,000',
-          },
-          {
-            id: 'req-502',
-            bookingNumber: 'REQ-502',
-            customerName: 'Sita Sharma',
-            providerName: 'Precision MEP Systems',
-            serviceCategory: 'MEP Electrical Conduits',
-            status: 'ACCEPTED',
-            statusLabel: 'Accepted by Contractor',
-            submittedDate: '2026-09-18',
-            budgetFormatted: '₹45,000',
-          },
-        ];
+        return [];
       }
 
       return rawBookings.map((b) => ({
@@ -413,30 +302,7 @@ export const mobileAdminWorkspaceService = {
       }
 
       if (rawProjects.length === 0) {
-        return [
-          {
-            id: 'proj-501',
-            title: 'Jubilee Hills Villa Raft Foundation',
-            customerName: 'Ramesh Kumar',
-            providerName: 'Apex Civil Structures',
-            status: 'IN_PROGRESS',
-            statusLabel: 'In Progress',
-            progressPercentage: 75,
-            startDate: '2026-08-01',
-            budgetFormatted: '₹1,20,000',
-          },
-          {
-            id: 'proj-502',
-            title: 'Madhapur Penthouse MEP Conduits',
-            customerName: 'Sita Sharma',
-            providerName: 'Precision MEP Systems',
-            status: 'IN_PROGRESS',
-            statusLabel: 'In Progress',
-            progressPercentage: 50,
-            startDate: '2026-08-10',
-            budgetFormatted: '₹45,000',
-          },
-        ];
+        return [];
       }
 
       return rawProjects.map((p) => {

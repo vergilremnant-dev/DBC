@@ -51,37 +51,6 @@ export const mobileProfessionalFinanceService = {
         }
       }
 
-      // Default mock fallback project if server returns empty list
-      if (projects.length === 0) {
-        projects = [
-          {
-            id: 'proj-501',
-            status: 'IN_PROGRESS',
-            createdAt: '2026-08-01T10:00:00Z',
-            customer: { fullName: 'Ramesh Kumar' },
-            requirement: { title: 'Jubilee Hills Villa Raft Foundation' },
-            quotation: { totalAmount: 120000 },
-            milestones: [
-              { id: 'm-1', name: 'Site Excavation', budgetAllocation: 30000, status: 'APPROVED', completionPercentage: 100 },
-              { id: 'm-2', name: 'Steel Mesh Binding', budgetAllocation: 45000, status: 'IN_PROGRESS', completionPercentage: 60 },
-              { id: 'm-3', name: 'Concrete Casting', budgetAllocation: 45000, status: 'PENDING', completionPercentage: 0 },
-            ],
-          },
-          {
-            id: 'proj-502',
-            status: 'IN_PROGRESS',
-            createdAt: '2026-08-10T10:00:00Z',
-            customer: { fullName: 'Sita Sharma' },
-            requirement: { title: 'Madhapur Penthouse MEP Conduits' },
-            quotation: { totalAmount: 45000 },
-            milestones: [
-              { id: 'm-10', name: 'Wall Chasing', budgetAllocation: 25000, status: 'APPROVED', completionPercentage: 100 },
-              { id: 'm-11', name: 'Box Fixing', budgetAllocation: 20000, status: 'IN_PROGRESS', completionPercentage: 50 },
-            ],
-          },
-        ];
-      }
-
       let totalEarnings = 0;
       let totalReceived = 0;
       let activeProjectValue = 0;
@@ -114,7 +83,7 @@ export const mobileProfessionalFinanceService = {
         activeProjectValue,
         formattedActiveValue: formatCurrency(activeProjectValue),
         currency: '₹',
-        recentTransactionsCount: 4,
+        recentTransactionsCount: projects.length,
         updatedAt: new Date().toISOString().split('T')[0],
       };
     } catch (error) {
@@ -130,7 +99,6 @@ export const mobileProfessionalFinanceService = {
 
   async getProfessionalProjectFinancials(projectId?: string): Promise<ProfessionalProjectFinancial[]> {
     try {
-      const summary = await this.getProfessionalFinanceSummary();
       let projects: Project[] = [];
       try {
         if (projectId) {
@@ -143,42 +111,13 @@ export const mobileProfessionalFinanceService = {
         // Fallback
       }
 
-      if (projects.length === 0) {
-        return [
-          {
-            projectId: 'proj-501',
-            projectName: 'Jubilee Hills Villa Raft Foundation',
-            customerName: 'Ramesh Kumar',
-            totalContractValue: 120000,
-            formattedContractValue: '₹1,20,000',
-            amountReceived: 30000,
-            formattedAmountReceived: '₹30,000',
-            pendingBalance: 90000,
-            formattedPendingBalance: '₹90,000',
-            milestoneCount: 3,
-            completedMilestoneCount: 1,
-            financialStatus: 'IN_PROGRESS',
-          },
-          {
-            projectId: 'proj-502',
-            projectName: 'Madhapur Penthouse MEP Conduits',
-            customerName: 'Sita Sharma',
-            totalContractValue: 45000,
-            formattedContractValue: '₹45,000',
-            amountReceived: 25000,
-            formattedAmountReceived: '₹25,000',
-            pendingBalance: 20000,
-            formattedPendingBalance: '₹20,000',
-            milestoneCount: 2,
-            completedMilestoneCount: 1,
-            financialStatus: 'IN_PROGRESS',
-          },
-        ];
+      if (!projects || projects.length === 0) {
+        return [];
       }
 
       return projects.map((p) => {
         const milestones = p.milestones || [];
-        const contractTotal = p.quotation?.totalAmount || 120000;
+        const contractTotal = p.quotation?.totalAmount || 0;
 
         let received = 0;
         let completedCount = 0;
@@ -193,7 +132,7 @@ export const mobileProfessionalFinanceService = {
 
         const pending = Math.max(0, contractTotal - received);
         let finStatus: 'UP_TO_DATE' | 'PAYMENT_PENDING' | 'DISBURSED' | 'IN_PROGRESS' = 'IN_PROGRESS';
-        if (received === contractTotal) finStatus = 'DISBURSED';
+        if (received === contractTotal && contractTotal > 0) finStatus = 'DISBURSED';
         else if (received > 0) finStatus = 'UP_TO_DATE';
 
         return {
@@ -220,79 +159,66 @@ export const mobileProfessionalFinanceService = {
   },
 
   async getProfessionalEarnings(): Promise<ProfessionalEarning[]> {
-    return [
-      {
-        id: 'earn-1',
-        projectId: 'proj-501',
-        projectName: 'Jubilee Hills Villa Raft Foundation',
-        milestoneId: 'm-1',
-        milestoneName: 'Site Clearance & Excavation',
-        amount: 30000,
-        formattedAmount: '₹30,000',
-        date: '2026-08-12',
-        status: 'DISBURSED',
-        statusLabel: 'Disbursed to Bank',
-      },
-      {
-        id: 'earn-2',
-        projectId: 'proj-502',
-        projectName: 'Madhapur Penthouse MEP Conduits',
-        milestoneId: 'm-10',
-        milestoneName: 'Wall Chasing & PVC Pipe Laying',
-        amount: 25000,
-        formattedAmount: '₹25,000',
-        date: '2026-08-20',
-        status: 'DISBURSED',
-        statusLabel: 'Disbursed to Bank',
-      },
-      {
-        id: 'earn-3',
-        projectId: 'proj-501',
-        projectName: 'Jubilee Hills Villa Raft Foundation',
-        milestoneId: 'm-2',
-        milestoneName: 'Steel Reinforcement Mesh Binding',
-        amount: 45000,
-        formattedAmount: '₹45,000',
-        date: '2026-09-18',
-        status: 'PENDING_RELEASE',
-        statusLabel: 'Awaiting Customer Approval',
-      },
-    ];
+    try {
+      const projects = await ProjectService.listProjects();
+      const earnings: ProfessionalEarning[] = [];
+
+      projects.forEach((p) => {
+        (p.milestones || []).forEach((m, idx) => {
+          if (m.status === 'APPROVED' || m.status === 'COMPLETED') {
+            earnings.push({
+              id: `earn-${p.id}-${m.id || idx}`,
+              projectId: p.id,
+              projectName: p.requirement?.title || `Project #${p.id}`,
+              milestoneId: m.id,
+              milestoneName: m.name,
+              amount: m.budgetAllocation || 0,
+              formattedAmount: formatCurrency(m.budgetAllocation),
+              date: m.actualEnd || m.plannedEnd || new Date().toISOString().split('T')[0],
+              status: m.status === 'APPROVED' ? 'DISBURSED' : 'PENDING_RELEASE',
+              statusLabel: m.status === 'APPROVED' ? 'Disbursed to Bank' : 'Awaiting Customer Approval',
+            });
+          }
+        });
+      });
+
+      return earnings;
+    } catch {
+      return [];
+    }
   },
 
   async getProfessionalTransactions(): Promise<ProfessionalTransaction[]> {
-    return [
-      {
-        id: 'tx-801',
-        transactionReference: 'TXN-DISB-9001',
-        projectId: 'proj-501',
-        projectName: 'Jubilee Hills Villa Raft Foundation',
-        milestoneName: 'Site Clearance & Excavation',
-        amount: 30000,
-        formattedAmount: '₹30,000',
-        type: 'PAYOUT',
-        status: 'SUCCESS',
-        date: '2026-09-15',
-        paymentMethod: 'Direct Bank Transfer (NEFT)',
-        invoiceNumber: 'INV-PRO-801',
-        receiptUrl: 'https://storage.dbc.in/receipts/inv-pro-801.pdf',
-      },
-      {
-        id: 'tx-802',
-        transactionReference: 'TXN-DISB-9002',
-        projectId: 'proj-502',
-        projectName: 'Madhapur Penthouse MEP Conduits',
-        milestoneName: 'Wall Chasing & PVC Pipe Laying',
-        amount: 25000,
-        formattedAmount: '₹25,000',
-        type: 'MILESTONE_RELEASE',
-        status: 'SUCCESS',
-        date: '2026-08-22',
-        paymentMethod: 'DBC Escrow Release',
-        invoiceNumber: 'INV-PRO-802',
-        receiptUrl: 'https://storage.dbc.in/receipts/inv-pro-802.pdf',
-      },
-    ];
+    try {
+      const projects = await ProjectService.listProjects();
+      const transactions: ProfessionalTransaction[] = [];
+
+      projects.forEach((p) => {
+        (p.milestones || []).forEach((m, idx) => {
+          if (m.status === 'APPROVED' || m.status === 'COMPLETED') {
+            transactions.push({
+              id: `tx-${p.id}-${m.id || idx}`,
+              transactionReference: `TXN-DISB-${String(m.id || idx).slice(-6)}`,
+              projectId: p.id,
+              projectName: p.requirement?.title || `Project #${p.id}`,
+              milestoneName: m.name,
+              amount: m.budgetAllocation || 0,
+              formattedAmount: formatCurrency(m.budgetAllocation),
+              type: m.status === 'APPROVED' ? 'PAYOUT' : 'MILESTONE_RELEASE',
+              status: 'SUCCESS',
+              date: m.actualEnd || new Date().toISOString().split('T')[0],
+              paymentMethod: m.status === 'APPROVED' ? 'Direct Bank Transfer (NEFT)' : 'DBC Escrow Release',
+              invoiceNumber: `INV-PRO-${p.id}`,
+              receiptUrl: `/api/projects/${p.id}/receipts/inv-pro-${p.id}.pdf`,
+            });
+          }
+        });
+      });
+
+      return transactions;
+    } catch {
+      return [];
+    }
   },
 
   async getProfessionalTransactionDetails(transactionId: string): Promise<ProfessionalTransaction> {

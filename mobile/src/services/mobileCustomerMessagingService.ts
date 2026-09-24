@@ -72,24 +72,6 @@ export const mobileCustomerMessagingService = {
         }
       });
 
-      // Provide default contextual conversation if empty
-      if (threads.length === 0) {
-        const defaultThread: MobileConversationThread = {
-          id: 'thread-proj-default',
-          providerId: 'prov-202',
-          providerName: 'Alice Architect',
-          providerRole: 'Principal Architect',
-          avatar: '📐',
-          projectContextTitle: 'Greenhills Villa Construction',
-          lastMessage: 'I have finalized the layout drawing for the villa elevation check.',
-          lastMessageAt: '11:00 AM',
-          unread: true,
-          unreadCount: 1,
-        };
-        threads.push(defaultThread);
-        localThreadStore[defaultThread.id] = defaultThread;
-      }
-
       return threads;
     } catch (error) {
       if (error instanceof Error && error.message.includes('401')) {
@@ -111,7 +93,7 @@ export const mobileCustomerMessagingService = {
         // Fallback to local message store
       }
 
-      let items: MobileMessageItem[] = rawMessages.map((m) => {
+      const items: MobileMessageItem[] = rawMessages.map((m) => {
         const role: MobileMessageSenderRole = m.senderId.includes('cust') ? 'CUSTOMER' : 'PRO';
         return {
           id: m.id,
@@ -135,49 +117,6 @@ export const mobileCustomerMessagingService = {
           items.push(localM);
         }
       });
-
-      // Provide initial mock messages if thread has no messages yet
-      if (items.length === 0 && threadId === 'thread-proj-default') {
-        items = [
-          {
-            id: 'm-1',
-            conversationId: threadId,
-            senderId: 'prov-202',
-            senderRole: 'PRO',
-            senderName: 'Alice Architect',
-            content: 'Hello! I am reviewing the structural plan coordinates.',
-            messageType: 'TEXT',
-            isRead: true,
-            timestamp: '10:15 AM',
-            createdAt: new Date(Date.now() - 3600000).toISOString(),
-          },
-          {
-            id: 'm-2',
-            conversationId: threadId,
-            senderId: 'cust-101',
-            senderRole: 'CUSTOMER',
-            senderName: 'You',
-            content: 'Great. Can we adjust the spacing in the kitchen annex?',
-            messageType: 'TEXT',
-            isRead: true,
-            timestamp: '10:30 AM',
-            createdAt: new Date(Date.now() - 1800000).toISOString(),
-          },
-          {
-            id: 'm-3',
-            conversationId: threadId,
-            senderId: 'prov-202',
-            senderRole: 'PRO',
-            senderName: 'Alice Architect',
-            content: 'Sure. I have finalized the layout drawing for the villa elevation check.',
-            messageType: 'TEXT',
-            isRead: false,
-            timestamp: '11:00 AM',
-            createdAt: new Date(Date.now() - 600000).toISOString(),
-          },
-        ];
-        localMessageStore[threadId] = items;
-      }
 
       return items;
     } catch (error) {
@@ -316,21 +255,8 @@ export const mobileCustomerMessagingService = {
 
       localThreadStore[newThreadId] = newThread;
       return { ...newThread, threadId: newThreadId };
-    } catch {
-      const fallbackThread: MobileConversationThread = {
-        id: `thread-proj-${projectId}`,
-        providerId: 'prov-202',
-        providerName: 'BuildCraft Engineering',
-        providerRole: 'Lead Contractor',
-        avatar: '🏗️',
-        projectContextTitle: '3BHK Raft Foundation & Structural Build',
-        projectId,
-        lastMessage: 'Project discussion thread opened.',
-        lastMessageAt: formatTimestamp(new Date().toISOString()),
-        unread: false,
-        unreadCount: 0,
-      };
-      return { ...fallbackThread, threadId: fallbackThread.id };
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : 'Unable to get project conversation');
     }
   },
 

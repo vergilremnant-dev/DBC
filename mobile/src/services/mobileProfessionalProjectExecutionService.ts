@@ -135,124 +135,14 @@ function mapMilestoneToMobile(m: ProjectMilestone, projectId: string): MobileMil
   };
 }
 
-function createDefaultMockProject(projectId: string): Project {
-  return {
-    id: projectId,
-    requirementId: 501,
-    quotationId: 801,
-    providerId: 'prov-101',
-    status: 'IN_PROGRESS',
-    createdAt: '2026-08-01T10:00:00Z',
-    updatedAt: '2026-09-20T10:00:00Z',
-    customer: {
-      id: 'cust-101',
-      fullName: 'Ramesh Kumar',
-      phoneNumber: '+91 98765 43210',
-      email: 'ramesh.kumar@example.com',
-    },
-    requirement: {
-      id: 501,
-      title: 'Jubilee Hills Villa Raft Foundation Construction',
-      category: { name: 'Civil Masonry & Foundation' },
-    },
-    quotation: {
-      id: 801,
-      totalAmount: 120000,
-    },
-    milestones: [
-      {
-        id: 'm-1',
-        projectId,
-        name: 'Site Clearance & 5ft Deep Raft Excavation',
-        description: 'Excavate 500 Sq Yd area down to hard soil stratum, dispose mud debris.',
-        budgetAllocation: 30000,
-        completionPercentage: 100,
-        status: 'APPROVED',
-        plannedStart: '2026-08-05',
-        plannedEnd: '2026-08-12',
-      },
-      {
-        id: 'm-2',
-        projectId,
-        name: 'Steel Reinforcement Mesh Binding & Shuttering',
-        description: 'Bind 16mm & 12mm TMT steel mesh grid, set outer ply shuttering frames.',
-        budgetAllocation: 45000,
-        completionPercentage: 60,
-        status: 'IN_PROGRESS',
-        plannedStart: '2026-08-13',
-        plannedEnd: '2026-08-25',
-      },
-      {
-        id: 'm-3',
-        projectId,
-        name: 'RCC M25 Ready-Mix Concrete Casting & Curing',
-        description: 'Pour 35 CuM ready mix concrete, operate vibrators, cure 14 days.',
-        budgetAllocation: 45000,
-        completionPercentage: 0,
-        status: 'PENDING',
-        plannedStart: '2026-08-26',
-        plannedEnd: '2026-09-10',
-      },
-    ],
-    documents: [
-      {
-        id: 'doc-1',
-        projectId,
-        name: 'Foundation Structural Structural Engineering Blueprint.pdf',
-        fileUrl: 'https://storage.dbc.in/docs/foundation_blueprint.pdf',
-        fileType: 'PDF',
-        createdAt: '2026-08-02T10:00:00Z',
-      },
-      {
-        id: 'doc-2',
-        projectId,
-        name: 'Soil Bearing Capacity Testing Certificate.pdf',
-        fileUrl: 'https://storage.dbc.in/docs/soil_test.pdf',
-        fileType: 'PDF',
-        createdAt: '2026-08-04T10:00:00Z',
-      },
-    ],
-    timeline: [
-      {
-        id: 't-1',
-        projectId,
-        eventType: 'PROJECT_ASSIGNED',
-        description: 'Contractor accepted customer request #REQ-501 and project was assigned.',
-        createdAt: '2026-08-01T10:00:00Z',
-      },
-      {
-        id: 't-2',
-        projectId,
-        eventType: 'PROJECT_STARTED',
-        description: 'Contractor initiated site planning and started execution phase.',
-        createdAt: '2026-08-05T09:00:00Z',
-      },
-      {
-        id: 't-3',
-        projectId,
-        eventType: 'MILESTONE_APPROVED',
-        description: 'Milestone 1 (Excavation) approved by customer Ramesh Kumar.',
-        createdAt: '2026-08-12T16:00:00Z',
-      },
-    ],
-  };
-}
-
 export const mobileProfessionalProjectExecutionService = {
   async getProfessionalProjects(): Promise<any[]> {
-    return [
-      {
-        id: 'proj-501',
-        title: 'Jubilee Hills Villa Raft Foundation',
-        customerName: 'Ramesh Kumar',
-        status: 'IN_PROGRESS',
-        statusLabel: 'In Progress',
-        progressPercentage: 75,
-        currentMilestoneName: 'Raft Slab Reinforcement',
-        startDate: '2026-08-01',
-        totalBudgetFormatted: '₹1,20,000',
-      },
-    ];
+    try {
+      const projects = await ProjectService.listProjects();
+      return projects.map(mapProjectToProfessionalOverview);
+    } catch {
+      return [];
+    }
   },
 
   async getProjectDetailsRaw(projectId: string): Promise<Project> {
@@ -261,23 +151,12 @@ export const mobileProfessionalProjectExecutionService = {
     }
 
     try {
-      let p: Project | null = null;
-      try {
-        p = await ProjectService.getProjectDetail(projectId);
-      } catch (err) {
-        if (err instanceof Error && (err.message.includes('401') || err.message.includes('403') || err.message.includes('Access denied'))) {
-          throw err;
-        }
-      }
-
+      const p = await ProjectService.getProjectDetail(projectId);
       if (p) {
         localProjectStore[projectId] = JSON.parse(JSON.stringify(p));
         return localProjectStore[projectId];
       }
-
-      const defaultP = createDefaultMockProject(projectId);
-      localProjectStore[projectId] = defaultP;
-      return defaultP;
+      throw new Error('PROJECT_NOT_FOUND');
     } catch (error) {
       if (error instanceof Error && error.message.includes('401')) {
         throw new Error('UNAUTHORIZED_EXPIRED_SESSION');

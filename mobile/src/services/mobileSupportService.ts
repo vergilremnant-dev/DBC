@@ -272,7 +272,7 @@ export const mobileSupportService = {
       createdAt: new Date().toISOString().split('T')[0],
       updatedAt: new Date().toISOString().split('T')[0],
       status: 'open' as any,
-      responseNote: `Your support request has been logged and sent to ${this.getSupportEmail()}. A platform specialist will review your issue.`,
+      responseNote: `Your support inquiry has been recorded (Local Reference: ${issueId}) and forwarded to platform support at ${this.getSupportEmail()}. A platform specialist will follow up via email.`,
     };
 
     localSupportRequests.unshift(issue);

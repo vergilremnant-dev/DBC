@@ -1,6 +1,7 @@
 /**
  * DBC Mobile Design System Theme Tokens.
- * Unified design tokens for colors, typography, spacing, touch targets, and shadows.
+ * Unified design tokens for colors, typography, spacing, touch targets, shadows,
+ * contrast standards, and accessibility support.
  */
 
 export const mobileColors = {
@@ -93,6 +94,15 @@ export const mobileShadows = {
   },
 };
 
+export const mobileAccessibilityTokens = {
+  minContrastRatio: 4.5, // WCAG AA for normal text
+  largeTextMinContrastRatio: 3.0, // WCAG AA for large text
+  reducedMotionDuration: 0, // ms when reduced motion enabled
+  normalAnimationDuration: 200, // ms standard transition
+  focusOutlineWidth: 2, // px outline for keyboard focus indicator
+  focusOutlineColor: '#2563EB',
+};
+
 export const mobileTheme = {
   colors: mobileColors,
   typography: mobileTypography,
@@ -100,4 +110,5 @@ export const mobileTheme = {
   borderRadius: mobileBorderRadius,
   touchTargets: mobileTouchTargets,
   shadows: mobileShadows,
+  accessibility: mobileAccessibilityTokens,
 };

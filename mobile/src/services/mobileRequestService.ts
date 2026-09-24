@@ -11,6 +11,7 @@ import {
   MobileProjectRequestForm,
   MobileQuotationDetails,
 } from '../types/requestMobileTypes';
+import { mobileCache } from '../cache/mobileCache.js';
 
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-IN', {
@@ -92,6 +93,8 @@ export class MobileRequestService {
     };
 
     const booking = await bookingApi.createBooking(payload);
+    mobileCache.invalidatePrefix('customer_requests');
+    mobileCache.invalidatePrefix('customer_dashboard');
     return mapBookingToMobileDetails(booking);
   }
 
@@ -129,6 +132,8 @@ export class MobileRequestService {
    */
   async cancelProjectRequest(id: string): Promise<MobileProjectRequestDetails> {
     const booking = await bookingApi.cancelBooking(id);
+    mobileCache.invalidatePrefix('customer_requests');
+    mobileCache.invalidatePrefix('customer_dashboard');
     return mapBookingToMobileDetails(booking);
   }
 
@@ -197,6 +202,11 @@ export class MobileRequestService {
     await quotationClientService.updateStatus(quotationId, 'ACCEPTED');
     const details = await this.getQuotationDetails(quotationId);
 
+    mobileCache.invalidatePrefix('quotation_');
+    mobileCache.invalidatePrefix('customer_requests');
+    mobileCache.invalidatePrefix('customer_projects');
+    mobileCache.invalidatePrefix('financial_');
+
     return {
       ...details,
       success: true,
@@ -210,6 +220,8 @@ export class MobileRequestService {
    */
   async rejectQuotation(quotationId: number, reason?: string): Promise<MobileQuotationDetails> {
     await quotationClientService.updateStatus(quotationId, 'REJECTED', reason);
+    mobileCache.invalidatePrefix('quotation_');
+    mobileCache.invalidatePrefix('customer_requests');
     return this.getQuotationDetails(quotationId);
   }
 }

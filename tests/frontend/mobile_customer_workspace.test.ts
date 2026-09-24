@@ -38,6 +38,7 @@ describe('Module 37 — Customer Mobile Workspace, Requests & Project Tracking T
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mobileCustomerWorkspaceService.clearCache();
     memoryStorage = new MemoryStorageAdapter();
     authStore = new MobileAuthStore(memoryStorage);
   });

@@ -15,6 +15,8 @@ import {
 } from '../types/customerWorkspaceMobileTypes';
 import { MobileProjectRequestDetails } from '../types/requestMobileTypes';
 
+import { mobileCache } from '../cache/mobileCache.js';
+
 export function formatProjectStatusLabel(status: ProjectStatus): string {
   switch (status) {
     case 'CREATED': return 'Project Initialized';
@@ -136,7 +138,9 @@ export class MobileCustomerWorkspaceService {
   /**
    * Clears any local cache for testing or session resets.
    */
-  clearCache(): void {}
+  clearCache(): void {
+    mobileCache.clear();
+  }
 
   async getMyProjects(status?: string): Promise<MobileCustomerProject[]> {
     return this.getCustomerProjects(status);
@@ -146,9 +150,15 @@ export class MobileCustomerWorkspaceService {
    * Retrieves customer projects list.
    */
   async getCustomerProjects(status?: string): Promise<MobileCustomerProject[]> {
+    const cacheKey = `customer_projects_${status || 'all'}`;
+    const cached = mobileCache.get<MobileCustomerProject[]>(cacheKey);
+    if (cached) return cached;
+
     try {
       const projects = await ProjectService.listProjects(status);
-      return projects.map(mapProjectToMobileCustomer);
+      const mapped = projects.map(mapProjectToMobileCustomer);
+      mobileCache.set(cacheKey, mapped, undefined, 'WORKSPACE');
+      return mapped;
     } catch (err) {
       if (err instanceof Error && (err.message.includes('401') || err.message.includes('403') || err.message.includes('Access denied'))) {
         throw err;

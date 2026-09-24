@@ -7,6 +7,7 @@ import type {
   MobileTransaction,
   MobilePaymentStatus,
 } from '../types/customerFinancialMobileTypes.js';
+import { mobileCache } from '../cache/mobileCache.js';
 
 // In-memory transaction log for mobile session payment tracking
 const transactionStore: Record<string, MobileTransaction[]> = {};
@@ -285,6 +286,10 @@ export const mobileCustomerFinancialService = {
         // Approval resolution fallback
       }
 
+      mobileCache.invalidatePrefix('financial_');
+      mobileCache.invalidatePrefix('project_');
+      mobileCache.invalidatePrefix('customer_projects');
+
       return {
         success: true,
         paymentId: newTx.id,
@@ -298,5 +303,6 @@ export const mobileCustomerFinancialService = {
 
   clearFinancialCache(): void {
     Object.keys(transactionStore).forEach((key) => delete transactionStore[key]);
+    mobileCache.invalidatePrefix('financial_');
   },
 };

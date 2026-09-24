@@ -6,6 +6,7 @@
 
 import { mobileApiClient } from '../api/mobileApiClient';
 import { defaultStorageAdapter, StorageAdapter } from '../storage/StorageAdapter';
+import { mobileCache } from '../cache/mobileCache.js';
 import {
   MobileAuthChallengeState,
   MobileAuthError,
@@ -148,6 +149,7 @@ export class MobileAuthStore {
   async logout(): Promise<void> {
     await mobileApiClient.setToken(null);
     await this.storage.removeItem('user_profile');
+    mobileCache.clear();
 
     this.state = {
       status: 'unauthenticated',

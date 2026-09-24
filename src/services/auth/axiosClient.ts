@@ -17,8 +17,11 @@ export function setAccessToken(token: string | null) {
   globalAccess.__accessToken = token;
 }
 
+export const DEFAULT_API_TIMEOUT_MS = 15000;
+
 export const axiosClient = axios.create({
   baseURL: API_BASE_URL,
+  timeout: DEFAULT_API_TIMEOUT_MS,
   headers: {
     'Content-Type': 'application/json',
   },

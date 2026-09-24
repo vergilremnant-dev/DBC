@@ -6,6 +6,7 @@
 import { axiosClient, getAccessToken, setAccessToken } from '../../../src/services/auth/axiosClient';
 import { mobileEnvironment } from '../config/environment';
 import { defaultStorageAdapter, StorageAdapter } from '../storage/StorageAdapter';
+import { normalizeMobileApiError } from './mobileErrorUtils.js';
 
 export class MobileApiClient {
   private storage: StorageAdapter;
@@ -40,33 +41,81 @@ export class MobileApiClient {
   /**
    * Perform HTTP GET request.
    */
-  async get<T>(url: string, params?: Record<string, unknown>): Promise<T> {
-    const response = await axiosClient.get<T>(url, { params });
-    return response.data;
+  async get<T>(
+    url: string,
+    params?: Record<string, unknown>,
+    options?: { timeout?: number; signal?: AbortSignal; headers?: Record<string, string> }
+  ): Promise<T> {
+    try {
+      const response = await axiosClient.get<T>(url, {
+        params,
+        timeout: options?.timeout,
+        signal: options?.signal,
+        headers: options?.headers,
+      });
+      return response.data;
+    } catch (err) {
+      throw normalizeMobileApiError(err);
+    }
   }
 
   /**
    * Perform HTTP POST request.
    */
-  async post<T>(url: string, data?: unknown): Promise<T> {
-    const response = await axiosClient.post<T>(url, data);
-    return response.data;
+  async post<T>(
+    url: string,
+    data?: unknown,
+    options?: { timeout?: number; signal?: AbortSignal; headers?: Record<string, string> }
+  ): Promise<T> {
+    try {
+      const response = await axiosClient.post<T>(url, data, {
+        timeout: options?.timeout,
+        signal: options?.signal,
+        headers: options?.headers,
+      });
+      return response.data;
+    } catch (err) {
+      throw normalizeMobileApiError(err);
+    }
   }
 
   /**
    * Perform HTTP PUT request.
    */
-  async put<T>(url: string, data?: unknown): Promise<T> {
-    const response = await axiosClient.put<T>(url, data);
-    return response.data;
+  async put<T>(
+    url: string,
+    data?: unknown,
+    options?: { timeout?: number; signal?: AbortSignal; headers?: Record<string, string> }
+  ): Promise<T> {
+    try {
+      const response = await axiosClient.put<T>(url, data, {
+        timeout: options?.timeout,
+        signal: options?.signal,
+        headers: options?.headers,
+      });
+      return response.data;
+    } catch (err) {
+      throw normalizeMobileApiError(err);
+    }
   }
 
   /**
    * Perform HTTP DELETE request.
    */
-  async delete<T>(url: string): Promise<T> {
-    const response = await axiosClient.delete<T>(url);
-    return response.data;
+  async delete<T>(
+    url: string,
+    options?: { timeout?: number; signal?: AbortSignal; headers?: Record<string, string> }
+  ): Promise<T> {
+    try {
+      const response = await axiosClient.delete<T>(url, {
+        timeout: options?.timeout,
+        signal: options?.signal,
+        headers: options?.headers,
+      });
+      return response.data;
+    } catch (err) {
+      throw normalizeMobileApiError(err);
+    }
   }
 
   /**

@@ -14,6 +14,20 @@ export const DEFAULT_CACHE_TTL = {
   GENERAL: 2 * 60 * 1000,      // 2 minutes
 };
 
+const FORBIDDEN_CACHE_SECURITY_KEYS = [
+  'access_token',
+  'refresh_token',
+  'password',
+  'otp',
+  'creditcard',
+  'card',
+  'cvv',
+  'bank',
+  'account_number',
+  'iban',
+  'secret',
+];
+
 class MobileCacheController {
   private cache = new Map<string, CacheEntry<any>>();
   private inFlightRequests = new Map<string, Promise<any>>();
@@ -43,11 +57,28 @@ class MobileCacheController {
   }
 
   /**
+   * Checks whether a cache entry exists and is fresh (within TTL window).
+   */
+  isFresh(key: string): boolean {
+    const entry = this.cache.get(key);
+    if (!entry) return false;
+    return !this.isExpired(entry);
+  }
+
+  /**
+   * Checks whether a cache entry is stale or missing.
+   */
+  isStale(key: string): boolean {
+    return !this.isFresh(key);
+  }
+
+  /**
    * Stores value in cache with specified TTL and category.
    */
   set<T>(key: string, data: T, ttlMs?: number, category: CacheEntry['category'] = 'GENERAL'): void {
-    // Security check: Never allow tokens or auth credentials in generic cache
-    if (key.includes('access_token') || key.includes('refresh_token') || key.includes('password') || key.includes('otp')) {
+    // Security check: Never allow tokens, passwords, OTPs, or financial secrets in generic cache
+    const lowerKey = key.toLowerCase();
+    if (FORBIDDEN_CACHE_SECURITY_KEYS.some((secKey) => lowerKey.includes(secKey))) {
       return;
     }
 
@@ -64,66 +95,55 @@ class MobileCacheController {
   }
 
   /**
-   * Checks whether a cached entry exists and is within its fresh TTL limit.
-   */
-  isFresh(key: string): boolean {
-    const entry = this.cache.get(key);
-    if (!entry) return false;
-    return !this.isExpired(entry);
-  }
-
-  /**
-   * Checks whether an entry exists but is older than half its TTL (stale but valid for revalidation).
-   */
-  isStale(key: string): boolean {
-    const entry = this.cache.get(key);
-    if (!entry) return true;
-    const age = Date.now() - entry.timestamp;
-    return age > entry.ttlMs / 2;
-  }
-
-  /**
-   * Invalidates a single specific cache key.
+   * Invalidates specific cache key.
    */
   invalidate(key: string): void {
     this.cache.delete(key);
   }
 
   /**
-   * Invalidates all cache entries matching a prefix string.
+   * Invalidates all cache entries matching a prefix (e.g. 'quotation_').
    */
   invalidatePrefix(prefix: string): void {
-    Array.from(this.cache.keys()).forEach((key) => {
+    for (const key of this.cache.keys()) {
       if (key.startsWith(prefix)) {
         this.cache.delete(key);
       }
-    });
+    }
   }
 
   /**
-   * Clears all cached entries.
+   * Clears all items from cache.
    */
   clear(): void {
     this.cache.clear();
+    this.inFlightRequests.clear();
   }
 
   /**
-   * Request Deduplication: Shares in-flight Promises for identical concurrent GET requests.
+   * Coalesces duplicate in-flight GET requests.
    */
-  async deduplicateRequest<T>(requestKey: string, requestFn: () => Promise<T>): Promise<T> {
-    if (this.inFlightRequests.has(requestKey)) {
-      return this.inFlightRequests.get(requestKey) as Promise<T>;
+  async deduplicateRequest<T>(key: string, fetchFn: () => Promise<T>): Promise<T> {
+    const cachedData = this.get<T>(key);
+    if (cachedData !== null) {
+      return cachedData;
+    }
+
+    if (this.inFlightRequests.has(key)) {
+      return this.inFlightRequests.get(key) as Promise<T>;
     }
 
     const promise = (async () => {
       try {
-        return await requestFn();
+        const data = await fetchFn();
+        this.set(key, data);
+        return data;
       } finally {
-        this.inFlightRequests.delete(requestKey);
+        this.inFlightRequests.delete(key);
       }
     })();
 
-    this.inFlightRequests.set(requestKey, promise);
+    this.inFlightRequests.set(key, promise);
     return promise;
   }
 

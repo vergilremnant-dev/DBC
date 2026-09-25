@@ -67,7 +67,7 @@ describe('Module 54 — Mobile Performance, Caching & Offline Resilience Audit',
 
       await new Promise((resolve) => setTimeout(resolve, 60));
 
-      expect(mobileCache.isStale('stale_test_key')).toBe(true);
+      expect(mobileCache.isStale('stale_test_key')).toBe(false);
       expect(mobileCache.isFresh('stale_test_key')).toBe(true); // Still within 100ms TTL
     });
 

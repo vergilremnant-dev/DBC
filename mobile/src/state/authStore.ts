@@ -147,18 +147,23 @@ export class MobileAuthStore {
   }
 
   async logout(): Promise<void> {
-    await mobileApiClient.setToken(null);
-    await this.storage.removeItem('user_profile');
-    mobileCache.clear();
+    try {
+      await mobileApiClient.setToken(null);
+    } catch {
+      // Ignore client token cleanup errors (e.g. offline)
+    } finally {
+      await this.storage.removeItem('user_profile');
+      mobileCache.clear();
 
-    this.state = {
-      status: 'unauthenticated',
-      user: null,
-      error: null,
-      challengeState: 'IDLE',
-      pendingTarget: null,
-    };
-    this.notify();
+      this.state = {
+        status: 'unauthenticated',
+        user: null,
+        error: null,
+        challengeState: 'IDLE',
+        pendingTarget: null,
+      };
+      this.notify();
+    }
   }
 
   markExpired(): void {

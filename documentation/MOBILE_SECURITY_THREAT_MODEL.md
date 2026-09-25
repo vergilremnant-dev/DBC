@@ -61,3 +61,26 @@ Database & Third-Party Payment Services
 
 - **Client-Side Code Tampering**: On web/PWA platforms, client-side code can be inspected by browser dev tools. Backend APIs enforce all business authorization rules.
 - **Future Native Device Hardening**: Certificate pinning, biometrics (FaceID/TouchID), and root/jailbreak detection are deferred to the native Android/iOS compilation phase.
+
+---
+
+## 5. Technical Privacy Threat Model (Module 60)
+
+### A. Data Subject Assets & Governance Tiers
+- **RESTRICTED**: Passwords, 6-digit OTPs, JWT Tokens, Credit Card PANs, CVVs, Bank Account Numbers, IBANs, Client Secrets. *(Strictly prohibited from generic cache, telemetry logs, and raw local storage)*.
+- **PERSONAL**: Full Name, Email Address, Phone Number, Physical Address, User Direct Message Bodies. *(Redacted from telemetry logs; persisted only within user-authenticated session contexts)*.
+- **SENSITIVE**: Milestone Costs, Payment Receipts (`txn_*`), Document URLs, Project Attachments. *(Cached with strict short TTLs; excluded from telemetry payloads)*.
+- **INTERNAL**: User IDs, Role, App Version, Network Status, Normalized API Path Templates. *(Safe for internal diagnostics and telemetry)*.
+- **PUBLIC**: City, Search Terms, Trade Specialty Categories, Public Professional Profiles. *(Safe for public discovery)*.
+
+### B. Privacy Threat Matrix
+
+| Threat | Target Data | Attack/Failure Scenario | Technical Control | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cross-Account Cache Contamination** | User A Workspace Data | User A logs out; User B logs in on same device and sees User A cached data | `logout()` executes `mobileCache.clear()` and removes `user_profile` in `finally` block | **VERIFIED** |
+| **Offline Logout Leakage** | Offline User Profile | Device goes offline; User logs out but network request fails, leaving local state intact | `logout()` wraps local state & cache cleanup in `finally` block so local purge always runs | **VERIFIED** |
+| **Rejected Cache Write Partial Leak** | Financial Credential | Attacker/Dev attempts `mobileCache.set()` with forbidden key | `mobileCache.set()` deletes existing entry on forbidden key match so no partial data remains | **VERIFIED** |
+| **Service Worker SW Persistence** | Private API Responses | SW caches `/api/auth/*` or `/api/payments/*` in browser storage | SW `fetch` listener explicitly ignores all `/api/*` endpoints | **VERIFIED** |
+| **Telemetry Credential Leakage** | Tokens / PII | Diagnostics logger captures error payload containing JWT or Email | `sanitizeObservabilityPayload` redacts all `FORBIDDEN_SENSITIVE_KEYS` to `[REDACTED]` | **VERIFIED** |
+| **URL Query Parameter Leakage** | Resource IDs / Tokens | Telemetry captures raw URL containing query string tokens or user IDs | `normalizeEndpointUrl` strips query params and template-replaces IDs with `:id` | **VERIFIED** |
+

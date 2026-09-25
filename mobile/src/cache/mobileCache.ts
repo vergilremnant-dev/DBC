@@ -79,6 +79,7 @@ class MobileCacheController {
     // Security check: Never allow tokens, passwords, OTPs, or financial secrets in generic cache
     const lowerKey = key.toLowerCase();
     if (FORBIDDEN_CACHE_SECURITY_KEYS.some((secKey) => lowerKey.includes(secKey))) {
+      this.cache.delete(key);
       return;
     }
 

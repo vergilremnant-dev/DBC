@@ -1,55 +1,44 @@
-# Mobile Release Engineering & Production Checklist
+# DBC Mobile Application — Release Candidate Pre-Flight Checklist
 
-## Pre-Release Validation
-
-### 1. Code & Source Control
-- [x] Working tree clean (`git status` zero uncommitted changes).
-- [x] Active branch identified (`main`).
-- [x] Commit hash recorded (`git rev-parse HEAD`).
-- [x] Zero raw `console.log` statements in production source files.
-- [x] Zero committed passwords, API secrets, or private keys.
-
-### 2. Automated Quality Gates
-- [x] TypeScript compilation check: `npx tsc -b` (**0 errors**).
-- [x] Mobile unit, integration & E2E release gate: `npm run test:mobile` (**380/380 tests passed**).
-- [x] Production readiness suite: `npx vitest run tests/frontend/mobile_production_readiness.test.ts` (**25/25 tests passed**).
-
-### 3. Production Build & Assets
-- [x] Production web build execution: `npx vite build` (**Succeeded in <1.0s**).
-- [x] Asset chunk hashes generated (`dist/assets/index-DBeQ4Gh8.js`, `dist/assets/vendor-DYMagUuo.js`).
-- [x] Bundle size audit verified (Vendor chunk ~424KB, main bundle ~831KB).
-- [x] PWA manifest specification valid (`display: "standalone"`, `theme_color: "#2563EB"`).
-
-### 4. Environment & Secret Boundaries
-- [x] `VITE_API_BASE_URL` uses HTTPS in production environment (`https://api.dbc.com`).
-- [x] Production environment validation asserts NO localhost or HTTP endpoints.
-- [x] Public config variables separated from server-only secrets.
-- [x] Telemetry log filter suppresses `debug` output in production mode.
+> [!NOTE]
+> Mandatory pre-release gate checklist for DBC Mobile Application across Code, Security, Privacy, Backend, PWA, Store, and Release domains.
 
 ---
 
-## Deployment & Verification
+## 1. Pre-Flight Checklist
 
-### 5. Deployment Execution
-- [ ] Deploy immutable `dist/` directory to production web container / CDN.
-- [ ] Purge CDN edge caches for HTML entry point (`index.html`).
-- [ ] Confirm HTTP to HTTPS redirect rules on edge routers.
+### Code & Automated Quality Gates
+- [x] All 35 mobile unit & integration test files pass 100% (600 tests).
+- [x] Full test suite (64 test files, 755 tests) passes 100%.
+- [x] Release Candidate test suite (`mobile_release_candidate.test.ts`) passes 100% (52 tests).
+- [x] TypeScript compilation (`npx tsc -b`) passes with **0 errors**.
+- [x] Production web build (`npx vite build`) completes cleanly.
 
-### 6. Post-Deployment Smoke Test
-- [ ] Verify login & 6-digit email OTP authentication lifecycle.
-- [ ] Verify Marketplace discovery & Category search filters.
-- [ ] Verify Customer Project Request submission.
-- [ ] Verify Professional Quotation proposal wizard.
-- [ ] Verify Customer Quotation acceptance & Milestone payment history.
-- [ ] Verify Customer/Professional/Admin workspace role separation.
+### Security & Secret Scanning
+- [x] Zero database connection passwords, service-role keys, or signing secrets in client bundle.
+- [x] Production environment forces HTTPS; HTTP and `localhost` fallbacks blocked.
+- [x] Bearer JWT tokens stored securely in persistent storage adapter.
+- [x] Logout purges tokens, persistent user profile, pending deep links, and memory cache.
 
----
+### Privacy & Data Governance
+- [x] Telemetry sanitization redacts sensitive credentials (tokens, passwords, OTPs).
+- [x] Service worker cache explicitly **excludes** API network requests (`/api/*`).
+- [x] Zero background device GPS location queried.
+- [x] Account switching completely purges prior user cache data.
 
-## Rollback Procedure (Web/PWA Container)
+### Backend & Financial Integrity
+- [x] Client application performs **0 calculations** for subtotal, platform fee (1%), GST (18%), or net payouts.
+- [x] Quotation acceptance atomically spawns Project entity with duplicate acceptance protection.
+- [x] Payment verification checks Razorpay signature on backend.
 
-If a critical production error occurs post-deployment:
-1. **Identify Faulty Commit**: Record commit hash of failing release.
-2. **Select Target Rollback Build**: Select previous known-good commit hash.
-3. **Redeploy Immutable Artifact**: Trigger deployment pipeline using previous build artifact.
-4. **Purge CDN Caches**: Immediately invalidate `index.html` at the edge to force clients to fetch clean asset references.
-5. **Verify Session Integrity**: Confirm user sessions remain valid post-rollback.
+### PWA Target Readiness
+- [x] PWA Manifest (`site.webmanifest` / `manifest.json`) valid.
+- [x] Service worker registration & static asset caching verified.
+- [x] PWA installability verified in desktop/mobile browsers.
+
+### Store & Legal Dependencies (External)
+- [ ] Apple Developer & Google Play Console developer accounts configured.
+- [ ] Native Android Gradle & iOS Xcode projects generated.
+- [ ] Backend account deletion API endpoint implemented.
+- [ ] Legal approval for Privacy Policy and Terms of Service URLs.
+- [ ] FCM / APNs production push notification credentials configured.

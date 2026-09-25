@@ -3,6 +3,8 @@
  * Supports environment switching (dev, staging, production) and API URLs.
  */
 
+import { validateEnvironmentConfig } from './environmentValidation';
+
 export interface MobileEnvironmentConfig {
   environment: 'development' | 'staging' | 'production';
   apiBaseUrl: string;
@@ -12,7 +14,7 @@ export interface MobileEnvironmentConfig {
   enableAnalytics: boolean;
 }
 
-const getEnvVar = (key: string, defaultValue: string): string => {
+const getEnvVar = (key: string, defaultValue?: string): string | undefined => {
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
     return process.env[key] as string;
   }
@@ -22,11 +24,31 @@ const getEnvVar = (key: string, defaultValue: string): string => {
   return defaultValue;
 };
 
-export const mobileEnvironment: MobileEnvironmentConfig = {
-  environment: (getEnvVar('MOBILE_ENV', 'development') as MobileEnvironmentConfig['environment']),
-  apiBaseUrl: getEnvVar('VITE_API_BASE_URL', getEnvVar('MOBILE_API_BASE_URL', 'http://localhost:3000')),
-  timeoutMs: 15000,
-  enablePushNotifications: getEnvVar('MOBILE_ENABLE_PUSH', 'true') === 'true',
-  enableBiometrics: getEnvVar('MOBILE_ENABLE_BIOMETRICS', 'true') === 'true',
-  enableAnalytics: getEnvVar('MOBILE_ENABLE_ANALYTICS', 'false') === 'true',
-};
+export function resolveEnvironmentConfig(overrideEnv?: Partial<MobileEnvironmentConfig>): MobileEnvironmentConfig {
+  const envType = (overrideEnv?.environment ||
+    getEnvVar('VITE_APP_ENV') ||
+    getEnvVar('MOBILE_ENV') ||
+    (typeof process !== 'undefined' && process.env?.NODE_ENV === 'production' ? 'production' : 'development')) as MobileEnvironmentConfig['environment'];
+
+  let defaultApiUrl = 'http://localhost:3000';
+  if (envType === 'production') {
+    defaultApiUrl = getEnvVar('VITE_API_BASE_URL') || getEnvVar('MOBILE_API_BASE_URL') || 'https://api.dbc.com';
+  } else if (envType === 'staging') {
+    defaultApiUrl = getEnvVar('VITE_API_BASE_URL') || getEnvVar('MOBILE_API_BASE_URL') || 'https://staging-api.dbc.com';
+  } else {
+    defaultApiUrl = getEnvVar('VITE_API_BASE_URL') || getEnvVar('MOBILE_API_BASE_URL') || 'http://localhost:3000';
+  }
+
+  const config: MobileEnvironmentConfig = {
+    environment: envType,
+    apiBaseUrl: overrideEnv?.apiBaseUrl || defaultApiUrl,
+    timeoutMs: overrideEnv?.timeoutMs || 15000,
+    enablePushNotifications: overrideEnv?.enablePushNotifications ?? (getEnvVar('MOBILE_ENABLE_PUSH', 'true') === 'true'),
+    enableBiometrics: overrideEnv?.enableBiometrics ?? (getEnvVar('MOBILE_ENABLE_BIOMETRICS', 'true') === 'true'),
+    enableAnalytics: overrideEnv?.enableAnalytics ?? (getEnvVar('MOBILE_ENABLE_ANALYTICS', 'false') === 'true'),
+  };
+
+  return config;
+}
+
+export const mobileEnvironment: MobileEnvironmentConfig = resolveEnvironmentConfig();

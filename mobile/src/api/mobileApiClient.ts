@@ -100,6 +100,26 @@ export class MobileApiClient {
   }
 
   /**
+   * Perform HTTP PATCH request.
+   */
+  async patch<T>(
+    url: string,
+    data?: unknown,
+    options?: { timeout?: number; signal?: AbortSignal; headers?: Record<string, string> }
+  ): Promise<T> {
+    try {
+      const response = await axiosClient.patch<T>(url, data, {
+        timeout: options?.timeout,
+        signal: options?.signal,
+        headers: options?.headers,
+      });
+      return response.data;
+    } catch (err) {
+      throw normalizeMobileApiError(err);
+    }
+  }
+
+  /**
    * Perform HTTP DELETE request.
    */
   async delete<T>(

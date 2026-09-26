@@ -1,19 +1,20 @@
-# DBC Mobile Go-Live Readiness & Decision Matrix — Module 66
+# DBC Mobile Go-Live Readiness & Decision Matrix — Module 68
 
 > [!NOTE]
-> This document details the final go-live readiness evaluation, blocker classification register, decision matrix, capabilities status, and production release declaration for the **DBC Mobile Application (Web/PWA Runtime)**.
+> This document details the final go-live readiness evaluation, blocker classification register, decision matrix, capabilities status, backend deployment runbook link, API integration audit, and production release declaration for the **DBC Mobile Application (Web/PWA Runtime)**.
 
 ---
 
 ## 1. Executive Go-Live Summary
 
-Modules 33 through 66 have completed the complete technical foundation, customer marketplace, professional workspace, admin console, authentication state machine, API contract integration, business logic transaction integrity, E2E validation, release candidate packaging, PWA service worker caching, and deployment engineering.
+Modules 33 through 68 have completed the complete technical foundation, customer marketplace, professional workspace, admin console, authentication state machine, API contract integration, business logic transaction integrity, E2E validation, release candidate packaging, PWA service worker caching, production backend readiness, account deletion API, deployment runbook (`MOBILE_BACKEND_DEPLOYMENT_RUNBOOK.md`), and API integration audit (`MOBILE_API_INTEGRATION_AUDIT.md`).
 
-* **Client Codebase & PWA Runtime**: 100% production ready, fully tested, and compiled.
+* **Client Codebase & PWA Runtime**: 100% production ready, fully tested, and compiled (`npx vite build`).
+* **Backend Application Code**: 100% production ready, with all API endpoints and Account Deletion handler (`POST /api/user/delete-account`) fully implemented and compiled.
 * **Staging Environment**: Verified and operational.
-* **Production Domain & Live Services**: Pending external DNS record updates, live payment merchant activation, and backend serverless endpoint deployment.
+* **Production Domain & Live Services**: Pending external DNS record updates (`dbc.com` and `api.dbc.com`), live payment merchant activation, and production backend deployment.
 
-**Final Go-Live Status**: `PRODUCTION GO-LIVE READY — EXTERNAL ACTIVATION REQUIRED`
+**Final Go-Live Status**: `BACKEND DEPLOYMENT READY — EXTERNAL ACTIVATION REQUIRED`
 
 ---
 

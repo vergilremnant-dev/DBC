@@ -1,20 +1,20 @@
-# DBC Mobile Go-Live Readiness & Decision Matrix — Module 68
+# DBC Mobile Go-Live Readiness & Decision Matrix — Module 70
 
 > [!NOTE]
-> This document details the final go-live readiness evaluation, blocker classification register, decision matrix, capabilities status, backend deployment runbook link, API integration audit, and production release declaration for the **DBC Mobile Application (Web/PWA Runtime)**.
+> This document details the final go-live readiness evaluation, blocker classification register, decision matrix, capabilities status, external activation runbook (`MOBILE_EXTERNAL_ACTIVATION_RUNBOOK.md`), production activation report (`MOBILE_PRODUCTION_ACTIVATION_REPORT.md`), and release declaration for the **DBC Mobile Application (Web/PWA Runtime)**.
 
 ---
 
 ## 1. Executive Go-Live Summary
 
-Modules 33 through 68 have completed the complete technical foundation, customer marketplace, professional workspace, admin console, authentication state machine, API contract integration, business logic transaction integrity, E2E validation, release candidate packaging, PWA service worker caching, production backend readiness, account deletion API, deployment runbook (`MOBILE_BACKEND_DEPLOYMENT_RUNBOOK.md`), and API integration audit (`MOBILE_API_INTEGRATION_AUDIT.md`).
+Modules 33 through 70 have completed the complete technical foundation, customer marketplace, professional workspace, admin console, authentication state machine, API contract integration, business logic transaction integrity, E2E validation, release candidate packaging, PWA service worker caching, production backend readiness, account deletion API, deployment runbook (`MOBILE_BACKEND_DEPLOYMENT_RUNBOOK.md`), API integration audit (`MOBILE_API_INTEGRATION_AUDIT.md`), and external activation runbook (`MOBILE_EXTERNAL_ACTIVATION_RUNBOOK.md`).
 
 * **Client Codebase & PWA Runtime**: 100% production ready, fully tested, and compiled (`npx vite build`).
 * **Backend Application Code**: 100% production ready, with all API endpoints and Account Deletion handler (`POST /api/user/delete-account`) fully implemented and compiled.
 * **Staging Environment**: Verified and operational.
 * **Production Domain & Live Services**: Pending external DNS record updates (`dbc.com` and `api.dbc.com`), live payment merchant activation, and production backend deployment.
 
-**Final Go-Live Status**: `BACKEND DEPLOYMENT READY — EXTERNAL ACTIVATION REQUIRED`
+**Final Go-Live Status**: `EXTERNAL ACTIVATION RUNBOOK COMPLETE — DNS/DEPLOYMENT PENDING`
 
 ---
 

@@ -1,19 +1,19 @@
-# DBC Mobile Production Activation, DNS Verification & Go-Live Audit Report — Module 69
+# DBC Mobile Production Activation, DNS Verification & Go-Live Audit Report — Module 70
 
 > [!NOTE]
-> This document details the empirical DNS resolution audit, domain mapping matrix, TLS certificate status, serverless backend deployment identity, Account Deletion security verification, PWA production manifest inspection, payment & notification boundaries, automated test evidence, and actionable external launch checklist for the **DBC Platform and Mobile Application**.
+> This document details the empirical DNS resolution audit, domain mapping matrix, TLS certificate status, serverless backend deployment identity, Account Deletion security verification, PWA production manifest inspection, payment & notification boundaries, external activation runbook link, automated test evidence, and actionable launch checklist for the **DBC Platform and Mobile Application**.
 
 ---
 
 ## 1. Executive Summary & Activation Status
 
 * **Module Status**: `COMPLETE`
-* **Final Deployment Status**: `BACKEND DEPLOYMENT READY — EXTERNAL ACTIVATION REQUIRED`
-* **Latest Repository Commit**: [`a8f553b`](https://github.com/vergilremnant-dev/DBC/commit/a8f553b) on `origin/main`
+* **Final Deployment Status**: `EXTERNAL ACTIVATION RUNBOOK COMPLETE — DNS/DEPLOYMENT PENDING`
+* **Latest Repository Commit**: [`afadd9e`](https://github.com/vergilremnant-dev/DBC/commit/afadd9e) on `origin/main`
 * **Active Client Runtime**: Web / Installable PWA (`mobile/src/`)
 * **Native Runtime Status**: Android & iOS Native builds remain deferred (`NATIVE BUILD NOT YET IMPLEMENTED`)
 
-While all application code, backend API routes, Account Deletion handlers, environment validation safeguards, PWA service worker caching rules, database ORM schemas, and automated test gates are 100% complete and verified locally and in staging, public reachability on `https://dbc.com` and `https://api.dbc.com` remains subject to external DNS delegation and production deployment on Vercel.
+While all application code, backend API routes, Account Deletion handlers, environment validation safeguards, PWA service worker caching rules, database ORM schemas, external activation runbook (`MOBILE_EXTERNAL_ACTIVATION_RUNBOOK.md`), and automated test gates are 100% complete and verified locally and in staging, public reachability on `https://dbc.com` and `https://api.dbc.com` remains subject to external DNS delegation and production deployment on Vercel.
 
 ---
 

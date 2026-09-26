@@ -198,6 +198,27 @@ export class MobileAuthService {
       await mobileApiClient.setToken(null);
     }
   }
+
+  /**
+   * Invokes POST /api/user/delete-account to anonymize account and purge active session.
+   */
+  async deleteAccount(userId?: string): Promise<{ success: boolean; message: string }> {
+    try {
+      const response = await mobileApiClient.post<{ success: boolean; message: string; deletedUserId?: string }>(
+        '/user/delete-account',
+        userId ? { userId } : {}
+      );
+      if (response.data.success) {
+        await mobileApiClient.setToken(null);
+      }
+      return {
+        success: response.data.success,
+        message: response.data.message || 'Account deleted successfully',
+      };
+    } catch (err: unknown) {
+      throw normalizeAuthError(err, 'SERVER_ERROR');
+    }
+  }
 }
 
 export const mobileAuthService = new MobileAuthService();

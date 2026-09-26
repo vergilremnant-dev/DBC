@@ -34,7 +34,7 @@ Modules 33 through 66 have completed the complete technical foundation, customer
 | Blocker ID | Domain / Component | Description | Owner / Action |
 | :--- | :--- | :--- | :--- |
 | `BLK-P1-01` | **Razorpay Live Merchant Keys** | Client bundle uses verified sandbox payment flow; live production keys require merchant approval | Finance / Operations Team |
-| `BLK-P1-02` | **Account Deletion Endpoint** | Mobile UI features Account Deletion action; backend endpoint `POST /api/user/delete-account` requires production deployment | Backend Team |
+| `BLK-P1-02` | **Account Deletion Endpoint** | Mobile UI features Account Deletion action; backend endpoint `POST /api/user/delete-account` code implemented in Module 67 (`api-lib/routes/user/delete-account.ts`); pending production deployment on `api.dbc.com` | Backend Operations Team |
 
 ---
 

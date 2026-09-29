@@ -123,3 +123,11 @@ npm run lint
 - **RBAC**: Enforced role-based access control across `ROLE_CUSTOMER`, `ROLE_PROVIDER`, and `ROLE_ADMIN`.
 - **Payment Integrity**: Razorpay secret is strictly server-side only with timing-safe HMAC-SHA256 signature verification.
 - **Environment Isolation**: Sensitive credentials are never committed or exposed to the client bundle.
+
+---
+
+## 🚀 Deployment & Version Control
+
+- **Primary Deployment Target**: Vercel Serverless Gateway
+- **GitHub Organization / Repository**: `vergilremnant-dev/DBC`
+

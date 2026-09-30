@@ -182,10 +182,10 @@ export function Navbar() {
         }
       `}
     >
-      <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6 lg:px-8 lg:grid lg:grid-cols-12 flex justify-between items-center h-full">
+      <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6 lg:px-8 lg:grid lg:grid-cols-12 flex justify-between items-center h-full min-w-0">
         
         {/* Brand Zone (2 Columns) */}
-        <div className="lg:col-span-2 flex items-center flex-shrink-0">
+        <div className="lg:col-span-2 flex items-center min-w-0 flex-shrink-0">
           <Link
             to="/"
             className="flex items-center hover:scale-[1.02] transition-transform duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald rounded-lg"
@@ -227,7 +227,7 @@ export function Navbar() {
                 </button>
 
                 {isInboxOpen && (
-                  <div className="absolute right-0 mt-2.5 w-76 rounded-2xl border border-stone-200 bg-white p-3.5 shadow-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 text-left">
+                  <div className="absolute right-0 mt-2.5 w-76 max-w-[calc(100vw-2rem)] rounded-2xl border border-stone-200 bg-white p-3.5 shadow-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 text-left">
                     <div className="flex items-center justify-between border-b border-stone-100 pb-2">
                       <span className="text-[9px] font-extrabold uppercase tracking-wider text-stone-500">Recent Chats</span>
                       <button
@@ -298,13 +298,13 @@ export function Navbar() {
         </div>
 
         {/* Mobile controls (Hamburger menu trigger) */}
-        <div className="lg:hidden flex items-center ml-auto">
+        <div className="lg:hidden flex items-center ml-auto flex-shrink-0">
           <button
             onClick={() => setIsMobileDrawerOpen(true)}
-            className="p-2 rounded-full border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
+            className="p-2 rounded-full border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 flex items-center justify-center"
             aria-label="Open navigation menu"
           >
-            <svg className="w-5.5 h-5.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>

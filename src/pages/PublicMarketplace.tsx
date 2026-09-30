@@ -336,7 +336,7 @@ export function PublicMarketplace() {
                 </button>
 
                 {isHeroLocationOpen && (
-                  <div className="absolute left-0 mt-2 w-56 rounded-xl border border-light-border bg-white p-3 shadow-apple-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="absolute left-0 mt-2 w-56 max-w-[calc(100vw-2rem)] rounded-xl border border-light-border bg-white p-3 shadow-apple-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-1 duration-150">
                     <div className="space-y-1">
                       <span className="block text-[9px] uppercase tracking-wider font-extrabold text-stone-gray">Popular Cities</span>
                       {['Hyderabad', 'Chennai', 'Bangalore', 'Mumbai', 'Delhi'].map((city) => (
@@ -373,7 +373,7 @@ export function PublicMarketplace() {
                       navigate(`/search?q=${encodeURIComponent(heroSearchVal.trim())}&city=${encodeURIComponent(selectedCity)}`);
                     }
                   }}
-                  className="w-full bg-transparent text-xs font-semibold text-stone-850 placeholder:text-stone-400 focus:outline-none border-none p-0"
+                  className="w-full bg-transparent text-base sm:text-xs font-semibold text-stone-850 placeholder:text-stone-400 focus:outline-none border-none p-0"
                 />
               </div>
 
@@ -395,7 +395,7 @@ export function PublicMarketplace() {
                 </button>
 
                 {isHeroFilterOpen && (
-                  <div className="absolute right-0 sm:right-auto sm:left-0 mt-2 w-64 rounded-xl border border-light-border bg-white p-4 shadow-apple-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="absolute right-0 sm:right-auto sm:left-0 mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-xl border border-light-border bg-white p-4 shadow-apple-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-1 duration-150">
                     <div className="space-y-2">
                       <span className="block text-[9px] uppercase tracking-wider font-extrabold text-stone-gray">Advanced Criteria</span>
                       <div className="space-y-1.5">

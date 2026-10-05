@@ -87,6 +87,40 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     }
   }, [step, resendCooldown]);
 
+  // Helper to safely obtain a fresh, active RecaptchaVerifier instance
+  const getOrCreateRecaptchaVerifier = (): RecaptchaVerifier | null => {
+    if (!auth) return null;
+
+    // Clean up any stale verifier instance stored on window
+    const existing = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
+    if (existing) {
+      try {
+        if (typeof existing.clear === 'function') {
+          existing.clear();
+        }
+      } catch (_) {}
+      (window as unknown as Record<string, unknown>).recaptchaVerifier = undefined;
+    }
+
+    // Ensure container element exists and is clear of old widget nodes
+    const container = document.getElementById('recaptcha-container');
+    if (container) {
+      container.innerHTML = '';
+    }
+
+    try {
+      const verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        size: 'invisible',
+        callback: () => {},
+      });
+      (window as unknown as Record<string, unknown>).recaptchaVerifier = verifier;
+      return verifier;
+    } catch (err) {
+      console.error('Failed to initialize RecaptchaVerifier:', err);
+      return null;
+    }
+  };
+
   // STEP 1 HANDLER: Send OTP / Proceed to verification
   const handleDetailsSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -132,24 +166,34 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       try {
         setSendingOtp(true);
 
-        let verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
+        const verifier = getOrCreateRecaptchaVerifier();
         if (!verifier) {
-          verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-            size: 'invisible',
-            callback: () => {},
-          });
-          (window as unknown as Record<string, unknown>).recaptchaVerifier = verifier;
+          setError('Failed to initialize reCAPTCHA security verification. Please refresh the page and try again.');
+          setSendingOtp(false);
+          return;
         }
 
         const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
         setConfirmationResult(result);
       } catch (fbErr: any) {
         console.error('Firebase Phone Auth Error:', fbErr?.code, fbErr?.message);
+        // Reset verifier on error so subsequent retries start fresh
+        const existing = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
+        if (existing) {
+          try {
+            if (typeof existing.clear === 'function') existing.clear();
+          } catch (_) {}
+          (window as unknown as Record<string, unknown>).recaptchaVerifier = undefined;
+        }
+
         const errCode = fbErr?.code || '';
+        const errMsg = fbErr?.message || '';
         if (errCode === 'auth/invalid-phone-number') {
           setError('The phone number format is invalid. Please check your 10-digit phone number.');
         } else if (errCode === 'auth/operation-not-allowed') {
           setError('Phone Authentication is not enabled in Firebase Console. Please enable Phone provider under Firebase Authentication settings.');
+        } else if (errCode === 'auth/captcha-check-failed' || errMsg.includes('reCAPTCHA') || errMsg.includes('removed')) {
+          setError('reCAPTCHA security check expired or was removed. Please click "Send Verification Code" again.');
         } else {
           setError(fbErr?.message || 'Failed to send SMS OTP via Firebase. Please check your phone number and network.');
         }
@@ -284,14 +328,14 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         setResendCooldown(30);
       } else if (channel === 'phone' && isFirebaseConfigured && auth) {
         const formattedPhone = formatE164Phone(phone);
-        const verifier = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier;
+        const verifier = getOrCreateRecaptchaVerifier();
         if (verifier) {
           const result = await signInWithPhoneNumber(auth, formattedPhone, verifier);
           setConfirmationResult(result);
           setResendSuccessMessage('A new SMS verification code has been sent to your phone number.');
           setResendCooldown(30);
         } else {
-          setError('reCAPTCHA verification is missing. Please change your phone number and try again.');
+          setError('Failed to initialize reCAPTCHA security verification. Please click "Change phone number" to restart.');
         }
       } else {
         setError('Firebase Phone Authentication is unavailable. Please check your configuration.');
@@ -307,6 +351,8 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
   return (
     <div className="space-y-4 text-left">
+      {/* Persistent Invisible Firebase reCAPTCHA Container */}
+      <div id="recaptcha-container" className="flex justify-center my-1"></div>
       
       {/* STEP 1: Registration details & channel selection */}
       {step === 1 && (
@@ -472,9 +518,6 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 <span>{error}</span>
               </div>
             )}
-
-            {/* Invisible Firebase reCAPTCHA Container */}
-            <div id="recaptcha-container" className="flex justify-center my-1"></div>
 
             {/* Action */}
             <button

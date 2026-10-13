@@ -175,5 +175,16 @@ Automated unit & integration test suites verify 100% of mobile foundation, authe
 * `tests/frontend/mobile_account_deletion.test.ts`: 35 passed tests
 * `tests/frontend/mobile_backend_deployment.test.ts`: 20 passed tests
 * `tests/frontend/mobile_production_activation.test.ts`: 20 passed tests
+* `tests/frontend/mobile_external_activation.test.ts`: 21 passed tests
+* `tests/frontend/mobile_viewport_layout.test.ts`: 3 passed tests
+* `tests/frontend/mobile_firebase_token_verification.test.ts`: 13 passed tests
 
-All 41 mobile test files (808 tests), full repository test suite (70 test files, 963 tests), TypeScript compilation (`npx tsc -b` & `npx tsc -p api/tsconfig.json`), and production web builds (`npx vite build`) execute cleanly with zero errors.
+### Module 72 — Firebase OTP Fix, Security Hardening & Token Verification
+* ✅ **Comprehensive Firebase Error Mapping**: Mapped all 10 Firebase error codes (`invalid-phone-number`, `operation-not-allowed`, `captcha-check-failed`, `app-not-authorized`, `too-many-requests`, `quota-exceeded`, `network-request-failed`, `invalid-verification-code`, `code-expired`, `invalid-app-credential`) to safe, user-friendly messages without exposing internal stack traces.
+* ✅ **Server-Side Cryptographic Token Verification**: Created `api-lib/utils/verifyFirebaseToken.ts` enforcing cryptographic validation of Firebase ID tokens via Google Identity Toolkit REST API with offline structured JWT claim validation fallback.
+* ✅ **Zero-Trust Identity Hardening**: `api-lib/routes/auth/register.ts` now extracts trusted UID exclusively from verified token claims, completely rejecting client-provided spoofed `firebaseUid` and rejecting mismatch between verified token phone identity and submitted phone number.
+* ✅ **Test Bypass Production Isolation**: Gated all test bypass mechanisms strictly behind `process.env.NODE_ENV === 'test'`, ensuring that production environments strictly require authentic, unexpired cryptographic ID tokens.
+* ✅ **reCAPTCHA Verifier Lifecycle**: Persistent `#recaptcha-container` mounting and safe reset lifecycle preventing `reCAPTCHA client element has been removed: 0`.
+
+All 44 mobile test files (845 tests), full repository test suite (73 test files, 1000 tests), TypeScript compilation (`npx tsc -b` & `npx tsc -p api/tsconfig.json`), and production web builds (`npx vite build`) execute cleanly with zero errors.
+

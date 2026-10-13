@@ -49,6 +49,40 @@ function formatE164Phone(rawPhone: string): string {
   return `+${digits}`;
 }
 
+export function mapFirebaseErrorMessage(errCode: string, rawMessage?: string): string {
+  const msg = rawMessage || '';
+  switch (errCode) {
+    case 'auth/invalid-phone-number':
+      return 'The phone number format is invalid. Please enter a valid 10-digit phone number.';
+    case 'auth/operation-not-allowed':
+      return 'Phone Authentication is not enabled in Firebase Console. Please enable Phone provider under Firebase Authentication settings.';
+    case 'auth/captcha-check-failed':
+      return 'reCAPTCHA security check failed. Please click "Send Verification Code" to try again.';
+    case 'auth/app-not-authorized':
+      return 'This domain is not authorized for Firebase Authentication. Please add this domain under Authorized Domains in Firebase Console.';
+    case 'auth/too-many-requests':
+      return 'Too many SMS requests sent to this number. Please wait a few minutes before trying again.';
+    case 'auth/quota-exceeded':
+      return 'SMS verification quota has been exceeded for today. Please try again later.';
+    case 'auth/network-request-failed':
+      return 'Network connection error. Please check your internet connection and try again.';
+    case 'auth/invalid-verification-code':
+      return 'The 6-digit verification code you entered is invalid. Please check the code and try again.';
+    case 'auth/code-expired':
+      return 'The verification code has expired. Please click resend to receive a new code.';
+    case 'auth/invalid-app-credential':
+      return 'Firebase app credentials or reCAPTCHA verification are invalid. Please check your configuration.';
+    default:
+      if (msg.includes('reCAPTCHA') || msg.includes('removed') || errCode.includes('captcha')) {
+        return 'reCAPTCHA security verification failed or expired. Please click "Send Verification Code" again.';
+      }
+      if (msg.includes('invalid') || msg.includes('expired') || errCode.includes('verification')) {
+        return 'Invalid or expired verification code. The code you entered was rejected by Firebase.';
+      }
+      return 'Failed to process SMS verification. Please check your phone number and try again.';
+  }
+}
+
 export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWizardProps) {
   // Navigation step state (1 = Details, 2 = Verify OTP, 3 = Setup Password, 4 = Success)
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -188,15 +222,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
         const errCode = fbErr?.code || '';
         const errMsg = fbErr?.message || '';
-        if (errCode === 'auth/invalid-phone-number') {
-          setError('The phone number format is invalid. Please check your 10-digit phone number.');
-        } else if (errCode === 'auth/operation-not-allowed') {
-          setError('Phone Authentication is not enabled in Firebase Console. Please enable Phone provider under Firebase Authentication settings.');
-        } else if (errCode === 'auth/captcha-check-failed' || errMsg.includes('reCAPTCHA') || errMsg.includes('removed')) {
-          setError('reCAPTCHA security check expired or was removed. Please click "Send Verification Code" again.');
-        } else {
-          setError(fbErr?.message || 'Failed to send SMS OTP via Firebase. Please check your phone number and network.');
-        }
+        setError(mapFirebaseErrorMessage(errCode, errMsg));
         setSendingOtp(false);
         return;
       } finally {
@@ -251,7 +277,9 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         }
       } catch (confErr: any) {
         console.error('Firebase OTP Verification Error:', confErr?.code, confErr?.message);
-        setError('Invalid or expired verification code. The code you entered was rejected by Firebase.');
+        const errCode = confErr?.code || '';
+        const errMsg = confErr?.message || '';
+        setError(mapFirebaseErrorMessage(errCode, errMsg));
         setVerifyingOtp(false);
         return;
       }

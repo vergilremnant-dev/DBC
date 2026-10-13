@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import { validatePasswordStrength } from '../../utils/validation.js';
 import { logSecurityEvent } from '../../services/auditService.js';
 import { VercelRequestWithUser } from '../../middleware/authMiddleware.js';
+import { verifyFirebaseIdToken } from '../../utils/verifyFirebaseToken.js';
 
 export default async function handler(req: VercelRequestWithUser, res: VercelResponse) {
   const method = req.method;
@@ -66,6 +67,8 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
       }
     }
 
+    let _trustedFirebaseUid: string | undefined = undefined;
+
     // MANDATORY SERVER-SIDE VERIFICATION PROOF VALIDATION
     if (!isPhoneRegistration) {
       // Email Channel: Must present valid, unexpired, single-use REGISTRATION_PROOF token
@@ -99,12 +102,26 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
       // Single-use / Replay protection: Atomically delete the proof session
       await db.userSession.delete({ where: { id: proofSession.id } });
     } else {
-      // Phone Channel: Must present verified Firebase UID / ID Token proof
-      const hasPhoneProof = Boolean(firebaseUid || verificationToken || firebaseIdToken || process.env.NODE_ENV === 'test');
-      if (!hasPhoneProof) {
+      // Phone Channel: Must present cryptographically verified Firebase ID Token
+      try {
+        const verifiedToken = await verifyFirebaseIdToken(firebaseIdToken, firebaseUid);
+        _trustedFirebaseUid = verifiedToken.uid;
+
+        // Verify phone identity match if verified phone is present on token
+        if (phone && verifiedToken.phoneNumber) {
+          const cleanReqPhone = String(phone).replace(/\D/g, '').slice(-10);
+          const cleanVerifiedPhone = String(verifiedToken.phoneNumber).replace(/\D/g, '').slice(-10);
+          if (cleanReqPhone && cleanVerifiedPhone && cleanReqPhone !== cleanVerifiedPhone) {
+            return res.status(400).json({
+              success: false,
+              message: 'Phone number does not match verified Firebase phone identity.',
+            });
+          }
+        }
+      } catch (tokenErr: any) {
         return res.status(400).json({
           success: false,
-          message: 'Please verify your phone number before creating your account.',
+          message: tokenErr.message || 'Please verify your phone number before creating your account.',
         });
       }
 

@@ -121,11 +121,8 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
     }
   }, [step, resendCooldown]);
 
-  // Helper to safely obtain a fresh, active RecaptchaVerifier instance
-  const getOrCreateRecaptchaVerifier = (): RecaptchaVerifier | null => {
-    if (!auth) return null;
-
-    // Clean up any stale verifier instance stored on window
+  // Helper to safely reset reCAPTCHA verifier when explicitly needed
+  const resetRecaptchaVerifier = () => {
     const existing = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
     if (existing) {
       try {
@@ -135,12 +132,24 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       } catch (_) {}
       (window as unknown as Record<string, unknown>).recaptchaVerifier = undefined;
     }
-
-    // Ensure container element exists and is clear of old widget nodes
     const container = document.getElementById('recaptcha-container');
     if (container) {
       container.innerHTML = '';
     }
+  };
+
+  // Helper to safely obtain an active RecaptchaVerifier instance
+  const getOrCreateRecaptchaVerifier = (): RecaptchaVerifier | null => {
+    if (!auth) return null;
+
+    // Reuse existing valid verifier on window if already initialized (avoids "already rendered" error)
+    const existing = (window as unknown as Record<string, unknown>).recaptchaVerifier as RecaptchaVerifier | undefined;
+    if (existing) {
+      return existing;
+    }
+
+    const container = document.getElementById('recaptcha-container');
+    if (!container) return null;
 
     try {
       const verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
@@ -370,8 +379,12 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       }
     } catch (err: any) {
       console.error('Firebase Resend Error:', err);
-      const errMsg = err?.message || 'We couldn\'t send a new verification code. Please try again.';
-      setError(errMsg);
+      const errCode = err?.code || '';
+      const errMsg = err?.message || '';
+      if (errCode === 'auth/captcha-check-failed' || errMsg.includes('reCAPTCHA')) {
+        resetRecaptchaVerifier();
+      }
+      setError(mapFirebaseErrorMessage(errCode, errMsg));
     } finally {
       setResendingOtp(false);
     }

@@ -110,6 +110,9 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
   // Status & Error states
   const [error, setError] = useState<string | null>(null);
   const [resendSuccessMessage, setResendSuccessMessage] = useState<string | null>(null);
+  // Only reveal the SMS-delay / email-fallback helper when the user explicitly asks for it,
+  // not as an unconditional message on every phone OTP screen.
+  const [smsHelpVisible, setSmsHelpVisible] = useState(false);
 
   // Countdown timer effect for resend cooldown
   useEffect(() => {
@@ -241,6 +244,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
     setStep(2);
     setResendCooldown(30);
+    setSmsHelpVisible(false);
   };
 
   // STEP 2 HANDLER: Verify OTP
@@ -440,6 +444,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     setVerificationToken(null);
                     setFirebaseIdToken(null);
                     setVerifiedUid(undefined);
+                    setSmsHelpVisible(false);
                   }}
                   className={`group relative py-2.5 px-3 text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
                     channel === 'email'
@@ -462,6 +467,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     setVerificationToken(null);
                     setFirebaseIdToken(null);
                     setVerifiedUid(undefined);
+                    setSmsHelpVisible(false);
                   }}
                   className={`group relative py-2.5 px-3 text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
                     channel === 'phone'
@@ -663,6 +669,16 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             >
               {resendingOtp ? 'Sending Code...' : `Resend Code ${resendCooldown > 0 ? `(in ${resendCooldown}s)` : ''}`}
             </button>
+            {/* Only show the "still haven't received" prompt for phone channel after cooldown expires */}
+            {channel === 'phone' && resendCooldown === 0 && !resendingOtp && !smsHelpVisible && (
+              <button
+                type="button"
+                onClick={() => setSmsHelpVisible(true)}
+                className="text-stone-400 hover:text-stone-600 underline underline-offset-2 transition cursor-pointer mt-0.5"
+              >
+                Still haven't received it?
+              </button>
+            )}
           </div>
 
           {/* Correct detail action links */}
@@ -673,6 +689,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 setStep(1);
                 setError(null);
                 setResendSuccessMessage(null);
+                setSmsHelpVisible(false);
               }}
               className="font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer hover:underline"
             >
@@ -680,22 +697,33 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             </button>
           </div>
 
-          {channel === 'phone' && (
+          {/* SMS delivery help — only shown when user explicitly requests it after a resend attempt */}
+          {channel === 'phone' && smsHelpVisible && (
             <div className="pt-1 text-center">
-              <div className="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 text-[11px] text-stone-500 leading-relaxed">
-                <span>SMS delayed or blocked by telecom DLT filters? </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setChannel('email');
-                    setStep(1);
-                    setError(null);
-                    setResendSuccessMessage(null);
-                  }}
-                  className="font-semibold text-emerald-700 hover:underline cursor-pointer"
-                >
-                  Verify via Email instead
-                </button>
+              <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 text-[11px] text-stone-500 leading-relaxed space-y-1.5">
+                <p className="text-stone-600 font-medium">
+                  SMS can be delayed or filtered by Indian telecom (DLT) regulations.
+                </p>
+                <p>
+                  You can{' '}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setChannel('email');
+                      setStep(1);
+                      setError(null);
+                      setResendSuccessMessage(null);
+                      setSmsHelpVisible(false);
+                    }}
+                    className="font-semibold text-emerald-700 hover:underline cursor-pointer"
+                  >
+                    verify via email instead
+                  </button>
+                  , or wait a minute and try resending.
+                </p>
+                <p className="text-[10px] text-stone-400">
+                  Note: A successful SMS request does not guarantee handset delivery — carrier routing is outside DBC's control.
+                </p>
               </div>
             </div>
           )}

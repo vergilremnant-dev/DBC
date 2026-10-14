@@ -679,6 +679,26 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
               {channel === 'email' ? '← Change email address' : '← Change phone number'}
             </button>
           </div>
+
+          {channel === 'phone' && (
+            <div className="pt-1 text-center">
+              <div className="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 text-[11px] text-stone-500 leading-relaxed">
+                <span>SMS delayed or blocked by telecom DLT filters? </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setChannel('email');
+                    setStep(1);
+                    setError(null);
+                    setResendSuccessMessage(null);
+                  }}
+                  className="font-semibold text-emerald-700 hover:underline cursor-pointer"
+                >
+                  Verify via Email instead
+                </button>
+              </div>
+            </div>
+          )}
         </>
       )}
 

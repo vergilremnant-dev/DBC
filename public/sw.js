@@ -27,6 +27,12 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
+  // Manifest and brand icons -> ALWAYS Network Only (Never cache PWA metadata)
+  if (url.pathname.includes('manifest.json') || url.pathname.startsWith('/icons/') || url.pathname.includes('favicon') || url.pathname.startsWith('/brand/')) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+
   // Navigation requests (HTML pages) -> ALWAYS Network Only (Never cache HTML)
   if (e.request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('.html')) {
     e.respondWith(

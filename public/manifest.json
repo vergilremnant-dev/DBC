@@ -1,7 +1,7 @@
 {
   "name": "DBC Design Build Connect",
   "short_name": "DBC",
-  "id": "/",
+  "id": "/?v=20261022",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -10,22 +10,22 @@
   "description": "Premium digital ecosystem for homeowners, architects, and contractors.",
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "/favicon.png?v=20261022",
       "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-192.png",
+      "src": "/icons/icon-192.png?v=20261022",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "/icons/icon-512.png?v=20261022",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-512-maskable.png",
+      "src": "/icons/icon-512-maskable.png?v=20261022",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

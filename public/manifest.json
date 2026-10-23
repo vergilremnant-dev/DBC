@@ -1,7 +1,7 @@
 {
   "name": "DBC Design Build Connect",
   "short_name": "DBC",
-  "id": "/?v=20261022",
+  "id": "/dbc-app-v2",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -10,25 +10,37 @@
   "description": "Premium digital ecosystem for homeowners, architects, and contractors.",
   "icons": [
     {
-      "src": "/favicon.png?v=20261022",
+      "src": "/favicon.png",
       "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-192.png?v=20261022",
+      "src": "/icons/dbc-app-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/dbc-app-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/dbc-app-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-512.png?v=20261022",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
-    },
-    {
-      "src": "/icons/icon-512-maskable.png?v=20261022",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }

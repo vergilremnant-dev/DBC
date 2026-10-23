@@ -29,7 +29,7 @@
       ]
     },
     {
-      "source": "/(manifest.json|favicon.ico|favicon.svg|favicon.png)",
+      "source": "/(manifest.json|favicon.*|apple-touch-icon.*|robots.txt)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0" },
         { "key": "Pragma", "value": "no-cache" },
@@ -65,7 +65,7 @@
       "destination": "/api/index"
     },
     {
-      "source": "/((?!api|assets|favicon.ico|manifest.json|sw.js|\\.well-known).*)",
+      "source": "/((?!api|assets|favicon|robots\\.txt|manifest\\.json|sw\\.js|\\.well-known).*)",
       "destination": "/index.html"
     }
   ]

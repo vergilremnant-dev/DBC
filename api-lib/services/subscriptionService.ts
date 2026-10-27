@@ -294,8 +294,9 @@ export async function verifyRazorpayPayment(
   if (!isValidSignature) {
     // Update the payment record to FAILED
     try {
+      // Scope to the caller: a bad signature must not let one user fail another user's payment.
       const p = await db.payment.findFirst({
-        where: { OR: [{ txRef: razorpayOrderId }, { razorpayOrderId }] },
+        where: { userId, OR: [{ txRef: razorpayOrderId }, { razorpayOrderId }] },
       });
       if (p) {
         await db.payment.update({

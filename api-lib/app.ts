@@ -17,6 +17,9 @@ import verifyEmailHandler from './routes/auth/verify-email.js';
 import forgotPasswordHandler from './routes/auth/forgot-password.js';
 import resetPasswordHandler from './routes/auth/reset-password.js';
 import changePasswordHandler from './routes/auth/change-password.js';
+import { corsAllowlist, stripSensitiveFields } from './utils/http.js';
+import phoneSessionHandler from './routes/auth/phone-session.js';
+import phoneRegisterHandler from './routes/auth/phone-register.js';
 import deleteAccountHandler from './routes/user/delete-account.js';
 import complianceHandler from './routes/compliance/index.js';
 import healthHandler from './routes/health/index.js';
@@ -175,6 +178,8 @@ import chatMessagesFetchHandler from './routes/chat/messages/[conversationId].js
 import chatMessagesReadHandler from './routes/chat/messages/[id]/read.js';
 
 const app = express();
+app.disable('x-powered-by');
+app.use(corsAllowlist);
 app.use((req, res, next) => {
   if (req.body !== undefined) {
     next();
@@ -191,11 +196,17 @@ const adapt = (handler) => async (req, res) => {
     writable: true,
     configurable: true
   });
+  // Defense in depth: never let a password hash reach a response, whatever a handler includes.
+  const originalJson = res.json.bind(res);
+  res.json = (body) => originalJson(stripSensitiveFields(body));
   try {
     await handler(req, res);
   } catch (err: any) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    // Log the error class only; messages can carry query details or user data.
+    console.error('[API_UNHANDLED_ERROR]', req.method, req.path, err?.name || 'Error');
+    if (!res.headersSent) {
+      res.status(500).json({ success: false, message: 'An internal server error occurred.' });
+    }
   }
 };
 
@@ -219,6 +230,8 @@ app.post('/api/auth/verify-email', adapt(verifyEmailHandler));
 app.post('/api/auth/forgot-password', adapt(forgotPasswordHandler));
 app.post('/api/auth/reset-password', adapt(resetPasswordHandler));
 app.post('/api/auth/change-password', adapt(changePasswordHandler));
+app.post('/api/auth/phone/session', adapt(phoneSessionHandler));
+app.post('/api/auth/phone/register', adapt(phoneRegisterHandler));
 app.post('/api/user/delete-account', adapt(deleteAccountHandler));
 app.delete('/api/user/delete-account', adapt(deleteAccountHandler));
 app.get('/api/compliance', adapt(complianceHandler));

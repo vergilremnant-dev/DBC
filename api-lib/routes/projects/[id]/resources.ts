@@ -1,5 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken } from '../../../utils/auth.js';
+import { getProjectAccess } from '../../../services/projectAccess.js';
 import { db } from '../../../utils/db.js';
 import { assignProjectResource } from '../../../services/projectService.js';
 
@@ -19,6 +20,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const access = await getProjectAccess(projectId, user);
+    if (!access) {
+      return res.status(404).json({ success: false, message: 'Project not found' });
+    }
+    if (!access.isMember && !access.isAdmin) {
+      return res.status(403).json({ success: false, message: 'Forbidden: You do not have access to this project' });
+    }
+
     if (method === 'GET') {
       const resources = await db.projectResource.findMany({
         where: { projectId },
@@ -29,6 +38,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (method === 'POST') {
+      if (!(access.isProvider)) {
+        return res.status(403).json({ success: false, message: 'Only the assigned professional can assign project resources' });
+      }
       const { email, role } = req.body;
 
       if (!email) {

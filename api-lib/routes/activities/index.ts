@@ -20,12 +20,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const offsetNum = Math.max(0, Number(offset));
 
   try {
+    // Security/audit activity is private: users see their own events, admins see all.
     const list = await db.globalActivity.findMany({
+      where: user.role === 'ADMIN' ? {} : { actorId: user.id },
       take: limitNum,
       skip: offsetNum,
       orderBy: { createdAt: 'desc' },
       include: {
-        actor: true,
+        actor: { select: { id: true, role: true, customerProfile: { select: { fullName: true } }, providerProfile: { select: { fullName: true, businessName: true } } } },
       },
     });
 

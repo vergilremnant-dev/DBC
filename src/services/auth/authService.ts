@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { axiosClient, setAccessToken } from './axiosClient';
-import type { ApiResponse, LoginRequest, LoginResponse } from '../../types/auth/authTypes';
+import { axiosClient, refreshSession, setAccessToken } from './axiosClient';
+import type { ApiResponse, AuthUser, LoginRequest, LoginResponse, PhoneRegisterRequest, PhoneSessionResponse } from '../../types/auth/authTypes';
 
 type LoginPayload = LoginResponse | ApiResponse<LoginResponse>;
 
@@ -16,6 +16,16 @@ function getErrorMessage(error: unknown, fallback: string) {
     return error.response?.data?.message ?? fallback;
   }
   return fallback;
+}
+
+/** Clears any leftover Firebase client sign-in (e.g. an abandoned OTP flow). Never blocks logout. */
+async function endFirebaseClientSession(): Promise<void> {
+  try {
+    const { signOutFirebasePhoneUser } = await import('./phoneAuth');
+    await signOutFirebasePhoneUser();
+  } catch {
+    // Firebase not configured or unavailable: nothing to clear.
+  }
 }
 
 export const authService = {
@@ -70,6 +80,36 @@ export const authService = {
       return data;
     } catch (error) {
       throw new Error(getErrorMessage(error, `Unable to complete ${providerName} sign-in`), { cause: error });
+    }
+  },
+
+  /**
+   * Exchange a Firebase phone ID token for a DBC session. The backend verifies the
+   * token; unregistered numbers return REGISTRATION_REQUIRED without a session.
+   */
+  async phoneSession(firebaseIdToken: string): Promise<PhoneSessionResponse> {
+    try {
+      const response = await axiosClient.post<PhoneSessionResponse & { success: boolean }>('/api/auth/phone/session', { firebaseIdToken });
+      if (response.data.status === 'AUTHENTICATED') {
+        setAccessToken(response.data.accessToken);
+      }
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error, 'Unable to sign in with this phone number'), { cause: error });
+    }
+  },
+
+  async phoneRegister(request: PhoneRegisterRequest): Promise<PhoneSessionResponse> {
+    try {
+      const response = await axiosClient.post<PhoneSessionResponse & { success: boolean }>('/api/auth/phone/register', request);
+      if (response.data.status !== 'AUTHENTICATED') {
+        throw new Error('Registration could not be completed');
+      }
+      setAccessToken(response.data.accessToken);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error && !axios.isAxiosError(error)) throw error;
+      throw new Error(getErrorMessage(error, 'Unable to complete registration'), { cause: error });
     }
   },
 
@@ -161,6 +201,7 @@ export const authService = {
       await axiosClient.post('/api/auth/logout');
     } finally {
       setAccessToken(null);
+      await endFirebaseClientSession();
     }
   },
 
@@ -169,21 +210,18 @@ export const authService = {
       await axiosClient.post('/api/auth/logout-all');
     } finally {
       setAccessToken(null);
+      await endFirebaseClientSession();
     }
   },
 
+  /** Restores the DBC session from the httpOnly refresh cookie (no OTP needed while it is valid). */
   async refresh(): Promise<LoginResponse> {
     try {
-      const response = await axiosClient.post<LoginPayload>('/api/auth/refresh');
-      if (response.data && 'success' in response.data && response.data.success === false) {
-        throw new Error((response.data as unknown as Record<string, unknown>).message as string || 'Session expired');
-      }
-      const data = unwrapLoginResponse(response.data);
-      setAccessToken(data.accessToken);
-      return data;
+      const session = await refreshSession();
+      return { accessToken: session.accessToken, user: session.user as AuthUser };
     } catch (error) {
-      setAccessToken(null);
-      throw new Error(getErrorMessage(error, 'Unable to refresh session'), { cause: error });
+      const fallback = error instanceof Error && error.message ? error.message : 'Unable to refresh session';
+      throw new Error(getErrorMessage(error, fallback), { cause: error });
     }
   },
 

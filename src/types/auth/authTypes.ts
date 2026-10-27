@@ -53,6 +53,19 @@ export interface RegisterResponse {
   verificationToken?: string;
 }
 
+export type PhoneAuthStatus = 'AUTHENTICATED' | 'REGISTRATION_REQUIRED'
+
+export type PhoneSessionResponse =
+  | { status: 'AUTHENTICATED'; isNewUser: boolean; accessToken: string; user: AuthUser }
+  | { status: 'REGISTRATION_REQUIRED'; phone: string }
+
+export interface PhoneRegisterRequest {
+  firebaseIdToken: string
+  firstName: string
+  lastName?: string
+  preferredCity?: string
+}
+
 export interface AuthState {
   accessToken: string | null
   user: AuthUser | null

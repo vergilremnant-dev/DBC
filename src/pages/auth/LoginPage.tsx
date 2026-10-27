@@ -4,14 +4,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthDispatch, useAuthSelector } from '../../hooks/auth/useAuthStore';
 import { getDashboardPathForRole } from '../../services/auth/authRedirect';
 import { clearError, loginThunk, socialLoginThunk } from '../../store/auth/authSlice';
-import type { LoginRequest } from '../../types/auth/authTypes';
-import type { RegisterPayload } from '../../components/auth/RegisterWizard';
+import type { AuthUser, LoginRequest } from '../../types/auth/authTypes';
 
 import { AuthLayout } from '../../components/auth/AuthLayout';
 
 // Reusable Auth Sub-components
 import { LoginForm } from '../../components/auth/LoginForm';
-import { RegisterWizard } from '../../components/auth/RegisterWizard';
+import { PhoneOtpAuth } from '../../components/auth/PhoneOtpAuth';
 import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm';
 import { ResetPasswordForm } from '../../components/auth/ResetPasswordForm';
 import { WelcomeScreen } from '../../components/auth/WelcomeScreen';
@@ -35,6 +34,8 @@ export function LoginPage() {
   // Custom mock user for onboarding registration pathway
   const [registeredUser, setRegisteredUser] = useState<WelcomeUser | null>(null);
   const [activeSocialProvider, setActiveSocialProvider] = useState<'google' | 'microsoft' | 'apple' | null>(null);
+  // Phone OTP is the primary sign-in; email + password remains for existing email accounts.
+  const [loginMethod, setLoginMethod] = useState<'phone' | 'email'>('phone');
 
   const queryParams = new URLSearchParams(location.search);
   const redirectParam = queryParams.get('redirect');
@@ -116,13 +117,14 @@ export function LoginPage() {
     navigate(redirectTo, { replace: true });
   };
 
-  const handleRegisterComplete = (payload: RegisterPayload) => {
-    // Save details to display on welcome page
+  // Called only after the backend has verified the Firebase token and issued a DBC session.
+  const handlePhoneAuthenticated = (authUser: AuthUser) => {
     setRegisteredUser({
-      firstName: payload.firstName,
-      email: payload.email,
-      role: payload.role,
+      firstName: authUser.firstName,
+      email: authUser.email,
+      role: authUser.role,
     });
+    setView('welcome');
   };
 
   function getRedirectTarget(role: string) {
@@ -140,7 +142,21 @@ export function LoginPage() {
 
   return (
     <AuthLayout showBackToMarketplace={view !== 'welcome'}>
-      {view === 'login' && (
+      {view === 'login' && loginMethod === 'phone' && (
+        <div className="w-full max-w-sm mx-auto">
+          <PhoneOtpAuth
+            mode="login"
+            onAuthenticated={handlePhoneAuthenticated}
+            onSwitchMode={() => handleSwitchView('register')}
+            onUseEmailLogin={() => {
+              dispatch(clearError());
+              setLoginMethod('email');
+            }}
+          />
+        </div>
+      )}
+
+      {view === 'login' && loginMethod === 'email' && (
         <div className="space-y-4 w-full max-w-sm mx-auto">
           <div className="text-left">
             <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Sign In</h2>
@@ -156,14 +172,27 @@ export function LoginPage() {
             onSocialLogin={handleSocialLogin}
             activeSocialProvider={activeSocialProvider}
           />
+          <div className="text-center text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                dispatch(clearError());
+                setLoginMethod('phone');
+              }}
+              className="font-semibold text-emerald-700 hover:underline cursor-pointer"
+            >
+              Sign in with mobile number instead
+            </button>
+          </div>
         </div>
       )}
 
       {view === 'register' && (
         <div className="w-full max-w-sm mx-auto">
-          <RegisterWizard
-            onRegisterComplete={handleRegisterComplete}
-            onBackToLogin={() => handleSwitchView('login')}
+          <PhoneOtpAuth
+            mode="register"
+            onAuthenticated={handlePhoneAuthenticated}
+            onSwitchMode={() => handleSwitchView('login')}
           />
         </div>
       )}

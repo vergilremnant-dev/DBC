@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken } from '../../../utils/auth.js';
 import { addRequirementAttachment } from '../../../services/requirementService.js';
+import { db } from '../../../utils/db.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = req.method;
@@ -29,6 +30,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const requirementId = Number(paramId);
+    if (!Number.isInteger(requirementId)) {
+      return res.status(400).json({ success: false, message: 'Invalid requirement ID format' });
+    }
+    const requirement = await db.requirement.findUnique({
+      where: { id: requirementId },
+      select: { customer: { select: { userId: true } } },
+    });
+    if (!requirement) {
+      return res.status(404).json({ success: false, message: 'Requirement not found' });
+    }
+    if (requirement.customer?.userId !== user.id && user.role !== 'ADMIN') {
+      return res.status(403).json({ success: false, message: 'Forbidden: Only the requirement owner can add attachments' });
+    }
     const attachment = await addRequirementAttachment(
       Number(paramId),
       fileName,

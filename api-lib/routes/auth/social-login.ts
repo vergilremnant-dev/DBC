@@ -38,10 +38,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   } catch (err: any) {
     const message = err.message || '';
+    if (message.includes('Invalid, expired, or unverified') || message.includes('must be verified')) {
+      return res.status(401).json({ success: false, message });
+    }
+    if (message.includes('temporarily unavailable')) {
+      return res.status(503).json({ success: false, message });
+    }
     if (message.includes('required') || message.includes('Could not verify') || message.includes('inactive') || message.includes('suspended')) {
       return res.status(400).json({ success: false, message });
     }
-    console.error('Social Login Error:', err);
-    return res.status(500).json({ success: false, message: message || 'Social authentication failed' });
+    console.error('[SOCIAL_LOGIN_ERROR]', err?.name || 'Error');
+    return res.status(500).json({ success: false, message: 'Social authentication failed' });
   }
 }

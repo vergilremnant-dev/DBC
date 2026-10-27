@@ -6,7 +6,8 @@ import crypto from 'crypto';
 import { validatePasswordStrength } from '../../utils/validation.js';
 import { logSecurityEvent } from '../../services/auditService.js';
 import { VercelRequestWithUser } from '../../middleware/authMiddleware.js';
-import { verifyFirebaseIdToken } from '../../utils/verifyFirebaseToken.js';
+import { verifyFirebasePhoneIdentity } from '../../utils/verifyFirebaseToken.js';
+import { normalizeE164 } from '../../utils/phone.js';
 
 export default async function handler(req: VercelRequestWithUser, res: VercelResponse) {
   const method = req.method;
@@ -67,7 +68,8 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
       }
     }
 
-    let _trustedFirebaseUid: string | undefined = undefined;
+    let trustedFirebaseUid: string | undefined = undefined;
+    let trustedPhoneE164: string | undefined = undefined;
 
     // MANDATORY SERVER-SIDE VERIFICATION PROOF VALIDATION
     if (!isPhoneRegistration) {
@@ -104,14 +106,21 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
     } else {
       // Phone Channel: Must present cryptographically verified Firebase ID Token
       try {
-        const verifiedToken = await verifyFirebaseIdToken(firebaseIdToken, firebaseUid);
-        _trustedFirebaseUid = verifiedToken.uid;
+        // Identity comes only from the verified token; client firebaseUid is ignored.
+        void firebaseUid;
+        const verifiedToken = await verifyFirebasePhoneIdentity(firebaseIdToken);
+        trustedFirebaseUid = verifiedToken.uid;
+        trustedPhoneE164 = normalizeE164(verifiedToken.phoneNumber) ?? undefined;
+        if (!trustedPhoneE164) {
+          return res.status(400).json({ success: false, message: 'Please verify your phone number before creating your account.' });
+        }
 
-        // Verify phone identity match if verified phone is present on token
-        if (phone && verifiedToken.phoneNumber) {
-          const cleanReqPhone = String(phone).replace(/\D/g, '').slice(-10);
+        // Submitted phone (or the phone-derived <number>@dbc.com email) must match the verified identity
+        const claimedPhone = phone || (normalizedEmail.endsWith('@dbc.com') ? normalizedEmail.split('@')[0] : '');
+        if (claimedPhone) {
+          const cleanReqPhone = String(claimedPhone).replace(/\D/g, '').slice(-10);
           const cleanVerifiedPhone = String(verifiedToken.phoneNumber).replace(/\D/g, '').slice(-10);
-          if (cleanReqPhone && cleanVerifiedPhone && cleanReqPhone !== cleanVerifiedPhone) {
+          if (cleanReqPhone !== cleanVerifiedPhone) {
             return res.status(400).json({
               success: false,
               message: 'Phone number does not match verified Firebase phone identity.',
@@ -123,6 +132,15 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
           success: false,
           message: tokenErr.message || 'Please verify your phone number before creating your account.',
         });
+      }
+
+      // One DBC account per verified phone identity
+      const existingIdentity = await db.user.findFirst({
+        where: { OR: [{ firebaseUid: trustedFirebaseUid }, { phoneE164: trustedPhoneE164 }] },
+        select: { id: true },
+      });
+      if (existingIdentity) {
+        return res.status(400).json({ success: false, message: 'Phone number is already registered' });
       }
 
       // Consume token if a proof session exists for this phone registration email
@@ -146,6 +164,9 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
         password: hashedPassword,
         role: mappedRole,
         status: 'ACTIVE',
+        ...(trustedFirebaseUid && trustedPhoneE164
+          ? { firebaseUid: trustedFirebaseUid, phoneE164: trustedPhoneE164, phoneVerifiedAt: new Date() }
+          : {}),
       },
     });
 

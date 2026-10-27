@@ -60,6 +60,11 @@ model User {
   password            String
   role                Role               @default(CUSTOMER)
   status              UserStatus         @default(ACTIVE)
+  // Verified identity links (Phase 1 Firebase phone OTP). Nullable so existing
+  // accounts are unaffected; set only from server-verified Firebase ID tokens.
+  firebaseUid         String?            @unique @map("firebase_uid")
+  phoneE164           String?            @unique @map("phone_e164")
+  phoneVerifiedAt     DateTime?          @map("phone_verified_at")
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
 

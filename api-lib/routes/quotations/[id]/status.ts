@@ -43,6 +43,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       message: `Quotation transitioned to ${status} successfully`,
     });
   } catch (err: any) {
-    return res.status(500).json({ success: false, message: err.message });
+    const message = err?.message || '';
+    if (/^(Unauthorized|Only the)/.test(message)) {
+      return res.status(403).json({ success: false, message });
+    }
+    if (message.includes('not found')) {
+      return res.status(404).json({ success: false, message });
+    }
+    return res.status(500).json({ success: false, message: 'An internal server error occurred.' });
   }
 }

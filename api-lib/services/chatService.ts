@@ -120,6 +120,12 @@ export async function sendMessage(
     finalAttachmentUrl = senderIdOrPayload.attachmentUrl || '';
   }
 
+  if (!finalConversationId || !finalSenderId) {
+    throw new Error('Conversation not found');
+  }
+  // Only conversation participants may post (throws 'Conversation not found' / 'Access denied').
+  await getConversationDetails(finalSenderId, finalConversationId);
+
   return await db.$transaction(async (tx) => {
     const msg = await tx.message.create({
       data: {

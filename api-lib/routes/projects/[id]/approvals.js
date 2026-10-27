@@ -1,4 +1,5 @@
 import { verifyToken } from '../../../utils/auth.js';
+import { getProjectAccess } from '../../../services/projectAccess.js';
 import { requestProjectApproval, submitProjectApproval } from '../../../services/projectService.js';
 export default async function handler(req, res) {
     const method = req.method;
@@ -20,7 +21,17 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Missing action parameter (REQUEST or RESOLVE)' });
     }
     try {
+        const access = await getProjectAccess(projectId, user);
+        if (!access) {
+            return res.status(404).json({ success: false, message: 'Project not found' });
+        }
+        if (!access.isMember && !access.isAdmin) {
+            return res.status(403).json({ success: false, message: 'Forbidden: You do not have access to this project' });
+        }
         if (action === 'REQUEST') {
+            if (!(access.isCustomer || access.isProvider)) {
+                return res.status(403).json({ success: false, message: 'Only project participants can request approvals' });
+            }
             if (!targetType || !targetId) {
                 return res.status(400).json({ success: false, message: 'Missing target details for approval request' });
             }

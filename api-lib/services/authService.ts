@@ -4,6 +4,7 @@ import { db } from '../utils/db.js';
 import { Role } from '@prisma/client';
 import { generateAccessToken } from '../utils/auth.js';
 import { logSecurityEvent } from './auditService.js';
+import { verifyFirebaseIdToken } from '../utils/verifyFirebaseToken.js';
 
 export interface LoginRequest {
   email: string;
@@ -36,7 +37,7 @@ function hashToken(token: string): string {
   return crypto.createHash('sha256').update(token).digest('hex');
 }
 
-interface DBUserForAuth {
+export interface DBUserForAuth {
   id: string;
   email: string;
   role: Role;
@@ -45,7 +46,7 @@ interface DBUserForAuth {
   providerProfile?: { fullName: string; phoneNumber: string | null } | null;
 }
 
-function mapUserToAuthUser(user: DBUserForAuth): AuthUser {
+export function mapUserToAuthUser(user: DBUserForAuth): AuthUser {
   let frontendRole = 'ROLE_CUSTOMER';
   let firstName = '';
   let lastName = '';
@@ -190,6 +191,37 @@ export async function loginUser(
   };
 }
 
+/**
+ * Issues a standard DBC session (15-min access JWT + rotating 7-day refresh token
+ * stored hashed in user_sessions) for an already-authenticated user. Same session
+ * shape as password and social login, so existing middleware/RBAC is unchanged.
+ */
+export async function createUserSession(
+  user: DBUserForAuth,
+  userAgent?: string,
+  ipAddress?: string
+): Promise<LoginResponse> {
+  const accessToken = generateAccessToken(user);
+  const rawRefreshToken = crypto.randomBytes(40).toString('hex');
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  await db.userSession.create({
+    data: {
+      userId: user.id,
+      token: hashToken(rawRefreshToken),
+      userAgent,
+      ipAddress,
+      expiresAt,
+    },
+  });
+
+  return {
+    accessToken,
+    refreshToken: rawRefreshToken,
+    user: mapUserToAuthUser(user),
+  };
+}
+
 export async function refreshUserToken(
   refreshToken: string,
   userAgent?: string,
@@ -222,6 +254,12 @@ export async function refreshUserToken(
   if (new Date() > session.expiresAt) {
     await db.userSession.delete({ where: { id: session.id } });
     throw new Error('Session expired');
+  }
+
+  // A suspended/deactivated account must not be able to mint new access tokens.
+  if (session.user.status !== 'ACTIVE') {
+    await db.userSession.deleteMany({ where: { userId: session.userId } });
+    throw new Error('Your account is currently inactive or suspended');
   }
 
   // Rotate refresh token
@@ -336,23 +374,20 @@ export async function socialLoginUser(
     verifiedEmail = input.email || 'apple_test_user@privaterelay.appleid.com';
     verifiedName = input.name || 'Apple Test User';
   } else {
+    // The client sends a Firebase ID token (signInWithPopup -> getIdToken). Verify it with the
+    // Firebase Admin SDK: signature, project audience/issuer and expiry. Google's tokeninfo endpoint
+    // does not check that the token was issued for THIS Firebase project.
+    let verified;
     try {
-      const tokenInfoRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken.trim())}`);
-      if (!tokenInfoRes.ok) {
-        throw new Error(`Invalid, expired, or unverified ${displayProvider} identity token`);
-      }
-      const data = await tokenInfoRes.json();
-      if (!data.email || (data.email_verified !== true && data.email_verified !== 'true')) {
-        throw new Error('Social account email address must be verified');
-      }
-      verifiedEmail = data.email.trim().toLowerCase();
-      if (data.name) verifiedName = data.name;
-    } catch (err: any) {
-      if (err.message && (err.message.includes('Apple') || err.message.includes('Microsoft') || err.message.includes('Google') || err.message.includes('verified') || err.message.includes('token'))) {
-        throw err;
-      }
+      verified = await verifyFirebaseIdToken(idToken);
+    } catch {
+      // Misconfiguration is logged server-side by the verifier; the client always gets one safe message.
       throw new Error(`Invalid, expired, or unverified ${displayProvider} identity token`);
     }
+    if (!verified.email || verified.emailVerified !== true) {
+      throw new Error('Social account email address must be verified');
+    }
+    verifiedEmail = verified.email.trim().toLowerCase();
   }
 
   if (!verifiedEmail) {

@@ -1,5 +1,6 @@
 import { verifyToken } from '../../../utils/auth.js';
-import { updateReadReceipt } from '../../../services/chatService.js';
+import { updateReadReceipt, getConversationDetails } from '../../../services/chatService.js';
+import { db } from '../../../utils/db.js';
 export default async function handler(req, res) {
     const method = req.method;
     const user = verifyToken(req);
@@ -17,13 +18,25 @@ export default async function handler(req, res) {
     }
     try {
         if (method === 'POST') {
-            const receipt = await updateReadReceipt(messageId, user.id);
+            await getConversationDetails(user.id, conversationId);
+            const message = await db.message.findFirst({ where: { id: String(messageId), conversationId }, select: { id: true } });
+            if (!message) {
+                return res.status(404).json({ success: false, message: 'Message not found in this conversation' });
+            }
+            const receipt = await updateReadReceipt(message.id, user.id);
             return res.status(200).json({ success: true, data: receipt, message: 'Message read receipt updated' });
         }
         res.setHeader('Allow', ['POST']);
         return res.status(405).json({ success: false, message: `Method ${method} Not Allowed` });
     }
     catch (err) {
-        return res.status(500).json({ success: false, message: err.message });
+        const message = err?.message || '';
+        if (message.includes('not found')) {
+            return res.status(404).json({ success: false, message: 'Conversation not found' });
+        }
+        if (message.includes('Access denied')) {
+            return res.status(403).json({ success: false, message: 'Access denied: You are not a participant in this conversation' });
+        }
+        return res.status(500).json({ success: false, message: 'An internal server error occurred.' });
     }
 }

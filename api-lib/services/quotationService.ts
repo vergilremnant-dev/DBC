@@ -241,6 +241,10 @@ export async function transitionQuotationStatus(
   const isProvider = existing.provider.userId === userId;
   const isCustomer = existing.requirement.customer.userId === userId;
 
+  if (!isAdmin && !isProvider && !isCustomer) {
+    throw new Error('Unauthorized status change: you are not a participant in this quotation');
+  }
+
   if (!isAdmin) {
     if (newStatus === QuotationStatus.SUBMITTED || newStatus === QuotationStatus.WITHDRAWN) {
       if (!isProvider) throw new Error('Only the provider can submit or withdraw quotations');

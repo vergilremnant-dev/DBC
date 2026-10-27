@@ -16,7 +16,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const list = await db.announcement.findMany({
         orderBy: { createdAt: 'desc' },
         include: {
-          author: true,
+          author: { select: { id: true, role: true, customerProfile: { select: { fullName: true } }, providerProfile: { select: { fullName: true, businessName: true } } } },
         },
       });
       return res.status(200).json({ success: true, data: list });

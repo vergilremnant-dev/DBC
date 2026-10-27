@@ -25,6 +25,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!quotation) {
         return res.status(404).json({ success: false, message: 'Quotation not found' });
       }
+      // Pricing and negotiations are private to the quoting professional, the requesting customer and admins.
+      const canView =
+        user.role === 'ADMIN' ||
+        quotation.provider?.userId === user.id ||
+        quotation.requirement?.customer?.userId === user.id;
+      if (!canView) {
+        return res.status(403).json({ success: false, message: 'Forbidden: You do not have access to this quotation' });
+      }
       return res.status(200).json({ success: true, data: quotation });
     }
 
@@ -45,6 +53,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
     return res.status(405).json({ success: false, message: `Method ${method} Not Allowed` });
   } catch (err: any) {
-    return res.status(500).json({ success: false, message: err.message });
+    const message = err?.message || '';
+    if (/^(Unauthorized|Only the)/.test(message)) {
+      return res.status(403).json({ success: false, message });
+    }
+    if (message.includes('not found')) {
+      return res.status(404).json({ success: false, message });
+    }
+    return res.status(500).json({ success: false, message: 'An internal server error occurred.' });
   }
 }

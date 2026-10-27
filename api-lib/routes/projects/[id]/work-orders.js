@@ -1,4 +1,5 @@
 import { verifyToken } from '../../../utils/auth.js';
+import { getProjectAccess } from '../../../services/projectAccess.js';
 import { db } from '../../../utils/db.js';
 import { createWorkOrder } from '../../../services/projectService.js';
 export default async function handler(req, res) {
@@ -13,6 +14,13 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Missing project ID parameter' });
     }
     try {
+        const access = await getProjectAccess(projectId, user);
+        if (!access) {
+            return res.status(404).json({ success: false, message: 'Project not found' });
+        }
+        if (!access.isMember && !access.isAdmin) {
+            return res.status(403).json({ success: false, message: 'Forbidden: You do not have access to this project' });
+        }
         if (method === 'GET') {
             const wos = await db.workOrder.findMany({
                 where: { projectId },
@@ -22,6 +30,9 @@ export default async function handler(req, res) {
             return res.status(200).json({ success: true, data: wos });
         }
         if (method === 'POST') {
+            if (!(access.isProvider)) {
+                return res.status(403).json({ success: false, message: 'Only the assigned professional can create work orders' });
+            }
             const { title, description, priority, dueDate, estimatedHours, assignedResourceId, milestoneId } = req.body;
             if (!title) {
                 return res.status(400).json({ success: false, message: 'Missing work order title' });

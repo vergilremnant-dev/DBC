@@ -1,12 +1,45 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { verifyFirebaseIdToken } from '../../api-lib/utils/verifyFirebaseToken.js';
+import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
+import {
+  verifyFirebaseIdToken,
+  verifyFirebasePhoneIdentity,
+  FirebaseTokenError,
+  __setFirebaseVerifierForTests,
+} from '../../api-lib/utils/verifyFirebaseToken.js';
 import { mapFirebaseErrorMessage } from '../../src/components/auth/RegisterWizard';
+
+/**
+ * Test double for the Firebase Admin SDK. Production code no longer contains any
+ * magic test tokens; tests install this verifier through the NODE_ENV=test-only seam.
+ */
+async function fakeAdminVerifier(token: string) {
+  if (token === 'test_invalid_firebase_token' || token === 'test_wrong_project') {
+    throw new FirebaseTokenError('INVALID_TOKEN');
+  }
+  if (token === 'test_malformed_token') throw new FirebaseTokenError('INVALID_TOKEN');
+  if (token === 'test_expired_token') throw new FirebaseTokenError('EXPIRED_TOKEN');
+  if (token === 'test_email_only_token') return { uid: 'email_uid', email: 'x@example.com', signInProvider: 'password' };
+  if (token === 'test_phone_mismatch_token') {
+    return { uid: 'test_mismatch_uid', phoneNumber: '+919999999999', signInProvider: 'phone' };
+  }
+  return { uid: 'test_verified_firebase_uid', phoneNumber: '+917981160986', signInProvider: 'phone' };
+}
 
 describe('Module 72 — Firebase Token Verification & Error Handling Tests', () => {
   const originalEnv = process.env.NODE_ENV;
 
-  afterEach(() => {
+  beforeAll(() => {
+    process.env.NODE_ENV = 'test';
+    __setFirebaseVerifierForTests(fakeAdminVerifier);
+  });
+
+  afterAll(() => {
+    process.env.NODE_ENV = 'test';
+    __setFirebaseVerifierForTests(null);
     process.env.NODE_ENV = originalEnv;
+  });
+
+  afterEach(() => {
+    process.env.NODE_ENV = 'test';
   });
 
   describe('1. Token Verification Functionality', () => {
@@ -38,8 +71,14 @@ describe('Module 72 — Firebase Token Verification & Error Handling Tests', () 
 
     it('rejects malformed Firebase ID tokens', async () => {
       await expect(verifyFirebaseIdToken('test_malformed_token')).rejects.toThrow(
-        'Malformed Firebase ID Token structure.'
+        'Invalid, expired, or untrusted Firebase ID Token.'
       );
+    });
+
+    it('rejects a verified token without a phone_number claim for phone identity', async () => {
+      await expect(verifyFirebasePhoneIdentity('test_email_only_token')).rejects.toMatchObject({
+        code: 'NOT_PHONE_IDENTITY',
+      });
     });
 
     it('rejects expired Firebase ID tokens', async () => {
@@ -55,74 +94,63 @@ describe('Module 72 — Firebase Token Verification & Error Handling Tests', () 
   });
 
   describe('2. Production Environment Security & Bypass Prevention', () => {
-    it('ensures test bypass is strictly unavailable in production environment', async () => {
+    it('ensures the test verifier seam cannot be used outside NODE_ENV=test', async () => {
       process.env.NODE_ENV = 'production';
+      expect(() => __setFirebaseVerifierForTests(fakeAdminVerifier)).toThrow(/only available in the test environment/);
 
-      // In production, missing token must throw even if clientUid is passed
+      // Missing token must throw even if a client UID is passed
       await expect(verifyFirebaseIdToken('', 'client_uid_123')).rejects.toThrow(
         'Missing Firebase ID Token. Please verify your phone number before registering.'
       );
-
       await expect(verifyFirebaseIdToken(undefined, 'client_uid_123')).rejects.toThrow(
         'Missing Firebase ID Token. Please verify your phone number before registering.'
       );
-
-      // In production, malformed token must be rejected
-      await expect(verifyFirebaseIdToken('not-a-valid-jwt-token')).rejects.toThrow(
-        /Malformed|Invalid|untrusted/
-      );
     });
 
-    it('correctly parses and validates claims in production fallback JWT format', async () => {
+    it('fails closed when the Firebase project is not configured (installed test verifier is ignored outside test env)', async () => {
       process.env.NODE_ENV = 'production';
-      const prevKey = process.env.VITE_FIREBASE_API_KEY;
-      delete process.env.VITE_FIREBASE_API_KEY;
-      delete process.env.FIREBASE_API_KEY;
+      const prevProject = process.env.FIREBASE_PROJECT_ID;
+      const prevViteProject = process.env.VITE_FIREBASE_PROJECT_ID;
+      delete process.env.FIREBASE_PROJECT_ID;
+      delete process.env.VITE_FIREBASE_PROJECT_ID;
+      try {
+        await expect(verifyFirebaseIdToken('mock_firebase_id_token')).rejects.toMatchObject({ code: 'NOT_CONFIGURED' });
+      } finally {
+        if (prevProject) process.env.FIREBASE_PROJECT_ID = prevProject;
+        if (prevViteProject) process.env.VITE_FIREBASE_PROJECT_ID = prevViteProject;
+      }
+    });
 
-      const header = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64');
+    it('rejects a forged token with valid-looking claims but no valid signature (requires firebase-admin)', async () => {
+      process.env.NODE_ENV = 'production';
+      const prevProject = process.env.FIREBASE_PROJECT_ID;
+      process.env.FIREBASE_PROJECT_ID = 'designbuildconnect';
+
+      const b64 = (o: object) => Buffer.from(JSON.stringify(o)).toString('base64url');
       const now = Math.floor(Date.now() / 1000);
-
-      // Expired token JWT
-      const expiredPayload = Buffer.from(
-        JSON.stringify({
+      const forged = [
+        b64({ alg: 'RS256', typ: 'JWT' }),
+        b64({
           aud: 'designbuildconnect',
           iss: 'https://securetoken.google.com/designbuildconnect',
-          sub: 'user_prod_123',
-          exp: now - 3600,
-        })
-      ).toString('base64');
-      await expect(
-        verifyFirebaseIdToken(`${header}.${expiredPayload}.mock_sig`)
-      ).rejects.toThrow('Firebase ID Token has expired.');
-
-      // Project mismatch token JWT
-      const wrongProjectPayload = Buffer.from(
-        JSON.stringify({
-          aud: 'wrong_project_id',
-          iss: 'https://securetoken.google.com/wrong_project_id',
-          sub: 'user_prod_123',
-          exp: now + 3600,
-        })
-      ).toString('base64');
-      await expect(
-        verifyFirebaseIdToken(`${header}.${wrongProjectPayload}.mock_sig`)
-      ).rejects.toThrow('Firebase ID Token issuer or project mismatch.');
-
-      // Valid token JWT
-      const validPayload = Buffer.from(
-        JSON.stringify({
-          aud: 'designbuildconnect',
-          iss: 'https://securetoken.google.com/designbuildconnect',
-          sub: 'verified_prod_uid_777',
+          sub: 'attacker_uid',
+          user_id: 'attacker_uid',
           phone_number: '+917981160986',
+          iat: now,
+          auth_time: now,
           exp: now + 3600,
-        })
-      ).toString('base64');
-      const verified = await verifyFirebaseIdToken(`${header}.${validPayload}.mock_sig`);
-      expect(verified.uid).toBe('verified_prod_uid_777');
-      expect(verified.phoneNumber).toBe('+917981160986');
+          firebase: { sign_in_provider: 'phone' },
+        }),
+        'mock_sig',
+      ].join('.');
 
-      if (prevKey) process.env.VITE_FIREBASE_API_KEY = prevKey;
+      try {
+        // Previously this token was ACCEPTED by an unsigned-payload fallback.
+        await expect(verifyFirebaseIdToken(forged)).rejects.toMatchObject({ code: 'INVALID_TOKEN' });
+      } finally {
+        if (prevProject) process.env.FIREBASE_PROJECT_ID = prevProject;
+        else delete process.env.FIREBASE_PROJECT_ID;
+      }
     });
   });
 

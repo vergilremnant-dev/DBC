@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { authService } from '../../services/auth/authService'
 import { setAccessToken } from '../../services/auth/axiosClient'
-import type { AuthState, AuthUser, LoginRequest, LoginResponse } from '../../types/auth/authTypes'
+import type { AuthState, AuthUser, LoginRequest, LoginResponse, PhoneRegisterRequest, PhoneSessionResponse } from '../../types/auth/authTypes'
 
 function readStoredUser() {
   const rawUser = localStorage.getItem('user')
@@ -98,6 +98,32 @@ export const refreshThunk = createAsyncThunk<LoginResponse, void, { rejectValue:
   },
 )
 
+export const phoneSessionThunk = createAsyncThunk<PhoneSessionResponse, string, { rejectValue: string }>(
+  'auth/phoneSession',
+  async (firebaseIdToken, { rejectWithValue }) => {
+    try {
+      const response = await authService.phoneSession(firebaseIdToken)
+      if (response.status === 'AUTHENTICATED') persistUser(response.user)
+      return response
+    } catch (error) {
+      return rejectWithValue(toErrorMessage(error, 'Unable to sign in with this phone number'))
+    }
+  },
+)
+
+export const phoneRegisterThunk = createAsyncThunk<PhoneSessionResponse, PhoneRegisterRequest, { rejectValue: string }>(
+  'auth/phoneRegister',
+  async (request, { rejectWithValue }) => {
+    try {
+      const response = await authService.phoneRegister(request)
+      if (response.status === 'AUTHENTICATED') persistUser(response.user)
+      return response
+    } catch (error) {
+      return rejectWithValue(toErrorMessage(error, 'Unable to complete registration'))
+    }
+  },
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -187,6 +213,35 @@ const authSlice = createSlice({
         state.user = null
         state.isAuthenticated = false
       })
+      .addCase(phoneSessionThunk.fulfilled, (state, action) => {
+        state.loading = false
+        if (action.payload.status === 'AUTHENTICATED') {
+          state.accessToken = action.payload.accessToken
+          state.user = action.payload.user
+          state.isAuthenticated = true
+        }
+      })
+      .addCase(phoneRegisterThunk.fulfilled, (state, action) => {
+        state.loading = false
+        if (action.payload.status === 'AUTHENTICATED') {
+          state.accessToken = action.payload.accessToken
+          state.user = action.payload.user
+          state.isAuthenticated = true
+        }
+      })
+      .addMatcher(
+        (action) => action.type === phoneSessionThunk.pending.type || action.type === phoneRegisterThunk.pending.type,
+        (state) => {
+          state.loading = true
+        },
+      )
+      .addMatcher(
+        (action) => action.type === phoneSessionThunk.rejected.type || action.type === phoneRegisterThunk.rejected.type,
+        (state) => {
+          // Phone flow errors are shown inside the OTP component, not the shared login error.
+          state.loading = false
+        },
+      )
   },
 })
 

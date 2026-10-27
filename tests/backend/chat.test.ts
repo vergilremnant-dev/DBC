@@ -81,10 +81,26 @@ describe('Messaging & Activities Logs', () => {
     const mockUpdate = vi.spyOn(db.conversation, 'update').mockResolvedValueOnce({} as any);
     const mockActivity = vi.spyOn(db.globalActivity, 'create').mockResolvedValueOnce({} as any);
 
+    // Sender must be a participant (Phase 2 authorization): sender-123 owns customer profile cust-123.
+    vi.spyOn(db.conversation, 'findUnique').mockResolvedValueOnce({ id: 'conv-123', customerId: 'cust-123', providerId: 'prov-123' } as any);
+    vi.spyOn(db.customerProfile, 'findUnique').mockResolvedValueOnce({ id: 'cust-123' } as any);
+    vi.spyOn(db.providerProfile, 'findFirst').mockResolvedValueOnce(null);
+
     const msg = await sendMessage('conv-123', 'sender-123', 'hello');
     expect(msg.content).toBe('hello');
     expect(mockUpdate).toHaveBeenCalled();
     expect(mockActivity).toHaveBeenCalled();
+  });
+
+  it('should refuse messages from users who are not conversation participants', async () => {
+    vi.spyOn(db.conversation, 'findUnique').mockResolvedValueOnce({ id: 'conv-123', customerId: 'cust-123', providerId: 'prov-123' } as any);
+    vi.spyOn(db.customerProfile, 'findUnique').mockResolvedValueOnce({ id: 'someone-else' } as any);
+    vi.spyOn(db.providerProfile, 'findFirst').mockResolvedValueOnce(null);
+    const mockCreate = vi.spyOn(db.message, 'create');
+    mockCreate.mockClear();
+
+    await expect(sendMessage('conv-123', 'outsider-1', 'spam')).rejects.toThrow('Access denied');
+    expect(mockCreate).not.toHaveBeenCalled();
   });
 });
 

@@ -60,11 +60,8 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
       },
     });
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`[Email OTP Dispatched] Email: ${normalizedEmail} | Verification Code: ${rawOtp}`);
-    } else {
-      console.log(`[Email OTP Dispatched] Email: ${normalizedEmail}`);
-    }
+    // Never log OTP values (in any environment). No email sender is wired up yet.
+    console.log('[Email OTP Generated] delivery pending: no email provider configured');
 
     return res.status(200).json({
       success: true,

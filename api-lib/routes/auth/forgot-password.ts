@@ -47,7 +47,8 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
     return res.status(200).json({
       success: true,
       message: 'If the email exists, a password reset link has been dispatched.',
-      resetToken, // Returned for dev/testing visibility
+      // The reset token is NEVER returned: returning it let anyone reset any account by email.
+      // It must be delivered out-of-band (email) — see deployment notes; no email sender exists yet.
     });
     } catch (_error: any) {
     return res.status(500).json({ success: false, message: 'An internal server error occurred.' });

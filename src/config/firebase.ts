@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, OAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, OAuthProvider, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
 import type { Auth, ConfirmationResult, UserCredential } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -37,5 +37,6 @@ export {
   OAuthProvider,
   signInWithPopup,
   signInWithRedirect,
+  signOut,
 };
 export type { ConfirmationResult, UserCredential };

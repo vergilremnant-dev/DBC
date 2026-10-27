@@ -20,7 +20,7 @@ export function generateAccessToken(user: { id: string; email: string; role: str
       role: user.role,
     },
     jwtSecret,
-    { expiresIn: '15m' } // 15 minutes Access Token
+    { expiresIn: '15m', algorithm: 'HS256' } // 15 minutes Access Token
   );
 }
 
@@ -31,7 +31,13 @@ export function verifyToken(req: VercelRequest): AuthenticatedUser | null {
     
     if (!token) return null;
     
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as AuthenticatedUser;
+    const secret = process.env.JWT_SECRET;
+    if (!secret) return null;
+    // Pin the algorithm so a token can never select its own verification method.
+    const decoded = jwt.verify(token, secret, { algorithms: ['HS256'] }) as AuthenticatedUser;
+    if (!decoded || typeof decoded.id !== 'string' || !['CUSTOMER', 'PROVIDER', 'ADMIN'].includes(decoded.role)) {
+      return null;
+    }
     return decoded;
   } catch {
     return null;

@@ -48,7 +48,7 @@ export default function NotificationPanel({ notifications, onClearItem }: Notifi
           <h3 className="text-xs font-black uppercase text-stone-900 tracking-wider">
             Operational Alerts
           </h3>
-          <p className="text-[9.5px] text-stone-450 font-medium">
+          <p className="text-3xs text-stone-450 font-medium">
             Items requiring immediate oversight. Latest five only.
           </p>
         </div>
@@ -69,15 +69,15 @@ export default function NotificationPanel({ notifications, onClearItem }: Notifi
                 {getAlertIcon(notif.type)}
               </span>
               <div className="flex-1 min-w-0">
-                <p className="leading-snug text-[11px] font-semibold text-stone-850">{notif.message}</p>
-                <span className="block text-[8px] opacity-75 font-bold uppercase mt-1">
+                <p className="leading-snug text-2xs font-semibold text-stone-850">{notif.message}</p>
+                <span className="block text-3xs opacity-75 font-bold uppercase mt-1">
                   {notif.time}
                 </span>
               </div>
               {onClearItem && (
                 <button
                   onClick={() => onClearItem(notif.id)}
-                  className="text-[10px] font-bold opacity-60 hover:opacity-100 transition-opacity focus:outline-none"
+                  className="text-2xs font-bold opacity-60 hover:opacity-100 transition-opacity focus:outline-none"
                   aria-label="Dismiss alert"
                 >
                   ✕

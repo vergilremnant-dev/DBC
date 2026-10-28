@@ -62,7 +62,7 @@ export function BlogCatalog() {
         
         {/* Banner Section */}
         <section className="text-center max-w-2xl mx-auto py-6">
-          <h1 className="text-3xl font-extrabold text-stone-900 font-serif leading-tight sm:text-4xl">
+          <h1 className="text-3xl font-extrabold text-stone-900 font-display leading-tight sm:text-4xl">
             {BRAND.fullName} Knowledge Hub
           </h1>
           {user?.role === 'ROLE_ADMIN' && (
@@ -124,7 +124,7 @@ export function BlogCatalog() {
         {/* Featured Section (visible when no filters) */}
         {!selectedCategory && !search && featured && featured.popular.length > 0 && (
           <section className="mt-12 space-y-6">
-            <h2 className="text-lg font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+            <h2 className="text-lg font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
               🔥 Popular Handbooks & Guides
             </h2>
             <div className="grid gap-6 sm:grid-cols-3">
@@ -141,23 +141,23 @@ export function BlogCatalog() {
                       className="h-40 w-full object-cover group-hover:scale-102 transition duration-300"
                     />
                   ) : (
-                    <div className="h-40 w-full bg-stone-100 flex items-center justify-center text-stone-400 font-bold uppercase tracking-wider text-[10px]">
+                    <div className="h-40 w-full bg-stone-100 flex items-center justify-center text-stone-400 font-bold uppercase tracking-wider text-2xs">
                       {BRAND.name} Guide
                     </div>
                   )}
                   <div className="p-4 flex-1 flex flex-col justify-between">
                     <div>
-                      <span className="text-[9px] font-black uppercase tracking-wider text-amber-600">
+                      <span className="text-3xs font-black uppercase tracking-wider text-amber-600">
                         {art.category?.name}
                       </span>
-                      <h3 className="mt-1 text-sm font-extrabold text-stone-900 font-serif group-hover:text-amber-700 transition leading-snug">
+                      <h3 className="mt-1 text-sm font-extrabold text-stone-900 font-display group-hover:text-amber-700 transition leading-snug">
                         {art.title}
                       </h3>
                       <p className="mt-1.5 text-xs text-stone-500 line-clamp-2 leading-relaxed">
                         {art.excerpt}
                       </p>
                     </div>
-                    <div className="mt-4 flex items-center justify-between text-[10px] text-stone-400 font-bold uppercase tracking-wider border-t border-stone-50 pt-3">
+                    <div className="mt-4 flex items-center justify-between text-2xs text-stone-400 font-bold uppercase tracking-wider border-t border-stone-50 pt-3">
                       <span>⏱️ {art.readTime} Min Read</span>
                       <span>👁️ {art.viewsCount} Reads</span>
                     </div>
@@ -170,7 +170,7 @@ export function BlogCatalog() {
 
         {/* Regular Articles Feed */}
         <section className="mt-12 space-y-6">
-          <h2 className="text-lg font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+          <h2 className="text-lg font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
             {selectedCategory
               ? `📚 Guides on ${categories.find((c) => c.slug === selectedCategory)?.name}`
               : search
@@ -205,10 +205,10 @@ export function BlogCatalog() {
                   <div className="p-4 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="text-[9px] font-black uppercase tracking-wider text-emerald-700">
+                        <span className="text-3xs font-black uppercase tracking-wider text-emerald-700">
                           {art.category?.name}
                         </span>
-                        <span className="text-[10px] text-stone-400 font-semibold">
+                        <span className="text-2xs text-stone-400 font-semibold">
                           {new Date(art.publishedAt || art.createdAt).toLocaleDateString('en-IN', {
                             month: 'short',
                             day: 'numeric',
@@ -218,11 +218,11 @@ export function BlogCatalog() {
                       <h3 className="mt-1 text-xs font-bold text-stone-900 group-hover:text-emerald-800 transition leading-snug">
                         {art.title}
                       </h3>
-                      <p className="mt-1 text-[11px] text-stone-500 line-clamp-2 leading-relaxed">
+                      <p className="mt-1 text-2xs text-stone-500 line-clamp-2 leading-relaxed">
                         {art.excerpt}
                       </p>
                     </div>
-                    <div className="mt-3 flex items-center justify-between text-[9px] text-stone-450 text-stone-500 font-bold uppercase tracking-wider">
+                    <div className="mt-3 flex items-center justify-between text-3xs text-stone-450 text-stone-500 font-bold uppercase tracking-wider">
                       <span>⏱️ {art.readTime} Min Read</span>
                       {art.authorProvider?.fullName && (
                         <span>✍️ {art.authorProvider.fullName}</span>
@@ -238,7 +238,7 @@ export function BlogCatalog() {
 
       {/* Footer */}
       <footer className="mt-16 border-t border-stone-200 bg-stone-50 py-10 text-center">
-        <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">
+        <p className="text-2xs text-stone-400 font-bold uppercase tracking-wider">
           {BRAND.name} © {new Date().getFullYear()} — Building Trust, Educating Communities.
         </p>
       </footer>

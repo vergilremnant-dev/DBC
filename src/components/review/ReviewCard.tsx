@@ -36,19 +36,19 @@ export function ReviewCard({ review, onReplyClick, canReply = false }: ReviewCar
           <div className="flex items-center gap-2">
             <span className="font-bold text-stone-900 text-sm">{getCustomerDisplayName(review.customer?.fullName)}</span>
             {review.isVerified && (
-              <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-50 border border-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+              <span className="text-3xs font-bold uppercase tracking-wider bg-emerald-50 border border-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
                 Verified
               </span>
             )}
           </div>
           <div className="flex items-center gap-2 mt-1.5">
             <StarRating rating={review.rating} size="sm" />
-            <span className="text-[10px] text-stone-400 font-semibold">{formatDate(review.createdAt)}</span>
+            <span className="text-2xs text-stone-400 font-semibold">{formatDate(review.createdAt)}</span>
           </div>
         </div>
 
         {review.wouldRecommend !== undefined && (
-          <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
+          <span className={`text-3xs font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
             review.wouldRecommend 
               ? 'bg-emerald-50 border-emerald-100 text-emerald-800' 
               : 'bg-stone-50 border-stone-200 text-stone-500'
@@ -69,7 +69,7 @@ export function ReviewCard({ review, onReplyClick, canReply = false }: ReviewCar
         <div className="bg-stone-50 border-l-2 border-amber-600 p-4 rounded-r-lg mt-3 text-xs space-y-1">
           <div className="flex items-center justify-between">
             <span className="font-bold text-stone-900">Provider Response</span>
-            <span className="text-[9px] text-stone-400 font-semibold">Replied</span>
+            <span className="text-3xs text-stone-400 font-semibold">Replied</span>
           </div>
           <p className="text-stone-600 leading-relaxed">{review.providerResponse}</p>
         </div>
@@ -80,7 +80,7 @@ export function ReviewCard({ review, onReplyClick, canReply = false }: ReviewCar
         <div className="pt-2 flex justify-end">
           <button
             onClick={() => onReplyClick(review.id)}
-            className="rounded bg-stone-900 hover:bg-stone-855 text-white text-[10px] font-bold px-3 py-1.5 transition cursor-pointer"
+            className="rounded bg-stone-900 hover:bg-stone-855 text-white text-2xs font-bold px-3 py-1.5 transition cursor-pointer"
           >
             Reply
           </button>

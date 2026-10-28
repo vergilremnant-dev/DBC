@@ -17,7 +17,7 @@ interface SecuritySettingsProps {
 
 function ReadOnlyBadge() {
   return (
-    <span className="text-[8px] font-black uppercase tracking-wider text-stone-400 bg-stone-100 border border-stone-200 px-1.5 py-0.5 rounded ml-2">
+    <span className="text-3xs font-black uppercase tracking-wider text-stone-400 bg-stone-100 border border-stone-200 px-1.5 py-0.5 rounded ml-2">
       Read-only · Backend Required
     </span>
   );
@@ -35,7 +35,7 @@ function ToggleField({
           {label}
           {readOnly && <ReadOnlyBadge />}
         </label>
-        {description && <p className="text-[10px] text-stone-500 font-medium mt-0.5">{description}</p>}
+        {description && <p className="text-2xs text-stone-500 font-medium mt-0.5">{description}</p>}
       </div>
       <button
         id={id}
@@ -62,12 +62,12 @@ export default function SecuritySettings({ values, onChange }: SecuritySettingsP
         {/* Password Policy */}
         <div className="py-4 border-b border-light-border/60">
           <div className="flex items-center gap-2 mb-3">
-            <p className="text-[10px] font-black uppercase tracking-wider text-stone-500">Password Policy</p>
+            <p className="text-2xs font-black uppercase tracking-wider text-stone-500">Password Policy</p>
             <ReadOnlyBadge />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label htmlFor="sec-min-len" className="block text-[10px] font-bold text-stone-600 mb-1.5">Min. Password Length</label>
+              <label htmlFor="sec-min-len" className="block text-2xs font-bold text-stone-600 mb-1.5">Min. Password Length</label>
               <div className="flex items-center gap-2">
                 <input
                   id="sec-min-len"
@@ -79,7 +79,7 @@ export default function SecuritySettings({ values, onChange }: SecuritySettingsP
                   readOnly
                   aria-readonly="true"
                 />
-                <span className="text-[10px] text-stone-500">chars</span>
+                <span className="text-2xs text-stone-500">chars</span>
               </div>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function SecuritySettings({ values, onChange }: SecuritySettingsP
                   disabled
                   className="w-3.5 h-3.5 accent-brand-emerald"
                 />
-                <span className="text-[10px] font-medium text-stone-600">{item.label}</span>
+                <span className="text-2xs font-medium text-stone-600">{item.label}</span>
               </label>
             ))}
           </div>
@@ -111,7 +111,7 @@ export default function SecuritySettings({ values, onChange }: SecuritySettingsP
             <label htmlFor="sec-session" className="text-xs font-bold text-stone-700 block">
               Session Timeout <ReadOnlyBadge />
             </label>
-            <p className="text-[10px] text-stone-500 font-medium mt-0.5">Auto-logout idle users after this period.</p>
+            <p className="text-2xs text-stone-500 font-medium mt-0.5">Auto-logout idle users after this period.</p>
           </div>
           <div className="flex items-center gap-2">
             <input
@@ -122,7 +122,7 @@ export default function SecuritySettings({ values, onChange }: SecuritySettingsP
               className={`${inputCls} opacity-60 cursor-not-allowed`}
               aria-readonly="true"
             />
-            <span className="text-[10px] text-stone-500">minutes</span>
+            <span className="text-2xs text-stone-500">minutes</span>
           </div>
         </div>
 
@@ -132,7 +132,7 @@ export default function SecuritySettings({ values, onChange }: SecuritySettingsP
             <label htmlFor="sec-lock" className="text-xs font-bold text-stone-700 block">
               Account Lock Threshold <ReadOnlyBadge />
             </label>
-            <p className="text-[10px] text-stone-500 font-medium mt-0.5">Failed login attempts before temporary account lock.</p>
+            <p className="text-2xs text-stone-500 font-medium mt-0.5">Failed login attempts before temporary account lock.</p>
           </div>
           <div className="flex items-center gap-2">
             <input
@@ -143,7 +143,7 @@ export default function SecuritySettings({ values, onChange }: SecuritySettingsP
               className={`${inputCls} opacity-60 cursor-not-allowed`}
               aria-readonly="true"
             />
-            <span className="text-[10px] text-stone-500">attempts</span>
+            <span className="text-2xs text-stone-500">attempts</span>
           </div>
         </div>
 

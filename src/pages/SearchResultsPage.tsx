@@ -171,7 +171,7 @@ export function SearchResultsPage() {
       category: p.category?.name || 'Home Services',
       priceRange: templateS.price,
       timeline: templateS.timeline,
-      rating: p.averageRating || 4.8,
+      rating: p.averageRating || 0,
     });
 
     const templateP = PROJECT_TEMPLATES[idx % PROJECT_TEMPLATES.length];
@@ -243,7 +243,7 @@ export function SearchResultsPage() {
           fullName: pro.fullName,
           businessName: pro.businessName,
           experienceYears: pro.experienceYears,
-          rating: pro.rating || 4.8,
+          rating: pro.rating || 0,
           skills: pro.skills || ['Coordination', 'Layout Drafting'],
           city: pro.city,
           consultationFee: 500,
@@ -283,7 +283,7 @@ export function SearchResultsPage() {
       <section className="relative pt-4 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left">
         
         {/* Navigation Breadcrumb */}
-        <div className="flex items-center gap-1.5 text-[11px] font-bold text-stone-400 mb-3.5">
+        <div className="flex items-center gap-1.5 text-2xs font-bold text-stone-400 mb-3.5">
           <button onClick={() => navigate('/')} className="hover:text-stone-900 transition cursor-pointer">
             Home
           </button>
@@ -299,7 +299,7 @@ export function SearchResultsPage() {
           <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-emerald-800/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl space-y-1.5">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-serif tracking-tight leading-tight text-white">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-display tracking-tight leading-tight text-white">
               {q ? `Search Results for "${q}"` : 'Find the Right Professional for Your Project'}
             </h1>
             <p className="text-xs text-stone-300 font-normal leading-relaxed max-w-2xl">
@@ -325,7 +325,7 @@ export function SearchResultsPage() {
                   <button
                     type="button"
                     onClick={() => setSearchInputVal('')}
-                    className="absolute right-2.5 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-[10px] font-bold transition cursor-pointer"
+                    className="absolute right-2.5 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-2xs font-bold transition cursor-pointer"
                   >
                     ✕
                   </button>
@@ -369,7 +369,7 @@ export function SearchResultsPage() {
 
           {/* Quick Specialty Discovery Shortcut Tags */}
           <div className="relative z-10 flex flex-wrap items-center gap-1.5 pt-4 text-xs text-stone-300">
-            <span className="text-[9.5px] font-black uppercase tracking-wider text-stone-400 mr-1">Popular:</span>
+            <span className="text-3xs font-black uppercase tracking-wider text-stone-400 mr-1">Popular:</span>
             {QUICK_SPECIALTIES.map((spec) => {
               const isSelected = filters.category === spec || (spec === 'All Specialties' && !filters.category);
               return (
@@ -382,7 +382,7 @@ export function SearchResultsPage() {
                       setFilters((prev) => ({ ...prev, category: spec }));
                     }
                   }}
-                  className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium transition cursor-pointer ${
+                  className={`px-2.5 py-0.5 rounded-full text-2xs font-medium transition cursor-pointer ${
                     isSelected
                       ? 'bg-emerald-600 text-white font-bold'
                       : 'bg-white/10 hover:bg-white/20 text-stone-200 border border-white/10'
@@ -429,7 +429,7 @@ export function SearchResultsPage() {
                 setSearchParams(p);
               }}
               aria-label="Filter by location"
-              className="h-8.5 text-[11.5px] font-bold text-stone-800 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600/20 transition"
+              className="h-8.5 text-xs font-bold text-stone-800 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600/20 transition"
             >
               <option value="">📍 All Locations</option>
               {uniqueCities.map((c) => (
@@ -442,7 +442,7 @@ export function SearchResultsPage() {
               value={filters.category}
               onChange={(e) => setFilters((prev) => ({ ...prev, category: e.target.value }))}
               aria-label="Filter by specialty"
-              className="h-8.5 text-[11.5px] font-bold text-stone-800 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600/20 transition"
+              className="h-8.5 text-xs font-bold text-stone-800 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600/20 transition"
             >
               <option value="">🛠️ All Specialties</option>
               {uniqueCategories.map((c) => (
@@ -453,7 +453,7 @@ export function SearchResultsPage() {
             {/* Verified Only Toggle Pill */}
             <button
               onClick={() => setFilters((prev) => ({ ...prev, isVerified: !prev.isVerified }))}
-              className={`h-8.5 px-3 rounded-lg border text-[11.5px] font-bold transition-all duration-200 cursor-pointer flex items-center gap-1 ${
+              className={`h-8.5 px-3 rounded-lg border text-xs font-bold transition-all duration-200 cursor-pointer flex items-center gap-1 ${
                 filters.isVerified
                   ? 'bg-emerald-50 border-emerald-600 text-emerald-800 ring-1 ring-emerald-200'
                   : 'bg-stone-50 hover:bg-stone-100 border-stone-200 text-stone-700'
@@ -466,7 +466,7 @@ export function SearchResultsPage() {
             {/* All Filters Drawer Trigger */}
             <button
               onClick={() => setIsFilterDrawerOpen(true)}
-              className={`h-8.5 px-3 rounded-lg border text-[11.5px] font-bold transition cursor-pointer flex items-center gap-1.5 ${
+              className={`h-8.5 px-3 rounded-lg border text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
                 activeFilterCount > 0
                   ? 'bg-stone-900 text-white border-stone-900 shadow-2xs'
                   : 'bg-stone-50 hover:bg-stone-100 border-stone-200 text-stone-700'
@@ -474,7 +474,7 @@ export function SearchResultsPage() {
             >
               <span>⚙️ Filters</span>
               {activeFilterCount > 0 && (
-                <span className="w-4 h-4 rounded-full bg-emerald-500 text-stone-950 font-black text-[9px] flex items-center justify-center">
+                <span className="w-4 h-4 rounded-full bg-emerald-500 text-stone-950 font-black text-3xs flex items-center justify-center">
                   {activeFilterCount}
                 </span>
               )}
@@ -482,12 +482,12 @@ export function SearchResultsPage() {
 
             {/* Sorting Dropdown */}
             <div className="flex items-center gap-1 pl-1.5 border-l border-stone-200">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-stone-400">Sort:</span>
+              <span className="text-3xs font-bold uppercase tracking-wider text-stone-400">Sort:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
                 aria-label="Sort options"
-                className="h-8.5 text-[11.5px] font-bold text-stone-900 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600/20 transition"
+                className="h-8.5 text-xs font-bold text-stone-900 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-lg px-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600/20 transition"
               >
                 <option value="relevance">Recommended</option>
                 <option value="rating">Highest Rated</option>
@@ -510,7 +510,7 @@ export function SearchResultsPage() {
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2.5 border-b border-stone-200/80">
           <div>
-            <h2 className="text-xs sm:text-sm font-bold font-serif text-stone-900 uppercase tracking-wide flex items-center gap-1.5">
+            <h2 className="text-xs sm:text-sm font-bold font-display text-stone-900 uppercase tracking-wide flex items-center gap-1.5">
               <span className="text-emerald-800">{tabCounts[activeTab]}</span>
               <span>
                 {activeTab === 'professionals' && 'Verified Professionals'}
@@ -519,7 +519,7 @@ export function SearchResultsPage() {
                 {activeTab === 'projects' && 'Architectural Showcase Blueprints'}
               </span>
             </h2>
-            <p className="text-[11px] text-stone-500 font-normal mt-0.2">
+            <p className="text-2xs text-stone-500 font-normal mt-0.2">
               Showing verified partners matching your project specifications {filters.city ? `in ${filters.city}` : 'across all regions'}.
             </p>
           </div>
@@ -528,7 +528,7 @@ export function SearchResultsPage() {
           {activeFilterCount > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
               {filters.city && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-stone-200 text-[11px] font-medium text-stone-800 shadow-2xs">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-stone-200 text-2xs font-medium text-stone-800 shadow-2xs">
                   <span>📍 {filters.city}</span>
                   <button
                     onClick={() => {
@@ -545,7 +545,7 @@ export function SearchResultsPage() {
               )}
 
               {filters.category && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-stone-200 text-[11px] font-medium text-stone-800 shadow-2xs">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-stone-200 text-2xs font-medium text-stone-800 shadow-2xs">
                   <span>Category: {filters.category}</span>
                   <button
                     onClick={() => setFilters((prev) => ({ ...prev, category: '' }))}
@@ -557,7 +557,7 @@ export function SearchResultsPage() {
               )}
 
               {filters.experienceYears > 0 && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-stone-200 text-[11px] font-medium text-stone-800 shadow-2xs">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-stone-200 text-2xs font-medium text-stone-800 shadow-2xs">
                   <span>Min {filters.experienceYears}+ Yrs</span>
                   <button
                     onClick={() => setFilters((prev) => ({ ...prev, experienceYears: 0 }))}
@@ -569,7 +569,7 @@ export function SearchResultsPage() {
               )}
 
               {filters.isVerified && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-[11px] font-bold text-emerald-800 shadow-2xs">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-2xs font-bold text-emerald-800 shadow-2xs">
                   <span>🛡️ Verified Only</span>
                   <button
                     onClick={() => setFilters((prev) => ({ ...prev, isVerified: false }))}
@@ -582,7 +582,7 @@ export function SearchResultsPage() {
 
               <button
                 onClick={handleResetFilters}
-                className="text-[11px] font-bold text-rose-600 hover:text-rose-800 underline ml-1 cursor-pointer"
+                className="text-2xs font-bold text-rose-600 hover:text-rose-800 underline ml-1 cursor-pointer"
               >
                 Clear all
               </button>
@@ -635,7 +635,7 @@ export function SearchResultsPage() {
                           experienceYears: pro.experienceYears,
                           city: pro.city,
                           state: pro.state,
-                          rating: pro.averageRating || 4.8,
+                          rating: pro.averageRating || 0,
                           skills: [pro.category?.name || 'Coordination', 'Layout Drafting', 'Civil Execution'],
                           description: pro.description || undefined,
                           isVerified: pro.verificationStatus === 'VERIFIED',
@@ -676,7 +676,7 @@ export function SearchResultsPage() {
                           title: pro.category?.name || 'Planning Consultant',
                           experienceYears: pro.experienceYears,
                           city: pro.city,
-                          rating: pro.averageRating || 4.8,
+                          rating: pro.averageRating || 0,
                           languages: ['English', 'Telugu', 'Hindi'],
                           sessionDuration: '60 Mins Session',
                           fee: pro.consultationFee || 500,
@@ -757,7 +757,7 @@ export function SearchResultsPage() {
               
               <div className="space-y-6 overflow-y-auto no-scrollbar pb-6 flex-1">
                 <div className="flex items-center justify-between border-b border-stone-100 pb-4">
-                  <h3 className="text-base font-bold font-serif text-stone-900">
+                  <h3 className="text-base font-bold font-display text-stone-900">
                     Discovery Filters
                   </h3>
                   <button

@@ -13,7 +13,7 @@ export function BookingEmptyState({ onAction }: BookingEmptyStateProps) {
         <h4 className="text-xs font-black text-stone-900 uppercase tracking-widest leading-snug">
           You haven't started a project request yet
         </h4>
-        <p className="text-[10px] text-stone-450 font-medium leading-relaxed">
+        <p className="text-2xs text-stone-450 font-medium leading-relaxed">
           Connect with local experts, submit custom project scope requirements, and request verified service partners directly from our catalog.
         </p>
       </div>
@@ -21,7 +21,7 @@ export function BookingEmptyState({ onAction }: BookingEmptyStateProps) {
       <div className="pt-2">
         <button
           onClick={onAction}
-          className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[10px] px-4.5 py-2.5 rounded-xl transition shadow-sm focus:outline-none"
+          className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-2xs px-4.5 py-2.5 rounded-xl transition shadow-sm focus:outline-none"
         >
           Find a Professional
         </button>

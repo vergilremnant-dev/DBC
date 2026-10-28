@@ -244,7 +244,7 @@ export function FinanceBillingPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <BrandLogo variant="header" />
-            <span className="rounded bg-stone-900 px-2.5 py-0.5 text-[8.5px] font-black text-white uppercase tracking-wider">
+            <span className="rounded bg-stone-900 px-2.5 py-0.5 text-3xs font-black text-white uppercase tracking-wider">
               Finance Desk
             </span>
           </div>
@@ -270,7 +270,7 @@ export function FinanceBillingPage() {
           </div>
         )}
 
-        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar">
+        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-3xs font-black uppercase tracking-wider no-scrollbar">
           {([
             { id: 'dashboard', label: 'Finance Dashboard', icon: '💳' },
             { id: 'estimates', label: 'Estimate & Quotes', icon: '📋' },
@@ -306,19 +306,19 @@ export function FinanceBillingPage() {
             {/* Quick Metrics */}
             <div className="grid gap-4 sm:grid-cols-4">
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Total Billings</span>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Total Billings</span>
                 <h4 className="text-xl font-extrabold text-stone-black mt-1">₹4,20,000</h4>
               </div>
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Pending Receipts</span>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Pending Receipts</span>
                 <h4 className="text-xl font-extrabold text-stone-black mt-1">₹1,85,000</h4>
               </div>
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Operating Expenses</span>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Operating Expenses</span>
                 <h4 className="text-xl font-extrabold text-stone-black mt-1">₹60,000</h4>
               </div>
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Platform Wallet</span>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Platform Wallet</span>
                 <h4 className="text-xl font-extrabold text-brand-emerald mt-1">₹3,40,000</h4>
               </div>
             </div>
@@ -332,11 +332,11 @@ export function FinanceBillingPage() {
                     {[12, 18, 14, 25, 22, 28, 34].map((flow, i) => (
                       <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
                         <div className="w-full bg-brand-emerald rounded-t-md" style={{ height: `${flow * 3}px` }} />
-                        <span className="text-[8px] text-stone-gray/80 font-bold">₹{flow}K</span>
+                        <span className="text-3xs text-stone-gray/80 font-bold">₹{flow}K</span>
                       </div>
                     ))}
                   </div>
-                  <div className="flex justify-between text-[8px] text-stone-gray/80 font-black uppercase tracking-wider mt-3 pt-2 border-t border-light-border/40">
+                  <div className="flex justify-between text-3xs text-stone-gray/80 font-black uppercase tracking-wider mt-3 pt-2 border-t border-light-border/40">
                     <span>May 26</span>
                     <span>Jun 26</span>
                     <span>Jul 26 (Current)</span>
@@ -347,7 +347,7 @@ export function FinanceBillingPage() {
               {/* GST & Tax overview */}
               <div className="dbc-card space-y-4">
                 <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Tax Ledger & GST Breakdown</h3>
-                <div className="space-y-2 text-[10px] font-semibold text-stone-gray">
+                <div className="space-y-2 text-2xs font-semibold text-stone-gray">
                   <p className="flex justify-between border-b border-light-border/45 pb-1.5">
                     <span>CGST Payouts (9%):</span> <strong className="text-stone-black">₹37,800</strong>
                   </p>
@@ -380,10 +380,10 @@ export function FinanceBillingPage() {
                   <div key={est.id} className="p-4 bg-light-stone/20 border border-light-border rounded-2xl flex justify-between items-center text-xs">
                     <div>
                       <h4 className="font-black text-stone-black">{est.name}</h4>
-                      <span className="block text-[8px] text-stone-gray font-bold mt-1">Client: {est.client} &bull; Date: {est.date}</span>
+                      <span className="block text-3xs text-stone-gray font-bold mt-1">Client: {est.client} &bull; Date: {est.date}</span>
                       <strong className="block text-stone-black mt-1">₹{est.amount.toLocaleString()} INR</strong>
                     </div>
-                    <span className={`dbc-badge text-[7.5px] py-0.5 uppercase font-bold ${
+                    <span className={`dbc-badge text-3xs py-0.5 uppercase font-bold ${
                       est.status === 'Accepted' ? 'dbc-badge-completed' : 'dbc-badge-planning'
                     }`}>{est.status}</span>
                   </div>
@@ -483,12 +483,12 @@ export function FinanceBillingPage() {
                             {inv.status === 'Sent' && currentUserRole === 'CUSTOMER' ? (
                               <button
                                 onClick={() => handlePayInvoice(inv)}
-                                className="dbc-btn dbc-btn-primary py-1 px-3 text-[9px] font-bold uppercase cursor-pointer"
+                                className="dbc-btn dbc-btn-primary py-1 px-3 text-3xs font-bold uppercase cursor-pointer"
                               >
                                 Pay Invoice
                               </button>
                             ) : (
-                              <span className={`dbc-badge text-[7.5px] py-0.5 uppercase ${
+                              <span className={`dbc-badge text-3xs py-0.5 uppercase ${
                                 inv.status === 'Paid' ? 'dbc-badge-completed' : 'dbc-badge-planning'
                               }`}>{inv.status}</span>
                             )}
@@ -565,12 +565,12 @@ export function FinanceBillingPage() {
                         <tr key={exp.id}>
                           <td>{exp.date}</td>
                           <td>
-                            <span className="dbc-badge text-[7.5px] py-0.5">{exp.category}</span>
+                            <span className="dbc-badge text-3xs py-0.5">{exp.category}</span>
                           </td>
                           <td>{exp.notes}</td>
                           <td className="font-semibold text-stone-black">₹{exp.amount.toLocaleString()}</td>
                           <td className="text-right">
-                            <span className={`dbc-badge text-[7.5px] py-0.5 uppercase ${
+                            <span className={`dbc-badge text-3xs py-0.5 uppercase ${
                               exp.status === 'Approved' ? 'dbc-badge-completed' : 'dbc-badge-planning'
                             }`}>{exp.status}</span>
                           </td>
@@ -588,7 +588,7 @@ export function FinanceBillingPage() {
                 <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Log Expense Payout</h3>
                 
                 <div className="space-y-1.5">
-                  <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Expense category</label>
+                  <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Expense category</label>
                   <select
                     value={expCategory}
                     onChange={(e) => setExpCategory(e.target.value as 'Materials' | 'Labor' | 'Equipment' | 'Travel' | 'Miscellaneous')}
@@ -638,9 +638,9 @@ export function FinanceBillingPage() {
                 <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Platform Escrow Wallet</h3>
                 
                 <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-3">
-                  <span className="dbc-badge dbc-badge-completed text-[7.5px] py-0.5">Wallet Balance Active</span>
+                  <span className="dbc-badge dbc-badge-completed text-3xs py-0.5">Wallet Balance Active</span>
                   <h4 className="text-2xl font-extrabold text-brand-emerald">₹3,40,000</h4>
-                  <p className="text-[10.5px] text-stone-gray font-semibold leading-relaxed">
+                  <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
                     Balance includes milestone advance payments held securely in DBC smart escrow before final project phase sign-offs.
                   </p>
                 </div>
@@ -682,11 +682,11 @@ export function FinanceBillingPage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <h4 className="text-xs font-black text-stone-black">Refund Ref: {ref.id}</h4>
-                        <span className="block text-[8px] text-stone-gray font-bold mt-1">Project: {ref.project}</span>
+                        <span className="block text-3xs text-stone-gray font-bold mt-1">Project: {ref.project}</span>
                       </div>
-                      <span className="dbc-badge text-[7.5px] py-0.5">{ref.status}</span>
+                      <span className="dbc-badge text-3xs py-0.5">{ref.status}</span>
                     </div>
-                    <p className="text-[10.5px] text-stone-gray font-semibold leading-relaxed">
+                    <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
                       <strong>Amount:</strong> ₹{ref.amount.toLocaleString()} INR<br />
                       <strong>Reason:</strong> "{ref.reason}"
                     </p>

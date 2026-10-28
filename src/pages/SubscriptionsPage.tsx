@@ -173,10 +173,10 @@ export function SubscriptionsPage() {
       <div className="bg-warm-cream text-stone-950 font-sans flex flex-col min-h-screen">
         <main className="mx-auto max-w-4xl w-full px-4 py-16 sm:px-6 space-y-12 flex-1">
           <div className="text-center space-y-4 max-w-xl mx-auto">
-            <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+            <span className="text-2xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
               Subscription Management
             </span>
-            <h1 className="text-3xl font-extrabold text-stone-900 font-serif sm:text-5xl leading-tight">
+            <h1 className="text-3xl font-extrabold text-stone-900 font-display sm:text-5xl leading-tight">
               Manage Your Pass
             </h1>
             <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-medium">
@@ -192,17 +192,17 @@ export function SubscriptionsPage() {
             <div className="md:col-span-1 bg-white border border-emerald-600 ring-4 ring-emerald-500/10 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
+                  <span className="text-2xs font-black uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
                     Active Plan
                   </span>
                   <span className="text-xs text-stone-500 font-semibold">
                     Expires {new Date(activeSub.endDate).toLocaleDateString()}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-stone-900 font-serif">
+                <h3 className="text-xl font-bold text-stone-900 font-display">
                   {currentPlan?.name || "Premium Gold Access"}
                 </h3>
-                <div className="text-3xl font-black text-emerald-700 font-serif">
+                <div className="text-3xl font-black text-emerald-700 font-display">
                   ₹{currentPlan?.price || 0}
                 </div>
                 <p className="text-xs text-stone-500 leading-relaxed">
@@ -244,7 +244,7 @@ export function SubscriptionsPage() {
 
             {/* Upgrade Options */}
             <div className="md:col-span-2 space-y-6">
-              <h2 className="text-lg font-bold text-stone-900 font-serif border-b border-stone-200 pb-2">
+              <h2 className="text-lg font-bold text-stone-900 font-display border-b border-stone-200 pb-2">
                 Upgrade / Change Plan
               </h2>
               {upgradePlans.length === 0 ? (
@@ -260,17 +260,17 @@ export function SubscriptionsPage() {
                       >
                         <div className="space-y-3 flex-1">
                           <div className="flex items-center gap-3">
-                            <h3 className="text-sm font-bold text-stone-900 font-serif">
+                            <h3 className="text-sm font-bold text-stone-900 font-display">
                               {up.name}
                             </h3>
-                            <span className="text-[8px] font-black uppercase tracking-widest text-stone-500 bg-stone-50 border border-stone-200 px-2 py-0.5 rounded-full">
+                            <span className="text-3xs font-black uppercase tracking-widest text-stone-500 bg-stone-50 border border-stone-200 px-2 py-0.5 rounded-full">
                               Upgrade Option
                             </span>
                           </div>
                           <p className="text-xs text-stone-500">
                             {up.description || "Unlock higher tier consultation and WhatsApp coordination access."}
                           </p>
-                          <ul className="text-[10px] text-stone-600 space-y-1">
+                          <ul className="text-2xs text-stone-600 space-y-1">
                             <li className="flex items-center gap-1.5">
                               <span className="text-emerald-600">✓</span>
                               Browse verified providers & portfolios
@@ -284,10 +284,10 @@ export function SubscriptionsPage() {
 
                         <div className="flex flex-col items-stretch sm:items-end justify-between min-w-[140px] gap-3">
                           <div className="text-right">
-                            <span className="text-[10px] text-stone-400 font-semibold line-through block">
+                            <span className="text-2xs text-stone-400 font-semibold line-through block">
                               ₹{isConsultant ? "4,999" : "999"}
                             </span>
-                            <span className="text-2xl font-black text-emerald-700 font-serif block">
+                            <span className="text-2xl font-black text-emerald-700 font-display block">
                               ₹{up.price}
                             </span>
                           </div>
@@ -318,10 +318,10 @@ export function SubscriptionsPage() {
         
         {/* Banner */}
         <div className="text-center space-y-4 max-w-xl mx-auto">
-          <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+          <span className="text-2xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
             Premium Marketplace Access
           </span>
-          <h1 className="text-3xl font-extrabold text-stone-900 font-serif sm:text-5xl leading-tight">
+          <h1 className="text-3xl font-extrabold text-stone-900 font-display sm:text-5xl leading-tight">
             Unlock Expert Capabilities
           </h1>
           <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-medium">
@@ -361,16 +361,16 @@ export function SubscriptionsPage() {
         >
           <div className="space-y-5">
             <div className="flex justify-between items-start">
-              <h3 className="text-lg font-bold text-stone-900 font-serif">
+              <h3 className="text-lg font-bold text-stone-900 font-display">
                 {p.name}
               </h3>
 
               {isActivePlan ? (
-                <span className="text-[9px] font-black uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
+                <span className="text-3xs font-black uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
                   Active / Subscribed
                 </span>
               ) : (
-                <span className="text-[9px] font-black uppercase tracking-widest text-stone-500 bg-stone-50 border border-stone-200 px-2 py-1 rounded-full">
+                <span className="text-3xs font-black uppercase tracking-widest text-stone-500 bg-stone-50 border border-stone-200 px-2 py-1 rounded-full">
                   Standard Plan
                 </span>
               )}
@@ -387,12 +387,12 @@ export function SubscriptionsPage() {
                       ₹999
                     </span>
 
-                    <span className="bg-red-100 text-red-700 text-[10px] font-bold rounded-full px-2 py-0.5">
+                    <span className="bg-red-100 text-red-700 text-2xs font-bold rounded-full px-2 py-0.5">
                       70% OFF
                     </span>
                   </div>
 
-                  <div className="text-4xl font-black text-emerald-700 font-serif">
+                  <div className="text-4xl font-black text-emerald-700 font-display">
                     ₹299
                   </div>
                 </>
@@ -405,12 +405,12 @@ export function SubscriptionsPage() {
                       ₹4,999
                     </span>
 
-                    <span className="bg-red-100 text-red-700 text-[10px] font-bold rounded-full px-2 py-0.5">
+                    <span className="bg-red-100 text-red-700 text-2xs font-bold rounded-full px-2 py-0.5">
                       50% OFF
                     </span>
                   </div>
 
-                  <div className="text-4xl font-black text-emerald-700 font-serif">
+                  <div className="text-4xl font-black text-emerald-700 font-display">
                     ₹2,499
                   </div>
                 </>
@@ -425,7 +425,7 @@ export function SubscriptionsPage() {
 
             {/* FEATURES */}
 
-            <ul className="text-[11px] font-semibold text-stone-700 space-y-3 pt-5 border-t border-stone-100">
+            <ul className="text-2xs font-semibold text-stone-700 space-y-3 pt-5 border-t border-stone-100">
 
               <li className="flex items-start gap-2">
                 <span className="text-emerald-600 mt-0.5">✓</span>
@@ -481,7 +481,7 @@ export function SubscriptionsPage() {
               {isActivePlan ? "Current Plan" : hasAnyActiveSub ? "Upgrade Unavailable" : `Get ${p.name.replace(' Package', '')}`}
             </button>
             {hasAnyActiveSub && !isActivePlan && (
-              <p className="text-[10px] text-red-600 mt-2 font-semibold text-center leading-relaxed">
+              <p className="text-2xs text-red-600 mt-2 font-semibold text-center leading-relaxed">
                 Upgrades are not supported yet in Phase 1.<br/>
                 Please wait for your current plan to expire or contact support.
               </p>

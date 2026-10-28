@@ -16,10 +16,10 @@ export default function QuickActions({ onTabSelect, onExport }: QuickActionsProp
   return (
     <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-left select-none space-y-4">
       <div>
-        <h4 className="text-[10px] font-black uppercase text-stone-900 tracking-wider">
+        <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           ⚡ Administrative Quick Shortcuts
         </h4>
-        <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
           Access specific dashboard operations
         </span>
       </div>
@@ -31,8 +31,8 @@ export default function QuickActions({ onTabSelect, onExport }: QuickActionsProp
             onClick={act.onClick}
             className="p-3 border border-light-border rounded-xl text-left bg-stone-50 hover:bg-stone-100 transition-colors flex flex-col justify-between h-20 text-stone-850 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald"
           >
-            <span className="font-bold text-[10px] uppercase tracking-wider">{act.label}</span>
-            <span className="text-[8.5px] text-stone-450 font-medium block mt-1">{act.desc}</span>
+            <span className="font-bold text-2xs uppercase tracking-wider">{act.label}</span>
+            <span className="text-3xs text-stone-450 font-medium block mt-1">{act.desc}</span>
           </button>
         ))}
 

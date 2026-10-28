@@ -109,7 +109,7 @@ export function ArticleDetailPage() {
   if (!article) {
     return (
       <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-4">
-        <h2 className="text-lg font-bold text-stone-900 font-serif">Guide Not Found</h2>
+        <h2 className="text-lg font-bold text-stone-900 font-display">Guide Not Found</h2>
         <p className="text-xs text-stone-500 mt-2">The article you are looking for may have been retired or moved.</p>
         <button
           onClick={() => navigate('/blog')}
@@ -140,14 +140,14 @@ export function ArticleDetailPage() {
         <article className="space-y-6">
           {/* Tag and Category */}
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-50 border border-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">
+            <span className="text-2xs font-black uppercase tracking-wider bg-emerald-50 border border-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">
               {article.category?.name}
             </span>
             <span className="text-xs text-stone-400 font-semibold">• {article.readTime} Min Read</span>
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl font-extrabold text-stone-900 font-serif leading-tight sm:text-4xl">
+          <h1 className="text-3xl font-extrabold text-stone-900 font-display leading-tight sm:text-4xl">
             {article.title}
           </h1>
 
@@ -194,7 +194,7 @@ export function ArticleDetailPage() {
               {article.tags.split(',').map((tag) => (
                 <span
                   key={tag}
-                  className="bg-stone-100 border border-stone-200 text-stone-600 px-2 py-0.5 rounded text-[10px] font-bold"
+                  className="bg-stone-100 border border-stone-200 text-stone-600 px-2 py-0.5 rounded text-2xs font-bold"
                 >
                   #{tag.trim()}
                 </span>
@@ -206,7 +206,7 @@ export function ArticleDetailPage() {
         {/* Action CTAs Section */}
         <section className="mt-12 rounded-2xl border border-stone-200 bg-stone-900 p-6 sm:p-8 text-white shadow-xl text-center space-y-6">
           <div className="max-w-md mx-auto space-y-2">
-            <h3 className="text-xl font-bold font-serif text-white">Need Expert Advice for Your Project?</h3>
+            <h3 className="text-xl font-bold font-display text-white">Need Expert Advice for Your Project?</h3>
             <p className="text-xs text-stone-300 leading-relaxed">
               Don't make blind decisions. Speak with certified providers, check technical structural specs, or request an immediate callback.
             </p>
@@ -237,7 +237,7 @@ export function ArticleDetailPage() {
         {/* Related Articles Section */}
         {related.length > 0 && (
           <section className="mt-16 border-t border-stone-200 pt-8 space-y-6">
-            <h3 className="text-lg font-bold text-stone-900 font-serif">📚 Related Guides</h3>
+            <h3 className="text-lg font-bold text-stone-900 font-display">📚 Related Guides</h3>
             <div className="grid gap-6 sm:grid-cols-2">
               {related.slice(0, 2).map((art) => (
                 <div
@@ -246,17 +246,17 @@ export function ArticleDetailPage() {
                   className="group bg-white border border-stone-200 rounded-xl p-4 shadow-sm hover:shadow hover:border-stone-300 transition cursor-pointer flex flex-col justify-between"
                 >
                   <div>
-                    <span className="text-[9px] font-black uppercase tracking-wider text-emerald-800">
+                    <span className="text-3xs font-black uppercase tracking-wider text-emerald-800">
                       {art.category?.name}
                     </span>
                     <h4 className="mt-1 text-xs font-bold text-stone-900 group-hover:text-emerald-800 transition leading-snug">
                       {art.title}
                     </h4>
-                    <p className="mt-1 text-[11px] text-stone-500 line-clamp-2 leading-relaxed">
+                    <p className="mt-1 text-2xs text-stone-500 line-clamp-2 leading-relaxed">
                       {art.excerpt}
                     </p>
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-[9px] text-stone-400 font-bold uppercase tracking-wider pt-2 border-t border-stone-50">
+                  <div className="mt-3 flex items-center justify-between text-3xs text-stone-400 font-bold uppercase tracking-wider pt-2 border-t border-stone-50">
                     <span>⏱️ {art.readTime} Min Read</span>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export function ArticleDetailPage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 border-t border-stone-200 bg-stone-50 py-8 text-center text-[10px] text-stone-400 font-bold uppercase tracking-wider">
+      <footer className="mt-20 border-t border-stone-200 bg-stone-50 py-8 text-center text-2xs text-stone-400 font-bold uppercase tracking-wider">
         {BRAND.fullName} Handbook Series — Verified Structural & Service Guidelines.
       </footer>
     </div>

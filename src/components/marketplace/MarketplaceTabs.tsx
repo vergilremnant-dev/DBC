@@ -22,7 +22,7 @@ export function MarketplaceTabs({ activeTab, onTabChange, counts }: MarketplaceT
           <button
             key={t.type}
             onClick={() => onTabChange(t.type)}
-            className={`flex-1 min-w-max text-center py-1.5 px-3 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer select-none flex items-center justify-center gap-1.5 ${
+            className={`flex-1 min-w-max text-center py-1.5 px-3 rounded-lg text-2xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer select-none flex items-center justify-center gap-1.5 ${
               isActive
                 ? 'bg-emerald-700 text-white font-extrabold shadow-xs'
                 : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/50'
@@ -30,7 +30,7 @@ export function MarketplaceTabs({ activeTab, onTabChange, counts }: MarketplaceT
           >
             <span>{t.label}</span>
             <span
-              className={`text-[9.5px] px-1.5 py-0.1 rounded ${
+              className={`text-3xs px-1.5 py-0.1 rounded ${
                 isActive ? 'bg-emerald-800 text-white font-bold' : 'bg-stone-200/80 text-stone-600'
               }`}
             >

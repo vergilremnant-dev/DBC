@@ -27,7 +27,7 @@ function InfoRow({ label, value, status }: SystemInfoRow) {
       <div className="flex items-center gap-2">
         <span className="text-xs font-semibold text-stone-800 font-mono">{value}</span>
         {status && (
-          <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${STATUS_STYLES[status]}`}>
+          <span className={`text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border ${STATUS_STYLES[status]}`}>
             {STATUS_LABELS[status]}
           </span>
         )}
@@ -55,7 +55,7 @@ export default function SystemInformation() {
           <InfoRow key={row.label} {...row} />
         ))}
       </div>
-      <p className="text-[9px] text-stone-400 font-medium mt-4 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2">
+      <p className="text-3xs text-stone-400 font-medium mt-4 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2">
         ℹ️ Live system metrics require backend health endpoints. Values shown are indicative. Full telemetry available in Phase 2.
       </p>
     </SectionCard>

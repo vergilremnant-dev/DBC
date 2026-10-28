@@ -73,12 +73,12 @@ export function ProfileMenu({ user, onLogout, onNavigateWorkspace, onNavigateHel
               <h4 className="text-xs font-bold text-stone-900 truncate leading-snug">
                 {user.firstName} {user.lastName || ''}
               </h4>
-              <p className="text-[10px] text-stone-500 truncate">{user.email}</p>
+              <p className="text-2xs text-stone-500 truncate">{user.email}</p>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-[8px] font-black uppercase bg-stone-100 text-stone-700 px-2 py-0.5 rounded border border-stone-200">
+                <span className="text-3xs font-black uppercase bg-stone-100 text-stone-700 px-2 py-0.5 rounded border border-stone-200">
                   {getDisplayRoleName(user.role)}
                 </span>
-                <span className="text-[8px] text-emerald-800 font-bold">
+                <span className="text-3xs text-emerald-800 font-bold">
                   {getVerificationBadge(user.role)}
                 </span>
               </div>

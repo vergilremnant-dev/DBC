@@ -165,19 +165,19 @@ export default function ConsultationWorkspace() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="bg-stone-100 text-stone-700 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="bg-stone-100 text-stone-700 text-3xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
                 ID: {id}
               </span>
-              <span className={`text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+              <span className={`text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
                 status === 'Completed' ? 'bg-emerald-50 text-emerald-800' : 'bg-blue-50 text-blue-800'
               }`}>
                 {status}
               </span>
-              <span className="bg-rose-50 border border-rose-200 text-[8px] font-black px-2 py-0.5 rounded-full uppercase text-rose-700">
+              <span className="bg-rose-50 border border-rose-200 text-3xs font-black px-2 py-0.5 rounded-full uppercase text-rose-700">
                 ⚠️ High Priority
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-serif leading-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
               Villa Spatial Orientation & Design Consultation
             </h1>
             <p className="text-xs text-stone-500 font-medium">
@@ -209,21 +209,21 @@ export default function ConsultationWorkspace() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-light-border/40 text-[10px] font-bold text-stone-450 uppercase tracking-wider">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-light-border/40 text-2xs font-bold text-stone-450 uppercase tracking-wider">
           <div>
-            <span className="block text-stone-400 text-[8px]">Budget Estimate</span>
+            <span className="block text-stone-400 text-3xs">Budget Estimate</span>
             <span className="text-stone-900 font-black text-xs">₹45,000</span>
           </div>
           <div>
-            <span className="block text-stone-400 text-[8px]">Scheduled Time</span>
+            <span className="block text-stone-400 text-3xs">Scheduled Time</span>
             <span className="text-stone-900 font-black text-xs">03-Aug &bull; 10:00 AM</span>
           </div>
           <div>
-            <span className="block text-stone-400 text-[8px]">Consultation Mode</span>
+            <span className="block text-stone-400 text-3xs">Consultation Mode</span>
             <span className="text-stone-900 font-black text-xs">🖥️ Video Call</span>
           </div>
           <div>
-            <span className="block text-stone-400 text-[8px]">Completion Checklist</span>
+            <span className="block text-stone-400 text-3xs">Completion Checklist</span>
             <span className="text-brand-emerald font-black text-xs">{checklistProgress}% ({checklist.filter(c => c.completed).length}/6)</span>
           </div>
         </div>
@@ -246,10 +246,10 @@ export default function ConsultationWorkspace() {
                 </div>
                 <div>
                   <h4 className="text-xs font-black text-stone-900">Ramesh Kumar</h4>
-                  <span className="text-[9px] text-stone-450 font-bold uppercase">Member since June 2026</span>
+                  <span className="text-3xs text-stone-450 font-bold uppercase">Member since June 2026</span>
                 </div>
               </div>
-              <div className="space-y-1.5 text-[10.5px] text-stone-600 font-medium">
+              <div className="space-y-1.5 text-2xs text-stone-600 font-medium">
                 <p>📞 <strong>Phone:</strong> +91 98765 43210</p>
                 <p>✉️ <strong>Email:</strong> ramesh.kumar@example.com</p>
                 <p>📍 <strong>Project Location:</strong> Gachibowli, Hyderabad</p>
@@ -260,13 +260,13 @@ export default function ConsultationWorkspace() {
             {/* Requirement Summary */}
             <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-3">
               <div>
-                <span className="text-[8px] font-black uppercase text-stone-450 tracking-wider">Project Specification</span>
+                <span className="text-3xs font-black uppercase text-stone-450 tracking-wider">Project Specification</span>
                 <h4 className="text-xs font-black text-stone-900">Modern Villa Vastu Alignment</h4>
               </div>
-              <p className="text-[10.5px] text-stone-600 font-medium leading-relaxed">
+              <p className="text-2xs text-stone-600 font-medium leading-relaxed">
                 Evaluating load-bearing capacity of design layouts and Vastu placement compliance for a modern 4BHK villa blueprints.
               </p>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-stone-450 font-bold uppercase tracking-wider pt-2 border-t border-light-border/40">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-stone-450 font-bold uppercase tracking-wider pt-2 border-t border-light-border/40">
                 <span>Timeline: 2 Weeks</span>
                 <span>Docs: {documents.length} Files</span>
               </div>
@@ -277,7 +277,7 @@ export default function ConsultationWorkspace() {
           {/* Project Timeline Milestones visualizer */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <h3 className="text-xs font-black uppercase tracking-wider text-stone-900">Consultation Milestones Progress</h3>
-            <div className="flex flex-wrap items-center gap-3 text-[9px] font-black uppercase tracking-wider">
+            <div className="flex flex-wrap items-center gap-3 text-3xs font-black uppercase tracking-wider">
               {[
                 { name: 'Submitted', done: true },
                 { name: 'Accepted', done: true },
@@ -301,7 +301,7 @@ export default function ConsultationWorkspace() {
 
           {/* Interactive Workspace Tabs Panel */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-6">
-            <div className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1.5 text-[9.5px] font-black uppercase tracking-wider no-scrollbar">
+            <div className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1.5 text-3xs font-black uppercase tracking-wider no-scrollbar">
               {([
                 { id: 'overview', label: 'Overview', icon: '📊' },
                 { id: 'notes', label: 'Consultation Notes', icon: '📝' },
@@ -330,11 +330,11 @@ export default function ConsultationWorkspace() {
             {activeTab === 'overview' && (
               <div className="space-y-4 text-stone-700 text-xs font-medium leading-relaxed">
                 <div>
-                  <h4 className="font-black text-stone-900 uppercase text-[10px]">Project Overview</h4>
+                  <h4 className="font-black text-stone-900 uppercase text-2xs">Project Overview</h4>
                   <p>Evaluating design layout drafts for structural safety constraints prior to filing municipal applications.</p>
                 </div>
                 <div>
-                  <h4 className="font-black text-stone-900 uppercase text-[10px]">Consultation Goals</h4>
+                  <h4 className="font-black text-stone-900 uppercase text-2xs">Consultation Goals</h4>
                   <ul className="list-disc pl-4 space-y-1 mt-1">
                     <li>Confirm load-bearing limits for ground foundation slab.</li>
                     <li>Audit Vastu corners alignment for kitchen location.</li>
@@ -342,7 +342,7 @@ export default function ConsultationWorkspace() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-black text-stone-900 uppercase text-[10px]">Key Challenges</h4>
+                  <h4 className="font-black text-stone-900 uppercase text-2xs">Key Challenges</h4>
                   <p className="italic text-stone-500">Soil type is black cotton clay, which might require raft layout stabilization check overlays.</p>
                 </div>
               </div>
@@ -351,7 +351,7 @@ export default function ConsultationWorkspace() {
             {/* TAB 2: CONSULTATION NOTES */}
             {activeTab === 'notes' && (
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-[10px] text-stone-400 font-semibold">
+                <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
                   <span>Last autosaved: {lastSavedNotes}</span>
                   {isSavingNotes && <span className="text-brand-emerald animate-pulse">Saving...</span>}
                 </div>
@@ -379,14 +379,14 @@ export default function ConsultationWorkspace() {
                 <div className="space-y-3">
                   {recommendations.map((rec, idx) => (
                     <div key={idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl space-y-1">
-                      <span className="text-[8px] font-black text-brand-emerald uppercase tracking-wider">{rec.category}</span>
+                      <span className="text-3xs font-black text-brand-emerald uppercase tracking-wider">{rec.category}</span>
                       <p className="text-xs text-stone-700 font-medium">{rec.text}</p>
                     </div>
                   ))}
                 </div>
 
                 <form onSubmit={handleAddRecommendation} className="space-y-3 pt-4 border-t border-light-border/40">
-                  <h4 className="text-[10px] font-black uppercase text-stone-850">Add Recommendation Advice</h4>
+                  <h4 className="text-2xs font-black uppercase text-stone-850">Add Recommendation Advice</h4>
                   <div className="grid grid-cols-3 gap-2">
                     <select
                       value={newRecCategory}
@@ -417,7 +417,7 @@ export default function ConsultationWorkspace() {
             {activeTab === 'documents' && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] text-stone-400 font-bold uppercase">{documents.length} Attachments</span>
+                  <span className="text-2xs text-stone-400 font-bold uppercase">{documents.length} Attachments</span>
                   <button
                     onClick={handleFileUpload}
                     className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
@@ -430,13 +430,13 @@ export default function ConsultationWorkspace() {
                     <div key={doc.id} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                       <div>
                         <h5 className="font-bold text-stone-900">{doc.name}</h5>
-                        <span className="block text-[8px] text-stone-400 font-bold uppercase mt-1">
+                        <span className="block text-3xs text-stone-400 font-bold uppercase mt-1">
                           {doc.category} &bull; {doc.size} &bull; Uploaded: {doc.uploadDate}
                         </span>
                       </div>
                       <button
                         onClick={() => alert(`Downloading file: ${doc.name}`)}
-                        className="text-brand-emerald font-black uppercase text-[10px] hover:underline"
+                        className="text-brand-emerald font-black uppercase text-2xs hover:underline"
                       >
                         Download
                       </button>
@@ -453,8 +453,8 @@ export default function ConsultationWorkspace() {
                   <div key={act.id} className="flex gap-4 items-start relative">
                     <span className="w-10 h-10 rounded-full border border-light-border bg-stone-50 flex items-center justify-center text-sm shrink-0 z-10">{act.icon}</span>
                     <div className="space-y-0.5 pt-1">
-                      <p className="text-[11px] text-stone-850 font-semibold">{act.description}</p>
-                      <span className="block text-[9px] text-stone-400 font-bold uppercase tracking-wider">{act.timestamp}</span>
+                      <p className="text-2xs text-stone-850 font-semibold">{act.description}</p>
+                      <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{act.timestamp}</span>
                     </div>
                   </div>
                 ))}
@@ -464,7 +464,7 @@ export default function ConsultationWorkspace() {
             {/* TAB 6: PRIVATE NOTES */}
             {activeTab === 'private' && (
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-[10px] text-stone-400 font-semibold">
+                <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
                   <span>🔒 Only visible to you. Never shared with client.</span>
                   {isSavingPrivate && <span className="text-brand-emerald animate-pulse">Saving...</span>}
                 </div>
@@ -480,7 +480,7 @@ export default function ConsultationWorkspace() {
             {/* TAB 7: CHECKLIST */}
             {activeTab === 'checklist' && (
               <div className="space-y-3">
-                <div className="flex justify-between items-center text-[10px] text-stone-400 font-bold uppercase">
+                <div className="flex justify-between items-center text-2xs text-stone-400 font-bold uppercase">
                   <span>Task Checklist Completion</span>
                   <span>{checklistProgress}%</span>
                 </div>
@@ -513,10 +513,10 @@ export default function ConsultationWorkspace() {
           <section className="bg-gradient-to-br from-stone-950 to-stone-900 border border-stone-850 p-6 rounded-3xl shadow-apple-sm text-white space-y-4 relative overflow-hidden">
             <div className="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
             <div className="space-y-0.5">
-              <span className="text-[8.5px] font-black uppercase text-emerald-400 tracking-wider">DBC Smart Assistant</span>
+              <span className="text-3xs font-black uppercase text-emerald-400 tracking-wider">DBC Smart Assistant</span>
               <h3 className="text-xs font-black">Workspace Suggestions</h3>
             </div>
-            <ul className="space-y-2 text-[10px] text-stone-300 font-medium">
+            <ul className="space-y-2 text-2xs text-stone-300 font-medium">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-400">✦</span>
                 <span>Review uploaded foundation blueprints.</span>
@@ -536,9 +536,9 @@ export default function ConsultationWorkspace() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
               <h2 className="text-sm font-black text-stone-900">Workspace Actions</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Direct workspace functions</p>
+              <p className="text-2xs text-stone-450 font-medium">Direct workspace functions</p>
             </div>
-            <div className="space-y-2 text-[11px] font-bold uppercase tracking-wider text-stone-700">
+            <div className="space-y-2 text-2xs font-bold uppercase tracking-wider text-stone-700">
               <button
                 onClick={() => navigate('/workspace/report/RP-501')}
                 className="w-full p-3 bg-brand-emerald text-white hover:bg-emerald-850 hover:bg-emerald-800 rounded-xl transition text-left cursor-pointer flex items-center gap-2.5 focus:outline-none"

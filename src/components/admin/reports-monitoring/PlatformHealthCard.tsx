@@ -37,10 +37,10 @@ export default function PlatformHealthCard({ health }: PlatformHealthCardProps) 
   return (
     <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-left select-none space-y-4">
       <div className="border-b border-light-border/40 pb-2 flex justify-between items-center">
-        <h4 className="text-[10px] font-black uppercase text-stone-905 tracking-wider">
+        <h4 className="text-2xs font-black uppercase text-stone-905 tracking-wider">
           🟢 Platform Services Health Status
         </h4>
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${getBadgeClass(health.overall)}`}>
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-3xs font-bold uppercase tracking-wider border ${getBadgeClass(health.overall)}`}>
           System Status: {health.overall}
         </span>
       </div>
@@ -49,13 +49,13 @@ export default function PlatformHealthCard({ health }: PlatformHealthCardProps) 
         {systems.map((sys, idx) => (
           <div key={idx} className="flex justify-between items-center border-b border-light-border/30 pb-2">
             <span>{sys.label}</span>
-            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[8.5px] font-bold uppercase border ${getBadgeClass(sys.status)}`}>
+            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-3xs font-bold uppercase border ${getBadgeClass(sys.status)}`}>
               {sys.status}
             </span>
           </div>
         ))}
 
-        <div className="pt-1.5 flex justify-between items-center text-[10px] text-stone-500 font-medium">
+        <div className="pt-1.5 flex justify-between items-center text-2xs text-stone-500 font-medium">
           <span>Cron Registry Last Backup:</span>
           <span className="font-mono bg-stone-50 border border-stone-200 px-2 py-0.5 rounded">
             {health.lastBackup}

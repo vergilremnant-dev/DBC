@@ -97,7 +97,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
         <h3 className="text-sm font-black uppercase tracking-wider text-stone-black leading-tight">
           Hello, {user?.firstName || user?.email || 'Partner'}!
         </h3>
-        <span className="block text-[8px] font-black uppercase bg-light-stone text-stone-gray px-2 py-0.5 rounded border border-light-border max-w-max">
+        <span className="block text-3xs font-black uppercase bg-light-stone text-stone-gray px-2 py-0.5 rounded border border-light-border max-w-max">
           Active Role: {title}
         </span>
       </div>
@@ -107,7 +107,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
         <div className="space-y-5">
           <div className="space-y-1">
             <h4 className="text-xs font-black uppercase tracking-wider text-stone-black">What is your primary project focus?</h4>
-            <p className="text-[10px] text-stone-gray font-medium">Select your current project type to personalize your workspace discovery experience.</p>
+            <p className="text-2xs text-stone-gray font-medium">Select your current project type to personalize your workspace discovery experience.</p>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -126,11 +126,11 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-base">{item.icon}</span>
-                    <span className={`text-[11px] font-bold ${isSelected ? 'text-emerald-900' : 'text-stone-black'}`}>
+                    <span className={`text-2xs font-bold ${isSelected ? 'text-emerald-900' : 'text-stone-black'}`}>
                       {item.label}
                     </span>
                   </div>
-                  <span className="text-[8.5px] text-stone-gray mt-1 font-medium leading-tight">{item.desc}</span>
+                  <span className="text-3xs text-stone-gray mt-1 font-medium leading-tight">{item.desc}</span>
                 </div>
               );
             })}
@@ -139,7 +139,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
           {/* Lightweight Optional Context */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-light-border/40">
             <div className="space-y-1">
-              <label className="text-[9px] font-black uppercase tracking-wider text-stone-gray block">Project Location (City / Region)</label>
+              <label className="text-3xs font-black uppercase tracking-wider text-stone-gray block">Project Location (City / Region)</label>
               <input
                 type="text"
                 placeholder="e.g. Hyderabad, Bengaluru, Mumbai"
@@ -149,7 +149,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[9px] font-black uppercase tracking-wider text-stone-gray block">Estimated Start Timeline</label>
+              <label className="text-3xs font-black uppercase tracking-wider text-stone-gray block">Estimated Start Timeline</label>
               <select
                 value={timeline}
                 onChange={(e) => setTimeline(e.target.value)}
@@ -166,7 +166,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
         /* PROVIDER / ADMIN SETUP CHECKLIST */
         <div className="space-y-4">
           <div className="space-y-2">
-            <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-stone-gray">
+            <div className="flex justify-between items-center text-3xs font-black uppercase tracking-widest text-stone-gray">
               <span>Onboarding Setup Progress</span>
               <span>{progress}% Complete</span>
             </div>
@@ -190,7 +190,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
                   `}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={`w-4 h-4 rounded-full border flex items-center justify-center text-[10px] font-black
+                    <span className={`w-4 h-4 rounded-full border flex items-center justify-center text-2xs font-black
                       ${isDone 
                         ? 'border-brand-emerald bg-brand-emerald/10 text-brand-emerald' 
                         : 'border-light-border text-transparent'
@@ -198,11 +198,11 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
                     `}>
                       ✓
                     </span>
-                    <span className={`text-[11px] font-semibold ${isDone ? 'line-through text-stone-gray' : 'text-stone-black'}`}>
+                    <span className={`text-2xs font-semibold ${isDone ? 'line-through text-stone-gray' : 'text-stone-black'}`}>
                       {act.label}
                     </span>
                   </div>
-                  <span className="text-[8px] text-stone-gray font-black uppercase tracking-wider">
+                  <span className="text-3xs text-stone-gray font-black uppercase tracking-wider">
                     {isDone ? 'DONE' : 'TODO'}
                   </span>
                 </div>

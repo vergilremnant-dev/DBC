@@ -45,7 +45,7 @@ export function NotificationButton({ role }: NotificationButtonProps) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
         </svg>
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-4.5 h-4.5 bg-brand-emerald text-white rounded-full flex items-center justify-center text-[8px] font-black border border-white shadow-apple-sm animate-pulse">
+          <span className="absolute -top-1 -right-1 w-4.5 h-4.5 bg-brand-emerald text-white rounded-full flex items-center justify-center text-3xs font-black border border-white shadow-apple-sm animate-pulse">
             {unreadCount}
           </span>
         )}
@@ -54,10 +54,10 @@ export function NotificationButton({ role }: NotificationButtonProps) {
       {isOpen && (
         <div className="absolute right-0 mt-2.5 w-80 rounded-2xl border border-light-border bg-white p-3.5 shadow-apple-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150">
           <div className="flex items-center justify-between border-b border-light-border pb-2">
-            <span className="text-[9px] font-extrabold uppercase tracking-wider text-stone-gray">Activity Logs</span>
+            <span className="text-3xs font-extrabold uppercase tracking-wider text-stone-gray">Activity Logs</span>
             <button
               onClick={() => notificationApi.markAllAsRead()}
-              className="text-[9px] font-extrabold text-brand-emerald hover:underline cursor-pointer focus:outline-none"
+              className="text-3xs font-extrabold text-brand-emerald hover:underline cursor-pointer focus:outline-none"
             >
               Mark all read
             </button>
@@ -76,9 +76,9 @@ export function NotificationButton({ role }: NotificationButtonProps) {
                 >
                   <div className="flex justify-between items-start gap-2">
                     <h5 className={`text-xs font-black truncate ${item.isRead ? 'text-stone-gray' : 'text-stone-black'}`}>{item.title}</h5>
-                    <span className="text-[8px] text-stone-gray font-semibold whitespace-nowrap">{item.createdAt}</span>
+                    <span className="text-3xs text-stone-gray font-semibold whitespace-nowrap">{item.createdAt}</span>
                   </div>
-                  <p className="text-[10px] text-stone-gray mt-0.5 leading-relaxed font-medium">{item.content}</p>
+                  <p className="text-2xs text-stone-gray mt-0.5 leading-relaxed font-medium">{item.content}</p>
                 </div>
               ))
             ) : (

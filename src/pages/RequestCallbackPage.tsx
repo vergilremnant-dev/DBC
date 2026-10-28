@@ -125,15 +125,15 @@ export function RequestCallbackPage() {
           {submittedRequest ? (
             <div className="rounded-2xl border border-emerald-250 bg-white p-8 shadow-sm text-center border-emerald-100">
               <span className="text-5xl">🎉</span>
-              <h2 className="mt-4 text-2xl font-bold text-emerald-950 font-serif">Callback Request Submitted!</h2>
+              <h2 className="mt-4 text-2xl font-bold text-emerald-950 font-display">Callback Request Submitted!</h2>
               <p className="mt-2 text-xs sm:text-sm text-stone-600">
                 An expert coordinator from {BRAND.name} will call you to plan your project details.
               </p>
               <div className="mt-6 inline-block bg-stone-50 border border-stone-100 px-6 py-4 rounded-xl">
-                <span className="block text-[9px] uppercase font-bold tracking-wider text-stone-400">Your Reference Number</span>
+                <span className="block text-3xs uppercase font-bold tracking-wider text-stone-400">Your Reference Number</span>
                 <strong className="text-xl font-mono text-stone-900 select-all tracking-wide">{submittedRequest.referenceNumber}</strong>
               </div>
-              <p className="mt-4 text-[10px] text-stone-400">Copy and save this reference number to track call progress.</p>
+              <p className="mt-4 text-2xs text-stone-400">Copy and save this reference number to track call progress.</p>
               <button
                 onClick={() => setSubmittedRequest(null)}
                 className="mt-8 rounded-lg bg-stone-900 px-6 py-2.5 text-xs font-bold text-white hover:bg-stone-850 hover:shadow transition cursor-pointer"
@@ -143,7 +143,7 @@ export function RequestCallbackPage() {
             </div>
           ) : (
             <div className="rounded-2xl border border-stone-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-2xl font-bold text-stone-900 font-serif">Talk to our Experts</h2>
+              <h2 className="text-2xl font-bold text-stone-900 font-display">Talk to our Experts</h2>
               <p className="mt-1 text-xs text-stone-500">
                 Provide your contact information and details. We will call you for a free consultation.
               </p>
@@ -157,7 +157,7 @@ export function RequestCallbackPage() {
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Full Name *</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Full Name *</label>
                     <input
                       type="text"
                       required
@@ -169,7 +169,7 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Phone Number *</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Phone Number *</label>
                     <input
                       type="tel"
                       required
@@ -182,7 +182,7 @@ export function RequestCallbackPage() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Email Address (Optional)</label>
+                  <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Email Address (Optional)</label>
                   <input
                     type="email"
                     placeholder="e.g. name@example.com"
@@ -194,7 +194,7 @@ export function RequestCallbackPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">City</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">City</label>
                     <input
                       type="text"
                       value={city}
@@ -204,7 +204,7 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Preferred Language</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Preferred Language</label>
                     <select
                       value={preferredLanguage}
                       onChange={(e) => setPreferredLanguage(e.target.value)}
@@ -220,7 +220,7 @@ export function RequestCallbackPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Service Category (Optional)</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Service Category (Optional)</label>
                     <select
                       value={serviceCategoryId}
                       onChange={(e) => setServiceCategoryId(e.target.value)}
@@ -234,7 +234,7 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Project Type</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Project Type</label>
                     <select
                       value={projectType}
                       onChange={(e) => setProjectType(e.target.value)}
@@ -252,7 +252,7 @@ export function RequestCallbackPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Estimated Budget (Optional)</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Estimated Budget (Optional)</label>
                     <input
                       type="number"
                       placeholder="e.g. 50000"
@@ -263,7 +263,7 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Preferred Call Time</label>
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Preferred Call Time</label>
                     <select
                       value={preferredCallTime}
                       onChange={(e) => setPreferredCallTime(e.target.value)}
@@ -278,7 +278,7 @@ export function RequestCallbackPage() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Message / Project Brief</label>
+                  <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Message / Project Brief</label>
                   <textarea
                     placeholder="Provide details about the work required..."
                     value={message}
@@ -303,8 +303,8 @@ export function RequestCallbackPage() {
         {/* Right Column: Track status widget */}
         <section className="space-y-6">
           <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
-            <h3 className="text-base font-bold text-stone-900 font-serif">Track Callback Request</h3>
-            <p className="text-[10px] text-stone-500 mt-1">Already submitted a request? Check its status here.</p>
+            <h3 className="text-base font-bold text-stone-900 font-display">Track Callback Request</h3>
+            <p className="text-2xs text-stone-500 mt-1">Already submitted a request? Check its status here.</p>
 
             {trackError && (
               <div className="mt-3 rounded-lg bg-rose-50 border border-rose-100 p-3 text-xs text-rose-800 leading-relaxed">
@@ -332,22 +332,22 @@ export function RequestCallbackPage() {
             {trackedStatus && (
               <div className="mt-6 border-t border-stone-100 pt-5 space-y-4">
                 <div className="bg-stone-50 p-3 rounded-lg border border-stone-100">
-                  <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider block">Status</span>
+                  <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Status</span>
                   <p className="mt-0.5 text-xs font-extrabold text-emerald-800 uppercase tracking-wide">{trackedStatus.status}</p>
                 </div>
                 <div className="grid gap-4 grid-cols-2">
                   <div>
-                    <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider block">Name</span>
+                    <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Name</span>
                     <p className="text-xs font-semibold text-stone-850">{trackedStatus.fullName}</p>
                   </div>
                   <div>
-                    <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider block">Preferred Time</span>
+                    <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Preferred Time</span>
                     <p className="text-xs font-semibold text-stone-850">{trackedStatus.preferredCallTime}</p>
                   </div>
                 </div>
                 {trackedStatus.category?.name && (
                   <div>
-                    <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider block">Category</span>
+                    <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Category</span>
                     <p className="text-xs font-semibold text-stone-850">{trackedStatus.category.name}</p>
                   </div>
                 )}

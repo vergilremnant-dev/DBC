@@ -221,7 +221,7 @@ function CustomerBookings() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-stone-200 pb-5">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold text-stone-900 font-serif">Project Requests</h2>
+          <h2 className="text-xl font-bold text-stone-900 font-display">Project Requests</h2>
           <p className="text-xs text-stone-500 font-medium">Track timelines, professional assignments, and status of your project requests.</p>
         </div>
         <div className="flex gap-2">
@@ -273,7 +273,7 @@ function CustomerBookings() {
           </div>
 
           {/* Select options filters */}
-          <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto text-[10px] font-bold text-stone-500 uppercase tracking-wide">
+          <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto text-2xs font-bold text-stone-500 uppercase tracking-wide">
             {/* Status */}
             <select
               value={statusFilter}

@@ -61,7 +61,7 @@ export function NotificationCard({
                 <NotificationBadge priority={notification.priority} type="priority" />
               )}
             </div>
-            <span className="text-[10px] text-stone-400 font-bold whitespace-nowrap">
+            <span className="text-2xs text-stone-400 font-bold whitespace-nowrap">
               {notification.createdAt}
             </span>
           </div>
@@ -72,20 +72,20 @@ export function NotificationCard({
             {notification.title}
           </h3>
 
-          <p className="text-[11px] text-stone-500 font-semibold leading-relaxed line-clamp-1">
+          <p className="text-2xs text-stone-500 font-semibold leading-relaxed line-clamp-1">
             {notification.content}
           </p>
         </div>
       </div>
 
       {/* Row action toggles */}
-      <div className="mt-3.5 pt-3 border-t border-stone-50 flex items-center justify-between gap-4 text-[10px] font-black uppercase tracking-wider text-stone-400">
+      <div className="mt-3.5 pt-3 border-t border-stone-50 flex items-center justify-between gap-4 text-2xs font-black uppercase tracking-wider text-stone-400">
         {/* Left: Unread dot or empty space */}
         <div className="flex items-center gap-1.5">
           {!notification.isRead && (
             <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-pulse"></span>
           )}
-          <span className="text-[9px] font-bold text-stone-400 select-all font-mono">
+          <span className="text-3xs font-bold text-stone-400 select-all font-mono">
             ID: {notification.id.toUpperCase()}
           </span>
         </div>

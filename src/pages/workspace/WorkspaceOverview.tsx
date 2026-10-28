@@ -168,7 +168,7 @@ export default function WorkspaceOverview() {
       )}
 
       {/* 1. Sub-Tab Selector Navigation */}
-      <div className="flex border-b border-light-border p-1 bg-white rounded-2xl shadow-apple-sm max-w-lg overflow-x-auto no-scrollbar">
+      <div className="flex gap-1 border border-light-border p-1 bg-white rounded-2xl shadow-apple-sm w-full sm:w-fit max-w-full overflow-x-auto no-scrollbar" role="tablist" aria-label="Overview sections">
         {([
           { id: 'dashboard', label: 'Dashboard', icon: '📊' },
           { id: 'projects', label: 'Projects', icon: '🏗️' },
@@ -181,12 +181,14 @@ export default function WorkspaceOverview() {
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex-1 text-center py-2 min-h-[44px] flex items-center justify-center gap-1 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer select-none
-                ${isActive ? 'bg-light-stone text-stone-black shadow-xs font-extrabold' : 'text-stone-gray'}
+              role="tab"
+              aria-selected={isActive}
+              className={`flex-1 sm:flex-none shrink-0 whitespace-nowrap px-3 min-h-[44px] flex items-center justify-center gap-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer select-none
+                ${isActive ? 'bg-light-stone text-stone-black font-semibold' : 'text-stone-gray hover:text-stone-black'}
               `}
             >
-              <span>{t.icon}</span>
-              <span className="hidden sm:inline ml-1">{t.label}</span>
+              <span aria-hidden="true">{t.icon}</span>
+              <span>{t.label}</span>
             </button>
           );
         })}
@@ -204,14 +206,14 @@ export default function WorkspaceOverview() {
 
           {/* ACTION CENTER */}
           <div className="space-y-3">
-            <h3 className="text-[10px] font-black uppercase tracking-wider text-stone-400">Action Required</h3>
+            <h3 className="text-2xs font-black uppercase tracking-wider text-stone-400">Action Required</h3>
             {payments.filter(p => p.status === 'Pending').length > 0 ? (
               <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left">
                 <div className="flex items-start sm:items-center gap-3">
                   <span className="text-xl">⚠️</span>
                   <div>
                     <h4 className="text-xs font-black text-amber-900 uppercase tracking-wide">Milestone Payment Pending</h4>
-                    <p className="text-[10.5px] text-amber-700 font-semibold mt-0.5">
+                    <p className="text-2xs text-amber-700 font-semibold mt-0.5">
                       Release funds for "{payments.find(p => p.status === 'Pending')?.milestone}" to proceed with structural work.
                     </p>
                   </div>
@@ -244,7 +246,7 @@ export default function WorkspaceOverview() {
                 🏗️
               </div>
               <div className="space-y-2 text-center">
-                <h3 className="text-base font-black text-stone-900 font-serif">Start Your First Project</h3>
+                <h3 className="text-base font-black text-stone-900 font-display">Start Your First Project</h3>
                 <p className="text-xs text-stone-500 max-w-md mx-auto leading-relaxed">
                   Find a construction or design professional, share your project requirements, receive custom quotations, and manage milestones end-to-end.
                 </p>
@@ -319,7 +321,7 @@ export default function WorkspaceOverview() {
                   <div className="dbc-card text-center p-8 space-y-4 border border-dashed border-stone-300">
                     <span className="text-3xl block">📋</span>
                     <h4 className="text-xs font-black text-stone-900 uppercase tracking-wider">No Requirements Found</h4>
-                    <p className="text-[10px] text-stone-500 font-semibold max-w-sm mx-auto leading-relaxed">
+                    <p className="text-2xs text-stone-500 font-semibold max-w-sm mx-auto leading-relaxed">
                       Post your project specifications to receive bids from verified architects, vastu consultants, and contractors.
                     </p>
                     <button
@@ -335,14 +337,14 @@ export default function WorkspaceOverview() {
                       <div className="flex justify-between items-start">
                         <div>
                           <h4 className="text-xs font-black text-stone-black">{req.title}</h4>
-                          <span className="inline-block text-[8px] font-black uppercase bg-light-stone text-stone-gray px-2 py-0.5 rounded border border-light-border mt-1">
+                          <span className="inline-block text-3xs font-black uppercase bg-light-stone text-stone-gray px-2 py-0.5 rounded border border-light-border mt-1">
                             {req.category}
                           </span>
                         </div>
                         <span className="dbc-badge dbc-badge-progress">{req.status}</span>
                       </div>
-                      <p className="text-[10px] text-stone-gray leading-relaxed font-semibold">{req.description}</p>
-                      <div className="border-t border-light-border/40 pt-2 flex justify-between items-center text-[9px] font-bold text-stone-gray uppercase">
+                      <p className="text-2xs text-stone-gray leading-relaxed font-semibold">{req.description}</p>
+                      <div className="border-t border-light-border/40 pt-2 flex justify-between items-center text-3xs font-bold text-stone-gray uppercase">
                         <span>Target Budget: ₹{(req.budgetMin || 0).toLocaleString()} - ₹{(req.budgetMax || 0).toLocaleString()}</span>
                         <button onClick={() => handleAction('requirements')} className="text-brand-emerald font-black hover:underline cursor-pointer focus:outline-none">Manage Proposals →</button>
                       </div>
@@ -376,7 +378,7 @@ export default function WorkspaceOverview() {
               >
                 <div className="h-44 relative bg-light-stone">
                   <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
-                  <div className="absolute bottom-3 left-3 bg-stone-900/80 backdrop-blur-sm text-white text-[8.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded border border-stone-850">
+                  <div className="absolute bottom-3 left-3 bg-stone-900/80 backdrop-blur-sm text-white text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border border-stone-850">
                     📍 {p.location}
                   </div>
                 </div>
@@ -385,14 +387,14 @@ export default function WorkspaceOverview() {
                   <div className="flex justify-between items-center">
                     <div>
                       <h4 className="text-xs font-black text-stone-black">{p.name}</h4>
-                      <span className="block text-[8px] text-stone-gray font-black uppercase tracking-wider mt-0.5">Stage: {p.stage}</span>
+                      <span className="block text-3xs text-stone-gray font-black uppercase tracking-wider mt-0.5">Stage: {p.stage}</span>
                     </div>
                     <span className="dbc-badge dbc-badge-verified">💚 {p.health}</span>
                   </div>
 
                   {/* Progress bar */}
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-[8px] font-black uppercase text-stone-gray">
+                    <div className="flex justify-between text-3xs font-black uppercase text-stone-gray">
                       <span>Completion</span>
                       <span>{p.progress}%</span>
                     </div>
@@ -402,7 +404,7 @@ export default function WorkspaceOverview() {
                   </div>
 
                   {/* Summary list */}
-                  <div className="text-[10px] text-stone-gray font-semibold space-y-1 pt-2 border-t border-light-border/40">
+                  <div className="text-2xs text-stone-gray font-semibold space-y-1 pt-2 border-t border-light-border/40">
                     <p className="flex justify-between"><span>Timeline:</span> <strong className="text-stone-black">{p.timeline}</strong></p>
                     <p className="flex justify-between"><span>Cost Status:</span> <strong className="text-stone-black">{p.budget}</strong></p>
                     <p className="flex justify-between"><span>Team assigned:</span> <strong className="text-stone-black">{p.pros.join(', ')}</strong></p>
@@ -429,7 +431,7 @@ export default function WorkspaceOverview() {
           </div>
 
           {/* Category Filter list */}
-          <div className="flex flex-wrap gap-2 pt-2 text-[9px] font-black uppercase tracking-wider">
+          <div className="flex flex-wrap gap-2 pt-2 text-3xs font-black uppercase tracking-wider">
             {['ALL', 'BLUEPRINTS', 'CONTRACTS', 'INVOICES'].map((cat) => (
               <button
                 key={cat}
@@ -463,7 +465,7 @@ export default function WorkspaceOverview() {
                   <tr key={doc.id}>
                     <td className="font-semibold text-stone-black">📄 {doc.name}</td>
                     <td>
-                      <span className="dbc-badge dbc-badge-verified text-[7.5px] py-0.5">
+                      <span className="dbc-badge dbc-badge-verified text-3xs py-0.5">
                         {doc.category}
                       </span>
                     </td>
@@ -493,17 +495,17 @@ export default function WorkspaceOverview() {
           
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="dbc-card text-center p-5">
-              <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Total Contract Budget</span>
+              <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Total Contract Budget</span>
               <h3 className="text-base font-extrabold text-stone-black mt-1">₹50,00,000</h3>
             </div>
             <div className="dbc-card text-center p-5">
-              <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Paid Amount</span>
+              <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Paid Amount</span>
               <h3 className="text-base font-extrabold text-brand-emerald mt-1">
                 ₹{payments.filter(p => p.status === 'Paid').reduce((acc, curr) => acc + curr.amount, 0).toLocaleString()}
               </h3>
             </div>
             <div className="dbc-card text-center p-5">
-              <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Pending Release</span>
+              <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Pending Release</span>
               <h3 className="text-base font-extrabold text-amber-700 mt-1">
                 ₹{payments.filter(p => p.status === 'Pending').reduce((acc, curr) => acc + curr.amount, 0).toLocaleString()}
               </h3>
@@ -529,7 +531,7 @@ export default function WorkspaceOverview() {
                     <td>{pay.milestone}</td>
                     <td className="font-extrabold text-stone-black">₹{pay.amount.toLocaleString()}</td>
                     <td>
-                      <span className={`dbc-badge text-[7.5px] py-0.5 ${
+                      <span className={`dbc-badge text-3xs py-0.5 ${
                         pay.status === 'Paid' ? 'dbc-badge-completed' : 'dbc-badge-progress'
                       }`}>
                         {pay.status}

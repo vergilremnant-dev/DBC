@@ -44,8 +44,8 @@ export function AuthChallengeModal({ isOpen, onClose, onSuccess, message }: Auth
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-sm p-4">
-      <div className="bg-white w-full max-w-md rounded-2xl p-6 sm:p-8 relative shadow-2xl border border-stone-100 animate-in fade-in zoom-in-95 duration-200 max-h-[85vh] overflow-y-auto">
+    <div className="dbc-modal-overlay">
+      <div role="dialog" aria-modal="true" className="dbc-modal max-h-[85vh] overflow-y-auto">
         
         {/* Close Button */}
         <button
@@ -56,11 +56,11 @@ export function AuthChallengeModal({ isOpen, onClose, onSuccess, message }: Auth
           ✕
         </button>
 
-        <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+        <span className="text-3xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
           Account Access Required
         </span>
 
-        <h2 className="mt-4 text-2xl font-bold text-stone-900 font-serif leading-tight">
+        <h2 className="mt-4 text-2xl font-bold text-stone-900 font-display leading-tight">
           Sign In to Continue
         </h2>
         
@@ -79,7 +79,7 @@ export function AuthChallengeModal({ isOpen, onClose, onSuccess, message }: Auth
         </div>
 
         <div className="mt-4 text-center">
-          <p className="text-[10px] text-stone-400 font-medium">
+          <p className="text-2xs text-stone-400 font-medium">
             New to {BRAND.name}? Join as a customer or partner from our registration menu.
           </p>
         </div>

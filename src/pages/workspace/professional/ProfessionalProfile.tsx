@@ -181,8 +181,8 @@ export default function ProfessionalProfile() {
           <span className="text-3xl p-3 bg-stone-50 border border-stone-200 rounded-2xl w-fit">🏢</span>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-serif">{profileData.businessName}</h1>
-              <span className="bg-emerald-50 text-emerald-800 text-[8px] font-black px-2 py-0.5 rounded-full border border-emerald-200">
+              <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">{profileData.businessName}</h1>
+              <span className="bg-emerald-50 text-emerald-800 text-3xs font-black px-2 py-0.5 rounded-full border border-emerald-200">
                 ✓ Verified Business
               </span>
             </div>
@@ -212,7 +212,7 @@ export default function ProfessionalProfile() {
             
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Business / Company Name</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Business / Company Name</label>
                 <input
                   type="text"
                   value={profileData.businessName}
@@ -222,7 +222,7 @@ export default function ProfessionalProfile() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Contact person Name</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Contact person Name</label>
                 <input
                   type="text"
                   value={profileData.ownerName}
@@ -235,7 +235,7 @@ export default function ProfessionalProfile() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Phone number</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Phone number</label>
                 <input
                   type="text"
                   value={profileData.phone}
@@ -245,7 +245,7 @@ export default function ProfessionalProfile() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Email address</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Email address</label>
                 <input
                   type="email"
                   value={profileData.email}
@@ -257,7 +257,7 @@ export default function ProfessionalProfile() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">About business summary</label>
+              <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">About business summary</label>
               <textarea
                 value={profileData.description}
                 onChange={e => setProfileData({ ...profileData, description: e.target.value })}
@@ -276,19 +276,19 @@ export default function ProfessionalProfile() {
             <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Business Registrations</h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <span className="block text-[8px] font-black text-stone-400 uppercase">GST registration ID</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase">GST registration ID</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.gstNo}</strong>
               </div>
               <div>
-                <span className="block text-[8px] font-black text-stone-400 uppercase">License registration number</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase">License registration number</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.licenseNo}</strong>
               </div>
               <div>
-                <span className="block text-[8px] font-black text-stone-400 uppercase">Business structure</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase">Business structure</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.businessType}</strong>
               </div>
               <div>
-                <span className="block text-[8px] font-black text-stone-400 uppercase">Years of market experience</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase">Years of market experience</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.experienceYears}</strong>
               </div>
             </div>
@@ -300,28 +300,28 @@ export default function ProfessionalProfile() {
             
             <div className="space-y-3">
               <div>
-                <span className="block text-[8px] font-black text-stone-450 uppercase mb-0.5">Primary trade category</span>
+                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Primary trade category</span>
                 <span className="text-stone-900 font-bold">{services.primary}</span>
               </div>
               <div>
-                <span className="block text-[8px] font-black text-stone-450 uppercase mb-0.5">Specialized scopes</span>
+                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Specialized scopes</span>
                 <span className="text-stone-900 font-bold">{services.secondary}</span>
               </div>
               <div>
-                <span className="block text-[8px] font-black text-stone-450 uppercase mb-0.5">Areas of Specialization Expertise</span>
+                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Areas of Specialization Expertise</span>
                 <div className="flex gap-1.5 flex-wrap mt-1">
                   {specializations.map((spec, i) => (
-                    <span key={i} className="bg-stone-50 border border-stone-200 px-2.5 py-0.5 rounded text-[10px] text-stone-600">
+                    <span key={i} className="bg-stone-50 border border-stone-200 px-2.5 py-0.5 rounded text-2xs text-stone-600">
                       {spec}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="pt-2 border-t border-light-border/40">
-                <span className="block text-[8px] font-black text-stone-450 uppercase mb-0.5">Service Locations Served</span>
+                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Service Locations Served</span>
                 <div className="flex gap-1.5 flex-wrap mt-1">
                   {locations.map((loc, i) => (
-                    <span key={i} className="bg-stone-50 border border-stone-200 px-2.5 py-0.5 rounded text-[10px] text-stone-600">
+                    <span key={i} className="bg-stone-50 border border-stone-200 px-2.5 py-0.5 rounded text-2xs text-stone-600">
                       {loc}
                     </span>
                   ))}
@@ -336,7 +336,7 @@ export default function ProfessionalProfile() {
               <h3 className="text-xs font-black uppercase text-stone-900">Portfolio Showcase</h3>
               <button
                 onClick={handleAddPortfolioItem}
-                className="text-[9px] font-black uppercase text-brand-emerald hover:underline"
+                className="text-3xs font-black uppercase text-brand-emerald hover:underline"
               >
                 + Add Project
               </button>
@@ -353,9 +353,9 @@ export default function ProfessionalProfile() {
                     <img src={proj.imgUrl} alt={proj.name} className="w-full h-32 object-cover bg-stone-100" />
                     <div className="p-4 space-y-2">
                       <strong className="text-stone-900 block truncate">{proj.name}</strong>
-                      <p className="text-[10px] text-stone-500 leading-relaxed font-semibold">{proj.description}</p>
+                      <p className="text-2xs text-stone-500 leading-relaxed font-semibold">{proj.description}</p>
                       
-                      <div className="flex justify-between items-center pt-2 border-t border-light-border/40 text-[9px] text-stone-400 font-bold uppercase">
+                      <div className="flex justify-between items-center pt-2 border-t border-light-border/40 text-3xs text-stone-400 font-bold uppercase">
                         <span>{proj.location} &bull; {proj.year}</span>
                         <button onClick={() => handleDeletePortfolioItem(proj.id)} className="text-rose-600 hover:underline">
                           Delete
@@ -377,7 +377,7 @@ export default function ProfessionalProfile() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div className="flex justify-between items-center border-b border-light-border/40 pb-2">
               <h3 className="text-xs font-black uppercase text-stone-900">Verification Center</h3>
-              <button onClick={handleUploadVerificationDoc} className="text-[8.5px] font-black uppercase text-brand-emerald hover:underline">
+              <button onClick={handleUploadVerificationDoc} className="text-3xs font-black uppercase text-brand-emerald hover:underline">
                 Upload doc
               </button>
             </div>
@@ -386,7 +386,7 @@ export default function ProfessionalProfile() {
               {verificationDocs.map((doc, idx) => (
                 <div key={idx} className="p-2.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center">
                   <span className="truncate max-w-[130px] block">{doc.name}</span>
-                  <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded border ${
+                  <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded border ${
                     doc.status === 'Approved' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-800'
                   }`}>
                     {doc.status}
@@ -401,17 +401,17 @@ export default function ProfessionalProfile() {
             <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Availability Rules</h3>
             <div className="space-y-3">
               <div>
-                <span className="block text-[8px] font-black text-stone-400 uppercase">Working Days</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase">Working Days</span>
                 <strong className="text-stone-900 block mt-0.5">{workingDays.join(', ')}</strong>
               </div>
               <div>
-                <span className="block text-[8px] font-black text-stone-400 uppercase">Operational Hours</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase">Operational Hours</span>
                 <strong className="text-stone-900 block mt-0.5">{workingHours}</strong>
               </div>
               <div className="pt-2 flex justify-between items-center border-t border-light-border/40">
                 <div>
                   <strong className="text-stone-850 block">Vacation Mode</strong>
-                   <span className="text-[10px] text-stone-400 font-bold block">Pause inbound project requests</span>
+                   <span className="text-2xs text-stone-400 font-bold block">Pause inbound project requests</span>
                 </div>
                 <input
                   type="checkbox"
@@ -430,7 +430,7 @@ export default function ProfessionalProfile() {
               {team.map((member, idx) => (
                 <div key={idx} className="p-3 bg-stone-50 border border-stone-100 rounded-xl space-y-1 text-xs">
                   <strong className="text-stone-900 block">{member.name}</strong>
-                  <div className="flex justify-between text-[10px] text-stone-450 font-bold uppercase">
+                  <div className="flex justify-between text-2xs text-stone-450 font-bold uppercase">
                     <span>{member.role}</span>
                   </div>
                 </div>

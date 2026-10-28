@@ -15,7 +15,7 @@ export function NotificationBadge({ category, priority, type = 'category' }: Not
     };
 
     return (
-      <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] uppercase tracking-wider ${priorityStyles[priority]}`}>
+      <span className={`inline-flex items-center px-2 py-0.5 rounded text-2xs uppercase tracking-wider ${priorityStyles[priority]}`}>
         {priority} Priority
       </span>
     );
@@ -35,7 +35,7 @@ export function NotificationBadge({ category, priority, type = 'category' }: Not
     const config = categoryStyles[category] || { style: 'bg-stone-50 border border-stone-100 text-stone-600', icon: '🔔' };
 
     return (
-      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${config.style}`}>
+      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-2xs font-bold ${config.style}`}>
         <span>{config.icon}</span>
         <span>{category}</span>
       </span>

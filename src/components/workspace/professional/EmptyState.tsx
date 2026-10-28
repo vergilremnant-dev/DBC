@@ -15,7 +15,7 @@ export function EmptyState({ icon, title, description, ctaLabel, onCtaClick }: E
         <h4 className="text-xs font-black text-stone-900 uppercase tracking-wider">
           {title}
         </h4>
-        <p className="text-[10px] text-stone-400 font-semibold max-w-xs mx-auto leading-relaxed">
+        <p className="text-2xs text-stone-400 font-semibold max-w-xs mx-auto leading-relaxed">
           {description}
         </p>
       </div>
@@ -23,7 +23,7 @@ export function EmptyState({ icon, title, description, ctaLabel, onCtaClick }: E
       {ctaLabel && onCtaClick && (
         <button
           onClick={onCtaClick}
-          className="rounded-lg bg-stone-900 hover:bg-stone-850 px-4 py-1.5 text-[10px] font-black text-white uppercase tracking-wider transition cursor-pointer shadow"
+          className="rounded-lg bg-stone-900 hover:bg-stone-850 px-4 py-1.5 text-2xs font-black text-white uppercase tracking-wider transition cursor-pointer shadow"
         >
           {ctaLabel}
         </button>

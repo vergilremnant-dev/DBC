@@ -163,10 +163,10 @@ export function AppointmentSchedulingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="space-y-1">
-              <span className="bg-stone-100 text-stone-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="bg-stone-100 text-stone-700 text-2xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                 Scheduler Engine
               </span>
-              <h1 className="text-2xl font-bold text-stone-950 font-serif leading-tight">
+              <h1 className="text-2xl font-bold text-stone-950 font-display leading-tight">
                 Calendar & Appointment Hub
               </h1>
               <p className="text-sm text-stone-500">
@@ -202,7 +202,7 @@ export function AppointmentSchedulingPage() {
           {/* Left Column: Scheduled Appointments Board */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm">
-              <h2 className="text-base font-bold text-stone-900 font-serif mb-4">Upcoming Scheduled Events</h2>
+              <h2 className="text-base font-bold text-stone-900 font-display mb-4">Upcoming Scheduled Events</h2>
               {appointments.length === 0 ? (
                 <div className="text-center py-12 text-stone-400 text-sm">
                   No appointments scheduled. Add one using the scheduler wizard on the right.
@@ -213,16 +213,16 @@ export function AppointmentSchedulingPage() {
                     <div key={apt.id} className="border border-stone-100 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-stone-50/50">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded border border-emerald-100 uppercase">
+                          <span className="bg-emerald-50 text-emerald-700 text-3xs font-bold px-1.5 py-0.5 rounded border border-emerald-100 uppercase">
                             {apt.eventType}
                           </span>
-                          <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">
+                          <span className="text-2xs text-stone-400 font-bold uppercase tracking-wider">
                             Status: {apt.status}
                           </span>
                         </div>
                         <h4 className="font-bold text-sm text-stone-900">{apt.title}</h4>
                         {apt.description && <p className="text-xs text-stone-500">{apt.description}</p>}
-                        <div className="text-[11px] text-stone-400 font-bold uppercase">
+                        <div className="text-2xs text-stone-400 font-bold uppercase">
                           Time: {new Date(apt.startTime).toLocaleString()} - {new Date(apt.endTime).toLocaleTimeString()}
                         </div>
                       </div>
@@ -265,9 +265,9 @@ export function AppointmentSchedulingPage() {
             {/* Booking Wizard Form (Only for Client) */}
             {currentUserRole === 'CUSTOMER' && (
               <form onSubmit={handleBook} className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
-                <h3 className="text-sm font-bold text-stone-950 uppercase tracking-widest font-serif">Appointment Wizard</h3>
+                <h3 className="text-sm font-bold text-stone-950 uppercase tracking-widest font-display">Appointment Wizard</h3>
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-stone-500 uppercase">Event Title</label>
+                  <label className="text-2xs font-bold text-stone-500 uppercase">Event Title</label>
                   <input
                     type="text"
                     value={title}
@@ -278,7 +278,7 @@ export function AppointmentSchedulingPage() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-stone-500 uppercase">Event Type</label>
+                    <label className="text-2xs font-bold text-stone-500 uppercase">Event Type</label>
                     <select
                       value={eventType}
                       onChange={(e) => setEventType(e.target.value)}
@@ -291,7 +291,7 @@ export function AppointmentSchedulingPage() {
                     </select>
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-stone-500 uppercase">Provider UUID</label>
+                    <label className="text-2xs font-bold text-stone-500 uppercase">Provider UUID</label>
                     <input
                       type="text"
                       value={providerId}
@@ -302,7 +302,7 @@ export function AppointmentSchedulingPage() {
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-stone-500 uppercase">Select Date</label>
+                  <label className="text-2xs font-bold text-stone-500 uppercase">Select Date</label>
                   <input
                     type="date"
                     value={bookingDate}
@@ -312,7 +312,7 @@ export function AppointmentSchedulingPage() {
                 </div>
                 {bookingDate && providerId && (
                   <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-stone-500 uppercase">Available Time Slots</label>
+                    <label className="text-2xs font-bold text-stone-500 uppercase">Available Time Slots</label>
                     {loadingSlots ? (
                       <div className="text-xs text-stone-400">Loading Slots...</div>
                     ) : availableSlots.length === 0 ? (
@@ -334,7 +334,7 @@ export function AppointmentSchedulingPage() {
                   </div>
                 )}
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-stone-500 uppercase">Description / Notes</label>
+                  <label className="text-2xs font-bold text-stone-500 uppercase">Description / Notes</label>
                   <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -351,7 +351,7 @@ export function AppointmentSchedulingPage() {
             {/* Provider availability settings manager */}
             {currentUserRole === 'PROVIDER' && (
               <form onSubmit={handleSaveBlocks} className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
-                <h3 className="text-sm font-bold text-stone-950 uppercase tracking-widest font-serif">Shift Settings</h3>
+                <h3 className="text-sm font-bold text-stone-950 uppercase tracking-widest font-display">Shift Settings</h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-xs font-bold text-stone-700">Monday</span>

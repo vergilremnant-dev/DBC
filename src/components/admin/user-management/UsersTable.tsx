@@ -40,7 +40,7 @@ export default function UsersTable({
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs" aria-label="Platform Users Detailed Table">
           <thead>
-            <tr className="border-b border-light-border bg-stone-50/50 text-[9px] font-black uppercase text-stone-400">
+            <tr className="border-b border-light-border bg-stone-50/50 text-3xs font-black uppercase text-stone-400">
               <th className="py-3 px-4 cursor-pointer hover:text-stone-900" onClick={() => onSort('name')}>
                 User Details{renderSortIndicator('name')}
               </th>
@@ -76,8 +76,8 @@ export default function UsersTable({
                       >
                         {u.name}
                       </strong>
-                      <span className="block text-[8.5px] text-stone-400 font-bold uppercase tracking-wider">ID: {u.id}</span>
-                      {u.companyName && <span className="block text-[9px] text-stone-500">{u.companyName}</span>}
+                      <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">ID: {u.id}</span>
+                      {u.companyName && <span className="block text-3xs text-stone-500">{u.companyName}</span>}
                     </div>
                   </div>
                 </td>
@@ -85,12 +85,12 @@ export default function UsersTable({
                 {/* Contact Info */}
                 <td className="py-3 px-4">
                   <p className="text-stone-700">{u.email}</p>
-                  <p className="text-[10px] text-stone-450 mt-0.5">{u.phone}</p>
+                  <p className="text-2xs text-stone-450 mt-0.5">{u.phone}</p>
                 </td>
 
                 {/* Platform Role */}
                 <td className="py-3 px-4">
-                  <span className="dbc-badge dbc-badge-progress text-[7.5px] py-0.5">{u.role}</span>
+                  <span className="dbc-badge dbc-badge-progress text-3xs py-0.5">{u.role}</span>
                 </td>
 
                 {/* Account Status */}
@@ -114,21 +114,21 @@ export default function UsersTable({
                   <div className="flex gap-2.5 justify-end">
                     <button
                       onClick={() => onSelectUser(u)}
-                      className="text-[9px] font-black uppercase text-brand-emerald hover:underline focus:outline-none"
+                      className="text-3xs font-black uppercase text-brand-emerald hover:underline focus:outline-none"
                     >
                       View
                     </button>
                     {u.status === 'Active' ? (
                       <button
                         onClick={() => onStatusChange(u.id, 'Suspended')}
-                        className="text-[9px] font-bold uppercase text-rose-600 hover:underline focus:outline-none"
+                        className="text-3xs font-bold uppercase text-rose-600 hover:underline focus:outline-none"
                       >
                         Suspend
                       </button>
                     ) : (
                       <button
                         onClick={() => onStatusChange(u.id, 'Active')}
-                        className="text-[9px] font-bold uppercase text-brand-emerald hover:underline focus:outline-none"
+                        className="text-3xs font-bold uppercase text-brand-emerald hover:underline focus:outline-none"
                       >
                         Activate
                       </button>
@@ -136,7 +136,7 @@ export default function UsersTable({
                     {u.verificationStatus === 'Pending' && (
                       <button
                         onClick={() => onApprove(u.id, u.name)}
-                        className="text-[9px] font-black uppercase text-brand-emerald hover:underline focus:outline-none"
+                        className="text-3xs font-black uppercase text-brand-emerald hover:underline focus:outline-none"
                       >
                         Verify
                       </button>

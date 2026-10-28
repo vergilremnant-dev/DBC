@@ -38,10 +38,10 @@ export default function DocumentViewer({ documents }: DocumentViewerProps) {
   return (
     <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-4 text-left select-none">
       <div className="border-b border-light-border/40 pb-2 flex justify-between items-center">
-        <h4 className="text-[10px] font-black uppercase text-stone-900 tracking-wider">
+        <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           📄 Submitted Document Files
         </h4>
-        <span className="text-[8px] bg-stone-150 text-stone-600 px-2 py-0.5 rounded font-black uppercase">
+        <span className="text-3xs bg-stone-150 text-stone-600 px-2 py-0.5 rounded font-black uppercase">
           {documents.length} Files
         </span>
       </div>
@@ -69,7 +69,7 @@ export default function DocumentViewer({ documents }: DocumentViewerProps) {
                     {doc.name}
                   </strong>
                 </div>
-                <div className="flex justify-between text-[9px] text-stone-450 font-bold uppercase tracking-wider">
+                <div className="flex justify-between text-3xs text-stone-450 font-bold uppercase tracking-wider">
                   <span>{doc.type}</span>
                   <span>{doc.size || '320 KB'}</span>
                 </div>
@@ -85,7 +85,7 @@ export default function DocumentViewer({ documents }: DocumentViewerProps) {
             <span className="truncate max-w-[180px] font-bold text-stone-850">
               Preview: {currentDoc.name}
             </span>
-            <div className="flex gap-2 text-[9px] font-black uppercase tracking-wider shrink-0">
+            <div className="flex gap-2 text-3xs font-black uppercase tracking-wider shrink-0">
               <button 
                 onClick={handleZoomOut}
                 className="px-2 py-1 bg-white hover:bg-stone-50 border border-stone-250 rounded cursor-pointer"
@@ -117,17 +117,17 @@ export default function DocumentViewer({ documents }: DocumentViewerProps) {
               style={{ transform: `scale(${zoomScale / 100})` }}
             >
               <span className="text-2xl">📄</span>
-              <strong className="text-[10px] text-stone-850 truncate max-w-[200px]">{currentDoc.name}</strong>
-              <p className="text-[8px] text-stone-400 font-bold uppercase tracking-widest">{currentDoc.type}</p>
-              <span className="text-[7.5px] text-stone-300 font-mono mt-1 select-none">
+              <strong className="text-2xs text-stone-850 truncate max-w-[200px]">{currentDoc.name}</strong>
+              <p className="text-3xs text-stone-400 font-bold uppercase tracking-widest">{currentDoc.type}</p>
+              <span className="text-3xs text-stone-300 font-mono mt-1 select-none">
                 [Certified DBC Encrypted Sandboxed File Review]
               </span>
             </div>
           </div>
 
           {/* Document Metadata details */}
-          <div className="bg-stone-50 border border-stone-150 p-3.5 rounded-xl space-y-1.5 text-[10px] text-stone-600 font-semibold">
-            <h5 className="text-[8.5px] font-black uppercase tracking-wider text-stone-450 border-b border-light-border/40 pb-1">
+          <div className="bg-stone-50 border border-stone-150 p-3.5 rounded-xl space-y-1.5 text-2xs text-stone-600 font-semibold">
+            <h5 className="text-3xs font-black uppercase tracking-wider text-stone-450 border-b border-light-border/40 pb-1">
               Document Audit Details
             </h5>
             <p>File Hash: <span className="font-mono text-stone-900">{currentDoc.metadata || 'SHA-256: 8a5d3fbc9c882103f...'}</span></p>

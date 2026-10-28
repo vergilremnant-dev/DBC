@@ -185,7 +185,7 @@ export default function ConsultantCrmPage() {
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider"> central database </span>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider"> central database </span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Customer Relationship Management</h1>
           <p className="text-xs text-stone-500 font-medium">Manage customer relationship logs, scheduled follow-ups, and notes histories.</p>
         </div>
@@ -227,7 +227,7 @@ export default function ConsultantCrmPage() {
             <span className={`text-base p-2 rounded-xl w-fit ${stat.color}`}>{stat.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{stat.count}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
             </div>
           </div>
         ))}
@@ -304,15 +304,15 @@ export default function ConsultantCrmPage() {
                     <div className="flex justify-between items-start pb-2 border-b border-light-border/40 gap-2">
                       <div>
                         <h4 className="text-xs font-black text-stone-900">{cust.fullName}</h4>
-                        <span className="block text-[8px] text-stone-400 font-bold uppercase tracking-wider">{cust.id} &bull; {cust.location}</span>
+                        <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{cust.id} &bull; {cust.location}</span>
                       </div>
                       <div className="flex gap-1.5 shrink-0">
-                        <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                        <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                           cust.health === 'Healthy' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-800'
                         }`}>
                           {cust.health}
                         </span>
-                        <span className="bg-stone-100 text-stone-700 text-[8px] font-bold px-2 py-0.5 rounded-full uppercase">
+                        <span className="bg-stone-100 text-stone-700 text-3xs font-bold px-2 py-0.5 rounded-full uppercase">
                           {cust.status}
                         </span>
                       </div>
@@ -320,7 +320,7 @@ export default function ConsultantCrmPage() {
 
                     <p className="text-xs text-stone-700 font-semibold pt-2.5">Project: {cust.projectTitle}</p>
                     
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[9.5px] text-stone-450 font-bold uppercase tracking-wider pt-3 border-t border-light-border/40 mt-3">
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-3xs text-stone-450 font-bold uppercase tracking-wider pt-3 border-t border-light-border/40 mt-3">
                       <span>Last interaction: {cust.lastInteraction}</span>
                       <span>Next follow-up: {cust.nextFollowUp}</span>
                     </div>
@@ -344,13 +344,13 @@ export default function ConsultantCrmPage() {
                   </div>
                   <div>
                     <h3 className="text-xs font-black text-stone-900">{selectedCustomer.fullName}</h3>
-                    <span className="text-[9px] text-stone-400 font-bold uppercase">{selectedCustomer.id}</span>
+                    <span className="text-3xs text-stone-400 font-bold uppercase">{selectedCustomer.id}</span>
                   </div>
                 </div>
                 <button onClick={() => setSelectedCustomerId(null)} className="text-stone-400 hover:text-stone-900 text-sm transition">✕</button>
               </div>
 
-              <div className="space-y-2.5 text-[11px] text-stone-600 font-medium">
+              <div className="space-y-2.5 text-2xs text-stone-600 font-medium">
                 <p>📞 <strong>Phone:</strong> {selectedCustomer.phone}</p>
                 <p>✉️ <strong>Email:</strong> {selectedCustomer.email}</p>
                 <p>📍 <strong>Project Location:</strong> {selectedCustomer.location}</p>
@@ -359,10 +359,10 @@ export default function ConsultantCrmPage() {
 
               {/* Tags Panel */}
               <div className="space-y-1.5 pt-3 border-t border-light-border/40">
-                <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider">Relationship Tags</span>
+                <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Relationship Tags</span>
                 <div className="flex flex-wrap gap-1.5">
                   {selectedCustomer.tags.map((t, idx) => (
-                    <span key={idx} className="bg-stone-100 text-stone-700 text-[8.5px] font-bold px-2 py-0.5 rounded border border-light-border/40 uppercase">
+                    <span key={idx} className="bg-stone-100 text-stone-700 text-3xs font-bold px-2 py-0.5 rounded border border-light-border/40 uppercase">
                       {t}
                     </span>
                   ))}
@@ -371,7 +371,7 @@ export default function ConsultantCrmPage() {
                       const newTag = prompt('Enter a custom tag:');
                       if (newTag) handleAddTag(newTag);
                     }}
-                    className="text-[8.5px] font-bold text-brand-emerald hover:underline"
+                    className="text-3xs font-bold text-brand-emerald hover:underline"
                   >
                     + Add Tag
                   </button>
@@ -381,7 +381,7 @@ export default function ConsultantCrmPage() {
 
             {/* 5. Autosaved Consultant Notes */}
             <div className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
-              <div className="flex justify-between items-center text-[10px] text-stone-400 font-semibold">
+              <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
                 <span>🔒 Consultant-only logs</span>
                 {isSavingNotes && <span className="text-brand-emerald animate-pulse">Autosaving...</span>}
               </div>
@@ -397,10 +397,10 @@ export default function ConsultantCrmPage() {
             <div className="bg-gradient-to-br from-stone-950 to-stone-900 border border-stone-850 p-6 rounded-3xl shadow-apple-sm text-white space-y-4 relative overflow-hidden">
               <div className="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
               <div className="space-y-0.5">
-                <span className="text-[8.5px] font-black uppercase text-emerald-400 tracking-wider">CRM Smart Assistant</span>
+                <span className="text-3xs font-black uppercase text-emerald-400 tracking-wider">CRM Smart Assistant</span>
                 <h3 className="text-xs font-black">AI Follow-up suggestions</h3>
               </div>
-              <ul className="space-y-2 text-[10px] text-stone-300 font-medium">
+              <ul className="space-y-2 text-2xs text-stone-300 font-medium">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400">✦</span>
                   <span>Contact {selectedCustomer.fullName} concerning next scheduled {selectedCustomer.nextFollowUp} task.</span>
@@ -420,12 +420,12 @@ export default function ConsultantCrmPage() {
                   <div key={fup.id} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                     <div>
                       <strong className="block text-stone-900 font-bold">{fup.customerName} ({fup.type})</strong>
-                      <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">Due date: {fup.date} &bull; Status: {fup.status}</span>
+                      <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">Due date: {fup.date} &bull; Status: {fup.status}</span>
                     </div>
                     {fup.status !== 'Completed' && (
                       <button
                         onClick={() => handleCompleteFollowUp(fup.id)}
-                        className="text-brand-emerald text-[9px] font-black uppercase tracking-wider hover:underline"
+                        className="text-brand-emerald text-3xs font-black uppercase tracking-wider hover:underline"
                       >
                         Complete Task
                       </button>

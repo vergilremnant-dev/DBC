@@ -46,7 +46,7 @@ export function ConsultantCard({ consultant, onBook, onViewProfile }: Consultant
 
         {/* Top Left: Consultation Badge */}
         <div className="absolute top-2.5 left-2.5 z-10">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-stone-950/80 backdrop-blur-md border border-amber-400/40 text-amber-300 text-[9px] font-bold tracking-wide shadow-md">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-stone-950/80 backdrop-blur-md border border-amber-400/40 text-amber-300 text-3xs font-bold tracking-wide shadow-md">
             <span>✨ Certified</span>
           </span>
         </div>
@@ -58,7 +58,7 @@ export function ConsultantCard({ consultant, onBook, onViewProfile }: Consultant
 
         {/* Bottom Right: Session Fee Pill */}
         <div className="absolute bottom-2.5 right-2.5 z-10">
-          <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 backdrop-blur-md border border-emerald-400/30 text-emerald-300 text-[10px] font-bold tracking-wide">
+          <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 backdrop-blur-md border border-emerald-400/30 text-emerald-300 text-2xs font-bold tracking-wide">
             ₹{consultant.fee} / session
           </span>
         </div>
@@ -82,34 +82,34 @@ export function ConsultantCard({ consultant, onBook, onViewProfile }: Consultant
         
         <div className="space-y-2">
           <div>
-            <h3 className="text-sm sm:text-base font-bold text-stone-900 font-serif leading-snug group-hover:text-emerald-800 transition truncate">
+            <h3 className="text-sm sm:text-base font-bold text-stone-900 font-display leading-snug group-hover:text-emerald-800 transition truncate">
               {consultant.fullName}
             </h3>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 mt-0.5 truncate">
+            <p className="text-2xs font-bold uppercase tracking-wider text-emerald-800 mt-0.5 truncate">
               {consultant.title}
             </p>
           </div>
 
           {/* Metrics strip */}
           <div className="flex flex-wrap items-center gap-1.5 text-xs text-stone-600">
-            <span className="inline-flex items-center gap-0.5 bg-amber-50 text-amber-900 border border-amber-200/90 px-1.5 py-0.2 rounded font-bold text-[10px]">
+            <span className="inline-flex items-center gap-0.5 bg-amber-50 text-amber-900 border border-amber-200/90 px-1.5 py-0.2 rounded font-bold text-2xs">
               <span>⭐</span> {consultant.rating.toFixed(1)}
             </span>
-            <span className="text-stone-300 text-[10px]">•</span>
-            <span className="text-stone-600 font-medium text-[10.5px]">
+            <span className="text-stone-300 text-2xs">•</span>
+            <span className="text-stone-600 font-medium text-2xs">
               ⏳ {consultant.experienceYears}+ Yrs
             </span>
-            <span className="text-stone-300 text-[10px]">•</span>
-            <span className="text-stone-600 font-medium text-[10.5px]">
+            <span className="text-stone-300 text-2xs">•</span>
+            <span className="text-stone-600 font-medium text-2xs">
               📍 {consultant.city}
             </span>
           </div>
 
-          <p className="text-[11.5px] text-stone-600 font-normal leading-relaxed line-clamp-2">
+          <p className="text-xs text-stone-600 font-normal leading-relaxed line-clamp-2">
             <span className="font-bold text-stone-900">Focus:</span> {consultant.specialization}
           </p>
 
-          <div className="flex items-center gap-2 text-[10px] text-stone-500 font-medium pt-0.5">
+          <div className="flex items-center gap-2 text-2xs text-stone-500 font-medium pt-0.5">
             <span>⏱️ {consultant.sessionDuration}</span>
             <span>•</span>
             <span className="truncate max-w-[150px]">🗣️ {consultant.languages.join(', ')}</span>
@@ -120,13 +120,13 @@ export function ConsultantCard({ consultant, onBook, onViewProfile }: Consultant
         <div className="grid grid-cols-2 gap-2 pt-3 border-t border-stone-100 mt-1">
           <button
             onClick={() => onViewProfile(consultant.id)}
-            className="h-8.5 px-2 rounded-lg border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] font-bold uppercase tracking-wider transition cursor-pointer flex items-center justify-center"
+            className="h-8.5 px-2 rounded-lg border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-2xs font-bold uppercase tracking-wider transition cursor-pointer flex items-center justify-center"
           >
             View Profile
           </button>
           <button
             onClick={() => onBook(consultant)}
-            className="h-8.5 px-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-[11px] font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
+            className="h-8.5 px-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-2xs font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
           >
             <span>Request Consultation</span>
             <span>→</span>

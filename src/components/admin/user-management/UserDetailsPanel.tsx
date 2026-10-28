@@ -23,7 +23,7 @@ export default function UserDetailsPanel({
       <div className="bg-white border border-light-border p-8 rounded-3xl text-center space-y-2.5 shadow-apple-sm text-stone-450 h-full flex flex-col justify-center select-none">
         <span className="text-3xl">👤</span>
         <h4 className="text-xs font-black uppercase text-stone-400 tracking-wider">Select a User</h4>
-        <p className="text-[10px] text-stone-500 font-medium">Click on a user profile to view detailed diagnostics and management actions.</p>
+        <p className="text-2xs text-stone-500 font-medium">Click on a user profile to view detailed diagnostics and management actions.</p>
       </div>
     );
   }
@@ -72,7 +72,7 @@ export default function UserDetailsPanel({
           </div>
           <div>
             <h3 className="text-xs font-black text-stone-900 leading-none">{user.name}</h3>
-            <span className="text-[9px] text-stone-400 font-bold uppercase block mt-1">User ID: {user.id}</span>
+            <span className="text-3xs text-stone-400 font-bold uppercase block mt-1">User ID: {user.id}</span>
           </div>
         </div>
         <button 
@@ -87,7 +87,7 @@ export default function UserDetailsPanel({
       {/* Account Info list */}
       <div className="space-y-4">
         <div>
-          <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider mb-2">
+          <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider mb-2">
             Identity & Role Details
           </span>
           <div className="space-y-2 text-xs font-semibold text-stone-600">
@@ -101,7 +101,7 @@ export default function UserDetailsPanel({
             )}
             <p className="flex justify-between border-b border-light-border/40 pb-1.5">
               <span>Primary Role:</span> 
-              <span className="bg-stone-100 text-stone-750 text-[8.5px] px-2 py-0.5 rounded font-black uppercase">
+              <span className="bg-stone-100 text-stone-750 text-3xs px-2 py-0.5 rounded font-black uppercase">
                 {user.role}
               </span>
             </p>
@@ -115,7 +115,7 @@ export default function UserDetailsPanel({
         </div>
 
         <div>
-          <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider mb-2">
+          <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider mb-2">
             Contact Credentials
           </span>
           <div className="space-y-2 text-xs font-semibold text-stone-600">
@@ -132,7 +132,7 @@ export default function UserDetailsPanel({
         </div>
 
         <div>
-          <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider mb-2">
+          <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider mb-2">
             Platform Metrics & Activity
           </span>
           <div className="space-y-2 text-xs font-semibold text-stone-600">
@@ -154,7 +154,7 @@ export default function UserDetailsPanel({
 
       {/* Account Operations CTA */}
       <div className="pt-4 border-t border-light-border space-y-3">
-        <span className="block text-[8.5px] font-black uppercase text-stone-850 tracking-wider">
+        <span className="block text-3xs font-black uppercase text-stone-850 tracking-wider">
           IAM Management Actions
         </span>
 

@@ -26,10 +26,10 @@ export function ProjectDetails({
         {/* Title row */}
         <div className="flex justify-between items-start gap-4">
           <div className="space-y-1">
-            <span className="bg-stone-50 border border-stone-200 text-stone-600 rounded px-2 py-0.5 text-[8px] font-black uppercase">
+            <span className="bg-stone-50 border border-stone-200 text-stone-600 rounded px-2 py-0.5 text-3xs font-black uppercase">
               {project.category}
             </span>
-            <h3 className="text-base font-bold text-stone-900 font-serif leading-snug">
+            <h3 className="text-base font-bold text-stone-900 font-display leading-snug">
               {project.name}
             </h3>
           </div>
@@ -46,19 +46,19 @@ export function ProjectDetails({
         {/* Client details / Timeline info */}
         <div className="grid grid-cols-2 gap-3 border-t border-b border-stone-100 py-4">
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-[8px] uppercase font-bold text-stone-400">Client / Customer</span>
+            <span className="block text-3xs uppercase font-bold text-stone-400">Client / Customer</span>
             <strong className="text-stone-900 text-sm block mt-0.5">{project.customerName}</strong>
           </div>
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-[8px] uppercase font-bold text-stone-400">Operational Priority</span>
+            <span className="block text-3xs uppercase font-bold text-stone-400">Operational Priority</span>
             <strong className="text-rose-800 text-sm block mt-0.5">{project.priority}</strong>
           </div>
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-[8px] uppercase font-bold text-stone-400">Start Date</span>
+            <span className="block text-3xs uppercase font-bold text-stone-400">Start Date</span>
             <strong className="text-stone-700 block mt-0.5">{project.startDate}</strong>
           </div>
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-[8px] uppercase font-bold text-stone-400">Completion Target</span>
+            <span className="block text-3xs uppercase font-bold text-stone-400">Completion Target</span>
             <strong className="text-stone-700 block mt-0.5">{project.completionDate}</strong>
           </div>
         </div>
@@ -74,26 +74,26 @@ export function ProjectDetails({
 
         {/* Client notes placeholder */}
         <div className="space-y-2 bg-stone-50 border border-stone-150 rounded-xl p-3">
-          <span className="block text-[9px] uppercase font-bold text-stone-400">Site Coordinator Logs</span>
-          <p className="text-[10px] text-stone-500 font-semibold leading-relaxed">
+          <span className="block text-3xs uppercase font-bold text-stone-400">Site Coordinator Logs</span>
+          <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
             Measurements checklist is complete. Concrete cement levels have been verified at site boundaries.
           </p>
         </div>
 
         {/* Attachments blueprint files */}
         <div className="space-y-2">
-          <span className="block text-[9px] uppercase font-bold text-stone-400 tracking-wider">
+          <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
             Contract Blueprints & Estimates (2)
           </span>
           <div className="space-y-2">
             <div className="flex items-center justify-between p-2 rounded-xl border border-stone-150 bg-stone-50/50 hover:bg-stone-50 transition cursor-pointer select-none">
               <div className="flex items-center gap-2">
                 <span className="text-base">📄</span>
-                <span className="text-[10px] font-bold text-stone-750">Villa_Wiring_Blueprints.pdf</span>
+                <span className="text-2xs font-bold text-stone-750">Villa_Wiring_Blueprints.pdf</span>
               </div>
               <button
                 onClick={() => alert('Downloaded layout blueprints')}
-                className="text-[9px] font-black uppercase text-emerald-800"
+                className="text-3xs font-black uppercase text-emerald-800"
               >
                 Get File
               </button>
@@ -102,11 +102,11 @@ export function ProjectDetails({
             <div className="flex items-center justify-between p-2 rounded-xl border border-stone-150 bg-stone-50/50 hover:bg-stone-50 transition cursor-pointer select-none">
               <div className="flex items-center gap-2">
                 <span className="text-base">📄</span>
-                <span className="text-[10px] font-bold text-stone-750">Final_Inspection_Signoff.pdf</span>
+                <span className="text-2xs font-bold text-stone-750">Final_Inspection_Signoff.pdf</span>
               </div>
               <button
                 onClick={() => alert('Downloaded signoff verification')}
-                className="text-[9px] font-black uppercase text-emerald-800"
+                className="text-3xs font-black uppercase text-emerald-800"
               >
                 Get File
               </button>
@@ -133,7 +133,7 @@ export function ProjectDetails({
 
         <button
           onClick={() => alert('Summary exported in CSV layout!')}
-          className="rounded-lg bg-stone-900 hover:bg-stone-850 px-3 py-1.5 text-[9px] font-black text-white uppercase tracking-wider cursor-pointer shadow-sm"
+          className="rounded-lg bg-stone-900 hover:bg-stone-850 px-3 py-1.5 text-3xs font-black text-white uppercase tracking-wider cursor-pointer shadow-sm"
         >
           Export Summary
         </button>

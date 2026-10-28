@@ -41,10 +41,10 @@ export default function UserStatistics({
             <span className="block text-xl font-black text-stone-900 leading-none">
               {card.count}
             </span>
-            <span className="block text-[9px] font-black text-stone-900 uppercase tracking-wider">
+            <span className="block text-3xs font-black text-stone-900 uppercase tracking-wider">
               {card.label}
             </span>
-            <span className="block text-[8.5px] text-stone-400 font-medium">
+            <span className="block text-3xs text-stone-400 font-medium">
               {card.desc}
             </span>
           </div>

@@ -41,14 +41,14 @@ export function RequirementCard({ requirement, onSelect }: RequirementCardProps)
             <h4 className="text-xs font-black text-stone-900 leading-snug group-hover:text-emerald-800 transition truncate">
               {requirement.title}
             </h4>
-            <span className="inline-block text-[8px] font-black uppercase bg-stone-100 text-stone-600 border border-stone-200 px-2 py-0.5 rounded">
+            <span className="inline-block text-3xs font-black uppercase bg-stone-100 text-stone-600 border border-stone-200 px-2 py-0.5 rounded">
               {requirement.category}
             </span>
           </div>
           <RequirementStatusBadge status={requirement.status} />
         </div>
 
-        <p className="text-[10px] text-stone-500 font-semibold leading-relaxed line-clamp-2">
+        <p className="text-2xs text-stone-500 font-semibold leading-relaxed line-clamp-2">
           Budget: ₹{requirement.budgetMin.toLocaleString()} - ₹{requirement.budgetMax.toLocaleString()} • Location: {requirement.city}
         </p>
       </div>
@@ -59,7 +59,7 @@ export function RequirementCard({ requirement, onSelect }: RequirementCardProps)
           <div className={`h-full rounded-full transition-all duration-300 ${getProgressWidth(requirement.status)}`} />
         </div>
 
-        <div className="flex justify-between items-center text-[9px] font-bold text-stone-400 uppercase tracking-wider">
+        <div className="flex justify-between items-center text-3xs font-bold text-stone-400 uppercase tracking-wider">
           <span>Created: {new Date(requirement.createdAt).toLocaleDateString()}</span>
           <span>
             {requirement.prosInterestedCount || 0} interested pros

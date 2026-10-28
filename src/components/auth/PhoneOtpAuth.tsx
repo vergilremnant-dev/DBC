@@ -36,7 +36,7 @@ interface PhoneOtpAuthProps {
 
 const inputClass =
   'w-full min-h-[44px] bg-stone-50/50 focus:bg-white border border-stone-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 rounded-xl text-xs font-medium text-stone-900 placeholder:text-stone-400 py-2.5 px-3.5 transition-all outline-none';
-const labelClass = 'block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5';
+const labelClass = 'block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5';
 const primaryButtonClass =
   'w-full min-h-[44px] py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer';
 
@@ -205,7 +205,7 @@ export function PhoneOtpAuth({ mode = 'login', onAuthenticated, onUseEmailLogin,
       <div id={RECAPTCHA_CONTAINER_ID} className="flex justify-center" />
 
       <div className="space-y-1">
-        <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">{heading}</h2>
+        <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">{heading}</h2>
         {state.stage === 'phone' && (
           <p className="text-xs text-stone-500">
             {mode === 'register'
@@ -322,7 +322,7 @@ export function PhoneOtpAuth({ mode = 'login', onAuthenticated, onUseEmailLogin,
                 </button>
               )}
               {state.smsHelpVisible && (
-                <p className="mt-1 p-3 rounded-xl bg-stone-50 border border-stone-200/80 text-[11px] text-stone-500 leading-relaxed">
+                <p className="mt-1 p-3 rounded-xl bg-stone-50 border border-stone-200/80 text-2xs text-stone-500 leading-relaxed">
                   Check that {maskPhoneE164(state.phoneE164)} is correct and can receive SMS. Messages can be delayed by your
                   mobile network. You can resend the code or change the number.
                 </p>

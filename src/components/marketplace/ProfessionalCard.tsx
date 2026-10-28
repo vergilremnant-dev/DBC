@@ -61,7 +61,7 @@ export function ProfessionalCard({
   const displayName = professional.businessName || professional.fullName;
   const isVerified = professional.isVerified ?? false;
   const coverUrl = professional.coverImage || getCoverForTitle(professional.title);
-  const reviewsCount = professional.totalReviews ?? (Math.floor(professional.rating * 4) + 6);
+  const reviewsCount = professional.totalReviews ?? 0;
 
   return (
     <div className="bg-white border border-stone-200/90 rounded-2xl overflow-hidden shadow-2xs hover:shadow-lg hover:border-emerald-600/40 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between relative text-left group">
@@ -81,7 +81,7 @@ export function ProfessionalCard({
         {/* Top Left: Verified Badge */}
         {isVerified && (
           <div className="absolute top-2.5 left-2.5 z-10">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-[9px] font-bold tracking-wide shadow-md">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-3xs font-bold tracking-wide shadow-md">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               <span>🛡️ Verified</span>
             </span>
@@ -95,7 +95,7 @@ export function ProfessionalCard({
               e.stopPropagation();
               onAddToCompare(professional);
             }}
-            className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-200 cursor-pointer shadow-sm backdrop-blur-md ${
+            className={`w-7 h-7 rounded-full flex items-center justify-center text-2xs font-bold transition-all duration-200 cursor-pointer shadow-sm backdrop-blur-md ${
               isComparing
                 ? 'bg-emerald-600 text-white ring-2 ring-emerald-300'
                 : 'bg-stone-950/60 hover:bg-stone-950/90 text-white/90 border border-white/20'
@@ -112,7 +112,7 @@ export function ProfessionalCard({
         {/* Bottom Right: Experience Badge */}
         {professional.experienceYears > 0 && (
           <div className="absolute bottom-2.5 right-2.5 z-10">
-            <span className="px-2 py-0.5 rounded-md bg-stone-950/70 backdrop-blur-md border border-white/15 text-stone-200 text-[9px] font-bold">
+            <span className="px-2 py-0.5 rounded-md bg-stone-950/70 backdrop-blur-md border border-white/15 text-stone-200 text-3xs font-bold">
               ⏳ {professional.experienceYears}+ Yrs
             </span>
           </div>
@@ -147,28 +147,28 @@ export function ProfessionalCard({
           
           {/* Identity & Trade Title */}
           <div>
-            <h3 className="text-sm sm:text-base font-bold text-stone-900 font-serif leading-snug group-hover:text-emerald-800 transition truncate">
+            <h3 className="text-sm sm:text-base font-bold text-stone-900 font-display leading-snug group-hover:text-emerald-800 transition truncate">
               {displayName}
             </h3>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 mt-0.5 truncate">
+            <p className="text-2xs font-bold uppercase tracking-wider text-emerald-800 mt-0.5 truncate">
               {professional.title}
             </p>
           </div>
 
           {/* Ratings, Reviews & Location */}
           <div className="flex flex-wrap items-center gap-1.5 text-xs text-stone-600">
-            <span className="inline-flex items-center gap-0.5 bg-amber-50 text-amber-900 border border-amber-200/90 px-1.5 py-0.2 rounded font-bold text-[10px]">
-              <span>⭐</span> {professional.rating ? professional.rating.toFixed(1) : '4.8'}
-              <span className="text-amber-700/70 font-normal">({reviewsCount})</span>
+            <span className="inline-flex items-center gap-0.5 bg-amber-50 text-amber-900 border border-amber-200/90 px-1.5 py-0.2 rounded font-bold text-2xs">
+              <span>⭐</span> {professional.rating ? professional.rating.toFixed(1) : 'New'}
+              {reviewsCount > 0 && <span className="text-amber-700/70 font-normal">({reviewsCount})</span>}
             </span>
-            <span className="text-stone-300 text-[10px]">•</span>
-            <span className="inline-flex items-center gap-0.5 text-stone-600 font-medium text-[10.5px] truncate max-w-[140px]">
+            <span className="text-stone-300 text-2xs">•</span>
+            <span className="inline-flex items-center gap-0.5 text-stone-600 font-medium text-2xs truncate max-w-[140px]">
               <span>📍</span> {professional.city}
             </span>
           </div>
 
           {/* Description snippet */}
-          <p className="text-[11.5px] text-stone-600 font-normal leading-relaxed line-clamp-2">
+          <p className="text-xs text-stone-600 font-normal leading-relaxed line-clamp-2">
             {professional.description || 'Verified coordination specialist offering certified layout drafting, architectural oversight, and on-site execution.'}
           </p>
 
@@ -178,13 +178,13 @@ export function ProfessionalCard({
               {professional.skills.slice(0, 3).map((s) => (
                 <span
                   key={s}
-                  className="text-[9px] font-medium bg-stone-100 border border-stone-200/70 text-stone-700 px-1.5 py-0.2 rounded"
+                  className="text-3xs font-medium bg-stone-100 border border-stone-200/70 text-stone-700 px-1.5 py-0.2 rounded"
                 >
                   {s}
                 </span>
               ))}
               {professional.skills.length > 3 && (
-                <span className="text-[9px] font-bold bg-stone-100 text-stone-500 px-1 py-0.2 rounded">
+                <span className="text-3xs font-bold bg-stone-100 text-stone-500 px-1 py-0.2 rounded">
                   +{professional.skills.length - 3}
                 </span>
               )}
@@ -196,13 +196,13 @@ export function ProfessionalCard({
         <div className="grid grid-cols-2 gap-2 pt-3 border-t border-stone-100 mt-1">
           <button
             onClick={() => onViewProfile(professional.id)}
-            className="min-h-[44px] px-2 rounded-xl border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] font-bold uppercase tracking-wider transition cursor-pointer flex items-center justify-center"
+            className="min-h-[44px] px-2 rounded-xl border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-2xs font-bold uppercase tracking-wider transition cursor-pointer flex items-center justify-center"
           >
             View Profile
           </button>
           <button
             onClick={() => onContact(professional)}
-            className="min-h-[44px] px-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-[11px] font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
+            className="min-h-[44px] px-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-2xs font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
           >
             <span>Discuss Project</span>
             <span>→</span>

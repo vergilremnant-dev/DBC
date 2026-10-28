@@ -32,11 +32,11 @@ function LocationModal({ item, onSave, onClose }: LocationModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/40 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-label={item?.id ? 'Edit Location' : 'Add Location'}>
-      <div className="bg-white rounded-3xl border border-light-border shadow-apple-lg p-6 w-full max-w-md space-y-5">
+    <div className="dbc-modal-overlay" role="dialog" aria-modal="true" aria-label={item?.id ? 'Edit Location' : 'Add Location'}>
+      <div className="dbc-modal space-y-5">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-black text-stone-900 font-serif">{item?.id ? 'Edit Location' : 'Add Location'}</h3>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-700 text-lg font-bold cursor-pointer focus:outline-none" aria-label="Close">✕</button>
+          <h3 className="text-sm font-black text-stone-900 font-display">{item?.id ? 'Edit Location' : 'Add Location'}</h3>
+          <button onClick={onClose} className="dbc-modal-close" aria-label="Close">✕</button>
         </div>
         <div className="space-y-4">
           <div>
@@ -157,7 +157,7 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
                 {search ? 'No locations match your search.' : 'No locations configured.'}
               </p>
               {!search && (
-                <button onClick={() => setModal({})} className="text-[10px] text-brand-emerald font-bold hover:underline cursor-pointer focus:outline-none">
+                <button onClick={() => setModal({})} className="text-2xs text-brand-emerald font-bold hover:underline cursor-pointer focus:outline-none">
                   Add your first location →
                 </button>
               )}
@@ -167,11 +167,11 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
               <table className="w-full text-left text-xs" aria-label="Locations table">
                 <thead>
                   <tr className="bg-stone-50 border-b border-light-border">
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500">Location</th>
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500">Type</th>
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500 hidden sm:table-cell">Parent</th>
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500">Status</th>
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500 text-right">Actions</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Location</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Type</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500 hidden sm:table-cell">Parent</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Status</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-light-border">
@@ -179,18 +179,18 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
                     <tr key={loc.id} className={`hover:bg-stone-50 transition-colors ${!loc.active ? 'opacity-50' : ''}`}>
                       <td className="px-4 py-3 font-semibold text-stone-800">{loc.name}</td>
                       <td className="px-4 py-3">
-                        <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${LOC_TYPE_COLORS[loc.type]}`}>{loc.type}</span>
+                        <span className={`text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border ${LOC_TYPE_COLORS[loc.type]}`}>{loc.type}</span>
                       </td>
                       <td className="px-4 py-3 text-stone-500 font-medium hidden sm:table-cell">{loc.parent || '—'}</td>
                       <td className="px-4 py-3">
-                        <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${loc.active ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-stone-100 text-stone-500 border-stone-200'}`}>
+                        <span className={`text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border ${loc.active ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-stone-100 text-stone-500 border-stone-200'}`}>
                           {loc.active ? 'Active' : 'Inactive'}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => setModal(loc)} className="text-[9px] font-bold text-stone-600 hover:text-brand-emerald transition cursor-pointer focus:outline-none" aria-label={`Edit ${loc.name}`}>Edit</button>
-                          <button onClick={() => handleToggle(loc.id)} className={`text-[9px] font-bold transition cursor-pointer focus:outline-none ${loc.active ? 'text-amber-600 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700'}`} aria-label={`${loc.active ? 'Deactivate' : 'Activate'} ${loc.name}`}>
+                          <button onClick={() => setModal(loc)} className="text-3xs font-bold text-stone-600 hover:text-brand-emerald transition cursor-pointer focus:outline-none" aria-label={`Edit ${loc.name}`}>Edit</button>
+                          <button onClick={() => handleToggle(loc.id)} className={`text-3xs font-bold transition cursor-pointer focus:outline-none ${loc.active ? 'text-amber-600 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700'}`} aria-label={`${loc.active ? 'Deactivate' : 'Activate'} ${loc.name}`}>
                             {loc.active ? 'Deactivate' : 'Activate'}
                           </button>
                         </div>
@@ -202,7 +202,7 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
             </div>
           )}
 
-          <p className="text-[9px] text-stone-400 font-medium">
+          <p className="text-3xs text-stone-400 font-medium">
             {locations.filter(l => l.active).length} active · {locations.filter(l => !l.active).length} inactive · {locations.length} total
           </p>
         </div>

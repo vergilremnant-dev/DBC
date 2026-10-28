@@ -19,7 +19,7 @@ export default function MarketplaceQuickActions({
 }: MarketplaceQuickActionsProps) {
   if (!requirement) {
     return (
-      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-[10px] text-stone-400 font-medium select-none">
+      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-2xs text-stone-400 font-medium select-none">
         No active listing selected for quick moderation commands.
       </div>
     );
@@ -28,15 +28,15 @@ export default function MarketplaceQuickActions({
   return (
     <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-4 text-left select-none">
       <div>
-        <h4 className="text-[10px] font-black uppercase text-stone-900 tracking-wider">
+        <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           Listing Commands: {requirement.id}
         </h4>
-        <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
           Owner: {requirement.customerName} &bull; Status: {requirement.status}
         </span>
       </div>
 
-      <div className="grid gap-2 grid-cols-2 text-[9px] font-black uppercase tracking-wider text-center">
+      <div className="grid gap-2 grid-cols-2 text-3xs font-black uppercase tracking-wider text-center">
         <button
           onClick={() => onSelectRequirement(requirement)}
           className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"

@@ -89,7 +89,7 @@ export function PublicProfessionalProfilePage() {
       <div className="min-h-screen bg-stone-50 py-16 px-4">
         <div className="max-w-md mx-auto text-center bg-white border border-stone-200 rounded-3xl p-8 space-y-4 shadow-sm">
           <span className="text-3xl block">🔍</span>
-          <h2 className="text-lg font-bold text-stone-900 font-serif">Professional Not Found</h2>
+          <h2 className="text-lg font-bold text-stone-900 font-display">Professional Not Found</h2>
           <p className="text-xs text-stone-500 font-medium leading-relaxed">{errorMsg || 'We could not locate the requested professional profile.'}</p>
           <button
             onClick={() => navigate('/search')}
@@ -140,7 +140,7 @@ export function PublicProfessionalProfilePage() {
                 </div>
               )}
               {isVerified && (
-                <span className="absolute -bottom-1 -right-1 bg-emerald-700 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full border-2 border-white shadow-xs">
+                <span className="absolute -bottom-1 -right-1 bg-emerald-700 text-white text-3xs font-black uppercase px-2 py-0.5 rounded-full border-2 border-white shadow-xs">
                   Verified
                 </span>
               )}
@@ -148,7 +148,7 @@ export function PublicProfessionalProfilePage() {
 
             <div className="space-y-1.5 text-left">
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900 font-serif leading-tight">{displayName}</h1>
+                <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900 font-display leading-tight">{displayName}</h1>
                 <FavoriteButton id={provider.id} type="professional" />
               </div>
               <p className="text-xs font-bold uppercase tracking-wider text-emerald-800">
@@ -159,7 +159,7 @@ export function PublicProfessionalProfilePage() {
                 <span>•</span>
                 <span>💼 {provider.experienceYears || 5}+ Years Experience</span>
                 <span>•</span>
-                <span className="text-amber-800 font-bold">⭐ {provider.averageRating || 4.8}</span>
+                <span className="text-amber-800 font-bold">⭐ {provider.averageRating ? provider.averageRating.toFixed(1) : 'New'}</span>
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ export function PublicProfessionalProfilePage() {
             <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
               <div className="flex justify-between items-center">
                 <h3 className="text-xs font-black uppercase tracking-wider text-stone-400">Featured Projects Gallery</h3>
-                <span className="text-[10px] font-bold uppercase text-stone-400">Verified Work</span>
+                <span className="text-2xs font-bold uppercase text-stone-400">Verified Work</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -229,10 +229,10 @@ export function PublicProfessionalProfilePage() {
                       <img src={proj.img} alt={proj.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
                     </div>
                     <div className="p-3.5 space-y-1 bg-white">
-                      <span className="text-[9px] font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 inline-block">
+                      <span className="text-3xs font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 inline-block">
                         {proj.category}
                       </span>
-                      <h4 className="text-xs font-bold text-stone-900 font-serif leading-snug">{proj.title}</h4>
+                      <h4 className="text-xs font-bold text-stone-900 font-display leading-snug">{proj.title}</h4>
                     </div>
                   </div>
                 ))}
@@ -282,7 +282,7 @@ export function PublicProfessionalProfilePage() {
               <span className="font-extrabold flex items-center gap-1.5">
                 🛡️ Direct Verified Inquiry
               </span>
-              <p className="text-[11px] text-emerald-900 font-medium leading-relaxed">
+              <p className="text-2xs text-emerald-900 font-medium leading-relaxed">
                 Submitting a project request connects you directly with {displayName}. You can share your spatial parameters, layout preferences, and budget to receive a tailored quotation.
               </p>
             </div>

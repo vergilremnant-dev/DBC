@@ -33,7 +33,7 @@ export default function VerificationFilters({
         </h3>
         <button
           onClick={onReset}
-          className="text-[9px] font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -42,7 +42,7 @@ export default function VerificationFilters({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-xs">
         {/* Role */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Account Role
           </label>
           <select
@@ -61,7 +61,7 @@ export default function VerificationFilters({
 
         {/* Verification Status */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Verification Status
           </label>
           <select
@@ -80,7 +80,7 @@ export default function VerificationFilters({
 
         {/* Document Type */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Document Type
           </label>
           <select
@@ -98,7 +98,7 @@ export default function VerificationFilters({
 
         {/* Submission Date */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Submission Date
           </label>
           <select
@@ -115,7 +115,7 @@ export default function VerificationFilters({
 
         {/* Location search */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             City/Location
           </label>
           <select

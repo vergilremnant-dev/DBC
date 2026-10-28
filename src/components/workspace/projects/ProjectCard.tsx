@@ -49,23 +49,23 @@ export function ProjectCard({ project, isSelected, onSelect }: ProjectCardProps)
         {/* Header Badges */}
         <div className="flex justify-between items-start gap-4">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="bg-stone-50 border border-stone-200 text-stone-600 rounded px-2 py-0.5 text-[8px] font-black uppercase">
+            <span className="bg-stone-50 border border-stone-200 text-stone-600 rounded px-2 py-0.5 text-3xs font-black uppercase">
               {project.category}
             </span>
             <ProjectStatusBadge status={project.status} />
           </div>
           
-          <span className={`inline-flex items-center px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-wider border select-none leading-none ${getPriorityColors(project.priority)}`}>
+          <span className={`inline-flex items-center px-2 py-0.5 rounded text-3xs font-black uppercase tracking-wider border select-none leading-none ${getPriorityColors(project.priority)}`}>
             {project.priority} Priority
           </span>
         </div>
 
         {/* Project details */}
         <div className="space-y-1">
-          <h3 className="text-sm font-bold text-stone-900 font-serif leading-snug">
+          <h3 className="text-sm font-bold text-stone-900 font-display leading-snug">
             {project.name}
           </h3>
-          <p className="text-[10px] text-stone-400 font-bold">
+          <p className="text-2xs text-stone-400 font-bold">
             Client: <strong className="text-stone-600 font-extrabold">{project.customerName}</strong>
           </p>
         </div>
@@ -73,7 +73,7 @@ export function ProjectCard({ project, isSelected, onSelect }: ProjectCardProps)
 
       {/* Progress & Milestone segment */}
       <div className="space-y-2 bg-stone-50/50 border border-stone-100 rounded-xl p-3">
-        <div className="flex items-center justify-between text-[9px] font-bold text-stone-400 uppercase tracking-wider">
+        <div className="flex items-center justify-between text-3xs font-bold text-stone-400 uppercase tracking-wider">
           <span>Milestone Completion</span>
           <span className="font-mono text-stone-700 font-bold">{project.progress}%</span>
         </div>
@@ -86,14 +86,14 @@ export function ProjectCard({ project, isSelected, onSelect }: ProjectCardProps)
           ></div>
         </div>
 
-        <div className="pt-1.5 border-t border-stone-100/50 flex justify-between items-center text-[9px] font-bold text-stone-400 uppercase tracking-wider">
+        <div className="pt-1.5 border-t border-stone-100/50 flex justify-between items-center text-3xs font-bold text-stone-400 uppercase tracking-wider">
           <span>Next Up</span>
           <span className="text-stone-700 truncate block max-w-xs">{project.nextMilestone}</span>
         </div>
       </div>
 
       {/* Date / Location Info row */}
-      <div className="flex items-center justify-between border-t border-stone-50 pt-3 text-[9px] font-black uppercase tracking-wider text-stone-400">
+      <div className="flex items-center justify-between border-t border-stone-50 pt-3 text-3xs font-black uppercase tracking-wider text-stone-400">
         <span>📍 {project.location}</span>
         <span>Est. Finish: <strong className="text-stone-600 font-extrabold">{project.completionDate}</strong></span>
       </div>

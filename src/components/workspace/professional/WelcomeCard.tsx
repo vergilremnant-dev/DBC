@@ -24,7 +24,7 @@ export function WelcomeCard({
 
       <div className="space-y-3">
         <div className="space-y-1">
-          <h1 className="text-xl font-black text-stone-900 font-serif leading-none">
+          <h1 className="text-xl font-black text-stone-900 font-display leading-none">
             Welcome back, {name} 👋
           </h1>
           <p className="text-xs text-stone-400 font-bold">
@@ -33,7 +33,7 @@ export function WelcomeCard({
         </div>
 
         {/* Status badges */}
-        <div className="flex flex-wrap items-center gap-2 text-[10px] font-black uppercase tracking-wider">
+        <div className="flex flex-wrap items-center gap-2 text-2xs font-black uppercase tracking-wider">
           <span className="bg-stone-50 border border-stone-200 text-stone-700 rounded-full px-3 py-1">
             Status: <strong className="text-stone-900 font-extrabold">{businessStatus}</strong>
           </span>
@@ -56,7 +56,7 @@ export function WelcomeCard({
       <div className="w-full md:w-64 space-y-2 border-t md:border-t-0 md:border-l border-stone-150 pt-4 md:pt-0 md:pl-6">
         <div className="flex justify-between items-center text-xs font-bold text-stone-600">
           <span>Profile Completion</span>
-          <span className="font-serif font-black text-stone-900">{profileCompletion}%</span>
+          <span className="font-display font-black text-stone-900">{profileCompletion}%</span>
         </div>
 
         {/* Progress indicator */}
@@ -72,7 +72,7 @@ export function WelcomeCard({
         {profileCompletion < 100 && (
           <button
             onClick={onCompleteProfile}
-            className="block text-[10px] uppercase font-black text-emerald-700 hover:text-emerald-900 transition tracking-wider text-left cursor-pointer"
+            className="block text-2xs uppercase font-black text-emerald-700 hover:text-emerald-900 transition tracking-wider text-left cursor-pointer"
           >
             Complete profile to unlock direct customer bids &rarr;
           </button>

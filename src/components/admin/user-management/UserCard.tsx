@@ -36,13 +36,13 @@ export default function UserCard({
             >
               {user.name}
             </strong>
-            <span className="bg-stone-100 text-stone-600 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">
+            <span className="bg-stone-100 text-stone-600 text-3xs font-bold px-1.5 py-0.5 rounded uppercase">
               {user.role}
             </span>
           </div>
-          <p className="text-[11px] text-stone-700 truncate">{user.email}</p>
-          <p className="text-[10px] text-stone-450">{user.phone}</p>
-          {user.companyName && <p className="text-[10px] text-stone-500">{user.companyName}</p>}
+          <p className="text-2xs text-stone-700 truncate">{user.email}</p>
+          <p className="text-2xs text-stone-450">{user.phone}</p>
+          {user.companyName && <p className="text-2xs text-stone-500">{user.companyName}</p>}
         </div>
       </div>
 
@@ -51,8 +51,8 @@ export default function UserCard({
         <StatusBadge status={user.verificationStatus} />
       </div>
 
-      <div className="border-t border-light-border/40 pt-3.5 flex justify-between items-center gap-2 text-[9px] font-black uppercase tracking-wider">
-        <div className="text-[8.5px] text-stone-450 font-bold">
+      <div className="border-t border-light-border/40 pt-3.5 flex justify-between items-center gap-2 text-3xs font-black uppercase tracking-wider">
+        <div className="text-3xs text-stone-450 font-bold">
           Joined: {user.joinedDate}
         </div>
         

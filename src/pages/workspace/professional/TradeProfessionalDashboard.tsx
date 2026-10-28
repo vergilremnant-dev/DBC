@@ -118,7 +118,7 @@ export default function TradeProfessionalDashboard() {
       {/* 1. Header Dashboard Overview */}
       <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">Operational Console</span>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Operational Console</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Welcome back, Apex Architect & Build</h1>
           <p className="text-xs text-stone-500 font-medium">Saturday, August 1 &bull; Greeting: Make progress and drive site safety rules.</p>
         </div>
@@ -133,7 +133,7 @@ export default function TradeProfessionalDashboard() {
                 availability === 'Available' ? 'bg-emerald-500' : availability === 'Busy' ? 'bg-amber-500' : 'bg-rose-500'
               }`}></span>
               Status: {availability}
-              <span className="text-[9px]">▼</span>
+              <span className="text-3xs">▼</span>
             </button>
             {availabilityOpen && (
               <div className="absolute right-0 mt-2 w-40 bg-white border border-stone-200 rounded-xl shadow-lg z-50 overflow-hidden">
@@ -179,8 +179,8 @@ export default function TradeProfessionalDashboard() {
             <span className={`text-base p-2 rounded-xl w-fit ${kpi.color}`}>{kpi.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{kpi.value}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
-              <span className="block text-[8px] text-stone-400 font-semibold">{kpi.desc}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
+              <span className="block text-3xs text-stone-400 font-semibold">{kpi.desc}</span>
             </div>
           </button>
         ))}
@@ -196,10 +196,10 @@ export default function TradeProfessionalDashboard() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
               <div>
-                <h3 className="text-xs font-black uppercase text-stone-900 font-serif">Active Projects</h3>
-                <p className="text-[10px] text-stone-400 font-medium">Construction tracking milestones</p>
+                <h3 className="text-xs font-black uppercase text-stone-900 font-display">Active Projects</h3>
+                <p className="text-2xs text-stone-400 font-medium">Construction tracking milestones</p>
               </div>
-              <button onClick={() => navigate('/workspace/projects')} className="text-[9.5px] font-black uppercase text-brand-emerald hover:underline cursor-pointer">
+              <button onClick={() => navigate('/workspace/projects')} className="text-3xs font-black uppercase text-brand-emerald hover:underline cursor-pointer">
                 View All Projects
               </button>
             </div>
@@ -210,7 +210,7 @@ export default function TradeProfessionalDashboard() {
                   <p className="text-xs text-stone-500 font-semibold">No active projects in progress yet.</p>
                   <button
                     onClick={() => navigate('/workspace/leads')}
-                    className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black text-[10px] uppercase tracking-wider transition cursor-pointer"
+                    className="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl font-black text-2xs uppercase tracking-wider transition cursor-pointer"
                   >
                     Explore Opportunities
                   </button>
@@ -226,9 +226,9 @@ export default function TradeProfessionalDashboard() {
                         >
                           {proj.name}
                         </strong>
-                        <span className="text-[10px] text-stone-500 font-bold">Client: {proj.customerName} &bull; Stage: {proj.stage}</span>
+                        <span className="text-2xs text-stone-500 font-bold">Client: {proj.customerName} &bull; Stage: {proj.stage}</span>
                       </div>
-                      <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                      <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                         proj.status === 'Completed' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-blue-50 border-blue-200 text-blue-800'
                       }`}>
                         {proj.status}
@@ -236,7 +236,7 @@ export default function TradeProfessionalDashboard() {
                     </div>
 
                     <div className="space-y-1">
-                      <div className="flex justify-between text-[9px] font-bold text-stone-500">
+                      <div className="flex justify-between text-3xs font-bold text-stone-500">
                         <span>Progress</span>
                         <span>{proj.progress}%</span>
                       </div>
@@ -254,10 +254,10 @@ export default function TradeProfessionalDashboard() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
               <div>
-                <h3 className="text-xs font-black uppercase text-stone-900 font-serif">Available Leads Match</h3>
-                <p className="text-[10px] text-stone-400">Requirements matching electrical, masonry, civil scopes</p>
+                <h3 className="text-xs font-black uppercase text-stone-900 font-display">Available Leads Match</h3>
+                <p className="text-2xs text-stone-400">Requirements matching electrical, masonry, civil scopes</p>
               </div>
-              <button onClick={() => navigate('/workspace/leads')} className="text-[9.5px] font-black uppercase text-brand-emerald hover:underline cursor-pointer">
+              <button onClick={() => navigate('/workspace/leads')} className="text-3xs font-black uppercase text-brand-emerald hover:underline cursor-pointer">
                 View All Leads
               </button>
             </div>
@@ -272,7 +272,7 @@ export default function TradeProfessionalDashboard() {
                   <div key={req.id} className="p-4 bg-stone-50 border border-stone-200 rounded-2xl flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs">
                     <div>
                       <strong className="text-stone-900 block">{req.title}</strong>
-                      <span className="block text-[10px] text-stone-500 font-bold mt-0.5">Budget: {req.budget} &bull; Location: {req.location} &bull; {req.postedDate}</span>
+                      <span className="block text-2xs text-stone-500 font-bold mt-0.5">Budget: {req.budget} &bull; Location: {req.location} &bull; {req.postedDate}</span>
                     </div>
                     <div className="flex gap-2 shrink-0">
                       <button onClick={() => handleSaveReq(req.id)} className="dbc-btn dbc-btn-sm dbc-btn-outline bg-white">
@@ -294,7 +294,7 @@ export default function TradeProfessionalDashboard() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-light-border text-[9px] font-black uppercase text-stone-400">
+                  <tr className="border-b border-light-border text-3xs font-black uppercase text-stone-400">
                     <th className="py-2">Quotation ID</th>
                     <th className="py-2">Client</th>
                     <th className="py-2">Requirement</th>
@@ -310,7 +310,7 @@ export default function TradeProfessionalDashboard() {
                       <td className="py-3 text-stone-500">{q.requirementTitle}</td>
                       <td className="py-3 font-bold text-stone-900">{q.amount}</td>
                       <td className="py-3">
-                        <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                        <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                           q.status === 'Accepted' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-800'
                         }`}>
                           {q.status}
@@ -331,17 +331,17 @@ export default function TradeProfessionalDashboard() {
           {/* Today's Schedule */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
-              <h2 className="text-sm font-black text-stone-900 font-serif">Today's Timeline</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Chronological site agendas</p>
+              <h2 className="text-sm font-black text-stone-900 font-display">Today's Timeline</h2>
+              <p className="text-2xs text-stone-450 font-medium">Chronological site agendas</p>
             </div>
 
             <div className="space-y-4 relative border-l-2 border-stone-100 pl-4 ml-2">
               {schedule.map((item, idx) => (
                 <div key={idx} className="relative space-y-0.5 text-xs font-semibold">
                   <span className="absolute -left-[23px] top-0 w-2 h-2 rounded-full bg-brand-emerald"></span>
-                  <span className="block text-[8px] font-bold text-stone-400 uppercase tracking-widest">{item.time}</span>
+                  <span className="block text-3xs font-bold text-stone-400 uppercase tracking-widest">{item.time}</span>
                   <h4 className="font-bold text-stone-900 leading-tight">{item.title}</h4>
-                  <p className="text-stone-500 text-[10px] leading-relaxed font-medium">{item.desc}</p>
+                  <p className="text-stone-500 text-2xs leading-relaxed font-medium">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -365,7 +365,7 @@ export default function TradeProfessionalDashboard() {
                   className="p-3 bg-stone-50 border border-stone-200 rounded-xl hover:bg-stone-100 transition cursor-pointer"
                 >
                   <span className="text-lg block mb-1">{act.icon}</span>
-                  <span className="text-[10px] text-stone-750 block">{act.label}</span>
+                  <span className="text-2xs text-stone-750 block">{act.label}</span>
                 </button>
               ))}
             </div>
@@ -378,7 +378,7 @@ export default function TradeProfessionalDashboard() {
               {notifications.map((not, idx) => (
                 <div key={idx} className="p-2.5 bg-stone-50 border border-stone-100 rounded-xl flex justify-between items-start gap-2">
                   <p className="leading-tight text-stone-750">{not.text}</p>
-                  <span className="text-[7.5px] text-stone-400 font-bold shrink-0">{not.time}</span>
+                  <span className="text-3xs text-stone-400 font-bold shrink-0">{not.time}</span>
                 </div>
               ))}
             </div>

@@ -169,7 +169,7 @@ export function IntegrationAutomationPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <BrandLogo variant="header" />
-            <span className="rounded bg-stone-900 px-2.5 py-0.5 text-[8.5px] font-black text-white uppercase tracking-wider">
+            <span className="rounded bg-stone-900 px-2.5 py-0.5 text-3xs font-black text-white uppercase tracking-wider">
               Integrations Desk
             </span>
           </div>
@@ -188,7 +188,7 @@ export function IntegrationAutomationPage() {
       {/* 2. Sub-Tab Switcher Row */}
       <main className="mx-auto max-w-6xl w-full px-4 py-8 sm:px-6 space-y-6 flex-1 text-left">
         
-        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar">
+        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-3xs font-black uppercase tracking-wider no-scrollbar">
           {([
             { id: 'dashboard', label: 'Connected Services', icon: '🔌' },
             { id: 'workflows', label: 'Automation Rules', icon: '⚡' },
@@ -224,19 +224,19 @@ export function IntegrationAutomationPage() {
             {/* Quick Metrics */}
             <div className="grid gap-4 sm:grid-cols-4">
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">API requests</span>
-                <h4 className="text-xl font-extrabold text-stone-black mt-1">45,820 <span className="text-[9px] text-stone-gray">/ day</span></h4>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">API requests</span>
+                <h4 className="text-xl font-extrabold text-stone-black mt-1">45,820 <span className="text-3xs text-stone-gray">/ day</span></h4>
               </div>
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Webhooks Dispatched</span>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Webhooks Dispatched</span>
                 <h4 className="text-xl font-extrabold text-stone-black mt-1">1,240 events</h4>
               </div>
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Average API Latency</span>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Average API Latency</span>
                 <h4 className="text-xl font-extrabold text-brand-emerald mt-1">~14ms</h4>
               </div>
               <div className="dbc-card p-5">
-                <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Webhook success rate</span>
+                <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Webhook success rate</span>
                 <h4 className="text-xl font-extrabold text-brand-emerald mt-1">99.8%</h4>
               </div>
             </div>
@@ -248,21 +248,21 @@ export function IntegrationAutomationPage() {
                 {services.map((srv) => (
                   <div key={srv.id} className="dbc-card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                      <span className="bg-light-stone text-stone-gray text-[8px] font-black px-1.5 py-0.5 rounded border border-light-border uppercase">
+                      <span className="bg-light-stone text-stone-gray text-3xs font-black px-1.5 py-0.5 rounded border border-light-border uppercase">
                         {srv.category}
                       </span>
                       <h4 className="text-xs font-black text-stone-black mt-1.5">{srv.name}</h4>
-                      <span className="block text-[8px] text-stone-gray font-bold mt-0.5">Auth Mode: {srv.authType}</span>
+                      <span className="block text-3xs text-stone-gray font-bold mt-0.5">Auth Mode: {srv.authType}</span>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <span className={`dbc-badge text-[7.5px] py-0.5 uppercase ${
+                      <span className={`dbc-badge text-3xs py-0.5 uppercase ${
                         srv.status === 'Connected' ? 'dbc-badge-completed' : 'dbc-badge-priority'
                       }`}>{srv.status}</span>
                       
                       <button
                         onClick={() => handleToggleService(srv.id)}
-                        className={`font-black text-[9px] hover:underline uppercase focus:outline-none ${
+                        className={`font-black text-3xs hover:underline uppercase focus:outline-none ${
                           srv.status === 'Connected' ? 'text-rose-600' : 'text-brand-emerald'
                         }`}
                       >
@@ -290,23 +290,23 @@ export function IntegrationAutomationPage() {
                   <div key={rule.id} className="p-4 bg-light-stone/20 border border-light-border rounded-2xl flex justify-between items-center text-xs">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="bg-brand-emerald text-white text-[7.5px] font-black px-1.5 py-0.5 rounded">IF</span>
+                        <span className="bg-brand-emerald text-white text-3xs font-black px-1.5 py-0.5 rounded">IF</span>
                         <strong className="text-stone-black font-extrabold">{rule.triggerEvent}</strong>
                       </div>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="bg-stone-500 text-white text-[7.5px] font-black px-1.5 py-0.5 rounded">THEN</span>
+                        <span className="bg-stone-500 text-white text-3xs font-black px-1.5 py-0.5 rounded">THEN</span>
                         <span className="text-stone-gray font-semibold">{rule.actionService} &bull; {rule.actionDetails}</span>
                       </div>
                     </div>
                     
                     <div className="flex items-center gap-3">
-                      <span className={`dbc-badge text-[7.5px] py-0.5 uppercase ${
+                      <span className={`dbc-badge text-3xs py-0.5 uppercase ${
                         rule.status === 'Active' ? 'dbc-badge-completed' : 'dbc-badge-planning'
                       }`}>{rule.status}</span>
                       
                       <button
                         onClick={() => handleToggleRuleStatus(rule.id)}
-                        className="text-[9px] font-black text-stone-gray hover:underline focus:outline-none"
+                        className="text-3xs font-black text-stone-gray hover:underline focus:outline-none"
                       >
                         {rule.status === 'Active' ? 'Pause' : 'Activate'}
                       </button>
@@ -386,7 +386,7 @@ export function IntegrationAutomationPage() {
                           <td className="font-semibold text-stone-black">{k.name}</td>
                           <td><code>{k.prefix}</code></td>
                           <td>
-                            <span className="dbc-badge text-[7.5px] py-0.5">{k.scope}</span>
+                            <span className="dbc-badge text-3xs py-0.5">{k.scope}</span>
                           </td>
                           <td>{k.createdAt}</td>
                           <td className="text-right">
@@ -395,7 +395,7 @@ export function IntegrationAutomationPage() {
                                 setApiKeys(prev => prev.filter(x => x.id !== k.id));
                                 alert('API Key revoked successfully.');
                               }}
-                              className="text-rose-600 hover:underline font-black text-[9px] uppercase focus:outline-none"
+                              className="text-rose-600 hover:underline font-black text-3xs uppercase focus:outline-none"
                             >
                               Revoke
                             </button>
@@ -421,7 +421,7 @@ export function IntegrationAutomationPage() {
                 />
                 
                 <div className="space-y-2">
-                  <span className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Trigger Events Checklist</span>
+                  <span className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Trigger Events Checklist</span>
                   <div className="flex flex-wrap gap-4 text-xs font-semibold text-stone-gray">
                     {['Project Created', 'Payment Completed', 'Invoice Paid', 'Booking Confirmed'].map((evt) => (
                       <label key={evt} className="flex items-center gap-1.5 cursor-pointer">
@@ -462,7 +462,7 @@ export function IntegrationAutomationPage() {
                 />
                 
                 <div className="space-y-1.5">
-                  <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Permission Scope</label>
+                  <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Permission Scope</label>
                   <select
                     value={keyScope}
                     onChange={(e) => setKeyScope(e.target.value as 'Read-Only' | 'Read-Write' | 'Admin')}
@@ -494,7 +494,7 @@ export function IntegrationAutomationPage() {
                 <p className="text-xs text-stone-gray leading-relaxed font-semibold mt-1">
                   Authenticate your scripts by sending the generated API Key inside the HTTP Request Header:
                 </p>
-                <pre className="p-3 bg-light-stone/30 border border-light-border rounded-xl text-[10.5px] font-mono text-stone-black mt-2">
+                <pre className="p-3 bg-light-stone/30 border border-light-border rounded-xl text-2xs font-mono text-stone-black mt-2">
                   Authorization: Bearer dbc_live_8a221f4bdc802
                 </pre>
               </div>
@@ -511,7 +511,7 @@ export function IntegrationAutomationPage() {
                 <p className="text-xs text-stone-gray leading-relaxed font-semibold mt-1">
                   Download SDK libraries to bootstrap integrations in Node.js, Python, or Go.
                 </p>
-                <div className="flex gap-2 pt-2 text-[9px] font-black uppercase tracking-wider">
+                <div className="flex gap-2 pt-2 text-3xs font-black uppercase tracking-wider">
                   <button onClick={() => alert('Downloading Node.js SDK...')} className="dbc-btn dbc-btn-outline bg-white py-1.5 px-4 cursor-pointer">
                     Node.js SDK
                   </button>
@@ -530,14 +530,14 @@ export function IntegrationAutomationPage() {
             <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Webhooks & API Call History</h3>
             <div className="divide-y divide-light-border/40">
               {integrationLogs.map((log) => (
-                <div key={log.id} className="py-3.5 flex justify-between items-center text-[10px] text-stone-gray font-semibold">
+                <div key={log.id} className="py-3.5 flex justify-between items-center text-2xs text-stone-gray font-semibold">
                   <div>
-                    <span className={`dbc-badge text-[7.5px] py-0.5 uppercase mr-2.5 ${
+                    <span className={`dbc-badge text-3xs py-0.5 uppercase mr-2.5 ${
                       log.status === 'Success' ? 'dbc-badge-completed' : 'dbc-badge-priority'
                     }`}>{log.status}</span>
                     <strong className="text-stone-black">{log.type}</strong>: {log.details}
                   </div>
-                  <span className="text-[8px] text-stone-gray font-bold">{log.timestamp}</span>
+                  <span className="text-3xs text-stone-gray font-bold">{log.timestamp}</span>
                 </div>
               ))}
             </div>

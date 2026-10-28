@@ -15,7 +15,7 @@ export function BookingTimeline({ status }: BookingTimelineProps) {
 
   return (
     <div className="space-y-3">
-      <span className="block text-[8px] uppercase font-black text-stone-400 tracking-wider">Project Timeline</span>
+      <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Project Timeline</span>
       
       {/* Horizontal timeline for larger viewports / Vertical for small */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-1">
@@ -24,7 +24,7 @@ export function BookingTimeline({ status }: BookingTimelineProps) {
             
             {/* Step Icon circle */}
             <div
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black border transition-all duration-300 z-10 ${
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-2xs font-black border transition-all duration-300 z-10 ${
                 stg.active
                   ? 'bg-emerald-600 border-emerald-700 text-white shadow-sm'
                   : 'bg-stone-50 border-stone-200 text-stone-400'
@@ -44,7 +44,7 @@ export function BookingTimeline({ status }: BookingTimelineProps) {
 
             {/* Step Title Label */}
             <span
-              className={`text-[9px] uppercase tracking-wider font-extrabold transition-all duration-300 ${
+              className={`text-3xs uppercase tracking-wider font-extrabold transition-all duration-300 ${
                 stg.active ? 'text-stone-850' : 'text-stone-400'
               }`}
             >

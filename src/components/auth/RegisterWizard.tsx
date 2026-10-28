@@ -403,14 +403,14 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       {step === 1 && (
         <>
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Create Your Account</h2>
+            <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Create Your Account</h2>
             <p className="text-xs text-stone-500">Enter your details to get started with your DBC account.</p>
           </div>
 
           <form onSubmit={handleDetailsSubmit} className="space-y-3.5 pt-2">
             {/* Full Name */}
             <div>
-              <label htmlFor="reg-fullname" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+              <label htmlFor="reg-fullname" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
                 Full Name
               </label>
               <div className="relative">
@@ -432,7 +432,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
             {/* Registration Channel Selector */}
             <div>
-              <span className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+              <span className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
                 Registration Channel
               </span>
               <div className="grid grid-cols-2 gap-2 p-1.5 bg-gradient-to-b from-stone-100/90 to-stone-200/80 rounded-2xl border border-stone-200/80 shadow-inner">
@@ -446,7 +446,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     setVerifiedUid(undefined);
                     setSmsHelpVisible(false);
                   }}
-                  className={`group relative py-2.5 px-3 text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
+                  className={`group relative py-2.5 px-3 text-2xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
                     channel === 'email'
                       ? 'bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 text-white shadow-md shadow-emerald-900/20 border border-emerald-500/30 scale-[1.01]'
                       : 'bg-transparent text-stone-600 hover:text-stone-900 hover:bg-white/60 border border-transparent'
@@ -469,7 +469,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                     setVerifiedUid(undefined);
                     setSmsHelpVisible(false);
                   }}
-                  className={`group relative py-2.5 px-3 text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
+                  className={`group relative py-2.5 px-3 text-2xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
                     channel === 'phone'
                       ? 'bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 text-white shadow-md shadow-emerald-900/20 border border-emerald-500/30 scale-[1.01]'
                       : 'bg-transparent text-stone-600 hover:text-stone-900 hover:bg-white/60 border border-transparent'
@@ -488,7 +488,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             {/* Email Field */}
             {channel === 'email' && (
               <div>
-                <label htmlFor="reg-email" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+                <label htmlFor="reg-email" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
                   Email Address
                 </label>
                 <div className="relative">
@@ -516,7 +516,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
             {channel === 'phone' && (
               <div className="space-y-2">
                 <div>
-                  <label htmlFor="reg-phone" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+                  <label htmlFor="reg-phone" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
                     Phone Number
                   </label>
                   <div className="relative">
@@ -541,7 +541,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                 </div>
 
                 {!isFirebaseConfigured && (
-                  <div className="rounded-xl border border-amber-200 bg-amber-50/90 p-3 text-[11px] font-medium text-amber-800 leading-relaxed flex flex-col gap-1">
+                  <div className="rounded-xl border border-amber-200 bg-amber-50/90 p-3 text-2xs font-medium text-amber-800 leading-relaxed flex flex-col gap-1">
                     <span className="font-bold flex items-center gap-1.5 text-amber-900">
                       <svg className="w-4 h-4 shrink-0 text-amber-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -549,7 +549,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                       Firebase Configuration Notice
                     </span>
                     <span>
-                      Real SMS OTP requires setting your Firebase Web App keys in <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-[10px]">.env.local</code>. Alternatively, select <strong>Email Address</strong> above to register instantly.
+                      Real SMS OTP requires setting your Firebase Web App keys in <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-2xs">.env.local</code>. Alternatively, select <strong>Email Address</strong> above to register instantly.
                     </span>
                   </div>
                 )}
@@ -592,7 +592,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       {step === 2 && (
         <>
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Verify Verification Code</h2>
+            <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Verify Verification Code</h2>
             <p className="text-xs text-stone-500">
               {channel === 'email' ? (
                 <>We've sent a verification code to your email address: <strong className="text-stone-700">{maskEmail(email)}</strong>.</>
@@ -605,7 +605,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
           <form onSubmit={handleVerifyOtpSubmit} className="space-y-3.5 pt-2">
             {/* OTP input */}
             <div>
-              <label htmlFor="reg-otp" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5 text-center">
+              <label htmlFor="reg-otp" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5 text-center">
                 Enter 6-Digit Code
               </label>
               <input
@@ -700,7 +700,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
           {/* SMS delivery help — only shown when user explicitly requests it after a resend attempt */}
           {channel === 'phone' && smsHelpVisible && (
             <div className="pt-1 text-center">
-              <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 text-[11px] text-stone-500 leading-relaxed space-y-1.5">
+              <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 text-2xs text-stone-500 leading-relaxed space-y-1.5">
                 <p className="text-stone-600 font-medium">
                   SMS can be delayed or filtered by Indian telecom (DLT) regulations.
                 </p>
@@ -721,7 +721,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   </button>
                   , or wait a minute and try resending.
                 </p>
-                <p className="text-[10px] text-stone-400">
+                <p className="text-2xs text-stone-400">
                   Note: A successful SMS request does not guarantee handset delivery — carrier routing is outside DBC's control.
                 </p>
               </div>
@@ -734,14 +734,14 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
       {step === 3 && (
         <>
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Set Up Your Password</h2>
+            <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Set Up Your Password</h2>
             <p className="text-xs text-stone-500">Create a secure password to complete your account setup.</p>
           </div>
 
           <form onSubmit={handlePasswordSetupSubmit} className="space-y-3.5 pt-2">
             {/* Password Field */}
             <div>
-              <label htmlFor="reg-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+              <label htmlFor="reg-password" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
                 New Password
               </label>
               <div className="relative">
@@ -763,7 +763,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
             {/* Confirm Password Field */}
             <div>
-              <label htmlFor="reg-confirm-password" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+              <label htmlFor="reg-confirm-password" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
                 Confirm Password
               </label>
               <div className="relative">

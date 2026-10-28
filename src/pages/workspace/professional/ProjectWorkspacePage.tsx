@@ -152,17 +152,17 @@ export default function ProjectWorkspacePage() {
       <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="bg-stone-100 border border-light-border text-stone-700 text-[8.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-stone-100 border border-light-border text-stone-700 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               ID: {id || 'PRJ-201'}
             </span>
-            <span className="bg-blue-50 text-blue-800 text-[8.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-blue-50 text-blue-800 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               In Progress
             </span>
-            <span className="bg-emerald-50 text-emerald-800 text-[8.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-emerald-50 text-emerald-800 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               {progress}% Progress
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-serif">Jubilee Hills Duplex Foundation</h1>
+          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Jubilee Hills Duplex Foundation</h1>
           <p className="text-xs text-stone-500 font-medium">Customer: Ramesh Kumar &bull; Civil/Architecture &bull; Start Date: 2026-07-10</p>
         </div>
 
@@ -198,9 +198,9 @@ export default function ProjectWorkspacePage() {
                   <div className="flex justify-between items-center flex-wrap gap-2">
                     <div>
                       <strong className="text-stone-900 block text-xs">{ms.title}</strong>
-                      <span className="text-[10px] text-stone-450 font-semibold">Target date: {ms.targetDate}</span>
+                      <span className="text-2xs text-stone-450 font-semibold">Target date: {ms.targetDate}</span>
                     </div>
-                    <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                    <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                       ms.status === 'Completed' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-blue-50 border-blue-200 text-blue-800'
                     }`}>
                       {ms.status}
@@ -211,7 +211,7 @@ export default function ProjectWorkspacePage() {
                     <div className="flex-1 bg-stone-200 h-1 rounded-full overflow-hidden">
                       <div className="bg-brand-emerald h-full" style={{ width: `${ms.completionPct}%` }}></div>
                     </div>
-                    <span className="text-[10px] font-bold text-stone-500 shrink-0">{ms.completionPct}%</span>
+                    <span className="text-2xs font-bold text-stone-500 shrink-0">{ms.completionPct}%</span>
                   </div>
                 </div>
               ))}
@@ -222,8 +222,8 @@ export default function ProjectWorkspacePage() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-6">
             <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
               <div>
-                <h3 className="text-xs font-black uppercase text-stone-900 font-serif">Project Task List</h3>
-                <p className="text-[10px] text-stone-450">Manage operational activities</p>
+                <h3 className="text-xs font-black uppercase text-stone-900 font-display">Project Task List</h3>
+                <p className="text-2xs text-stone-450">Manage operational activities</p>
               </div>
             </div>
 
@@ -241,13 +241,13 @@ export default function ProjectWorkspacePage() {
                       <strong className={`block text-stone-850 ${task.status === 'Completed' ? 'line-through text-stone-400' : ''}`}>
                         {task.name}
                       </strong>
-                      <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">Assignee: {task.assignedTo} &bull; Due: {task.dueDate}</span>
+                      <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">Assignee: {task.assignedTo} &bull; Due: {task.dueDate}</span>
                     </div>
                   </div>
 
                   <button
                     onClick={() => handleDeleteTask(task.id)}
-                    className="text-[9px] font-black uppercase text-rose-600 hover:underline"
+                    className="text-3xs font-black uppercase text-rose-600 hover:underline"
                   >
                     Delete
                   </button>
@@ -257,7 +257,7 @@ export default function ProjectWorkspacePage() {
 
             {/* Add Task Form */}
             <form onSubmit={handleAddTask} className="space-y-2 pt-4 border-t border-light-border/40 text-xs">
-              <span className="block text-[8.5px] font-black uppercase text-stone-850">Create New Project Task</span>
+              <span className="block text-3xs font-black uppercase text-stone-850">Create New Project Task</span>
               <div className="grid grid-cols-2 gap-2">
                 <input
                   type="text"
@@ -326,7 +326,7 @@ export default function ProjectWorkspacePage() {
               {team.map((member, idx) => (
                 <div key={idx} className="p-3 bg-stone-50 border border-stone-100 rounded-xl space-y-1 text-xs">
                   <strong className="text-stone-900 block">{member.name}</strong>
-                  <div className="flex justify-between text-[10px] text-stone-450 font-bold uppercase">
+                  <div className="flex justify-between text-2xs text-stone-450 font-bold uppercase">
                     <span>{member.role}</span>
                   </div>
                 </div>
@@ -342,11 +342,11 @@ export default function ProjectWorkspacePage() {
                 <div key={idx} className="p-2.5 bg-stone-50 border border-stone-100 rounded-xl flex justify-between items-center text-xs">
                   <div>
                     <span className="font-bold text-stone-850 block truncate max-w-[120px]">{doc.name}</span>
-                    <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">{doc.type} &bull; {doc.date}</span>
+                    <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{doc.type} &bull; {doc.date}</span>
                   </div>
                   <button
                     onClick={() => alert(`Downloading project file: ${doc.name}`)}
-                    className="text-brand-emerald text-[8.5px] font-black uppercase hover:underline"
+                    className="text-brand-emerald text-3xs font-black uppercase hover:underline"
                   >
                     Open
                   </button>
@@ -358,17 +358,17 @@ export default function ProjectWorkspacePage() {
           {/* Activity Timeline */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
-              <h2 className="text-sm font-black text-stone-900 font-serif">Project Timeline Updates</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Audit logs of project updates</p>
+              <h2 className="text-sm font-black text-stone-900 font-display">Project Timeline Updates</h2>
+              <p className="text-2xs text-stone-450 font-medium">Audit logs of project updates</p>
             </div>
 
             <div className="space-y-4 relative border-l-2 border-stone-100 pl-4 ml-2">
               {activityTrail.map((item, idx) => (
                 <div key={idx} className="relative space-y-0.5 text-xs font-semibold">
                   <span className="absolute -left-[23px] top-0 w-2 h-2 rounded-full bg-brand-emerald"></span>
-                  <span className="block text-[8px] font-bold text-stone-400 uppercase tracking-widest">{item.date}</span>
+                  <span className="block text-3xs font-bold text-stone-400 uppercase tracking-widest">{item.date}</span>
                   <h4 className="font-bold text-stone-900 leading-tight">{item.action}</h4>
-                  <p className="text-stone-500 text-[10px] leading-relaxed font-medium">By {item.user}</p>
+                  <p className="text-stone-500 text-2xs leading-relaxed font-medium">By {item.user}</p>
                 </div>
               ))}
             </div>
@@ -380,9 +380,9 @@ export default function ProjectWorkspacePage() {
 
       {/* Update Progress Modal */}
       {showProgressModal && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white border border-light-border max-w-sm w-full p-6 rounded-3xl shadow-apple-lg space-y-4">
-            <h3 className="text-sm font-black text-stone-900 font-serif">Update Project Completion %</h3>
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4">
+            <h3 className="text-sm font-black text-stone-900 font-display">Update Project Completion %</h3>
             <div className="space-y-2">
               <label className="block text-xs font-bold text-stone-600">Drag to adjust progress value:</label>
               <div className="flex items-center gap-4">
@@ -397,7 +397,7 @@ export default function ProjectWorkspacePage() {
                 <span className="text-sm font-black text-stone-900">{tempProgress}%</span>
               </div>
             </div>
-            <div className="flex gap-3 justify-end text-[10px] font-black uppercase tracking-wider pt-2">
+            <div className="flex gap-3 justify-end text-2xs font-black uppercase tracking-wider pt-2">
               <button
                 onClick={() => setShowProgressModal(false)}
                 className="px-4 py-2 border border-stone-200 bg-white text-stone-750 hover:bg-stone-50 rounded-xl"

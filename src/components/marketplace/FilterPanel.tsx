@@ -47,11 +47,11 @@ export function FilterPanel({
       {/* Filter Header */}
       <div className="flex items-center justify-between border-b border-stone-100 pb-3.5">
         <div className="flex items-center gap-2">
-          <h3 className="text-xs font-black uppercase tracking-wider text-stone-900 font-serif">
+          <h3 className="text-xs font-black uppercase tracking-wider text-stone-900 font-display">
             Filters
           </h3>
           {activeFilterCount > 0 && (
-            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 font-black text-[10px] flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 font-black text-2xs flex items-center justify-center">
               {activeFilterCount}
             </span>
           )}
@@ -61,14 +61,14 @@ export function FilterPanel({
           {activeFilterCount > 0 && (
             <button
               onClick={onReset}
-              className="text-[10px] font-black uppercase tracking-wider text-rose-600 hover:text-rose-800 transition cursor-pointer"
+              className="text-2xs font-black uppercase tracking-wider text-rose-600 hover:text-rose-800 transition cursor-pointer"
             >
               Clear All
             </button>
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="md:hidden text-[10px] font-bold uppercase tracking-wider text-stone-500 hover:text-stone-900 cursor-pointer"
+            className="md:hidden text-2xs font-bold uppercase tracking-wider text-stone-500 hover:text-stone-900 cursor-pointer"
           >
             {collapsed ? 'Show' : 'Hide'}
           </button>
@@ -80,7 +80,7 @@ export function FilterPanel({
           
           {/* Location City Selection */}
           <div className="space-y-1.5">
-            <label htmlFor="city-filter" className="block text-[10px] font-bold uppercase tracking-wider text-stone-500">
+            <label htmlFor="city-filter" className="block text-2xs font-bold uppercase tracking-wider text-stone-500">
               Location / Region
             </label>
             <select
@@ -100,7 +100,7 @@ export function FilterPanel({
 
           {/* Trade Category Selection */}
           <div className="space-y-1.5">
-            <label htmlFor="category-filter" className="block text-[10px] font-bold uppercase tracking-wider text-stone-500">
+            <label htmlFor="category-filter" className="block text-2xs font-bold uppercase tracking-wider text-stone-500">
               Service / Category
             </label>
             <select
@@ -120,7 +120,7 @@ export function FilterPanel({
 
           {/* Experience level slider */}
           <div className="space-y-1.5 pt-1">
-            <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-stone-500">
+            <div className="flex justify-between items-center text-2xs font-bold uppercase tracking-wider text-stone-500">
               <label htmlFor="experience-filter">Min Experience</label>
               <span className="text-stone-900 font-extrabold">{filters.experienceYears || '0'}+ Years</span>
             </div>

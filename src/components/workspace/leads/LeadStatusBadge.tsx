@@ -22,7 +22,7 @@ export function LeadStatusBadge({ status }: LeadStatusBadgeProps) {
   };
 
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-wider border select-none leading-none ${getColors(status)}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-3xs font-black uppercase tracking-wider border select-none leading-none ${getColors(status)}`}>
       {status}
     </span>
   );

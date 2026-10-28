@@ -36,7 +36,7 @@ export function LoginForm({
         
         {/* Email or Phone Field */}
         <div>
-          <label htmlFor="login-email" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+          <label htmlFor="login-email" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
             Email Address or Phone Number
           </label>
           <div className="relative">
@@ -60,14 +60,14 @@ export function LoginForm({
         {/* Password Field */}
         <div>
           <div className="flex justify-between items-center mb-1.5">
-            <label htmlFor="login-password" className="text-[10px] font-black uppercase tracking-wider text-stone-500">
+            <label htmlFor="login-password" className="text-2xs font-black uppercase tracking-wider text-stone-500">
               Password
             </label>
             {onForgotPassword && (
               <button
                 type="button"
                 onClick={onForgotPassword}
-                className="text-[10px] font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer focus:outline-none py-1"
+                className="text-2xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer focus:outline-none py-1"
               >
                 Forgot Password?
               </button>
@@ -155,7 +155,7 @@ export function LoginForm({
       {/* Divider */}
       <div className="relative flex items-center justify-center my-4">
         <div className="w-full border-t border-stone-200"></div>
-        <span className="relative bg-white px-3 text-[10px] font-bold uppercase tracking-widest text-stone-400">
+        <span className="relative bg-white px-3 text-2xs font-bold uppercase tracking-widest text-stone-400">
           Or continue with
         </span>
       </div>

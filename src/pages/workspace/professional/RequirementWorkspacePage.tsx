@@ -122,17 +122,17 @@ export default function RequirementWorkspacePage() {
       <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="bg-stone-100 border border-light-border text-stone-700 text-[8.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-stone-100 border border-light-border text-stone-700 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               ID: {reqData.id}
             </span>
-            <span className="bg-emerald-50 text-emerald-800 text-[8.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-emerald-50 text-emerald-800 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               {interestSubmitted ? 'Interest Submitted' : reqData.status}
             </span>
-            <span className="bg-amber-50 text-amber-800 text-[8.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-amber-50 text-amber-800 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               {reqData.priority} Priority
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-serif">{reqData.title}</h1>
+          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">{reqData.title}</h1>
           <p className="text-xs text-stone-500 font-medium">{reqData.category} &bull; {reqData.location} &bull; Posted {reqData.postedDate}</p>
         </div>
 
@@ -171,7 +171,7 @@ export default function RequirementWorkspacePage() {
             <p className="text-xs text-stone-600 font-semibold leading-relaxed">{reqData.fullDesc}</p>
 
             <div className="space-y-2.5 pt-3 border-t border-light-border/40">
-              <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider">Project Scope</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Project Scope</span>
               <ul className="space-y-1.5 text-xs text-stone-600 font-semibold">
                 {reqData.scope.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
@@ -183,7 +183,7 @@ export default function RequirementWorkspacePage() {
             </div>
 
             <div className="space-y-2.5 pt-3 border-t border-light-border/40">
-              <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider">Expected Deliverables</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Expected Deliverables</span>
               <ul className="space-y-1.5 text-xs text-stone-600 font-semibold">
                 {reqData.deliverables.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
@@ -201,19 +201,19 @@ export default function RequirementWorkspacePage() {
             
             <div className="grid gap-4 sm:grid-cols-2 text-xs font-semibold text-stone-600">
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-[8px] font-black text-stone-400 uppercase mb-0.5">Construction Stage</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Construction Stage</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.stage}</span>
               </div>
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-[8px] font-black text-stone-400 uppercase mb-0.5">Area / Size</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Area / Size</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.size}</span>
               </div>
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-[8px] font-black text-stone-400 uppercase mb-0.5">Preferred Materials</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Preferred Materials</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.materials}</span>
               </div>
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-[8px] font-black text-stone-400 uppercase mb-0.5">Style Preferences</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Style Preferences</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.style}</span>
               </div>
             </div>
@@ -224,13 +224,13 @@ export default function RequirementWorkspacePage() {
             <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Reference Drawings & Attachments</h3>
             
             <div className="space-y-3">
-              <span className="block text-[8.5px] font-black uppercase text-stone-450 tracking-wider">Site & Elevation Photos</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Site & Elevation Photos</span>
               <div className="grid gap-4 grid-cols-2">
                 {reqData.images.map((img, idx) => (
                   <div key={idx} className="group relative rounded-2xl overflow-hidden border border-stone-200 h-32 bg-stone-50">
                     <img src={img.url} alt={img.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
                     <div className="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                      <button onClick={() => alert(`Opening photo: ${img.name}`)} className="bg-white text-stone-900 px-3 py-1 text-[9px] font-black uppercase rounded-lg">
+                      <button onClick={() => alert(`Opening photo: ${img.name}`)} className="bg-white text-stone-900 px-3 py-1 text-3xs font-black uppercase rounded-lg">
                         Zoom View
                       </button>
                     </div>
@@ -240,17 +240,17 @@ export default function RequirementWorkspacePage() {
             </div>
 
             <div className="space-y-3 pt-4 border-t border-light-border/40">
-              <span className="block text-[8.5px] font-black uppercase text-stone-450 tracking-wider">Blueprint & Soil Documents (PDF/DWG)</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Blueprint & Soil Documents (PDF/DWG)</span>
               <div className="space-y-2">
                 {reqData.documents.map((doc, idx) => (
                   <div key={idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                     <div>
                       <strong className="text-stone-850 block">{doc.name}</strong>
-                      <span className="text-[8.5px] text-stone-400 font-bold uppercase mt-0.5">{doc.size}</span>
+                      <span className="text-3xs text-stone-400 font-bold uppercase mt-0.5">{doc.size}</span>
                     </div>
                     <button
                       onClick={() => alert(`Downloading attachment: ${doc.name}`)}
-                      className="text-brand-emerald text-[9px] font-black uppercase hover:underline"
+                      className="text-brand-emerald text-3xs font-black uppercase hover:underline"
                     >
                       Download
                     </button>
@@ -284,7 +284,7 @@ export default function RequirementWorkspacePage() {
               </div>
             </div>
 
-            <div className="p-3 bg-amber-50 border border-amber-100 rounded-2xl text-[9px] font-medium text-amber-850 leading-relaxed">
+            <div className="p-3 bg-amber-50 border border-amber-100 rounded-2xl text-3xs font-medium text-amber-850 leading-relaxed">
               🔒 Privacy Policy rules mask phone coordinates, email logs, and exact site layout address coordinates until contract offer or consult approval confirmation is submitted.
             </div>
           </section>
@@ -312,17 +312,17 @@ export default function RequirementWorkspacePage() {
           {/* Activity audit trail chronological timeline */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
-              <h2 className="text-sm font-black text-stone-900 font-serif">Requirement Activity Logs</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Audit logs of requirement updates</p>
+              <h2 className="text-sm font-black text-stone-900 font-display">Requirement Activity Logs</h2>
+              <p className="text-2xs text-stone-450 font-medium">Audit logs of requirement updates</p>
             </div>
 
             <div className="space-y-4 relative border-l-2 border-stone-100 pl-4 ml-2">
               {activityTrail.map((item, idx) => (
                 <div key={idx} className="relative space-y-0.5 text-xs font-semibold">
                   <span className="absolute -left-[23px] top-0 w-2 h-2 rounded-full bg-brand-emerald"></span>
-                  <span className="block text-[8px] font-bold text-stone-400 uppercase tracking-widest">{item.date}</span>
+                  <span className="block text-3xs font-bold text-stone-400 uppercase tracking-widest">{item.date}</span>
                   <h4 className="font-bold text-stone-900 leading-tight">{item.action}</h4>
-                  <p className="text-stone-500 text-[10px] leading-relaxed font-medium">By {item.user}</p>
+                  <p className="text-stone-500 text-2xs leading-relaxed font-medium">By {item.user}</p>
                 </div>
               ))}
             </div>
@@ -335,7 +335,7 @@ export default function RequirementWorkspacePage() {
               {similarRequirements.map(item => (
                 <div key={item.id} className="p-3 bg-stone-50 border border-stone-100 rounded-xl space-y-1 text-xs">
                   <strong className="text-stone-900 block truncate">{item.title}</strong>
-                  <div className="flex justify-between text-[10px] text-stone-450 font-bold uppercase">
+                  <div className="flex justify-between text-2xs text-stone-450 font-bold uppercase">
                     <span>Budget: {item.budget}</span>
                     <span>{item.location}</span>
                   </div>

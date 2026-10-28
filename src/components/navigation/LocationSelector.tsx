@@ -48,11 +48,11 @@ export function LocationSelector({ selectedCity, onCitySelect, popularCities }: 
         aria-label="Select location"
       >
         <span className="text-sm">📍</span>
-        <div className="flex flex-col text-[10px] leading-tight pr-1">
+        <div className="flex flex-col text-2xs leading-tight pr-1">
           <span className="font-extrabold text-stone-black truncate max-w-[80px]">{selectedCity}</span>
-          <span className="text-[7.5px] text-stone-gray font-semibold tracking-wide whitespace-nowrap">{getServingRegion(selectedCity)}</span>
+          <span className="text-3xs text-stone-gray font-semibold tracking-wide whitespace-nowrap">{getServingRegion(selectedCity)}</span>
         </div>
-        <span className="text-[8px] text-stone-gray">▼</span>
+        <span className="text-3xs text-stone-gray">▼</span>
       </button>
 
       {isOpen && (
@@ -68,7 +68,7 @@ export function LocationSelector({ selectedCity, onCitySelect, popularCities }: 
           </form>
           
           <div className="space-y-1">
-            <span className="block text-[9px] uppercase tracking-wider font-extrabold text-stone-gray">Popular Cities</span>
+            <span className="block text-3xs uppercase tracking-wider font-extrabold text-stone-gray">Popular Cities</span>
             {popularCities.map((city) => (
               <button
                 key={city}

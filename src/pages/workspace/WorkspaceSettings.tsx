@@ -379,24 +379,24 @@ export default function WorkspaceSettings() {
                   />
                 ) : (
                   <div className="space-y-4">
-                    <h3 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+                    <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
                       Personal Details
                     </h3>
                     <div className="grid gap-4 sm:grid-cols-2 text-xs font-semibold text-stone-600">
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-                        <span className="block text-[9px] uppercase font-bold text-stone-400">Display / User Name</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-400">Display / User Name</span>
                         <span className="text-stone-900">{personalInfo.displayName || 'Not Set'}</span>
                       </div>
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-                        <span className="block text-[9px] uppercase font-bold text-stone-400">Gender</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-400">Gender</span>
                         <span className="text-stone-900">{personalInfo.gender || 'Not Specified'}</span>
                       </div>
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-                        <span className="block text-[9px] uppercase font-bold text-stone-400">Date of Birth</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-400">Date of Birth</span>
                         <span className="text-stone-900">{personalInfo.dob || 'Not Specified'}</span>
                       </div>
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100 sm:col-span-2">
-                        <span className="block text-[9px] uppercase font-bold text-stone-400">Biography</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-400">Biography</span>
                         <p className="text-stone-600 leading-relaxed mt-0.5">{personalInfo.bio || 'No biography written yet.'}</p>
                       </div>
                     </div>

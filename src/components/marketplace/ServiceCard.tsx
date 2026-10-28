@@ -43,7 +43,7 @@ export function ServiceCard({ service, onBook }: ServiceCardProps) {
 
         {/* Top Left: Category badge */}
         <div className="absolute top-2.5 left-2.5 z-10">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-[9px] font-bold tracking-wide shadow-md">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-3xs font-bold tracking-wide shadow-md">
             <span>📦 {service.category}</span>
           </span>
         </div>
@@ -55,7 +55,7 @@ export function ServiceCard({ service, onBook }: ServiceCardProps) {
 
         {/* Bottom Right: Timeline badge */}
         <div className="absolute bottom-2.5 right-2.5 z-10">
-          <span className="px-2 py-0.5 rounded-md bg-stone-950/70 backdrop-blur-md border border-white/15 text-stone-200 text-[9px] font-bold">
+          <span className="px-2 py-0.5 rounded-md bg-stone-950/70 backdrop-blur-md border border-white/15 text-stone-200 text-3xs font-bold">
             ⏱️ {service.timeline}
           </span>
         </div>
@@ -65,10 +65,10 @@ export function ServiceCard({ service, onBook }: ServiceCardProps) {
       <div className="p-4 sm:p-4.5 space-y-3 flex-1 flex flex-col justify-between">
         <div className="space-y-2">
           <div>
-            <h3 className="text-sm sm:text-base font-bold text-stone-900 font-serif leading-snug group-hover:text-emerald-800 transition line-clamp-1">
+            <h3 className="text-sm sm:text-base font-bold text-stone-900 font-display leading-snug group-hover:text-emerald-800 transition line-clamp-1">
               {service.name}
             </h3>
-            <p className="text-[11px] text-stone-500 font-medium mt-0.5 truncate">
+            <p className="text-2xs text-stone-500 font-medium mt-0.5 truncate">
               by <span className="text-stone-800 font-bold">{service.providerName}</span>
             </p>
           </div>
@@ -76,11 +76,11 @@ export function ServiceCard({ service, onBook }: ServiceCardProps) {
           {/* Pricing & Rating strip */}
           <div className="p-2.5 rounded-xl border border-stone-200/80 bg-stone-50/60 flex items-center justify-between">
             <div>
-              <span className="block text-[8px] font-bold uppercase text-stone-400">Estimated Cost</span>
+              <span className="block text-3xs font-bold uppercase text-stone-400">Estimated Cost</span>
               <span className="text-xs font-bold text-stone-900">{service.priceRange}</span>
             </div>
             <div className="text-right">
-              <span className="block text-[8px] font-bold uppercase text-stone-400">Rating</span>
+              <span className="block text-3xs font-bold uppercase text-stone-400">Rating</span>
               <span className="text-xs font-bold text-amber-800">⭐ {service.rating.toFixed(1)}</span>
             </div>
           </div>
@@ -89,7 +89,7 @@ export function ServiceCard({ service, onBook }: ServiceCardProps) {
         <div className="pt-3 border-t border-stone-100 mt-1">
           <button
             onClick={() => onBook(service)}
-            className="w-full h-8.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-[11px] font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
+            className="w-full h-8.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-2xs font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
           >
             <span>Request Package</span>
             <span>→</span>

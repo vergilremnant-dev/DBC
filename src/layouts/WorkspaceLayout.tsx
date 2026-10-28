@@ -136,7 +136,7 @@ export default function WorkspaceLayout() {
           <div className="flex items-center gap-2.5">
             <div className="text-right hidden md:block">
               <span className="block text-xs font-bold text-stone-900 leading-none">{user?.firstName} {user?.lastName || ''}</span>
-              <span className="block text-[8px] font-black uppercase text-stone-500 tracking-wider mt-0.5">
+              <span className="block text-3xs font-black uppercase text-stone-500 tracking-wider mt-0.5">
                 {user?.role === 'ROLE_PROVIDER' ? 'Professional Workspace' : 'Customer Account'}
               </span>
             </div>
@@ -231,7 +231,7 @@ export default function WorkspaceLayout() {
           </div>
 
           {/* Optional Status Area Footer */}
-          <footer className="mt-8 border-t border-light-border pt-4 flex flex-col sm:flex-row justify-between items-center text-[10px] text-stone-400 font-bold uppercase tracking-wider gap-2">
+          <footer className="mt-8 border-t border-light-border pt-4 flex flex-col sm:flex-row justify-between items-center text-2xs text-stone-400 font-bold uppercase tracking-wider gap-2">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse"></span>
               <span>Workspace Active • Secure Shell</span>

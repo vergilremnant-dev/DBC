@@ -32,7 +32,7 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
 
         {/* Top Left: Category badge */}
         <div className="absolute top-2.5 left-2.5 z-10">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-[9px] font-bold tracking-wide shadow-md">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-3xs font-bold tracking-wide shadow-md">
             <span>🏛️ {project.category}</span>
           </span>
         </div>
@@ -44,7 +44,7 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
 
         {/* Bottom Left: Location Pill */}
         <div className="absolute bottom-2.5 left-2.5 z-10">
-          <span className="px-2 py-0.5 rounded-md bg-stone-950/70 backdrop-blur-md border border-white/15 text-stone-200 text-[9px] font-bold">
+          <span className="px-2 py-0.5 rounded-md bg-stone-950/70 backdrop-blur-md border border-white/15 text-stone-200 text-3xs font-bold">
             📍 {project.location}
           </span>
         </div>
@@ -53,13 +53,13 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
       {/* 2. CARD CONTENT (COMPACT) */}
       <div className="p-4 sm:p-4.5 space-y-3 flex-1 flex flex-col justify-between">
         <div className="space-y-1.5">
-          <h3 className="text-sm sm:text-base font-bold text-stone-900 font-serif leading-snug group-hover:text-emerald-800 transition line-clamp-1">
+          <h3 className="text-sm sm:text-base font-bold text-stone-900 font-display leading-snug group-hover:text-emerald-800 transition line-clamp-1">
             {project.name}
           </h3>
-          <p className="text-[11px] text-stone-500 font-medium">
+          <p className="text-2xs text-stone-500 font-medium">
             Designed by <span className="text-stone-800 font-bold">{project.professionalName}</span> • {project.completionDate}
           </p>
-          <p className="text-[11.5px] text-stone-600 font-normal leading-relaxed line-clamp-2 pt-0.5">
+          <p className="text-xs text-stone-600 font-normal leading-relaxed line-clamp-2 pt-0.5">
             {project.description}
           </p>
         </div>
@@ -67,7 +67,7 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
         <div className="pt-3 border-t border-stone-100 mt-1">
           <button
             onClick={() => onViewDetails(project)}
-            className="w-full h-8.5 rounded-lg border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
+            className="w-full h-8.5 rounded-lg border border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-800 text-2xs font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
           >
             <span>View Blueprint</span>
             <span>→</span>

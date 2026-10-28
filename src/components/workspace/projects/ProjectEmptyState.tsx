@@ -13,7 +13,7 @@ export function ProjectEmptyState({ onBrowseLeads }: ProjectEmptyStateProps) {
       </div>
 
       <div className="space-y-2">
-        <h3 className="text-base font-extrabold text-stone-900 font-serif">
+        <h3 className="text-base font-extrabold text-stone-900 font-display">
           You don't have any active projects yet.
         </h3>
         <p className="text-xs text-stone-400 font-semibold leading-relaxed max-w-sm mx-auto">

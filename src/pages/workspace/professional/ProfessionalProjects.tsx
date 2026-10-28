@@ -170,7 +170,7 @@ export default function ProfessionalProjects() {
         // CONSULTANT VIEW: MY CONSULTATIONS
         <div className="space-y-6">
           <div className="border-b border-light-border pb-5 space-y-1">
-            <h1 className="text-xl font-bold text-stone-900 font-serif">My Consultations</h1>
+            <h1 className="text-xl font-bold text-stone-900 font-display">My Consultations</h1>
             <p className="text-xs text-stone-500 font-medium font-semibold">
               Track your advisory sessions, write recommendations, and publish structural reports.
             </p>
@@ -193,12 +193,12 @@ export default function ProfessionalProjects() {
                 >
                   <div className="flex justify-between items-center">
                     <h4 className="text-xs font-black text-stone-black">{c.topic}</h4>
-                    <span className={`dbc-badge text-[7.5px] py-0.5 ${
+                    <span className={`dbc-badge text-3xs py-0.5 ${
                       c.status === 'Published' ? 'dbc-badge-completed' : 'dbc-badge-progress'
                     }`}>{c.status}</span>
                   </div>
-                  <p className="text-[10px] text-stone-gray font-semibold mt-1">Client: {c.clientName}</p>
-                  <span className="block text-[8px] text-stone-gray mt-2 pt-2 border-t border-light-border/40">🗓️ {c.date} • {c.timeSlot}</span>
+                  <p className="text-2xs text-stone-gray font-semibold mt-1">Client: {c.clientName}</p>
+                  <span className="block text-3xs text-stone-gray mt-2 pt-2 border-t border-light-border/40">🗓️ {c.date} • {c.timeSlot}</span>
                 </div>
               ))}
             </div>
@@ -212,11 +212,11 @@ export default function ProfessionalProjects() {
                   <div className="border-b border-light-border pb-3 flex justify-between items-start">
                     <div>
                       <h3 className="text-xs font-black text-stone-black">{activeConsult.topic}</h3>
-                      <span className="block text-[8.5px] text-stone-gray font-bold mt-0.5">Client: {activeConsult.clientName}</span>
+                      <span className="block text-3xs text-stone-gray font-bold mt-0.5">Client: {activeConsult.clientName}</span>
                     </div>
                   </div>
 
-                  <div className="text-[10px] text-stone-gray font-semibold space-y-2">
+                  <div className="text-2xs text-stone-gray font-semibold space-y-2">
                     <p>🗓️ <strong>Scheduled Slot:</strong> {activeConsult.date} • {activeConsult.timeSlot}</p>
                     <p>📝 <strong>Meeting Notes:</strong> "{activeConsult.notes}"</p>
                   </div>
@@ -228,7 +228,7 @@ export default function ProfessionalProjects() {
                   
                   <div className="space-y-2">
                     {activeConsult.recommendations.map((rec, i) => (
-                      <div key={i} className="p-3 bg-light-stone/30 border border-light-border rounded-xl text-[10px] text-stone-gray font-semibold leading-relaxed">
+                      <div key={i} className="p-3 bg-light-stone/30 border border-light-border rounded-xl text-2xs text-stone-gray font-semibold leading-relaxed">
                         👉 {rec}
                       </div>
                     ))}
@@ -242,7 +242,7 @@ export default function ProfessionalProjects() {
                       onChange={(e) => setRecInput(e.target.value)}
                       className="flex-1 dbc-input text-xs"
                     />
-                    <button type="submit" className="dbc-btn dbc-btn-primary py-1 px-3 text-[9px] font-bold uppercase tracking-wider cursor-pointer">
+                    <button type="submit" className="dbc-btn dbc-btn-primary py-1 px-3 text-3xs font-bold uppercase tracking-wider cursor-pointer">
                       Add
                     </button>
                   </form>
@@ -251,7 +251,7 @@ export default function ProfessionalProjects() {
                 {/* Technical Report Generator */}
                 <div className="dbc-card space-y-4">
                   <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Technical Report Builder</h3>
-                  <div className="text-[10px] text-stone-gray font-semibold space-y-2 leading-relaxed">
+                  <div className="text-2xs text-stone-gray font-semibold space-y-2 leading-relaxed">
                     <p>📊 <strong>Selected Template:</strong> {activeConsult.reportTemplate}</p>
                     <p>🔢 <strong>Version Code:</strong> {activeConsult.reportVersion}</p>
                   </div>
@@ -260,14 +260,14 @@ export default function ProfessionalProjects() {
                     {activeConsult.status === 'Draft' ? (
                       <button
                         onClick={() => handlePublishReport(activeConsult.id)}
-                        className="dbc-btn dbc-btn-primary py-2 px-4 text-[9px] font-bold uppercase tracking-wider cursor-pointer"
+                        className="dbc-btn dbc-btn-primary py-2 px-4 text-3xs font-bold uppercase tracking-wider cursor-pointer"
                       >
                         Publish & Submit Report
                       </button>
                     ) : (
                       <button
                         onClick={() => alert('Downloading technical compliance report PDF...')}
-                        className="dbc-btn dbc-btn-outline py-2 px-4 text-[9px] font-bold uppercase tracking-wider bg-white cursor-pointer"
+                        className="dbc-btn dbc-btn-outline py-2 px-4 text-3xs font-bold uppercase tracking-wider bg-white cursor-pointer"
                       >
                         Download PDF Report
                       </button>
@@ -285,7 +285,7 @@ export default function ProfessionalProjects() {
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-200 pb-5 gap-4">
             <div className="space-y-1">
-              <h1 className="text-xl font-bold text-stone-900 font-serif">My Projects</h1>
+              <h1 className="text-xl font-bold text-stone-900 font-display">My Projects</h1>
               <p className="text-xs text-stone-500 font-medium font-semibold">
                 Manage your ongoing and completed customer project coordinates.
               </p>

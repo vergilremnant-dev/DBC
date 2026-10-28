@@ -223,7 +223,7 @@ export default function MessagesCommunicationCenter() {
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">collaboration central</span>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">collaboration central</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Communication Center</h1>
           <p className="text-xs text-stone-500 font-medium">Manage discussions and coordinate with clients, builders, and inspectors.</p>
         </div>
@@ -264,7 +264,7 @@ export default function MessagesCommunicationCenter() {
             <span className={`text-base p-2 rounded-xl w-fit ${stat.color}`}>{stat.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{stat.count}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
             </div>
           </div>
         ))}
@@ -283,7 +283,7 @@ export default function MessagesCommunicationCenter() {
             className="dbc-input text-xs"
           />
 
-          <div className="flex gap-1 border-b border-light-border pb-2 text-[9.5px] font-black uppercase tracking-wider">
+          <div className="flex gap-1 border-b border-light-border pb-2 text-3xs font-black uppercase tracking-wider">
             {['ALL', 'Customer', 'Group'].map(type => (
               <button
                 key={type}
@@ -316,12 +316,12 @@ export default function MessagesCommunicationCenter() {
                     <div className="flex justify-between items-center">
                       <h4 className="text-xs font-black text-stone-900 truncate">{conv.name}</h4>
                       {conv.unreadCount > 0 && (
-                        <span className="bg-brand-emerald text-white text-[8px] font-black px-1.5 py-0.5 rounded-full">
+                        <span className="bg-brand-emerald text-white text-3xs font-black px-1.5 py-0.5 rounded-full">
                           {conv.unreadCount}
                         </span>
                       )}
                     </div>
-                    <p className="text-[10px] text-stone-500 font-semibold truncate mt-0.5">{conv.lastMessage}</p>
+                    <p className="text-2xs text-stone-500 font-semibold truncate mt-0.5">{conv.lastMessage}</p>
                   </div>
                 </div>
               );
@@ -340,7 +340,7 @@ export default function MessagesCommunicationCenter() {
                   <span className="text-lg">{activeConv.avatar}</span>
                   <div>
                     <h3 className="text-xs font-black text-stone-900 leading-none">{activeConv.name}</h3>
-                    <span className="text-[8px] font-black uppercase text-brand-emerald tracking-wider">{activeConv.type} Conversation</span>
+                    <span className="text-3xs font-black uppercase text-brand-emerald tracking-wider">{activeConv.type} Conversation</span>
                   </div>
                 </div>
                 <button
@@ -365,7 +365,7 @@ export default function MessagesCommunicationCenter() {
                     if (isSys) {
                       return (
                         <div key={msg.id} className="text-center">
-                          <span className="inline-block bg-stone-100 border border-light-border/40 text-stone-500 text-[8.5px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                          <span className="inline-block bg-stone-100 border border-light-border/40 text-stone-500 text-3xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                             ⚙️ {msg.text} &bull; {msg.timestamp}
                           </span>
                         </div>
@@ -377,15 +377,15 @@ export default function MessagesCommunicationCenter() {
                         <div className={`max-w-xs p-3 rounded-2xl text-xs leading-relaxed font-semibold shadow-apple-sm text-left ${
                           isPro ? 'bg-brand-emerald text-white rounded-tr-none' : 'bg-stone-50 text-stone-850 rounded-tl-none border border-stone-200'
                         }`}>
-                          {!isPro && <span className="block text-[8px] opacity-75 font-black uppercase tracking-wider mb-1">{msg.senderName}</span>}
+                          {!isPro && <span className="block text-3xs opacity-75 font-black uppercase tracking-wider mb-1">{msg.senderName}</span>}
                           <p>{msg.text}</p>
                           {msg.attachment && (
-                            <div className="mt-2 pt-2 border-t border-white/20 flex justify-between items-center text-[9px] font-bold">
+                            <div className="mt-2 pt-2 border-t border-white/20 flex justify-between items-center text-3xs font-bold">
                               <span>📂 {msg.attachment.name} ({msg.attachment.size})</span>
                               <button onClick={() => alert('File download placeholder.')} className="underline uppercase">Open</button>
                             </div>
                           )}
-                          <span className="block text-[7.5px] opacity-70 text-right mt-1.5">{msg.timestamp}</span>
+                          <span className="block text-3xs opacity-70 text-right mt-1.5">{msg.timestamp}</span>
                         </div>
                       </div>
                     );
@@ -395,7 +395,7 @@ export default function MessagesCommunicationCenter() {
 
               {/* Message Composer & Templates */}
               <div className="p-4 border-t border-light-border bg-stone-50/50 space-y-3">
-                <div className="flex flex-wrap gap-1.5 text-[8.5px] font-bold text-stone-500">
+                <div className="flex flex-wrap gap-1.5 text-3xs font-bold text-stone-500">
                   {templates.map(tmpl => (
                     <button
                       key={tmpl.title}
@@ -443,7 +443,7 @@ export default function MessagesCommunicationCenter() {
             <div className="flex flex-col justify-center items-center text-center p-8 space-y-2 h-[450px]">
               <span className="text-3xl">💬</span>
               <h3 className="text-xs font-black text-stone-400 uppercase tracking-widest">Select a Conversation</h3>
-              <p className="text-[10px] text-stone-500 max-w-xs leading-relaxed">Pick a chat thread from left inbox directory to collaborate.</p>
+              <p className="text-2xs text-stone-500 max-w-xs leading-relaxed">Pick a chat thread from left inbox directory to collaborate.</p>
             </div>
           )}
         </div>
@@ -455,18 +455,18 @@ export default function MessagesCommunicationCenter() {
           <section className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-4">
             <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Shared Attachments</h3>
             {sharedFiles.length === 0 ? (
-              <p className="text-[10px] text-stone-400 font-semibold italic text-center py-2">No attachments shared yet.</p>
+              <p className="text-2xs text-stone-400 font-semibold italic text-center py-2">No attachments shared yet.</p>
             ) : (
               <div className="space-y-2">
                 {sharedFiles.map((file, idx) => (
                   <div key={idx} className="p-2.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                     <div>
                       <span className="font-bold text-stone-850 block truncate max-w-[120px]">{file.name}</span>
-                      <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">{file.uploadedBy} &bull; {file.date}</span>
+                      <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{file.uploadedBy} &bull; {file.date}</span>
                     </div>
                     <button
                       onClick={() => alert(`Downloading shared file: ${file.name}`)}
-                      className="text-brand-emerald text-[8.5px] font-black uppercase hover:underline"
+                      className="text-brand-emerald text-3xs font-black uppercase hover:underline"
                     >
                       Open
                     </button>
@@ -478,7 +478,7 @@ export default function MessagesCommunicationCenter() {
 
           {/* Internal Notes */}
           <section className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-3">
-            <div className="flex justify-between items-center text-[10px] text-stone-400 font-semibold">
+            <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
               <span>🔒 Internal Notes (Private)</span>
               {isSavingNotes && <span className="text-brand-emerald animate-pulse">Saving...</span>}
             </div>
@@ -494,10 +494,10 @@ export default function MessagesCommunicationCenter() {
           <section className="bg-gradient-to-br from-stone-950 to-stone-900 border border-stone-850 p-5 rounded-3xl shadow-apple-sm text-white space-y-4 relative overflow-hidden">
             <div className="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
             <div className="space-y-0.5">
-              <span className="text-[8.5px] font-black uppercase text-emerald-400 tracking-wider">Assistant</span>
+              <span className="text-3xs font-black uppercase text-emerald-400 tracking-wider">Assistant</span>
               <h3 className="text-xs font-black">AI Conversation summary</h3>
             </div>
-            <ul className="space-y-2 text-[9.5px] text-stone-300 font-medium">
+            <ul className="space-y-2 text-3xs text-stone-300 font-medium">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-400">✦</span>
                 <span>Ramesh shared blueprints blueprints.</span>

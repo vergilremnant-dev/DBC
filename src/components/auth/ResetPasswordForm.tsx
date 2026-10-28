@@ -29,14 +29,14 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
     <div className="space-y-4 text-left">
       
       <div className="space-y-1">
-        <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Reset Password</h2>
+        <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Reset Password</h2>
         <p className="text-xs text-stone-500">Enter your new secure password credentials.</p>
       </div>
 
       {!success ? (
         <form onSubmit={handleSubmit} className="space-y-3.5 pt-2">
           <div>
-            <label htmlFor="reset-pass" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+            <label htmlFor="reset-pass" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
               New Password
             </label>
             <input
@@ -50,7 +50,7 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
           </div>
 
           <div>
-            <label htmlFor="reset-confirm" className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">
+            <label htmlFor="reset-confirm" className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">
               Confirm New Password
             </label>
             <input

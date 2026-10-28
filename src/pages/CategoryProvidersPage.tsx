@@ -70,6 +70,14 @@ export function CategoryProvidersPage() {
 
   const categoryId = id ? parseInt(id, 10) : null;
 
+  // Close the detail dialog with Escape
+  useEffect(() => {
+    if (!selectedProvider) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedProvider(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedProvider]);
+
   useEffect(() => {
     if (!categoryId || isNaN(categoryId)) {
       startTransition(() => {
@@ -148,7 +156,7 @@ export function CategoryProvidersPage() {
 
   return (
     <div className="bg-warm-cream text-stone-900 font-sans">
-      <main className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 space-y-8">
+      <main className="dbc-container py-8 sm:py-12 space-y-8">
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between">
@@ -167,8 +175,8 @@ export function CategoryProvidersPage() {
               <div className="text-5xl p-3 bg-warm-cream rounded-xl">{getIconEmoji(category.icon)}</div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl sm:text-2xl font-black font-serif text-stone-900">{category.name}</h1>
-                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border uppercase ${category.categoryType === 'BLUE_COLLAR' ? 'bg-stone-100 text-stone-700 border-light-border' : 'bg-warm-cream text-wood-brown border-light-border'}`}>
+                  <h1 className="text-xl sm:text-2xl font-black font-display text-stone-900">{category.name}</h1>
+                  <span className={`text-3xs font-bold px-2 py-0.5 rounded-full border uppercase ${category.categoryType === 'BLUE_COLLAR' ? 'bg-stone-100 text-stone-700 border-light-border' : 'bg-warm-cream text-wood-brown border-light-border'}`}>
                     {category.categoryType === 'BLUE_COLLAR' ? 'Blue Collar' : 'White Collar'}
                   </span>
                 </div>
@@ -180,19 +188,19 @@ export function CategoryProvidersPage() {
             <div className="flex bg-warm-cream p-0.5 rounded-full border border-light-border">
               <button
                 onClick={() => setWorkforceFilter('ALL')}
-                className={`text-[9px] font-bold px-2.5 py-1 rounded-full transition cursor-pointer ${workforceFilter === 'ALL' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-850'}`}
+                className={`text-3xs font-bold px-2.5 py-1 rounded-full transition cursor-pointer ${workforceFilter === 'ALL' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-850'}`}
               >
                 All
               </button>
               <button
                 onClick={() => setWorkforceFilter('BLUE_COLLAR')}
-                className={`text-[9px] font-bold px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'BLUE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-500 hover:text-stone-850'}`}
+                className={`text-3xs font-bold px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'BLUE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-500 hover:text-stone-850'}`}
               >
                 Blue
               </button>
               <button
                 onClick={() => setWorkforceFilter('WHITE_COLLAR')}
-                className={`text-[9px] font-bold px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'WHITE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-500 hover:text-stone-850'}`}
+                className={`text-3xs font-bold px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'WHITE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-500 hover:text-stone-850'}`}
               >
                 White
               </button>
@@ -210,14 +218,14 @@ export function CategoryProvidersPage() {
         {/* Category Sorting Filters */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-light-border pb-4">
           <div>
-            <h2 className="text-lg font-bold font-serif text-stone-900">Available Professionals</h2>
+            <h2 className="text-lg font-bold font-display text-stone-900">Available Professionals</h2>
             <p className="text-xs text-stone-500">Showing {filteredProviders.length} active service partners</p>
           </div>
           <div className="flex items-center gap-2">
             <select
               value={sortBy}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortBy(e.target.value as ProviderSearchParams['sort'])}
-              className="text-[10px] font-bold text-stone-650 bg-white border border-light-border px-3.5 py-1.5 rounded-full shadow-xs focus:outline-none cursor-pointer hover:bg-warm-cream transition font-semibold"
+              className="text-2xs font-bold text-stone-650 bg-white border border-light-border px-3.5 py-1.5 rounded-full shadow-xs focus:outline-none cursor-pointer hover:bg-warm-cream transition font-semibold"
             >
               <option value="relevance">Relevance Sort</option>
               <option value="rating">Highest Rating</option>
@@ -264,18 +272,18 @@ export function CategoryProvidersPage() {
                     <div className="flex justify-between items-start">
                       <div className="flex items-center gap-1.5">
                         <span className={`h-2.5 w-2.5 rounded-full ${isBlueCollar ? 'bg-stone-500' : 'bg-wood-brown'}`}></span>
-                        <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border font-black ${isBlueCollar ? 'text-stone-700 bg-stone-100 border-light-border' : 'text-wood-brown bg-warm-cream border-light-border'}`}>
+                        <span className={`text-3xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border font-black ${isBlueCollar ? 'text-stone-700 bg-stone-100 border-light-border' : 'text-wood-brown bg-warm-cream border-light-border'}`}>
                           {isBlueCollar ? 'Blue Collar' : 'White Collar'}
                         </span>
                       </div>
-                      <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full">⭐ 4.8</span>
+                      <span className="text-2xs font-bold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full">{p.averageRating > 0 ? `⭐ ${p.averageRating.toFixed(1)}` : 'New'}</span>
                     </div>
 
-                    <h3 className="mt-4 text-base font-extrabold text-stone-900 leading-tight font-serif">{p.fullName}</h3>
+                    <h3 className="mt-4 text-base font-extrabold text-stone-900 leading-tight font-display">{p.fullName}</h3>
                     {p.businessName && <p className="text-xs font-semibold text-stone-400 mt-0.5">{p.businessName}</p>}
                     
                     <p className="mt-3 text-xs text-stone-500 font-semibold">📍 {p.city}, {p.state}</p>
-                    <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mt-1">💼 {p.experienceYears} Years Experience</p>
+                    <p className="text-2xs text-stone-400 font-bold uppercase tracking-wider mt-1">💼 {p.experienceYears} Years Experience</p>
                     
                     <p className="mt-4 text-xs text-stone-600 line-clamp-3 leading-relaxed">
                       {p.description || 'No business description provided.'}
@@ -305,18 +313,18 @@ export function CategoryProvidersPage() {
 
       {/* Provider detail modal */}
       {selectedProvider && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-black/60 backdrop-blur-md">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto shadow-xl border border-light-border relative animate-in fade-in zoom-in duration-200">
+        <div className="dbc-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedProvider(null); }}>
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-xl space-y-6">
             <button
               onClick={() => setSelectedProvider(null)}
-              className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 font-bold text-lg cursor-pointer"
+              className="dbc-modal-close absolute top-4 right-4 z-10 bg-white/90 shadow-sm" aria-label="Close dialog"
             >
               ✕
             </button>
             <div className="flex gap-4 items-center">
               <div className="w-16 h-16 rounded-full bg-warm-cream flex items-center justify-center text-3xl">👤</div>
               <div>
-                <h3 className="text-xl font-bold font-serif text-stone-955">{selectedProvider.fullName}</h3>
+                <h3 className="text-xl font-bold font-display text-stone-955">{selectedProvider.fullName}</h3>
                 <p className="text-xs text-stone-500 font-medium">{selectedProvider.businessName || 'Independent Partner'}</p>
                 <p className="text-xs text-stone-450 mt-1">📍 {selectedProvider.city}, {selectedProvider.state}</p>
               </div>
@@ -325,15 +333,15 @@ export function CategoryProvidersPage() {
             <div className="grid grid-cols-3 gap-3 border-y border-light-border py-4 text-center">
               <div>
                 <span className="block text-lg font-bold text-stone-950">{selectedProvider.experienceYears} Years</span>
-                <span className="text-[9px] text-stone-450 uppercase font-black">Experience</span>
+                <span className="text-3xs text-stone-450 uppercase font-black">Experience</span>
               </div>
               <div>
-                <span className="block text-lg font-bold text-stone-955">⭐ 4.8</span>
-                <span className="text-[9px] text-stone-450 uppercase font-black">Rating</span>
+                <span className="block text-lg font-bold text-stone-955">{selectedProvider.averageRating > 0 ? `⭐ ${selectedProvider.averageRating.toFixed(1)}` : 'New'}</span>
+                <span className="text-3xs text-stone-450 uppercase font-black">Rating</span>
               </div>
               <div>
                 <span className="block text-lg font-bold text-stone-955">₹{selectedProvider.consultationFee || '0'}</span>
-                <span className="text-[9px] text-stone-450 uppercase font-black">Consultation</span>
+                <span className="text-3xs text-stone-450 uppercase font-black">Consultation</span>
               </div>
             </div>
 

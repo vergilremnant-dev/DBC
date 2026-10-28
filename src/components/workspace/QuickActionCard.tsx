@@ -18,7 +18,7 @@ export function QuickActionCard({ title, description, icon, onClick }: QuickActi
         <h4 className="text-xs font-black text-stone-900 group-hover:text-emerald-800 transition duration-200">
           {title}
         </h4>
-        <p className="text-[10px] text-stone-450 font-semibold leading-relaxed">
+        <p className="text-2xs text-stone-450 font-semibold leading-relaxed">
           {description}
         </p>
       </div>

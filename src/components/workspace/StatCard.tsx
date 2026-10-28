@@ -9,14 +9,14 @@ export function StatCard({ title, value, icon, label }: StatCardProps) {
   return (
     <div className="bg-white border border-stone-200 p-5 rounded-2xl shadow-sm flex justify-between items-center text-left transition duration-200">
       <div className="space-y-1">
-        <span className="block text-[9px] uppercase font-black text-stone-400 tracking-wider">
+        <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">
           {title}
         </span>
         <div className="flex items-baseline gap-2">
           <span className="text-2xl font-black text-stone-900 leading-none">
             {value}
           </span>
-          <span className="text-[9px] text-stone-450 font-bold uppercase tracking-wide">
+          <span className="text-3xs text-stone-450 font-bold uppercase tracking-wide">
             {label}
           </span>
         </div>

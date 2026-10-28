@@ -15,12 +15,12 @@ export function ProfileCompletionCard({ percentage, incompleteItems }: ProfileCo
     <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-5 text-left">
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <h3 className="text-sm font-bold text-stone-900 font-serif">Profile Strength</h3>
-          <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">
+          <h3 className="text-sm font-bold text-stone-900 font-display">Profile Strength</h3>
+          <p className="text-2xs text-stone-400 font-bold uppercase tracking-wider">
             Complete settings to unlock faster expert callbacks
           </p>
         </div>
-        <span className="text-xl font-black font-serif text-stone-900">{percentage}%</span>
+        <span className="text-xl font-black font-display text-stone-900">{percentage}%</span>
       </div>
 
       {/* Progress Bar indicator */}
@@ -36,7 +36,7 @@ export function ProfileCompletionCard({ percentage, incompleteItems }: ProfileCo
       {/* Checklist items */}
       {incompleteItems.length > 0 ? (
         <div className="space-y-2.5 pt-3 border-t border-stone-50">
-          <span className="block text-[9px] uppercase font-bold text-stone-400 tracking-wider">
+          <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
             Remaining Tasks
           </span>
           <div className="grid gap-2 sm:grid-cols-2">
@@ -46,7 +46,7 @@ export function ProfileCompletionCard({ percentage, incompleteItems }: ProfileCo
                 onClick={item.action}
                 className="group flex items-center justify-between p-2.5 rounded-xl border border-stone-150 bg-stone-50/50 hover:bg-stone-50 hover:border-stone-300 transition cursor-pointer"
               >
-                <div className="flex items-center gap-2 text-[11px] font-bold text-stone-600">
+                <div className="flex items-center gap-2 text-2xs font-bold text-stone-600">
                   <span className="text-stone-300 group-hover:text-stone-500 transition text-xs">○</span>
                   <span>{item.label}</span>
                 </div>

@@ -25,15 +25,15 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
       {activities.map((act) => (
         <div key={act.id} className="relative space-y-1">
           {/* Timeline Dot */}
-          <div className="absolute -left-[23px] top-0.5 w-4.5 h-4.5 rounded-full bg-stone-100 border border-stone-300 flex items-center justify-center text-[10px] shadow-sm select-none">
+          <div className="absolute -left-[23px] top-0.5 w-4.5 h-4.5 rounded-full bg-stone-100 border border-stone-300 flex items-center justify-center text-2xs shadow-sm select-none">
             {act.icon}
           </div>
           
           <div className="flex justify-between items-baseline gap-2">
             <h5 className="text-xs font-bold text-stone-900 leading-snug">{act.title}</h5>
-            <span className="text-[9px] text-stone-400 font-extrabold whitespace-nowrap">{act.time}</span>
+            <span className="text-3xs text-stone-400 font-extrabold whitespace-nowrap">{act.time}</span>
           </div>
-          <p className="text-[10px] text-stone-500 font-semibold leading-relaxed">
+          <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
             {act.description}
           </p>
         </div>

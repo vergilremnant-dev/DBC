@@ -22,14 +22,14 @@ export default function EmptyState({
         <h4 className="text-xs font-black text-stone-900 uppercase tracking-widest">
           {title}
         </h4>
-        <p className="text-[10px] text-stone-500 font-medium leading-relaxed">
+        <p className="text-2xs text-stone-500 font-medium leading-relaxed">
           {description}
         </p>
       </div>
       {actionText && onAction && (
         <button
           onClick={onAction}
-          className="dbc-btn dbc-btn-primary py-2 px-4 text-[9.5px] font-black uppercase tracking-wider transition cursor-pointer"
+          className="dbc-btn dbc-btn-primary py-2 px-4 text-3xs font-black uppercase tracking-wider transition cursor-pointer"
         >
           {actionText}
         </button>

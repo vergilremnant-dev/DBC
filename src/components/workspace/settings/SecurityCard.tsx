@@ -66,7 +66,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
     <div className="space-y-6 text-left text-xs font-semibold text-stone-700">
       {/* 1. Change Password Section */}
       <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-4">
-        <h3 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+        <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
           Change Password
         </h3>
 
@@ -75,7 +75,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
 
         <form onSubmit={handlePasswordSubmit} className="space-y-3.5">
           <div className="space-y-1">
-            <label className="block text-[10px] uppercase font-bold text-stone-400">Current Password</label>
+            <label className="block text-2xs uppercase font-bold text-stone-400">Current Password</label>
             <input
               type="password"
               value={oldPassword}
@@ -87,7 +87,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">New Password</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">New Password</label>
               <input
                 type="password"
                 value={newPassword}
@@ -98,7 +98,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Confirm Password</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Confirm Password</label>
               <input
                 type="password"
                 value={confirmPassword}
@@ -121,7 +121,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
 
       {/* 2. Privacy Settings Section */}
       <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-4">
-        <h3 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+        <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
           Privacy Settings
         </h3>
 
@@ -135,7 +135,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Show Profile in Marketplace Search</span>
-              <p className="text-[10px] text-stone-400 font-medium leading-normal">
+              <p className="text-2xs text-stone-400 font-medium leading-normal">
                 Allow certified coordinators and contractors to view my project interests and contact card.
               </p>
             </div>
@@ -150,7 +150,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Share Anonymous Telemetry</span>
-              <p className="text-[10px] text-stone-400 font-medium leading-normal">
+              <p className="text-2xs text-stone-400 font-medium leading-normal">
                 Help us improve {BRAND.name} by sending anonymous user experience click reports.
               </p>
             </div>
@@ -160,7 +160,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
 
       {/* 3. Active Sessions */}
       <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-4">
-        <h3 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+        <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
           Active Login Sessions
         </h3>
 
@@ -172,14 +172,14 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
               <div key={sess.id} className="pt-3 first:pt-0 flex items-center justify-between gap-4 text-xs font-semibold text-stone-700">
                 <div className="space-y-0.5">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-stone-900 font-serif">{sess.browser}</span>
+                    <span className="text-stone-900 font-display">{sess.browser}</span>
                     {sess.current && (
-                      <span className="text-[8px] bg-emerald-50 border border-emerald-100 text-emerald-800 font-black px-1.5 py-0.5 rounded">
+                      <span className="text-3xs bg-emerald-50 border border-emerald-100 text-emerald-800 font-black px-1.5 py-0.5 rounded">
                         Current
                       </span>
                     )}
                   </div>
-                  <div className="text-[10px] text-stone-400 font-medium">
+                  <div className="text-2xs text-stone-400 font-medium">
                     IP: {sess.ip} • {sess.location}
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
       <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 border-l-4 border-l-rose-500">
         <div className="space-y-1 text-center sm:text-left">
           <h3 className="text-xs font-extrabold text-stone-900 uppercase">Export & Account Management</h3>
-          <p className="text-[10px] text-stone-400 font-semibold max-w-md">
+          <p className="text-2xs text-stone-400 font-semibold max-w-md">
             Download your personal coordination data files in JSON structure, or request to permanently delete your account.
           </p>
         </div>

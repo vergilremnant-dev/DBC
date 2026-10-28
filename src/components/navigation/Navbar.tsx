@@ -175,17 +175,17 @@ export function Navbar() {
 
   return (
     <header 
-      className={`sticky top-0 z-50 w-full transition-all duration-300 backdrop-blur-md border-b flex items-center
-        ${isScrolled 
-          ? 'h-[72px] bg-white/90 border-light-border shadow-apple-sm' 
-          : 'h-[78px] sm:h-[80px] bg-white/70 border-light-border/40 shadow-none'
+      className={`sticky top-0 z-50 w-full h-16 transition-[background-color,box-shadow,border-color] duration-200 backdrop-blur-md border-b flex items-center
+        ${isScrolled
+          ? 'bg-white/95 border-light-border shadow-apple-sm'
+          : 'bg-white/80 border-light-border/60 shadow-none'
         }
       `}
     >
-      <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6 lg:px-8 lg:grid lg:grid-cols-12 flex justify-between items-center h-full min-w-0">
-        
-        {/* Brand Zone (2 Columns) */}
-        <div className="lg:col-span-2 flex items-center min-w-0 flex-shrink-0">
+      <div className="dbc-container flex items-center justify-between gap-4 lg:gap-6 h-full min-w-0">
+
+        {/* Brand Zone */}
+        <div className="flex items-center min-w-0 flex-shrink-0">
           <Link
             to="/"
             className="flex items-center hover:scale-[1.02] transition-transform duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald rounded-lg"
@@ -194,9 +194,9 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Navigation Zone (8 Columns) */}
-        <div className="lg:col-span-8 hidden lg:flex justify-center items-center">
-          <nav className="flex items-center gap-6 xl:gap-8" aria-label="Main Navigation">
+        {/* Navigation Zone */}
+        <div className="hidden lg:flex flex-1 justify-center items-center min-w-0">
+          <nav className="flex items-center gap-1 xl:gap-2" aria-label="Main Navigation">
             {activeLinks.map((link) => (
               <NavbarItem key={link.to} to={link.to} end={link.to === '/'}>
                 {link.label}
@@ -205,8 +205,8 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* Action Zone (2 Columns) */}
-        <div className="lg:col-span-2 hidden lg:flex justify-end items-center flex-shrink-0">
+        {/* Action Zone */}
+        <div className="hidden lg:flex justify-end items-center flex-shrink-0">
           {isAuthenticated && user ? (
             <NavigationGroup className="gap-2.5">
               {/* Inbox Dropdown Button */}
@@ -220,7 +220,7 @@ export function Navbar() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                   {conversations.length > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-700 text-white rounded-full flex items-center justify-center text-[8px] font-black border border-white shadow-xs">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-700 text-white rounded-full flex items-center justify-center text-3xs font-black border border-white shadow-xs">
                       {conversations.length}
                     </span>
                   )}
@@ -229,13 +229,13 @@ export function Navbar() {
                 {isInboxOpen && (
                   <div className="absolute right-0 mt-2.5 w-76 max-w-[calc(100vw-2rem)] rounded-2xl border border-stone-200 bg-white p-3.5 shadow-lg z-50 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 text-left">
                     <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-                      <span className="text-[9px] font-extrabold uppercase tracking-wider text-stone-500">Recent Chats</span>
+                      <span className="text-3xs font-extrabold uppercase tracking-wider text-stone-500">Recent Chats</span>
                       <button
                         onClick={() => {
                           setIsInboxOpen(false);
                           navigate('/workspace/inbox');
                         }}
-                        className="text-[9px] font-extrabold text-emerald-800 hover:underline cursor-pointer focus:outline-none"
+                        className="text-3xs font-extrabold text-emerald-800 hover:underline cursor-pointer focus:outline-none"
                       >
                         View inbox
                       </button>
@@ -258,9 +258,9 @@ export function Navbar() {
                             >
                               <div className="flex justify-between items-center">
                                 <span className="text-xs font-black text-stone-900">{otherName}</span>
-                                <span className="text-[8px] text-stone-400 font-extrabold">Active</span>
+                                <span className="text-3xs text-stone-400 font-extrabold">Active</span>
                               </div>
-                              <p className="text-[10px] text-stone-500 truncate mt-0.5 font-medium">
+                              <p className="text-2xs text-stone-500 truncate mt-0.5 font-medium">
                                 {convo.lastMessage || 'Open chat thread records.'}
                               </p>
                             </div>
@@ -286,11 +286,11 @@ export function Navbar() {
               />
             </NavigationGroup>
           ) : (
-            <NavigationGroup>
-              <Link
-                to="/login"
-                className="dbc-btn dbc-btn-primary tracking-wider text-[10px] font-bold uppercase rounded-lg shadow-apple-sm px-4 py-2"
-              >
+            <NavigationGroup className="gap-2">
+              <Link to="/login" className="dbc-btn dbc-btn-ghost">
+                Log in
+              </Link>
+              <Link to="/login" className="dbc-btn dbc-btn-primary">
                 Become a Professional
               </Link>
             </NavigationGroup>
@@ -301,10 +301,11 @@ export function Navbar() {
         <div className="lg:hidden flex items-center ml-auto flex-shrink-0">
           <button
             onClick={() => setIsMobileDrawerOpen(true)}
-            className="p-2 rounded-full border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 flex items-center justify-center"
+            className="w-10 h-10 rounded-full border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 flex items-center justify-center"
             aria-label="Open navigation menu"
+            aria-expanded={isMobileDrawerOpen}
           >
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>

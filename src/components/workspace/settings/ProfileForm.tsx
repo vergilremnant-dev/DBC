@@ -43,19 +43,19 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 text-xs font-semibold text-stone-700 text-left">
-      <h3 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+      <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
         Personal Details
       </h3>
 
       {error && (
-        <div className="bg-rose-50 border border-rose-100 text-rose-800 text-[11px] font-bold p-3 rounded-xl">
+        <div className="bg-rose-50 border border-rose-100 text-rose-800 text-2xs font-bold p-3 rounded-xl">
           ⚠️ {error}
         </div>
       )}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">First Name *</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">First Name *</label>
           <input
             type="text"
             name="firstName"
@@ -68,7 +68,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
         </div>
 
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">Last Name *</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">Last Name *</label>
           <input
             type="text"
             name="lastName"
@@ -83,7 +83,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">Display Name</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">Display Name</label>
           <input
             type="text"
             name="displayName"
@@ -95,7 +95,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
         </div>
 
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">Gender</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">Gender</label>
           <select
             name="gender"
             value={values.gender}
@@ -111,7 +111,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
       </div>
 
       <div className="space-y-1">
-        <label className="block text-[10px] uppercase font-bold text-stone-400">Date of Birth</label>
+        <label className="block text-2xs uppercase font-bold text-stone-400">Date of Birth</label>
         <input
           type="date"
           name="dob"
@@ -122,7 +122,7 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
       </div>
 
       <div className="space-y-1">
-        <label className="block text-[10px] uppercase font-bold text-stone-400">Biography</label>
+        <label className="block text-2xs uppercase font-bold text-stone-400">Biography</label>
         <textarea
           name="bio"
           value={values.bio}

@@ -168,7 +168,7 @@ export function MobilePwaPage() {
         <div className="mx-auto flex max-w-md items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
             <BrandLogo variant="header" />
-            <span className="rounded bg-emerald-700 px-2 py-0.5 text-[8px] font-black text-white uppercase tracking-wider">
+            <span className="rounded bg-emerald-700 px-2 py-0.5 text-3xs font-black text-white uppercase tracking-wider">
               PWA Mode
             </span>
           </div>
@@ -177,7 +177,7 @@ export function MobilePwaPage() {
             {/* Online/Offline simulator switch */}
             <button
               onClick={() => setIsOnline(!isOnline)}
-              className={`text-[9px] font-black uppercase px-2 py-1 rounded-xl border transition cursor-pointer select-none ${
+              className={`text-3xs font-black uppercase px-2 py-1 rounded-xl border transition cursor-pointer select-none ${
                 isOnline ? 'bg-emerald-50 text-emerald-800 border-emerald-100' : 'bg-rose-50 text-rose-800 border-rose-100'
               }`}
             >
@@ -190,11 +190,11 @@ export function MobilePwaPage() {
 
       {/* 2. Sync queue indicators banner */}
       {syncQueue.some(q => q.status === 'Pending Sync') && (
-        <div className="bg-amber-50 border-b border-amber-100 px-4 py-2 flex justify-between items-center text-[10px] text-amber-800 font-bold max-w-md mx-auto w-full">
+        <div className="bg-amber-50 border-b border-amber-100 px-4 py-2 flex justify-between items-center text-2xs text-amber-800 font-bold max-w-md mx-auto w-full">
           <span>⚡ {syncQueue.filter(q => q.status === 'Pending Sync').length} items awaiting sync queue</span>
           <button
             onClick={handleSyncAll}
-            className="underline uppercase tracking-wider text-[9px] font-black focus:outline-none"
+            className="underline uppercase tracking-wider text-3xs font-black focus:outline-none"
           >
             Sync Now
           </button>
@@ -217,7 +217,7 @@ export function MobilePwaPage() {
               <button
                 key={t.id}
                 onClick={() => setActiveTab(t.id)}
-                className={`flex-1 text-center py-2.5 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer select-none
+                className={`flex-1 text-center py-2.5 rounded-xl text-3xs font-black uppercase tracking-wider transition cursor-pointer select-none
                   ${isActive ? 'bg-light-stone text-stone-black shadow-xs font-extrabold' : 'text-stone-gray'}
                 `}
               >
@@ -236,12 +236,12 @@ export function MobilePwaPage() {
             <div className="dbc-card space-y-4">
               <div className="flex justify-between items-center">
                 <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">GPS Site Check-In</h3>
-                <span className={`dbc-badge text-[7.5px] py-0.5 ${isClockedIn ? 'dbc-badge-completed' : 'dbc-badge-planning'}`}>
+                <span className={`dbc-badge text-3xs py-0.5 ${isClockedIn ? 'dbc-badge-completed' : 'dbc-badge-planning'}`}>
                   {isClockedIn ? 'Active Onsite' : 'Clocked Out'}
                 </span>
               </div>
 
-              <p className="text-[10px] text-stone-gray font-semibold leading-relaxed">
+              <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
                 Check in to verify location geofences and log work hour records on project contracts.
               </p>
 
@@ -256,7 +256,7 @@ export function MobilePwaPage() {
 
               {/* Logs */}
               {clockLog.length > 0 && (
-                <div className="space-y-1.5 pt-2 border-t border-light-border/40 text-[9.5px] font-mono text-stone-gray">
+                <div className="space-y-1.5 pt-2 border-t border-light-border/40 text-3xs font-mono text-stone-gray">
                   {clockLog.slice(0, 3).map((log, i) => (
                     <p key={i}>{log}</p>
                   ))}
@@ -298,11 +298,11 @@ export function MobilePwaPage() {
               <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Synchronization Queue</h3>
               <div className="divide-y divide-light-border/40">
                 {syncQueue.map((item) => (
-                  <div key={item.id} className="py-2.5 flex justify-between items-center text-[10px] text-stone-gray font-semibold">
+                  <div key={item.id} className="py-2.5 flex justify-between items-center text-2xs text-stone-gray font-semibold">
                     <div>
                       <strong className="text-stone-black">{item.type}</strong>: {item.details}
                     </div>
-                    <span className={`dbc-badge text-[7.5px] py-0.5 uppercase ${
+                    <span className={`dbc-badge text-3xs py-0.5 uppercase ${
                       item.status === 'Uploaded' ? 'dbc-badge-completed' : 'dbc-badge-priority'
                     }`}>{item.status}</span>
                   </div>
@@ -325,7 +325,7 @@ export function MobilePwaPage() {
               ) : (
                 <>
                   <span className="text-3xl">📷</span>
-                  <span className="text-[9px] font-black uppercase tracking-widest text-stone-300 mt-2">Simulated camera viewport active</span>
+                  <span className="text-3xs font-black uppercase tracking-widest text-stone-300 mt-2">Simulated camera viewport active</span>
                 </>
               )}
             </div>
@@ -348,7 +348,7 @@ export function MobilePwaPage() {
             {/* Captured Photos Grid */}
             {photosCaptured.length > 0 && (
               <div className="pt-4 border-t border-light-border/40 space-y-3">
-                <span className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Captured Site Files</span>
+                <span className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Captured Site Files</span>
                 <div className="grid grid-cols-3 gap-2">
                   {photosCaptured.map((ph, idx) => (
                     <img
@@ -368,7 +368,7 @@ export function MobilePwaPage() {
         {activeTab === 'offline' && (
           <div className="dbc-card space-y-4">
             <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Offline Document Storage</h3>
-            <p className="text-[10px] text-stone-gray font-semibold leading-relaxed">
+            <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
               Mark critical contracts and blueprint CAD plans to store them in your local browser Cache API for offline reading on construction sites.
             </p>
 
@@ -380,7 +380,7 @@ export function MobilePwaPage() {
                     <span className="font-bold text-stone-black truncate pr-3">📄 {doc}</span>
                     <button
                       onClick={() => handleToggleCache(doc)}
-                      className={`text-[9px] font-black uppercase focus:outline-none ${
+                      className={`text-3xs font-black uppercase focus:outline-none ${
                         isCached ? 'text-rose-600' : 'text-brand-emerald'
                       }`}
                     >

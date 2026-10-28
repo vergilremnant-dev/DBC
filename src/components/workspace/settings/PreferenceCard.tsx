@@ -43,9 +43,9 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
   return (
     <form onSubmit={handleSubmit} className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-5 text-left text-xs font-semibold text-stone-700">
       <div className="border-b border-stone-100 pb-2 flex justify-between items-center">
-        <h3 className="text-sm font-bold text-stone-900 font-serif">System Preferences</h3>
+        <h3 className="text-sm font-bold text-stone-900 font-display">System Preferences</h3>
         {success && (
-          <span className="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded font-bold border border-emerald-100">
+          <span className="text-2xs text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded font-bold border border-emerald-100">
             Preferences Saved!
           </span>
         )}
@@ -54,7 +54,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
       {/* Settings Grid */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">Theme (UI Mode)</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">Theme (UI Mode)</label>
           <select
             name="theme"
             value={values.theme}
@@ -68,7 +68,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
         </div>
 
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">Language</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">Language</label>
           <select
             name="language"
             value={values.language}
@@ -83,7 +83,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
         </div>
 
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">Time Zone</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">Time Zone</label>
           <select
             name="timeZone"
             value={values.timeZone}
@@ -97,7 +97,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
         </div>
 
         <div className="space-y-1">
-          <label className="block text-[10px] uppercase font-bold text-stone-400">Date Format</label>
+          <label className="block text-2xs uppercase font-bold text-stone-400">Date Format</label>
           <select
             name="dateFormat"
             value={values.dateFormat}
@@ -113,7 +113,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
 
       {/* Notifications Checklist */}
       <div className="space-y-3 pt-3 border-t border-stone-50">
-        <span className="block text-[10px] uppercase font-bold text-stone-400 tracking-wider">
+        <span className="block text-2xs uppercase font-bold text-stone-400 tracking-wider">
           Notification Preferences
         </span>
         
@@ -128,7 +128,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Bid Alerts</span>
-              <p className="text-[10px] text-stone-400 font-medium leading-none">Notify me when contractors place bids on my requirements.</p>
+              <p className="text-2xs text-stone-400 font-medium leading-none">Notify me when contractors place bids on my requirements.</p>
             </div>
           </label>
 
@@ -142,7 +142,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Booking Confirmations</span>
-              <p className="text-[10px] text-stone-400 font-medium leading-none">Notify when schedules are accepted or status changes.</p>
+              <p className="text-2xs text-stone-400 font-medium leading-none">Notify when schedules are accepted or status changes.</p>
             </div>
           </label>
 
@@ -156,7 +156,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Messages & Replies</span>
-              <p className="text-[10px] text-stone-400 font-medium leading-none">Notify me when design consultants reply in inbox.</p>
+              <p className="text-2xs text-stone-400 font-medium leading-none">Notify me when design consultants reply in inbox.</p>
             </div>
           </label>
 
@@ -170,7 +170,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Promotion Alerts</span>
-              <p className="text-[10px] text-stone-400 font-medium leading-none">Monsoon special discounts and Vastu pass alerts.</p>
+              <p className="text-2xs text-stone-400 font-medium leading-none">Monsoon special discounts and Vastu pass alerts.</p>
             </div>
           </label>
         </div>
@@ -186,7 +186,7 @@ export function PreferenceCard({ initialValues, onSave, saving = false }: Prefer
             onChange={handleChange}
             className="dbc-checkbox"
           />
-          <span className="text-[10px] uppercase font-bold text-stone-400">Subscribe to monthly construction guides</span>
+          <span className="text-2xs uppercase font-bold text-stone-400">Subscribe to monthly construction guides</span>
         </label>
         
         <button

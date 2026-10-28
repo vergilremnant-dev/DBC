@@ -80,8 +80,8 @@ export default function ConsultantFinancePage() {
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider"> Escrow and Billings </span>
-          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-serif">Financial Overview</h1>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider"> Escrow and Billings </span>
+          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Financial Overview</h1>
           <p className="text-xs text-stone-500 font-medium">Monitor consultation earnings, generate invoices, track settlements, and review revenue trends.</p>
         </div>
 
@@ -114,11 +114,11 @@ export default function ConsultantFinancePage() {
           <div key={idx} className="bg-white border border-light-border p-4 rounded-2xl shadow-apple-xs hover:shadow-apple-sm transition flex flex-col justify-between">
             <div className="flex justify-between items-start">
               <span className={`text-base p-2 rounded-xl w-fit ${stat.color}`}>{stat.icon}</span>
-              <span className="text-[8.5px] font-black text-stone-400 uppercase">{stat.trend}</span>
+              <span className="text-3xs font-black text-stone-400 uppercase">{stat.trend}</span>
             </div>
             <div className="mt-4 space-y-0.5">
               <span className="block text-xl font-black text-stone-900">{stat.value}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
             </div>
           </div>
         ))}
@@ -135,9 +135,9 @@ export default function ConsultantFinancePage() {
             <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
               <div>
                 <h3 className="text-xs font-black uppercase text-stone-900">Revenue Analytics</h3>
-                <p className="text-[10px] text-stone-400 font-medium">Cash flow trend timelines</p>
+                <p className="text-2xs text-stone-400 font-medium">Cash flow trend timelines</p>
               </div>
-              <div className="flex gap-1 border border-stone-200 p-1 bg-stone-50 rounded-xl text-[8.5px] font-black uppercase tracking-wider">
+              <div className="flex gap-1 border border-stone-200 p-1 bg-stone-50 rounded-xl text-3xs font-black uppercase tracking-wider">
                 {['Daily', 'Weekly', 'Monthly', 'Yearly'].map(view => (
                   <button
                     key={view}
@@ -158,11 +158,11 @@ export default function ConsultantFinancePage() {
                 {[15, 22, 18, 30, 45, 28].map((val, idx) => (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2">
                     <div className="w-full bg-brand-emerald rounded-t-md transition-all duration-300" style={{ height: `${val * 2.2}px` }} />
-                    <span className="text-[8px] text-stone-500 font-bold">₹{val}K</span>
+                    <span className="text-3xs text-stone-500 font-bold">₹{val}K</span>
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between text-[8px] text-stone-400 font-black uppercase tracking-wider mt-4 pt-2 border-t border-light-border/40">
+              <div className="flex justify-between text-3xs text-stone-400 font-black uppercase tracking-wider mt-4 pt-2 border-t border-light-border/40">
                 <span>March 26</span>
                 <span>April 26</span>
                 <span>May 26</span>
@@ -178,7 +178,7 @@ export default function ConsultantFinancePage() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
                 <h3 className="text-xs font-black uppercase text-stone-900">Consultation Earnings Ledger</h3>
-                <p className="text-[10px] text-stone-400">Statement breakdown log details</p>
+                <p className="text-2xs text-stone-400">Statement breakdown log details</p>
               </div>
 
               <div className="flex gap-2 w-full sm:w-auto">
@@ -206,7 +206,7 @@ export default function ConsultantFinancePage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-light-border text-[9px] font-black uppercase text-stone-400">
+                  <tr className="border-b border-light-border text-3xs font-black uppercase text-stone-400">
                     <th className="py-2.5">Transaction Info</th>
                     <th className="py-2.5">Date</th>
                     <th className="py-2.5">Invoice Ref</th>
@@ -220,13 +220,13 @@ export default function ConsultantFinancePage() {
                     <tr key={tx.id}>
                       <td className="py-3">
                         <strong className="block text-stone-900">{tx.customerName}</strong>
-                        <span className="text-[10px] text-stone-450">{tx.consultationType}</span>
+                        <span className="text-2xs text-stone-450">{tx.consultationType}</span>
                       </td>
                       <td className="py-3 text-stone-500">{tx.date}</td>
                       <td className="py-3 text-stone-500">{tx.invoiceId}</td>
                       <td className="py-3 font-bold text-stone-900">{tx.amount}</td>
                       <td className="py-3">
-                        <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                        <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                           tx.status === 'Paid' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : tx.status === 'Overdue' ? 'bg-rose-50 border-rose-200 text-rose-700' : 'bg-amber-50 border-amber-200 text-amber-700'
                         }`}>
                           {tx.status}
@@ -236,14 +236,14 @@ export default function ConsultantFinancePage() {
                         {tx.status === 'Overdue' ? (
                           <button
                             onClick={() => handleSendReminder(tx.id)}
-                            className="text-[9px] font-black uppercase text-rose-600 hover:underline"
+                            className="text-3xs font-black uppercase text-rose-600 hover:underline"
                           >
                             Send Reminder
                           </button>
                         ) : (
                           <button
                             onClick={() => alert(`Opening Invoice detail: ${tx.invoiceId}`)}
-                            className="text-[9px] font-black uppercase text-brand-emerald hover:underline"
+                            className="text-3xs font-black uppercase text-brand-emerald hover:underline"
                           >
                             View Invoice
                           </button>
@@ -265,10 +265,10 @@ export default function ConsultantFinancePage() {
           <section className="bg-gradient-to-br from-stone-950 to-stone-900 border border-stone-850 p-6 rounded-3xl shadow-apple-sm text-white space-y-4 relative overflow-hidden">
             <div className="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
             <div className="space-y-0.5">
-              <span className="text-[8.5px] font-black uppercase text-emerald-400 tracking-wider">Financial Assistant</span>
+              <span className="text-3xs font-black uppercase text-emerald-400 tracking-wider">Financial Assistant</span>
               <h3 className="text-xs font-black">AI Revenue insights</h3>
             </div>
-            <ul className="space-y-2 text-[10px] text-stone-300 font-medium">
+            <ul className="space-y-2 text-2xs text-stone-300 font-medium">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-400">✦</span>
                 <span>Net earnings are up 12% compared to June averages.</span>
@@ -284,11 +284,11 @@ export default function ConsultantFinancePage() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
               <h2 className="text-sm font-black text-stone-900">Payout Settlements</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Escrow deposits withdrawal logs</p>
+              <p className="text-2xs text-stone-450 font-medium">Escrow deposits withdrawal logs</p>
             </div>
 
             <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-2.5">
-              <span className="dbc-badge dbc-badge-completed text-[7.5px] py-0.5">Available for Payout</span>
+              <span className="dbc-badge dbc-badge-completed text-3xs py-0.5">Available for Payout</span>
               <h4 className="text-2xl font-extrabold text-brand-emerald">₹34,000</h4>
               <button
                 onClick={() => {
@@ -301,7 +301,7 @@ export default function ConsultantFinancePage() {
             </div>
 
             <div className="space-y-2.5 pt-3 border-t border-light-border/40">
-              <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider">Settlement History</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Settlement History</span>
               {settlements.map(set => (
                 <div key={set.id} className="flex justify-between items-center text-xs p-2 bg-stone-50 border border-stone-100 rounded-xl font-semibold">
                   <span className="text-stone-750">🗓️ {set.date} &bull; {set.id}</span>

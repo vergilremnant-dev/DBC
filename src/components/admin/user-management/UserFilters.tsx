@@ -25,7 +25,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
         </h3>
         <button
           onClick={onReset}
-          className="text-[9px] font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -34,7 +34,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
         {/* Role Filter */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Platform Role
           </label>
           <select
@@ -52,7 +52,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Status Filter */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Account Status
           </label>
           <select
@@ -70,7 +70,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Verification Status */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Verification Status
           </label>
           <select
@@ -87,7 +87,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Registration Date */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Registration Date
           </label>
           <select
@@ -104,7 +104,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Location search input */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Location/City
           </label>
           <input

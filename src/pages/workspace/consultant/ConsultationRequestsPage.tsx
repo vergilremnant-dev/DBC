@@ -241,7 +241,7 @@ export default function ConsultationRequestsPage() {
       {/* 1. Page Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">Expert Center</span>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Expert Center</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Consultation Requests</h1>
           <p className="text-xs text-stone-500 font-medium">Review, prioritize, and respond to customer consultation requests.</p>
         </div>
@@ -275,7 +275,7 @@ export default function ConsultationRequestsPage() {
             <span className={`text-base p-2 rounded-xl w-fit ${stat.color}`}>{stat.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{stat.count}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
             </div>
           </div>
         ))}
@@ -328,13 +328,13 @@ export default function ConsultationRequestsPage() {
         {/* Row 2: Status & Priority Pills */}
         <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-light-border/40">
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase text-stone-400">Status:</span>
+            <span className="text-2xs font-black uppercase text-stone-400">Status:</span>
             <div className="flex flex-wrap gap-1.5">
               {['ALL', 'New', 'Pending Review', 'Accepted', 'Scheduled', 'Completed', 'Rejected'].map(s => (
                 <button
                   key={s}
                   onClick={() => setStatusFilter(s)}
-                  className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider transition border cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg text-3xs font-bold uppercase tracking-wider transition border cursor-pointer ${
                     statusFilter === s ? 'bg-stone-black border-stone-black text-white' : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
                   }`}
                 >
@@ -345,13 +345,13 @@ export default function ConsultationRequestsPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase text-stone-400">Priority:</span>
+            <span className="text-2xs font-black uppercase text-stone-400">Priority:</span>
             <div className="flex gap-1.5">
               {['ALL', 'High', 'Medium', 'Low'].map(p => (
                 <button
                   key={p}
                   onClick={() => setPriorityFilter(p)}
-                  className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider transition border cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg text-3xs font-bold uppercase tracking-wider transition border cursor-pointer ${
                     priorityFilter === p ? 'bg-stone-black border-stone-black text-white' : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
                   }`}
                 >
@@ -388,17 +388,17 @@ export default function ConsultationRequestsPage() {
                 >
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-3 pb-3 border-b border-light-border/40">
                     <div className="space-y-1">
-                      <span className="text-[9px] font-black text-stone-400 uppercase tracking-wider">{req.id} • {req.category}</span>
+                      <span className="text-3xs font-black text-stone-400 uppercase tracking-wider">{req.id} • {req.category}</span>
                       <h4 className="text-xs font-black text-stone-900">{req.requirementTitle}</h4>
-                      <p className="text-[10px] text-stone-600 font-semibold">Client: {req.customerName}</p>
+                      <p className="text-2xs text-stone-600 font-semibold">Client: {req.customerName}</p>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className={`text-[8.5px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                      <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                         req.priority === 'High' ? 'bg-rose-50 border-rose-200 text-rose-700' : req.priority === 'Medium' ? 'bg-amber-50 border-amber-200 text-amber-700' : 'bg-stone-550 border-stone-200 text-stone-500'
                       }`}>
                         ⚠️ {req.priority}
                       </span>
-                      <span className={`text-[8.5px] font-black uppercase px-2 py-0.5 rounded-full ${
+                      <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full ${
                         req.status === 'New' ? 'bg-blue-50 text-blue-700' : req.status === 'Pending Review' ? 'bg-amber-50 text-amber-700' : req.status === 'Accepted' ? 'bg-emerald-50 text-emerald-700' : req.status === 'Scheduled' ? 'bg-indigo-50 text-indigo-700' : 'bg-stone-100 text-stone-600'
                       }`}>
                         {req.status}
@@ -406,9 +406,9 @@ export default function ConsultationRequestsPage() {
                     </div>
                   </div>
 
-                  <p className="text-[11px] text-stone-600 font-medium py-3 leading-relaxed">{req.summary}</p>
+                  <p className="text-2xs text-stone-600 font-medium py-3 leading-relaxed">{req.summary}</p>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[10px] text-stone-450 font-bold uppercase tracking-wider pt-3 border-t border-light-border/40">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-2xs text-stone-450 font-bold uppercase tracking-wider pt-3 border-t border-light-border/40">
                     <div className="flex flex-wrap gap-x-4 gap-y-1">
                       <span>📍 {req.location}</span>
                       <span>💰 Budget: {req.budget}</span>
@@ -466,7 +466,7 @@ export default function ConsultationRequestsPage() {
 
               {/* 5. Pagination */}
               <div className="flex items-center justify-between pt-4">
-                <span className="text-[10px] text-stone-450 font-bold uppercase tracking-wider">
+                <span className="text-2xs text-stone-450 font-bold uppercase tracking-wider">
                   Page {currentPage} of {totalPages} ({filteredRequests.length} requests)
                 </span>
                 <div className="flex items-center gap-2">
@@ -506,7 +506,7 @@ export default function ConsultationRequestsPage() {
           <aside className="lg:col-span-5 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4 text-left animate-in slide-in-from-right-3 duration-200">
             <div className="flex justify-between items-start border-b border-light-border pb-4">
               <div>
-                <span className="text-[8px] font-black uppercase text-stone-450 tracking-wider">Request Detail Preview</span>
+                <span className="text-3xs font-black uppercase text-stone-450 tracking-wider">Request Detail Preview</span>
                 <h3 className="text-xs font-black text-stone-900 leading-normal">{selectedRequest.requirementTitle}</h3>
               </div>
               <button
@@ -517,7 +517,7 @@ export default function ConsultationRequestsPage() {
               </button>
             </div>
 
-            <div className="space-y-3.5 text-[11px] text-stone-600 font-medium">
+            <div className="space-y-3.5 text-2xs text-stone-600 font-medium">
               <div className="p-3 bg-stone-50 rounded-xl space-y-2 border border-stone-100">
                 <p>👤 <strong>Client Name:</strong> {selectedRequest.customerName}</p>
                 <p>📍 <strong>Location:</strong> {selectedRequest.location}</p>
@@ -526,30 +526,30 @@ export default function ConsultationRequestsPage() {
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase text-stone-400">Detailed Description</span>
+                <span className="text-2xs font-black uppercase text-stone-400">Detailed Description</span>
                 <p className="leading-relaxed bg-stone-50/40 p-3 rounded-xl border border-stone-100">{selectedRequest.description}</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 text-[10.5px]">
+              <div className="grid grid-cols-2 gap-3 text-2xs">
                 <div className="p-3 bg-stone-50 rounded-xl border border-stone-100">
-                  <span className="block text-[8px] font-black uppercase text-stone-400">Consult Mode</span>
+                  <span className="block text-3xs font-black uppercase text-stone-400">Consult Mode</span>
                   <span className="font-bold text-stone-850">🖥️ {selectedRequest.consultationMode}</span>
                 </div>
                 <div className="p-3 bg-stone-50 rounded-xl border border-stone-100">
-                  <span className="block text-[8px] font-black uppercase text-stone-400">Expected Timeline</span>
+                  <span className="block text-3xs font-black uppercase text-stone-400">Expected Timeline</span>
                   <span className="font-bold text-stone-850">⏳ {selectedRequest.expectedTimeline}</span>
                 </div>
               </div>
 
               <div className="p-3 bg-stone-50 rounded-xl border border-stone-100 flex justify-between items-center">
                 <span>📁 Uploaded Documents</span>
-                <span className="bg-stone-200 text-stone-800 text-[10px] px-2 py-0.5 rounded-full font-black">
+                <span className="bg-stone-200 text-stone-800 text-2xs px-2 py-0.5 rounded-full font-black">
                   {selectedRequest.documentsCount} Files
                 </span>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase text-stone-400">Client Notes</span>
+                <span className="text-2xs font-black uppercase text-stone-400">Client Notes</span>
                 <p className="italic bg-light-stone/20 p-3 rounded-xl border border-light-border/40">"{selectedRequest.notes}"</p>
               </div>
             </div>
@@ -584,8 +584,8 @@ export default function ConsultationRequestsPage() {
 
       {/* 6. Action Confirmation Modal */}
       {confirmDialog && confirmDialog.isOpen && (
-        <div className="fixed inset-0 bg-stone-950/45 backdrop-blur-xs flex items-center justify-center z-50 animate-in fade-in duration-250">
-          <div className="bg-white border border-light-border p-6 rounded-3xl max-w-sm w-full mx-4 shadow-xl space-y-4 animate-in zoom-in-95 duration-150 text-left select-none">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4 text-left select-none">
             <div className="space-y-1">
               <h3 className="text-sm font-black text-stone-900 uppercase">Confirm Action</h3>
               <p className="text-xs text-stone-500 font-medium">Are you sure you want to {confirmDialog.action.toLowerCase()} this consultation request?</p>

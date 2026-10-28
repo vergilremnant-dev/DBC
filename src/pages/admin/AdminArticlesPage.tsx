@@ -174,7 +174,7 @@ export function AdminArticlesPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/blog')}>
             <BrandLogo variant="header" />
-            <span className="rounded bg-stone-900 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+            <span className="rounded bg-stone-900 px-2 py-0.5 text-2xs font-bold text-white uppercase tracking-wider">
               Writer Portal
             </span>
           </div>
@@ -200,20 +200,20 @@ export function AdminArticlesPage() {
         {analytics && (
           <section className="grid gap-4 sm:grid-cols-4">
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Total Articles</span>
-              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-serif">{analytics.totalArticles}</h4>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Total Articles</span>
+              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">{analytics.totalArticles}</h4>
             </div>
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Hub Views</span>
-              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-serif">👁️ {analytics.totalViews}</h4>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Hub Views</span>
+              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">👁️ {analytics.totalViews}</h4>
             </div>
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Consultation CVs</span>
-              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-serif">💬 {analytics.totalConsultationConversions}</h4>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Consultation CVs</span>
+              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">💬 {analytics.totalConsultationConversions}</h4>
             </div>
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Callback CVs</span>
-              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-serif">📞 {analytics.totalCallbackConversions}</h4>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Callback CVs</span>
+              <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">📞 {analytics.totalCallbackConversions}</h4>
             </div>
           </section>
         )}
@@ -221,7 +221,7 @@ export function AdminArticlesPage() {
         {/* Editor Form & Category Creation */}
         <section className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-stone-100 pb-4">
-            <h2 className="text-lg font-bold text-stone-900 font-serif">
+            <h2 className="text-lg font-bold text-stone-900 font-display">
               {isEditing ? '✏️ Modify Handbook Article' : '📝 Compose Handbook Article'}
             </h2>
             <button
@@ -390,7 +390,7 @@ export function AdminArticlesPage() {
 
         {/* Existing Articles Table */}
         <section className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm overflow-x-auto">
-          <h2 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-3">
+          <h2 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-3">
             📚 Composed Handbooks & Articles
           </h2>
           <table className="mt-4 w-full text-left text-xs border-collapse">
@@ -421,7 +421,7 @@ export function AdminArticlesPage() {
                       💬 {art.consultationConversions} / 📞 {art.callbackConversions}
                     </td>
                     <td className="py-3.5 pr-2">
-                      <span className={`inline-block rounded px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ${
+                      <span className={`inline-block rounded px-2 py-0.5 text-3xs font-bold uppercase tracking-wider ${
                         art.isPublished 
                           ? 'bg-emerald-50 border border-emerald-100 text-emerald-800' 
                           : 'bg-amber-50 border border-amber-100 text-amber-800'
@@ -453,9 +453,9 @@ export function AdminArticlesPage() {
 
       {/* Category Modal */}
       {showCatModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <form onSubmit={handleCategoryCreate} className="w-full max-w-sm rounded-2xl border border-stone-200 bg-white p-6 shadow-2xl text-xs space-y-4">
-            <h3 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+        <div className="dbc-modal-overlay">
+          <form onSubmit={handleCategoryCreate} role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm text-xs space-y-4">
+            <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
               Add Blog Category
             </h3>
             

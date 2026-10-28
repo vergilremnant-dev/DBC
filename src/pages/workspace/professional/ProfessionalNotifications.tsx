@@ -48,7 +48,7 @@ export default function ProfessionalNotifications() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-light-border pb-5 gap-4">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold text-stone-900 font-serif">Business Notifications</h2>
+          <h2 className="text-xl font-bold text-stone-900 font-display">Business Notifications</h2>
           <p className="text-xs text-stone-500 font-medium font-semibold">
             Track business updates, direct booking alerts, and client payments history.
           </p>
@@ -64,23 +64,23 @@ export default function ProfessionalNotifications() {
       {/* Summary stats */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="dbc-card text-center p-4">
-          <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Unread Alerts</span>
+          <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Unread Alerts</span>
           <h3 className="text-base font-extrabold text-brand-emerald mt-1">{unreadCount} Pending</h3>
         </div>
         <div className="dbc-card text-center p-4">
-          <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Urgent Priority</span>
+          <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Urgent Priority</span>
           <h3 className="text-base font-extrabold text-amber-700 mt-1">
             {notifications.filter(n => !n.isRead && n.priority === 'High').length} Actionable
           </h3>
         </div>
         <div className="dbc-card text-center p-4">
-          <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">Total Received</span>
+          <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Total Received</span>
           <h3 className="text-base font-extrabold text-stone-black mt-1">{notifications.length} Total</h3>
         </div>
       </div>
 
       {/* Categories filters */}
-      <div className="flex flex-wrap gap-2 pt-2 text-[9px] font-black uppercase tracking-wider">
+      <div className="flex flex-wrap gap-2 pt-2 text-3xs font-black uppercase tracking-wider">
         {['ALL', 'SYSTEM', 'PROJECTS', 'LEADS', 'REQUESTS'].map((cat) => (
           <button
             key={cat}
@@ -115,15 +115,15 @@ export default function ProfessionalNotifications() {
             >
               <div className="space-y-1.5 flex-1 min-w-0 pr-4">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className={`dbc-badge text-[7.5px] py-0.5 ${
+                  <span className={`dbc-badge text-3xs py-0.5 ${
                     n.priority === 'High' ? 'dbc-badge-priority' : 'dbc-badge-progress'
                   }`}>
                     {n.category}
                   </span>
                   <h4 className="text-xs font-black text-stone-black truncate">{n.title}</h4>
                 </div>
-                <p className="text-[10px] text-stone-gray font-semibold leading-relaxed">{n.content}</p>
-                <span className="block text-[8px] text-stone-gray/80 font-bold">{n.time}</span>
+                <p className="text-2xs text-stone-gray font-semibold leading-relaxed">{n.content}</p>
+                <span className="block text-3xs text-stone-gray/80 font-bold">{n.time}</span>
               </div>
 
               <button
@@ -131,7 +131,7 @@ export default function ProfessionalNotifications() {
                   e.stopPropagation();
                   handleDelete(n.id);
                 }}
-                className="text-[10px] font-bold text-stone-gray hover:text-rose-600 focus:outline-none"
+                className="text-2xs font-bold text-stone-gray hover:text-rose-600 focus:outline-none"
                 title="Remove alert log"
               >
                 ✕

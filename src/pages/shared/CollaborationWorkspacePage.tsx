@@ -222,10 +222,10 @@ export function CollaborationWorkspacePage() {
       <div className="bg-white border-b border-light-border sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-0.5 text-left">
-            <span className="bg-stone-150 text-stone-700 text-[8.5px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-stone-150 text-stone-700 text-3xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
               Real-Time Collaboration Platform
             </span>
-            <h1 className="text-xl font-bold text-stone-900 font-serif leading-tight">
+            <h1 className="text-xl font-bold text-stone-900 font-display leading-tight">
               Project Collaboration Rooms
             </h1>
           </div>
@@ -296,10 +296,10 @@ export function CollaborationWorkspacePage() {
                       `}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="bg-light-stone text-stone-gray text-[7.5px] font-black px-1.5 py-0.5 rounded border border-light-border uppercase">
+                        <span className="bg-light-stone text-stone-gray text-3xs font-black px-1.5 py-0.5 rounded border border-light-border uppercase">
                           {conv.conversationType}
                         </span>
-                        <span className="text-[8px] text-stone-gray font-bold">
+                        <span className="text-3xs text-stone-gray font-bold">
                           {conv.lastMessageAt ? new Date(conv.lastMessageAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
                         </span>
                       </div>
@@ -307,7 +307,7 @@ export function CollaborationWorkspacePage() {
                         {currentUserRole === 'PROVIDER' ? conv.customer?.fullName : conv.provider?.fullName}
                       </span>
                       {conv.lastMessage && (
-                        <p className="text-[10px] text-stone-gray truncate font-medium">
+                        <p className="text-2xs text-stone-gray truncate font-medium">
                           {conv.lastMessage}
                         </p>
                       )}
@@ -321,7 +321,7 @@ export function CollaborationWorkspacePage() {
             <form onSubmit={handleNewChat} className="dbc-card space-y-3">
               <h3 className="text-xs font-black text-stone-black uppercase tracking-wider border-b border-light-border/40 pb-2">Open Chat Room</h3>
               <div className="space-y-1">
-                <label className="text-[8px] font-black text-stone-gray uppercase tracking-widest">Provider UUID</label>
+                <label className="text-3xs font-black text-stone-gray uppercase tracking-widest">Provider UUID</label>
                 <input
                   type="text"
                   value={newChatProvider}
@@ -332,7 +332,7 @@ export function CollaborationWorkspacePage() {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[8px] font-black text-stone-gray uppercase tracking-widest">Room Category</label>
+                <label className="text-3xs font-black text-stone-gray uppercase tracking-widest">Room Category</label>
                 <select
                   value={newChatType}
                   onChange={(e) => setNewChatType(e.target.value)}
@@ -357,10 +357,10 @@ export function CollaborationWorkspacePage() {
               {/* Header title */}
               <div className="border-b border-light-border p-4 bg-light-stone/10 rounded-t-3xl flex justify-between items-center text-left">
                 <div>
-                  <h3 className="font-serif font-black text-stone-black text-sm">
+                  <h3 className="font-display font-black text-stone-black text-sm">
                     {activeConv ? activeRecipientName : 'No active channel'}
                   </h3>
-                  <span className="text-[8px] text-stone-gray font-bold">
+                  <span className="text-3xs text-stone-gray font-bold">
                     {activeConv ? `Room Type: ${activeConv.conversationType} | ID: ${activeConv.id}` : 'Select a channel from the left sidebar to connect'}
                   </span>
                 </div>
@@ -378,7 +378,7 @@ export function CollaborationWorkspacePage() {
                   const isMyMessage = msg.senderId === (token ? JSON.parse(atob(token.split('.')[1])).id : '');
                   return (
                     <div key={msg.id} className={`flex flex-col max-w-[85%] text-left ${isMyMessage ? 'ml-auto items-end' : 'mr-auto items-start'}`}>
-                      <span className="text-[8px] text-stone-gray font-bold mb-0.5">
+                      <span className="text-3xs text-stone-gray font-bold mb-0.5">
                         {msg.sender?.fullName} • {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                       <div className={`p-3 rounded-2xl text-xs font-semibold leading-relaxed shadow-apple-sm
@@ -428,7 +428,7 @@ export function CollaborationWorkspacePage() {
                   <button
                     key={t.id}
                     onClick={() => setRightPanelTab(t.id)}
-                    className={`flex-1 text-center py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer select-none
+                    className={`flex-1 text-center py-2 rounded-xl text-3xs font-black uppercase tracking-wider transition cursor-pointer select-none
                       ${isActive ? 'bg-light-stone text-stone-black shadow-xs font-extrabold' : 'text-stone-gray'}
                     `}
                   >
@@ -460,7 +460,7 @@ export function CollaborationWorkspacePage() {
                             {task.title}
                           </span>
                           {task.commentsCount > 0 && (
-                            <span className="block text-[8px] text-brand-emerald font-bold mt-0.5">
+                            <span className="block text-3xs text-brand-emerald font-bold mt-0.5">
                               💬 {task.commentsCount} comments
                             </span>
                           )}
@@ -498,7 +498,7 @@ export function CollaborationWorkspacePage() {
                   <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Shared Blueprints</h3>
                   <button
                     onClick={handleUploadFile}
-                    className="text-[9px] font-black uppercase text-brand-emerald hover:underline focus:outline-none"
+                    className="text-3xs font-black uppercase text-brand-emerald hover:underline focus:outline-none"
                   >
                     Upload File +
                   </button>
@@ -509,11 +509,11 @@ export function CollaborationWorkspacePage() {
                     <div key={file.id} className="p-3 bg-light-stone/30 border border-light-border rounded-2xl flex justify-between items-center text-left">
                       <div className="min-w-0 pr-2">
                         <h4 className="text-xs font-black text-stone-black truncate">📄 {file.name}</h4>
-                        <span className="block text-[8px] text-stone-gray font-semibold mt-0.5">Uploader: {file.uploader} • {file.size}</span>
+                        <span className="block text-3xs text-stone-gray font-semibold mt-0.5">Uploader: {file.uploader} • {file.size}</span>
                       </div>
                       <button
                         onClick={() => alert(`Downloading file: ${file.name}`)}
-                        className="text-[9px] font-black text-brand-emerald hover:underline focus:outline-none"
+                        className="text-3xs font-black text-brand-emerald hover:underline focus:outline-none"
                       >
                         Download
                       </button>
@@ -531,9 +531,9 @@ export function CollaborationWorkspacePage() {
                   {activities.map((act) => (
                     <div key={act.id} className="border-l-2 border-light-border pl-3 relative space-y-1 text-left">
                       <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-brand-emerald" />
-                      <div className="text-[8px] text-stone-gray font-black uppercase tracking-wider">{act.activityType}</div>
-                      <div className="text-[10px] text-stone-gray font-semibold leading-relaxed">{act.description}</div>
-                      <span className="block text-[8px] text-stone-gray/80 font-bold">{new Date(act.createdAt).toLocaleDateString()}</span>
+                      <div className="text-3xs text-stone-gray font-black uppercase tracking-wider">{act.activityType}</div>
+                      <div className="text-2xs text-stone-gray font-semibold leading-relaxed">{act.description}</div>
+                      <span className="block text-3xs text-stone-gray/80 font-bold">{new Date(act.createdAt).toLocaleDateString()}</span>
                     </div>
                   ))}
                 </div>
@@ -547,8 +547,8 @@ export function CollaborationWorkspacePage() {
                 {announcements.map((ann) => (
                   <div key={ann.id} className="bg-light-stone/30 border border-light-border rounded-2xl p-3 space-y-1.5">
                     <h5 className="font-black text-xs text-stone-black">{ann.title}</h5>
-                    <p className="text-[10.5px] text-stone-gray font-semibold leading-relaxed">{ann.content}</p>
-                    <span className="block text-[8px] text-stone-gray font-bold">
+                    <p className="text-2xs text-stone-gray font-semibold leading-relaxed">{ann.content}</p>
+                    <span className="block text-3xs text-stone-gray font-bold">
                       {ann.author?.fullName} • {new Date(ann.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -558,7 +558,7 @@ export function CollaborationWorkspacePage() {
               {/* Notice Publisher */}
               {(currentUserRole === 'PROVIDER' || currentUserRole === 'ADMIN') && (
                 <form onSubmit={handlePostAnnouncement} className="space-y-3 pt-3 border-t border-light-border/40">
-                  <h4 className="text-[9.5px] font-black uppercase tracking-wider text-stone-black">Publish Bulletin Notice</h4>
+                  <h4 className="text-3xs font-black uppercase tracking-wider text-stone-black">Publish Bulletin Notice</h4>
                   <input
                     type="text"
                     placeholder="Notice Title"

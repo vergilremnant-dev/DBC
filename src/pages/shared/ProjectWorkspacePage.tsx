@@ -497,14 +497,14 @@ export function ProjectWorkspacePage() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="bg-stone-100 text-stone-700 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                <span className="bg-stone-100 text-stone-700 text-2xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
                   Project Workspace
                 </span>
-                <span className="bg-emerald-50 text-emerald-800 border border-emerald-100 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                <span className="bg-emerald-50 text-emerald-800 border border-emerald-100 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   {project.status === 'ASSIGNED' ? 'Project Assigned' : project.status}
                 </span>
               </div>
-              <h1 className="text-2xl font-bold text-stone-900 font-serif leading-tight">
+              <h1 className="text-2xl font-bold text-stone-900 font-display leading-tight">
                 {project.requirement?.title || 'Execution Work Agreement'}
               </h1>
               <p className="text-xs text-stone-500 font-medium">
@@ -514,8 +514,8 @@ export function ProjectWorkspacePage() {
             
             {/* Origin Lineage Card */}
             <div className="bg-stone-50 border border-stone-200 p-3 rounded-2xl text-xs text-left space-y-1 shrink-0">
-              <span className="text-[9px] font-black uppercase text-stone-400 block tracking-wider">Origin Lineage</span>
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-stone-800">
+              <span className="text-3xs font-black uppercase text-stone-400 block tracking-wider">Origin Lineage</span>
+              <div className="flex items-center gap-1.5 text-2xs font-bold text-stone-800">
                 <span>Project Request</span>
                 <span className="text-stone-400">➔</span>
                 <span>Accepted Proposal</span>
@@ -591,14 +591,14 @@ export function ProjectWorkspacePage() {
               <span className="text-base">🔒</span>
               <span><strong>PROJECT CLOSED:</strong> This project workspace is a read-only historical record. All documents, financials, activity timeline, and messages remain accessible.</span>
             </div>
-            <button onClick={handleOpenMessaging} className="text-emerald-800 hover:underline shrink-0 text-[11px] font-extrabold ml-3">
+            <button onClick={handleOpenMessaging} className="text-emerald-800 hover:underline shrink-0 text-2xs font-extrabold ml-3">
               💬 Post-Completion Support &rarr;
             </button>
           </div>
         )}
 
         {/* Navigation tabs switcher */}
-        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar mb-6">
+        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-3xs font-black uppercase tracking-wider no-scrollbar mb-6">
           {([
             { id: 'overview', label: 'Dashboard & Milestones', icon: '📊' },
             { id: 'financials', label: 'Financials & Payments', icon: '💳' },
@@ -649,24 +649,24 @@ export function ProjectWorkspacePage() {
               {/* Quick Metrics row */}
               <div className="grid gap-4 sm:grid-cols-4">
                 <div className="dbc-card p-5 text-left">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Approved Budget</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Approved Budget</span>
                   <h4 className="text-xl font-extrabold text-stone-black mt-1">
                     {project.quotation?.totalAmount ? `₹${project.quotation.totalAmount.toLocaleString()}` : '₹25,00,000'}
                   </h4>
                 </div>
                 <div className="dbc-card p-5 text-left">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Milestone Progress</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Milestone Progress</span>
                   <h4 className="text-xl font-extrabold text-stone-black mt-1">{calculatedProgress}%</h4>
-                  <span className="text-[9px] text-stone-500 font-semibold">{completedMilestonesCount} of {totalMilestonesCount} completed</span>
+                  <span className="text-3xs text-stone-500 font-semibold">{completedMilestonesCount} of {totalMilestonesCount} completed</span>
                 </div>
                 <div className="dbc-card p-5 text-left">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Active Stage</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Active Stage</span>
                   <h4 className="text-sm font-extrabold text-brand-emerald mt-1 truncate">
                     {activeMs ? activeMs.name : (totalMilestonesCount === 0 ? 'No active milestone' : 'All milestones completed')}
                   </h4>
                 </div>
                 <div className="dbc-card p-5 text-left">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Overall Health</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Overall Health</span>
                   <h4 className="text-xl font-extrabold text-brand-emerald mt-1">🟢 HEALTHY</h4>
                 </div>
               </div>
@@ -674,7 +674,7 @@ export function ProjectWorkspacePage() {
               {/* Progress bar container */}
               <div className="dbc-card p-5 text-left space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <span className="text-stone-800 uppercase tracking-wider text-[10px]">Overall Execution Progress</span>
+                  <span className="text-stone-800 uppercase tracking-wider text-2xs">Overall Execution Progress</span>
                   <span className="text-emerald-700 font-black">{calculatedProgress}%</span>
                 </div>
                 <div className="w-full bg-stone-200 h-3 rounded-full overflow-hidden">
@@ -688,7 +688,7 @@ export function ProjectWorkspacePage() {
               {/* Stages overview */}
               <div className="dbc-card space-y-4">
                 <h3 className="text-xs font-black uppercase tracking-wider text-stone-black text-left">Project Lifecycle Stages</h3>
-                <div className="flex flex-wrap items-center gap-3 text-[9px] font-black uppercase tracking-wider">
+                <div className="flex flex-wrap items-center gap-3 text-3xs font-black uppercase tracking-wider">
                   {['Draft', 'Requirement Approved', 'Planning', 'Execution', 'Quality Review', 'Handover', 'Warranty'].map((stage, idx) => {
                     const isCurrent = stage === 'Execution';
                     return (
@@ -757,7 +757,7 @@ export function ProjectWorkspacePage() {
                                 <span className="text-xs font-bold text-stone-400">#{index + 1}</span>
                                 <h4 className="text-sm font-black text-stone-900">{m.name}</h4>
                                 <span
-                                  className={`dbc-badge text-[8px] py-0.5 uppercase font-extrabold ${
+                                  className={`dbc-badge text-3xs py-0.5 uppercase font-extrabold ${
                                     isDone
                                       ? 'dbc-badge-completed'
                                       : isInProgress
@@ -771,7 +771,7 @@ export function ProjectWorkspacePage() {
                               {m.description && (
                                 <p className="text-xs text-stone-600 leading-snug">{m.description}</p>
                               )}
-                              <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-stone-500 font-medium pt-1">
+                              <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-stone-500 font-medium pt-1">
                                 {m.budgetAllocation > 0 && (
                                   <span>Allocation: <strong>₹{m.budgetAllocation.toLocaleString()}</strong></span>
                                 )}
@@ -790,21 +790,21 @@ export function ProjectWorkspacePage() {
                                 {!isDone && (
                                   <button
                                     onClick={() => handleMarkMilestoneComplete(m.id)}
-                                    className="px-2.5 py-1 bg-emerald-700 text-white rounded-lg text-[10px] font-bold hover:bg-emerald-800 transition"
+                                    className="px-2.5 py-1 bg-emerald-700 text-white rounded-lg text-2xs font-bold hover:bg-emerald-800 transition"
                                   >
                                     ✓ Complete
                                   </button>
                                 )}
                                 <button
                                   onClick={() => handleOpenEditMilestone(m)}
-                                  className="px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg text-[10px] font-bold hover:bg-stone-200 transition"
+                                  className="px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg text-2xs font-bold hover:bg-stone-200 transition"
                                 >
                                   ✏️ Edit
                                 </button>
                                 {!isDone && (
                                   <button
                                     onClick={() => setDeletingMilestoneId(m.id)}
-                                    className="px-2.5 py-1 bg-red-50 text-red-700 rounded-lg text-[10px] font-bold hover:bg-red-100 transition"
+                                    className="px-2.5 py-1 bg-red-50 text-red-700 rounded-lg text-2xs font-bold hover:bg-red-100 transition"
                                   >
                                     🗑️ Delete
                                   </button>
@@ -856,13 +856,13 @@ export function ProjectWorkspacePage() {
                       return (
                         <div key={event.id || idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                           <div className="space-y-0.5">
-                            <span className="text-[8px] font-black uppercase tracking-wider bg-stone-200 px-1.5 py-0.5 rounded text-stone-700">
+                            <span className="text-3xs font-black uppercase tracking-wider bg-stone-200 px-1.5 py-0.5 rounded text-stone-700">
                               {event.eventType}
                             </span>
                             <p className="font-bold text-stone-900 text-xs mt-1">{event.description}</p>
-                            <span className="text-[9px] text-stone-500">By {actorEmail}</span>
+                            <span className="text-3xs text-stone-500">By {actorEmail}</span>
                           </div>
-                          <span className="text-[9px] text-stone-400 font-semibold shrink-0 ml-3">{formattedTime}</span>
+                          <span className="text-3xs text-stone-400 font-semibold shrink-0 ml-3">{formattedTime}</span>
                         </div>
                       );
                     })}
@@ -900,27 +900,27 @@ export function ProjectWorkspacePage() {
               {/* Financial Summary Cards */}
               <div className="grid gap-4 sm:grid-cols-4">
                 <div className="dbc-card p-5">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Total Project Value</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Total Project Value</span>
                   <h4 className="text-xl font-extrabold text-stone-black mt-1">₹{totalProjectAmount.toLocaleString()}</h4>
-                  <span className="text-[9px] text-stone-500 font-semibold">Agreed Commercial Terms</span>
+                  <span className="text-3xs text-stone-500 font-semibold">Agreed Commercial Terms</span>
                 </div>
 
                 <div className="dbc-card p-5">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Total Customer Payable</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Total Customer Payable</span>
                   <h4 className="text-xl font-extrabold text-stone-black mt-1">₹{totalCustomerPayable.toLocaleString()}</h4>
-                  <span className="text-[9px] text-stone-500 font-semibold">Incl. 1% Escrow + 18% GST</span>
+                  <span className="text-3xs text-stone-500 font-semibold">Incl. 1% Escrow + 18% GST</span>
                 </div>
 
                 <div className="dbc-card p-5">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Amount Paid</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Amount Paid</span>
                   <h4 className="text-xl font-extrabold text-brand-emerald mt-1">₹{amountPaid.toLocaleString()}</h4>
-                  <span className="text-[9px] text-stone-500 font-semibold">{paidMilestones.length} Milestones Settled</span>
+                  <span className="text-3xs text-stone-500 font-semibold">{paidMilestones.length} Milestones Settled</span>
                 </div>
 
                 <div className="dbc-card p-5">
-                  <span className="text-[8.5px] font-black uppercase tracking-wider text-stone-gray">Remaining Balance</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-gray">Remaining Balance</span>
                   <h4 className="text-xl font-extrabold text-amber-700 mt-1">₹{amountDue.toLocaleString()}</h4>
-                  <span className="text-[9px] text-stone-500 font-semibold">Payable on Milestone Releases</span>
+                  <span className="text-3xs text-stone-500 font-semibold">Payable on Milestone Releases</span>
                 </div>
               </div>
 
@@ -930,7 +930,7 @@ export function ProjectWorkspacePage() {
                   <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
                     Milestone Payment Schedule ({milestones.length})
                   </h3>
-                  <span className="text-[9.5px] font-bold text-stone-500">
+                  <span className="text-3xs font-bold text-stone-500">
                     Server-Controlled Billing Rules
                   </span>
                 </div>
@@ -939,7 +939,7 @@ export function ProjectWorkspacePage() {
                   <div className="p-6 bg-stone-50 border border-dashed border-stone-300 rounded-2xl text-center space-y-2">
                     <span className="text-2xl">💳</span>
                     <p className="text-xs font-semibold text-stone-700">No milestone payment schedule defined yet.</p>
-                    <p className="text-[11px] text-stone-500">
+                    <p className="text-2xs text-stone-500">
                       Milestones will display payment allocations once added to the project.
                     </p>
                   </div>
@@ -960,7 +960,7 @@ export function ProjectWorkspacePage() {
                               <span className="text-xs font-bold text-stone-400">#{idx + 1}</span>
                               <h4 className="text-xs font-black text-stone-900">{m.name}</h4>
                               <span
-                                className={`dbc-badge text-[7.5px] py-0.5 uppercase font-bold ${
+                                className={`dbc-badge text-3xs py-0.5 uppercase font-bold ${
                                   isPaid
                                     ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
                                     : isDue
@@ -971,14 +971,14 @@ export function ProjectWorkspacePage() {
                                 {isPaid ? 'Paid' : isDue ? 'Payment Due' : 'Scheduled'}
                               </span>
                             </div>
-                            <p className="text-[11px] text-stone-500 font-medium">
+                            <p className="text-2xs text-stone-500 font-medium">
                               Milestone Allocation: <strong className="text-stone-800">₹{allocAmount.toLocaleString()}</strong>
                             </p>
                           </div>
 
                           <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
                             <div className="text-right hidden sm:block">
-                              <span className="text-[9px] font-black uppercase text-stone-400 block">Status</span>
+                              <span className="text-3xs font-black uppercase text-stone-400 block">Status</span>
                               <span className="text-xs font-bold text-stone-800">{isPaid ? 'Settled' : 'Unpaid'}</span>
                             </div>
 
@@ -1013,7 +1013,7 @@ export function ProjectWorkspacePage() {
                   <span>🛡️</span>
                   <span>Commercial & Fee Transparency</span>
                 </div>
-                <p className="text-[11px] text-emerald-800 font-medium leading-relaxed">
+                <p className="text-2xs text-emerald-800 font-medium leading-relaxed">
                   Every milestone payment includes a transparent breakdown separating the core Project Milestone Value, the 1% DBC Platform Escrow & Verification Fee, and 18% GST on platform fees. Payment funds are processed per milestone completion sign-off.
                 </p>
               </div>
@@ -1031,15 +1031,15 @@ export function ProjectWorkspacePage() {
                     {paidMilestones.map((m: any, idx: number) => (
                       <div key={idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                         <div className="space-y-0.5">
-                          <span className="text-[8px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
+                          <span className="text-3xs font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
                             SUCCESS
                           </span>
                           <p className="font-bold text-stone-900 text-xs">Milestone Payment: "{m.name}"</p>
-                          <span className="text-[9px] font-mono text-stone-400">TXN-PROJ-{m.id ? m.id.slice(-6) : idx + 100}</span>
+                          <span className="text-3xs font-mono text-stone-400">TXN-PROJ-{m.id ? m.id.slice(-6) : idx + 100}</span>
                         </div>
                         <div className="text-right">
                           <strong className="text-stone-900 text-xs block">₹{(m.budgetAllocation || 0).toLocaleString()}</strong>
-                          <span className="text-[9px] text-stone-400 font-semibold">Verified</span>
+                          <span className="text-3xs text-stone-400 font-semibold">Verified</span>
                         </div>
                       </div>
                     ))}
@@ -1065,7 +1065,7 @@ export function ProjectWorkspacePage() {
                     <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
                       Project Documents & Attachments ({totalDocs})
                     </h3>
-                    <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+                    <p className="text-2xs text-stone-500 font-medium mt-0.5">
                       Secure, project-scoped repository for drawings, specifications, agreements, and site photos.
                     </p>
                   </div>
@@ -1081,7 +1081,7 @@ export function ProjectWorkspacePage() {
                   <div className="p-8 bg-stone-50 border border-dashed border-stone-300 rounded-2xl text-center space-y-2">
                     <span className="text-3xl">📁</span>
                     <p className="text-xs font-semibold text-stone-700">No project documents yet.</p>
-                    <p className="text-[11px] text-stone-500 max-w-md mx-auto">
+                    <p className="text-2xs text-stone-500 max-w-md mx-auto">
                       Upload project documents to keep drawings, contracts, specifications, and site photos organized in one place.
                     </p>
                     <button
@@ -1119,15 +1119,15 @@ export function ProjectWorkspacePage() {
                                 {doc.name}
                               </h4>
                               <div className="flex items-center gap-2">
-                                <span className="dbc-badge text-[7.5px] py-0.5 uppercase font-bold bg-stone-100 text-stone-700">
+                                <span className="dbc-badge text-3xs py-0.5 uppercase font-bold bg-stone-100 text-stone-700">
                                   {doc.fileType || 'Document'}
                                 </span>
-                                <span className="text-[9px] text-stone-400 font-semibold">{formattedDate}</span>
+                                <span className="text-3xs text-stone-400 font-semibold">{formattedDate}</span>
                               </div>
                             </div>
                           </div>
 
-                          <div className="flex justify-between items-center pt-2 border-t border-stone-100 text-[10px]">
+                          <div className="flex justify-between items-center pt-2 border-t border-stone-100 text-2xs">
                             <span className="text-stone-500 font-medium truncate max-w-[50%]">
                               Uploaded by <strong className="text-stone-800">{uploaderRole} ({uploaderName})</strong>
                             </span>
@@ -1170,7 +1170,7 @@ export function ProjectWorkspacePage() {
                     <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">
                       Full Project Activity Timeline ({totalEvents})
                     </h3>
-                    <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+                    <p className="text-2xs text-stone-500 font-medium mt-0.5">
                       Chronological history of milestone updates, document uploads, status changes, and approvals.
                     </p>
                   </div>
@@ -1180,7 +1180,7 @@ export function ProjectWorkspacePage() {
                   <div className="p-8 bg-stone-50 border border-dashed border-stone-300 rounded-2xl text-center space-y-2">
                     <span className="text-3xl">⚡</span>
                     <p className="text-xs font-semibold text-stone-700">No project activity yet.</p>
-                    <p className="text-[11px] text-stone-500 max-w-md mx-auto">
+                    <p className="text-2xs text-stone-500 max-w-md mx-auto">
                       Events will automatically appear here as status updates, milestones, and project documents are recorded.
                     </p>
                   </div>
@@ -1209,16 +1209,16 @@ export function ProjectWorkspacePage() {
                           <span className="absolute left-2 top-4.5 w-3 h-3 rounded-full bg-emerald-600 border-2 border-white ring-2 ring-stone-100" />
                           <div className="space-y-1 overflow-hidden pr-2">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className={`px-2 py-0.5 border text-[9px] font-black uppercase rounded ${badgeStyle}`}>
+                              <span className={`px-2 py-0.5 border text-3xs font-black uppercase rounded ${badgeStyle}`}>
                                 {event.type.replace(/_/g, ' ')}
                               </span>
-                              <span className="text-[10px] text-stone-500 font-semibold">
+                              <span className="text-2xs text-stone-500 font-semibold">
                                 {actorRole} ({actorEmail})
                               </span>
                             </div>
                             <p className="font-bold text-stone-900 text-xs mt-1 leading-snug">{event.description}</p>
                           </div>
-                          <span className="text-[9.5px] text-stone-400 font-semibold shrink-0 ml-3">{formattedTime}</span>
+                          <span className="text-3xs text-stone-400 font-semibold shrink-0 ml-3">{formattedTime}</span>
                         </div>
                       );
                     })}
@@ -1239,26 +1239,26 @@ export function ProjectWorkspacePage() {
               <div className="p-4 bg-light-stone/20 rounded-2xl border border-light-border space-y-3">
                 
                 {/* Gantt Row 1 */}
-                <div className="flex items-center text-[10px] font-semibold text-stone-gray">
+                <div className="flex items-center text-2xs font-semibold text-stone-gray">
                   <span className="w-1/3 truncate text-stone-black">Laying Foundation Concrete</span>
                   <div className="w-2/3 bg-stone-150 h-5 rounded relative">
-                    <div className="bg-brand-emerald h-full rounded w-full flex items-center px-2 text-[8px] font-black text-white">100% DONE</div>
+                    <div className="bg-brand-emerald h-full rounded w-full flex items-center px-2 text-3xs font-black text-white">100% DONE</div>
                   </div>
                 </div>
 
                 {/* Gantt Row 2 */}
-                <div className="flex items-center text-[10px] font-semibold text-stone-gray">
+                <div className="flex items-center text-2xs font-semibold text-stone-gray">
                   <span className="w-1/3 truncate text-stone-black">Structural Beams Alignment</span>
                   <div className="w-2/3 bg-stone-150 h-5 rounded relative">
-                    <div className="bg-brand-emerald h-full rounded w-[40%] flex items-center px-2 text-[8px] font-black text-white">40% ACTIVE</div>
+                    <div className="bg-brand-emerald h-full rounded w-[40%] flex items-center px-2 text-3xs font-black text-white">40% ACTIVE</div>
                   </div>
                 </div>
 
                 {/* Gantt Row 3 */}
-                <div className="flex items-center text-[10px] font-semibold text-stone-gray">
+                <div className="flex items-center text-2xs font-semibold text-stone-gray">
                   <span className="w-1/3 truncate text-stone-black">Electrical Conduits Plumbing</span>
                   <div className="w-2/3 bg-stone-150 h-5 rounded relative">
-                    <div className="bg-stone-300 h-full rounded w-[15%] flex items-center px-2 text-[8px] font-black text-stone-600">PLANNING</div>
+                    <div className="bg-stone-300 h-full rounded w-[15%] flex items-center px-2 text-3xs font-black text-stone-600">PLANNING</div>
                   </div>
                 </div>
 
@@ -1270,11 +1270,11 @@ export function ProjectWorkspacePage() {
               
               {/* To Do */}
               <div className="dbc-card space-y-3 bg-stone-50/50">
-                <h4 className="text-[9px] font-black uppercase tracking-widest text-stone-gray">To Do</h4>
+                <h4 className="text-3xs font-black uppercase tracking-widest text-stone-gray">To Do</h4>
                 {kanbanTasks.filter(t => t.status === 'todo').map(t => (
                   <div key={t.id} className="p-3 bg-white border border-light-border rounded-xl space-y-2">
                     <h5 className="text-xs font-black text-stone-black leading-snug">{t.title}</h5>
-                    <div className="flex justify-between items-center text-[8px] font-black uppercase">
+                    <div className="flex justify-between items-center text-3xs font-black uppercase">
                       <span className="text-stone-gray">{t.assignee}</span>
                       <button onClick={() => handleTaskStatusChange(t.id, 'progress')} className="text-brand-emerald hover:underline">Start &rarr;</button>
                     </div>
@@ -1284,11 +1284,11 @@ export function ProjectWorkspacePage() {
 
               {/* In Progress */}
               <div className="dbc-card space-y-3 bg-stone-50/50">
-                <h4 className="text-[9px] font-black uppercase tracking-widest text-stone-gray">In Progress</h4>
+                <h4 className="text-3xs font-black uppercase tracking-widest text-stone-gray">In Progress</h4>
                 {kanbanTasks.filter(t => t.status === 'progress').map(t => (
                   <div key={t.id} className="p-3 bg-white border border-light-border rounded-xl space-y-2">
                     <h5 className="text-xs font-black text-stone-black leading-snug">{t.title}</h5>
-                    <div className="flex justify-between items-center text-[8px] font-black uppercase">
+                    <div className="flex justify-between items-center text-3xs font-black uppercase">
                       <span className="text-stone-gray">{t.assignee}</span>
                       <button onClick={() => handleTaskStatusChange(t.id, 'review')} className="text-brand-emerald hover:underline">Review &rarr;</button>
                     </div>
@@ -1298,11 +1298,11 @@ export function ProjectWorkspacePage() {
 
               {/* Review */}
               <div className="dbc-card space-y-3 bg-stone-50/50">
-                <h4 className="text-[9px] font-black uppercase tracking-widest text-stone-gray">Review</h4>
+                <h4 className="text-3xs font-black uppercase tracking-widest text-stone-gray">Review</h4>
                 {kanbanTasks.filter(t => t.status === 'review').map(t => (
                   <div key={t.id} className="p-3 bg-white border border-light-border rounded-xl space-y-2">
                     <h5 className="text-xs font-black text-stone-black leading-snug">{t.title}</h5>
-                    <div className="flex justify-between items-center text-[8px] font-black uppercase">
+                    <div className="flex justify-between items-center text-3xs font-black uppercase">
                       <span className="text-stone-gray">{t.assignee}</span>
                       <button onClick={() => handleTaskStatusChange(t.id, 'done')} className="text-brand-emerald hover:underline">Approve &rarr;</button>
                     </div>
@@ -1312,11 +1312,11 @@ export function ProjectWorkspacePage() {
 
               {/* Done */}
               <div className="dbc-card space-y-3 bg-stone-50/50">
-                <h4 className="text-[9px] font-black uppercase tracking-widest text-stone-gray">Done</h4>
+                <h4 className="text-3xs font-black uppercase tracking-widest text-stone-gray">Done</h4>
                 {kanbanTasks.filter(t => t.status === 'done').map(t => (
                   <div key={t.id} className="p-3 bg-white border border-light-border rounded-xl space-y-2">
                     <h5 className="text-xs font-black text-stone-black leading-snug line-through text-stone-gray/60">{t.title}</h5>
-                    <div className="text-[8px] font-black uppercase text-stone-gray">
+                    <div className="text-3xs font-black uppercase text-stone-gray">
                       {t.assignee}
                     </div>
                   </div>
@@ -1341,9 +1341,9 @@ export function ProjectWorkspacePage() {
                   <div key={cr.id} className="p-4 bg-light-stone/20 border border-light-border rounded-2xl space-y-3">
                     <div className="flex justify-between items-start">
                       <h4 className="text-xs font-black text-stone-black">{cr.title}</h4>
-                      <span className="dbc-badge text-[7.5px] py-0.5">{cr.status}</span>
+                      <span className="dbc-badge text-3xs py-0.5">{cr.status}</span>
                     </div>
-                    <p className="text-[10px] text-stone-gray font-semibold leading-relaxed">
+                    <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
                       <strong>Reason:</strong> "{cr.reason}"<br />
                       <strong>Financial Impact:</strong> +₹{cr.costImpact.toLocaleString()}<br />
                       <strong>Timeline Impact:</strong> +{cr.scheduleImpactDays} days
@@ -1353,13 +1353,13 @@ export function ProjectWorkspacePage() {
                       <div className="flex gap-2 pt-2">
                         <button
                           onClick={() => handleResolveChangeRequest(cr.id, true)}
-                          className="dbc-btn dbc-btn-primary py-1 px-4 text-[9px] font-bold uppercase cursor-pointer"
+                          className="dbc-btn dbc-btn-primary py-1 px-4 text-3xs font-bold uppercase cursor-pointer"
                         >
                           Approve Sign-off
                         </button>
                         <button
                           onClick={() => handleResolveChangeRequest(cr.id, false)}
-                          className="dbc-btn dbc-btn-danger py-1 px-4 text-[9px] font-bold uppercase cursor-pointer"
+                          className="dbc-btn dbc-btn-danger py-1 px-4 text-3xs font-bold uppercase cursor-pointer"
                         >
                           Decline Request
                         </button>
@@ -1412,11 +1412,11 @@ export function ProjectWorkspacePage() {
                     <div key={r.id} className="p-3 bg-light-stone/30 border border-light-border rounded-2xl flex justify-between items-center text-xs">
                       <div>
                         <h4 className="font-black text-stone-black">{r.risk}</h4>
-                        <span className="block text-[8px] text-stone-gray font-bold mt-1">
+                        <span className="block text-3xs text-stone-gray font-bold mt-1">
                           Probability: {r.probability} &bull; Impact: {r.impact}
                         </span>
                       </div>
-                      <span className="dbc-badge dbc-badge-priority text-[7.5px] py-0.5">{r.status}</span>
+                      <span className="dbc-badge dbc-badge-priority text-3xs py-0.5">{r.status}</span>
                     </div>
                   ))}
                 </div>
@@ -1472,11 +1472,11 @@ export function ProjectWorkspacePage() {
                   <div key={log.id} className="p-4 bg-light-stone/20 border border-light-border rounded-2xl space-y-2">
                     <div className="flex justify-between items-center border-b border-light-border/40 pb-1.5">
                       <span className="text-xs font-black text-stone-black">Log Date: {log.date}</span>
-                      <span className="bg-light-stone text-stone-gray text-[8px] font-black px-1.5 py-0.5 rounded border border-light-border uppercase">
+                      <span className="bg-light-stone text-stone-gray text-3xs font-black px-1.5 py-0.5 rounded border border-light-border uppercase">
                         ⛅ {log.weather}
                       </span>
                     </div>
-                    <p className="text-[10.5px] text-stone-gray font-semibold leading-relaxed">
+                    <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
                       <strong>Workers Scaffolding:</strong> {log.workersCount} active onsite<br />
                       <strong>Completed Operations:</strong> "{log.completedWork}"<br />
                       <strong>Materials Delivered:</strong> "{log.materialsDelivered}"
@@ -1512,7 +1512,7 @@ export function ProjectWorkspacePage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Materials Delivered</label>
+                  <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Materials Delivered</label>
                   <input
                     type="text"
                     placeholder="e.g. 50 bags sand, 20 steel rods"
@@ -1523,7 +1523,7 @@ export function ProjectWorkspacePage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Scaffolding Work Completed</label>
+                  <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Scaffolding Work Completed</label>
                   <textarea
                     placeholder="Detail today's accomplishments..."
                     value={newLogText}
@@ -1555,8 +1555,8 @@ export function ProjectWorkspacePage() {
                     alt={ph.caption}
                     className="w-full h-32 object-cover rounded-xl border border-light-border"
                   />
-                  <div className="text-[10px] text-stone-gray font-semibold">
-                    <span className="dbc-badge text-[7px] py-0.5 mb-1.5 uppercase font-bold bg-light-stone">{ph.category}</span>
+                  <div className="text-2xs text-stone-gray font-semibold">
+                    <span className="dbc-badge text-3xs py-0.5 mb-1.5 uppercase font-bold bg-light-stone">{ph.category}</span>
                     <p className="truncate mt-1">{ph.caption}</p>
                   </div>
                 </div>
@@ -1572,12 +1572,12 @@ export function ProjectWorkspacePage() {
             {/* Handover milestones */}
             <div className="dbc-card space-y-4">
               <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Final Handover Certificate</h3>
-              <p className="text-[11px] text-stone-gray font-semibold leading-relaxed">
+              <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
                 Project handover represents the final transfer of ownership back to the customer upon verification of safety certificates and structural clearances.
               </p>
 
               <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-3">
-                <span className="dbc-badge dbc-badge-completed text-[7.5px] py-0.5">Ready for Handover</span>
+                <span className="dbc-badge dbc-badge-completed text-3xs py-0.5">Ready for Handover</span>
                 <p className="text-xs text-stone-gray font-bold">
                   All milestones completed. Final inspection safety clearances uploaded.
                 </p>
@@ -1599,7 +1599,7 @@ export function ProjectWorkspacePage() {
                     <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Warranty & Post-Completion Support</h3>
                     <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-2">
                       <span className="text-xs font-bold text-stone-800">Standard Professional Support</span>
-                      <p className="text-[11px] text-stone-500 font-medium leading-relaxed">
+                      <p className="text-2xs text-stone-500 font-medium leading-relaxed">
                         Specific warranty duration was not configured in the agreed quotation. Contact your lead professional directly for post-completion queries or defect support.
                       </p>
                       <button
@@ -1641,7 +1641,7 @@ export function ProjectWorkspacePage() {
                 <div className="dbc-card space-y-4">
                   <div className="flex justify-between items-center">
                     <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Warranty Tracker Period</h3>
-                    <span className={`px-2 py-0.5 text-[8.5px] font-black uppercase rounded-full border ${badgeClass}`}>
+                    <span className={`px-2 py-0.5 text-3xs font-black uppercase rounded-full border ${badgeClass}`}>
                       {badgeText}
                     </span>
                   </div>
@@ -1649,10 +1649,10 @@ export function ProjectWorkspacePage() {
                   <div className="p-4 bg-light-stone/20 border border-light-border rounded-2xl space-y-3">
                     <div className="flex justify-between items-center text-xs">
                       <span className="font-bold text-stone-800">Covered Period: {warrantyMonths} Months</span>
-                      <span className="text-[10px] text-stone-500 font-bold">Expires: {formattedEnd}</span>
+                      <span className="text-2xs text-stone-500 font-bold">Expires: {formattedEnd}</span>
                     </div>
 
-                    <p className="text-[10.5px] text-stone-600 font-medium leading-relaxed">
+                    <p className="text-2xs text-stone-600 font-medium leading-relaxed">
                       {isExpired
                         ? `Warranty period expired on ${formattedEnd}. You may still message your professional for post-completion maintenance.`
                         : `Active structural and deliverable coverage with ${daysRemaining} days remaining.`}
@@ -1677,7 +1677,7 @@ export function ProjectWorkspacePage() {
                     Project Rating & Customer Feedback
                   </h3>
                   {hasSubmittedReview && (
-                    <span className="dbc-badge bg-emerald-100 text-emerald-800 text-[8px]">
+                    <span className="dbc-badge bg-emerald-100 text-emerald-800 text-3xs">
                       ⭐ Review Published
                     </span>
                   )}
@@ -1686,7 +1686,7 @@ export function ProjectWorkspacePage() {
                 {hasSubmittedReview ? (
                   <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl space-y-1">
                     <p className="text-xs font-bold text-emerald-900">Thank you for reviewing your project experience!</p>
-                    <p className="text-[11px] text-emerald-700 font-medium">
+                    <p className="text-2xs text-emerald-700 font-medium">
                       Your feedback helps other clients discover trustworthy professionals on the DBC platform.
                     </p>
                   </div>
@@ -1694,7 +1694,7 @@ export function ProjectWorkspacePage() {
                   <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div>
                       <h4 className="text-xs font-black text-stone-900">Share Your Experience</h4>
-                      <p className="text-[11px] text-stone-500 font-medium mt-0.5">
+                      <p className="text-2xs text-stone-500 font-medium mt-0.5">
                         Rate the quality, communication, and milestone execution of your lead professional.
                       </p>
                     </div>
@@ -1716,8 +1716,8 @@ export function ProjectWorkspacePage() {
 
       {/* ADD MILESTONE MODAL */}
       {isAddMsModalOpen && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-left">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-lg space-y-4 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="text-base font-black text-stone-900">Add Project Milestone</h3>
               <button onClick={() => setIsAddMsModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
@@ -1786,11 +1786,11 @@ export function ProjectWorkspacePage() {
 
       {/* EDIT MILESTONE MODAL */}
       {editingMilestone && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-left">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-lg space-y-4 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="text-base font-black text-stone-900">Edit Project Milestone</h3>
-              <button onClick={() => setEditingMilestone(null)} className="text-stone-400 hover:text-stone-700">✕</button>
+              <button onClick={() => setEditingMilestone(null)} className="dbc-modal-close" aria-label="Close dialog">✕</button>
             </div>
             <form onSubmit={handleUpdateMilestoneSubmit} className="space-y-3">
               <div>
@@ -1866,8 +1866,8 @@ export function ProjectWorkspacePage() {
 
       {/* DELETE CONFIRMATION MODAL */}
       {deletingMilestoneId && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-center">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4 text-center">
             <span className="text-3xl">⚠️</span>
             <h3 className="text-base font-black text-stone-900">Delete Milestone?</h3>
             <p className="text-xs text-stone-600">
@@ -1893,8 +1893,8 @@ export function ProjectWorkspacePage() {
 
       {/* UPLOAD DOCUMENT MODAL */}
       {isUploadDocModalOpen && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-4 text-left">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-lg space-y-4 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="text-base font-black text-stone-900">Upload Project Document</h3>
               <button onClick={() => setIsUploadDocModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
@@ -1941,7 +1941,7 @@ export function ProjectWorkspacePage() {
                   />
                 </div>
               </div>
-              <p className="text-[10px] text-stone-500 italic">
+              <p className="text-2xs text-stone-500 italic">
                 Note: Standard document types (.pdf, .png, .jpg, .docx, .dwg) are supported. Executable (.exe, .sh, .bat) files are strictly prohibited for security reasons.
               </p>
               <div className="flex justify-end gap-2 pt-3 border-t">
@@ -1966,8 +1966,8 @@ export function ProjectWorkspacePage() {
 
       {/* DELETE DOCUMENT CONFIRMATION MODAL */}
       {deletingDocId && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-stone-200 space-y-4 text-center">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4 text-center">
             <span className="text-3xl">⚠️</span>
             <h3 className="text-base font-black text-stone-900">Remove Document?</h3>
             <p className="text-xs text-stone-600">
@@ -2014,11 +2014,11 @@ export function ProjectWorkspacePage() {
 
       {/* PROJECT COMPLETION CONFIRMATION MODAL */}
       {isCompletionModalOpen && project && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-5 text-left">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-lg space-y-5 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <div className="space-y-0.5">
-                <span className="text-[9px] font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+                <span className="text-3xs font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
                   Project Handover & Closure
                 </span>
                 <h3 className="text-base font-black text-stone-900 mt-1">
@@ -2084,11 +2084,11 @@ export function ProjectWorkspacePage() {
 
       {/* POST-COMPLETION REVIEW MODAL */}
       {isReviewModalOpen && project && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-stone-200 space-y-5 text-left">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-lg space-y-5 text-left">
             <div className="flex justify-between items-center border-b pb-3">
               <div>
-                <span className="text-[9px] font-black uppercase text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+                <span className="text-3xs font-black uppercase text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
                   Customer Review
                 </span>
                 <h3 className="text-base font-black text-stone-900 mt-1">Rate Your Project Experience</h3>

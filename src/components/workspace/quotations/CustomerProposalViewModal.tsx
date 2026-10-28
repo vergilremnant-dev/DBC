@@ -49,40 +49,40 @@ export default function CustomerProposalViewModal({
   const getStatusBadge = (status: QuotationStatus) => {
     switch (status) {
       case 'DRAFT':
-        return <span className="text-[9px] font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-200">Draft</span>;
+        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-200">Draft</span>;
       case 'SUBMITTED':
       case 'VIEWED':
       case 'UNDER_REVIEW':
-        return <span className="text-[9px] font-black uppercase px-2.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Awaiting Your Review</span>;
+        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Awaiting Your Review</span>;
       case 'ACCEPTED':
-        return <span className="text-[9px] font-black uppercase px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">✓ Accepted</span>;
+        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">✓ Accepted</span>;
       case 'REJECTED':
-        return <span className="text-[9px] font-black uppercase px-2.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Declined</span>;
+        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Declined</span>;
       case 'WITHDRAWN':
       case 'EXPIRED':
-        return <span className="text-[9px] font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-500 border border-stone-200">{status}</span>;
+        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-500 border border-stone-200">{status}</span>;
       default:
-        return <span className="text-[9px] font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-700">{status}</span>;
+        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-700">{status}</span>;
     }
   };
 
   const isPendingReview = ['SUBMITTED', 'VIEWED', 'UNDER_REVIEW', 'NEGOTIATION', 'REVISED'].includes(currentQuotation.status);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-xs p-4 overflow-y-auto">
+    <div className="dbc-modal-overlay">
       
       {/* Notice Banner */}
       {noticeMessage && (
         <div className="fixed top-4 right-4 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border border-stone-700 animate-gentle-fade flex items-center gap-2">
           <span>{noticeMessage}</span>
-          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2">✕</button>
+          <button onClick={() => setNoticeMessage(null)} className="text-stone-400 hover:text-white ml-2" aria-label="Dismiss notice">✕</button>
         </div>
       )}
 
       {/* Confirmation Dialog Overlay */}
       {confirmAction && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center bg-stone-900/50 p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-stone-200 space-y-4 text-xs">
+        <div className="dbc-modal-overlay z-60">
+          <div role="dialog" aria-modal="true" className="dbc-modal space-y-4 text-xs">
             <h3 className="text-sm font-bold text-stone-900">
               {confirmAction === 'ACCEPT' ? 'Accept Commercial Proposal?' : 'Decline Commercial Proposal?'}
             </h3>
@@ -138,13 +138,13 @@ export default function CustomerProposalViewModal({
       )}
 
       {/* Main Modal Container */}
-      <div className="bg-white border border-stone-300 max-w-3xl w-full rounded-3xl shadow-2xl overflow-hidden my-8 animate-gentle-fade text-left">
+      <div role="dialog" aria-modal="true" className="dbc-modal max-w-3xl p-0 text-left">
         
         {/* Modal Header */}
         <div className="p-6 bg-stone-50 border-b border-stone-200 flex justify-between items-start">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-black uppercase tracking-wider text-stone-400">Project Proposal</span>
+              <span className="text-2xs font-black uppercase tracking-wider text-stone-400">Project Proposal</span>
               {getStatusBadge(currentQuotation.status)}
             </div>
             <h2 className="text-lg font-bold text-stone-900 mt-1">
@@ -156,7 +156,7 @@ export default function CustomerProposalViewModal({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-stone-400 hover:text-stone-700 text-sm font-bold rounded-lg hover:bg-stone-200 transition"
+            className="dbc-modal-close" aria-label="Close dialog"
           >
             ✕
           </button>
@@ -168,14 +168,14 @@ export default function CustomerProposalViewModal({
           {/* Executive Summary */}
           {currentQuotation.proposal?.summary && (
             <div className="p-4 bg-emerald-50/60 border border-emerald-100 rounded-2xl space-y-1">
-              <span className="text-[9px] font-black uppercase text-emerald-800 tracking-wider">Executive Summary</span>
+              <span className="text-3xs font-black uppercase text-emerald-800 tracking-wider">Executive Summary</span>
               <p className="text-stone-800 font-medium leading-relaxed">{currentQuotation.proposal.summary}</p>
             </div>
           )}
 
           {/* Scope of Work */}
           <div className="space-y-2">
-            <h4 className="text-[10px] font-black uppercase text-stone-400 tracking-wider">Project Scope & Specifications</h4>
+            <h4 className="text-2xs font-black uppercase text-stone-400 tracking-wider">Project Scope & Specifications</h4>
             <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl text-stone-800 leading-relaxed font-normal whitespace-pre-line">
               {currentQuotation.proposal?.scope || 'Standard professional execution scope provided upon review.'}
             </div>
@@ -184,7 +184,7 @@ export default function CustomerProposalViewModal({
           {/* Deliverables */}
           {currentQuotation.proposal?.deliverables && (
             <div className="space-y-2">
-              <h4 className="text-[10px] font-black uppercase text-stone-400 tracking-wider">Project Deliverables</h4>
+              <h4 className="text-2xs font-black uppercase text-stone-400 tracking-wider">Project Deliverables</h4>
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl text-stone-800 leading-relaxed whitespace-pre-line">
                 {currentQuotation.proposal.deliverables}
               </div>
@@ -196,13 +196,13 @@ export default function CustomerProposalViewModal({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {currentQuotation.proposal?.assumptions && (
                 <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-1">
-                  <span className="text-[9px] font-black uppercase text-stone-400">Assumptions</span>
+                  <span className="text-3xs font-black uppercase text-stone-400">Assumptions</span>
                   <p className="text-stone-700 leading-relaxed">{currentQuotation.proposal.assumptions}</p>
                 </div>
               )}
               {currentQuotation.proposal?.exclusions && (
                 <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-1">
-                  <span className="text-[9px] font-black uppercase text-stone-400">Exclusions</span>
+                  <span className="text-3xs font-black uppercase text-stone-400">Exclusions</span>
                   <p className="text-stone-700 leading-relaxed">{currentQuotation.proposal.exclusions}</p>
                 </div>
               )}
@@ -211,21 +211,21 @@ export default function CustomerProposalViewModal({
 
           {/* Commercial & Pricing Breakdown */}
           <div className="border-t border-stone-200 pt-4 space-y-3">
-            <h4 className="text-[10px] font-black uppercase text-stone-400 tracking-wider">Commercial Breakdown</h4>
+            <h4 className="text-2xs font-black uppercase text-stone-400 tracking-wider">Commercial Breakdown</h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl">
-                <span className="text-[9px] font-black uppercase text-emerald-800 block">Proposed Total Amount</span>
+                <span className="text-3xs font-black uppercase text-emerald-800 block">Proposed Total Amount</span>
                 <span className="text-xl font-extrabold text-stone-900 block mt-1">₹{currentQuotation.totalAmount.toLocaleString()}</span>
-                <span className="text-[9px] text-emerald-700 font-medium block mt-0.5">Pricing Model: {currentQuotation.priceModel}</span>
+                <span className="text-3xs text-emerald-700 font-medium block mt-0.5">Pricing Model: {currentQuotation.priceModel}</span>
               </div>
 
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl">
-                <span className="text-[9px] font-black uppercase text-stone-400 block">Estimated Execution Timeline</span>
+                <span className="text-3xs font-black uppercase text-stone-400 block">Estimated Execution Timeline</span>
                 <span className="text-lg font-bold text-stone-900 block mt-1">{currentQuotation.estimatedDurationDays} Days</span>
               </div>
 
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl">
-                <span className="text-[9px] font-black uppercase text-stone-400 block">Warranty Period</span>
+                <span className="text-3xs font-black uppercase text-stone-400 block">Warranty Period</span>
                 <span className="text-lg font-bold text-stone-900 block mt-1">
                   {currentQuotation.warrantyMonths ? `${currentQuotation.warrantyMonths} Months` : 'Standard'}
                 </span>
@@ -235,13 +235,13 @@ export default function CustomerProposalViewModal({
             {/* Milestones if present */}
             {currentQuotation.milestones && currentQuotation.milestones.length > 0 && (
               <div className="mt-4 space-y-2">
-                <span className="text-[9px] font-black uppercase text-stone-400">Proposed Execution Milestones</span>
+                <span className="text-3xs font-black uppercase text-stone-400">Proposed Execution Milestones</span>
                 <div className="divide-y divide-stone-100 border border-stone-200 rounded-2xl overflow-hidden bg-white">
                   {currentQuotation.milestones.map((m, idx) => (
                     <div key={idx} className="p-3 flex justify-between items-center text-xs">
                       <div>
                         <strong className="text-stone-800 block">{m.name}</strong>
-                        {m.description && <span className="text-stone-400 text-[10px]">{m.description}</span>}
+                        {m.description && <span className="text-stone-400 text-2xs">{m.description}</span>}
                       </div>
                       <span className="font-bold text-stone-900">₹{m.cost.toLocaleString()}</span>
                     </div>
@@ -254,7 +254,7 @@ export default function CustomerProposalViewModal({
           {/* Terms & Notes */}
           {currentQuotation.proposal?.notes && (
             <div className="border-t border-stone-200 pt-4 space-y-1">
-              <span className="text-[9px] font-black uppercase text-stone-400">Additional Terms & Notes</span>
+              <span className="text-3xs font-black uppercase text-stone-400">Additional Terms & Notes</span>
               <p className="text-stone-600 bg-stone-50 p-3 rounded-xl border border-stone-100">{currentQuotation.proposal.notes}</p>
             </div>
           )}

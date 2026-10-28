@@ -201,11 +201,11 @@ export function BookServicePage() {
     return (
       <CustomerPageShell>
         <div className="mx-auto max-w-xl text-center space-y-8 py-12 animate-in fade-in zoom-in duration-200">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-3xl mx-auto border border-emerald-200 shadow-xs font-serif font-black">
+          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-3xl mx-auto border border-emerald-200 shadow-xs font-display font-black">
             ✓
           </div>
           <div className="space-y-2">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight font-serif">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight font-display">
               Project Request Submitted
             </h1>
             <p className="text-sm text-stone-600 font-medium leading-relaxed">
@@ -224,8 +224,8 @@ export function BookServicePage() {
                 { label: 'Discuss details & receive structural quote proposal', checked: false },
                 { label: 'Authorize proposal & release milestones in your dashboard', checked: false }
               ].map((item, idx) => (
-                <div key={idx} className="flex items-start gap-3 text-[11.5px] font-semibold">
-                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] flex-shrink-0 border ${
+                <div key={idx} className="flex items-start gap-3 text-xs font-semibold">
+                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-3xs flex-shrink-0 border ${
                     item.checked 
                       ? 'bg-emerald-50 text-emerald-800 border-emerald-300' 
                       : item.current 
@@ -268,13 +268,13 @@ export function BookServicePage() {
         <div className="border-b border-stone-200/80 pb-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200/80 text-[10px] font-black uppercase tracking-widest text-emerald-800 mb-2">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200/80 text-2xs font-black uppercase tracking-widest text-emerald-800 mb-2">
                 <svg className="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
                 Verified Project Inquiry
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight font-serif">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight font-display">
                 Request Project Quote
               </h1>
               <p className="mt-1 text-sm text-stone-600 font-medium">
@@ -318,7 +318,7 @@ export function BookServicePage() {
               {/* Professional Selection (if not locked by URL) */}
               {!urlProviderId && providersList.length > 0 && (
                 <div className="bg-white rounded-2xl border border-stone-200 p-5 shadow-xs">
-                  <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-2">
+                  <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-2">
                     Select Professional
                   </label>
                   <div className="relative">
@@ -373,7 +373,7 @@ export function BookServicePage() {
                           {selectedProvider.businessName || selectedProvider.category?.name || 'Verified DBC Professional'}
                         </p>
 
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-1 text-[11px] text-stone-500 font-medium">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-1 text-2xs text-stone-500 font-medium">
                           {/* Rating */}
                           <span className="inline-flex items-center gap-1 font-bold text-stone-800">
                             <span className="text-amber-500">★</span>
@@ -418,7 +418,7 @@ export function BookServicePage() {
 
                     {/* Verified Badge */}
                     <div className="flex-shrink-0 self-start">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-black uppercase tracking-wider shadow-2xs">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-2xs font-black uppercase tracking-wider shadow-2xs">
                         <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
                         </svg>
@@ -439,7 +439,7 @@ export function BookServicePage() {
               <div className="bg-white rounded-2xl border border-stone-200 p-5 sm:p-6 shadow-xs space-y-4">
                 <div className="border-b border-stone-100 pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-stone-100 text-stone-700 font-black text-[10px] flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-stone-100 text-stone-700 font-black text-2xs flex items-center justify-center">
                       1
                     </span>
                     <h3 className="text-sm font-bold text-stone-900 tracking-tight">
@@ -454,7 +454,7 @@ export function BookServicePage() {
                 <div className="grid grid-cols-1 gap-4 pt-1">
                   {/* Target Start Date */}
                   <div>
-                    <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1.5">
+                    <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-1.5">
                       Target Start Date <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
@@ -475,7 +475,7 @@ export function BookServicePage() {
               <div className="bg-white rounded-2xl border border-stone-200 p-5 sm:p-6 shadow-xs space-y-4">
                 <div className="border-b border-stone-100 pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-stone-100 text-stone-700 font-black text-[10px] flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-stone-100 text-stone-700 font-black text-2xs flex items-center justify-center">
                       2
                     </span>
                     <h3 className="text-sm font-bold text-stone-900 tracking-tight">
@@ -490,7 +490,7 @@ export function BookServicePage() {
                 <div className="space-y-4 pt-1">
                   {/* Service Address */}
                   <div>
-                    <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1.5">
+                    <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-1.5">
                       Service Address <span className="text-rose-500">*</span>
                     </label>
                     <input
@@ -506,7 +506,7 @@ export function BookServicePage() {
                   {/* City & State Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1.5">
+                      <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-1.5">
                         City <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -518,7 +518,7 @@ export function BookServicePage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1.5">
+                      <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-1.5">
                         State <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -533,7 +533,7 @@ export function BookServicePage() {
 
                   {/* Project Timeline */}
                   <div>
-                    <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1.5">
+                    <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-1.5">
                       Project Timeline <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
@@ -559,7 +559,7 @@ export function BookServicePage() {
 
                   {/* Approximate Budget */}
                   <div>
-                    <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1.5">
+                    <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-1.5">
                       Approximate Budget <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
@@ -585,7 +585,7 @@ export function BookServicePage() {
 
                   {/* Project Description */}
                   <div>
-                    <label className="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1.5">
+                    <label className="block text-2xs font-black uppercase tracking-wider text-stone-600 mb-1.5">
                       Project Description & Scope Requirements <span className="text-rose-500">*</span>
                     </label>
                     <textarea
@@ -614,7 +614,7 @@ export function BookServicePage() {
                     </svg>
                     Request Summary
                   </h3>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  <span className="text-2xs font-black uppercase tracking-widest text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                     Step 3
                   </span>
                 </div>
@@ -668,23 +668,23 @@ export function BookServicePage() {
 
                 {/* Payment Messaging Info Box */}
                 <div className="rounded-xl bg-emerald-50/50 border border-emerald-100 p-3.5 space-y-1.5 text-left">
-                  <div className="flex items-center gap-1.5 text-[10.5px] font-black uppercase text-emerald-800 tracking-wider">
+                  <div className="flex items-center gap-1.5 text-2xs font-black uppercase text-emerald-800 tracking-wider">
                     <span>💵 Zero Upfront Payments</span>
                   </div>
-                  <p className="text-[10px] text-stone-600 font-medium leading-relaxed">
+                  <p className="text-2xs text-stone-600 font-medium leading-relaxed">
                     No payment is required to submit this project request. You will discuss the project scope and proposal with the professional before starting work.
                   </p>
                 </div>
 
                 {/* Trust & Guarantee Box */}
                 <div className="rounded-xl bg-stone-50 border border-stone-200/80 p-3.5 space-y-2">
-                  <div className="flex items-center gap-2 text-[11px] font-bold text-stone-800">
+                  <div className="flex items-center gap-2 text-2xs font-bold text-stone-800">
                     <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     <span>DBC Verified Quality Standards</span>
                   </div>
-                  <p className="text-[10px] text-stone-500 font-medium leading-normal pl-5.5">
+                  <p className="text-2xs text-stone-500 font-medium leading-normal pl-5.5">
                     Direct on-site scope evaluation and milestone tracking via your DBC workspace.
                   </p>
                 </div>
@@ -705,7 +705,7 @@ export function BookServicePage() {
                   )}
                 </button>
 
-                <p className="text-[10px] text-stone-400 text-center font-medium">
+                <p className="text-2xs text-stone-400 text-center font-medium">
                   By confirming, a project quote request is dispatched to the professional.
                 </p>
 

@@ -33,7 +33,7 @@ export default function VerificationDetails({
       <div className="bg-white border border-light-border p-8 rounded-3xl text-center space-y-2.5 shadow-apple-sm text-stone-450 h-full flex flex-col justify-center select-none">
         <span className="text-3xl">👤</span>
         <h4 className="text-xs font-black uppercase text-stone-400 tracking-wider">Select an Applicant</h4>
-        <p className="text-[10px] text-stone-500 font-medium">Click on a verification row or card to inspect documents and take action.</p>
+        <p className="text-2xs text-stone-500 font-medium">Click on a verification row or card to inspect documents and take action.</p>
       </div>
     );
   }
@@ -49,7 +49,7 @@ export default function VerificationDetails({
       <div className="flex justify-between items-start border-b border-light-border pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-stone-400 font-bold">{request.id}</span>
+            <span className="text-2xs font-mono text-stone-400 font-bold">{request.id}</span>
             <StatusBadge status={request.status} />
           </div>
           <h3 className="text-xs font-black text-stone-900 mt-1 leading-snug">{request.name}</h3>
@@ -67,7 +67,7 @@ export default function VerificationDetails({
       <div className="space-y-4 text-xs font-semibold text-stone-600">
         {/* Applicant details */}
         <div>
-          <span className="block text-[8px] font-black uppercase text-stone-455 tracking-wider mb-2">
+          <span className="block text-3xs font-black uppercase text-stone-455 tracking-wider mb-2">
             Applicant Identity
           </span>
           <div className="space-y-2">
@@ -76,7 +76,7 @@ export default function VerificationDetails({
             </p>
             <p className="flex justify-between border-b border-light-border/40 pb-1.5">
               <span>Account Role:</span> 
-              <span className="bg-stone-100 text-stone-750 text-[8.5px] px-2 py-0.5 rounded font-black uppercase">
+              <span className="bg-stone-100 text-stone-750 text-3xs px-2 py-0.5 rounded font-black uppercase">
                 {request.role}
               </span>
             </p>
@@ -101,7 +101,7 @@ export default function VerificationDetails({
         {/* Business details */}
         {request.businessName && (
           <div>
-            <span className="block text-[8px] font-black uppercase text-stone-455 tracking-wider mb-2">
+            <span className="block text-3xs font-black uppercase text-stone-455 tracking-wider mb-2">
               Business Registration
             </span>
             <div className="space-y-2">
@@ -120,14 +120,14 @@ export default function VerificationDetails({
 
         {/* Internal Audit Review Notes */}
         <div className="space-y-2">
-          <label className="block text-[8px] font-black uppercase text-stone-455 tracking-wider">
+          <label className="block text-3xs font-black uppercase text-stone-455 tracking-wider">
             Internal Moderator Review Notes
           </label>
           <textarea
             value={internalNotes}
             onChange={(e) => setInternalNotes(e.target.value)}
             placeholder="Add compliance notes, document validation checklists, structural checks records..."
-            className="dbc-input text-[10px] min-h-[80px]"
+            className="dbc-input text-2xs min-h-[80px]"
           />
           <button
             onClick={handleSaveNotesClick}
@@ -140,7 +140,7 @@ export default function VerificationDetails({
 
       {/* Moderation Controls Actions */}
       <div className="pt-4 border-t border-light-border space-y-2">
-        <span className="block text-[8.5px] font-black uppercase text-stone-850 tracking-wider">
+        <span className="block text-3xs font-black uppercase text-stone-850 tracking-wider">
           Compliance Command Actions
         </span>
 

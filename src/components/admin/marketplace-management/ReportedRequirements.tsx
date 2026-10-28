@@ -22,12 +22,12 @@ export default function ReportedRequirements({
           <h3 className="text-xs font-black uppercase text-stone-900 tracking-wider">
             🚨 Flagged Moderation Queue
           </h3>
-          <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+          <p className="text-2xs text-stone-500 font-medium mt-0.5">
             Review user flags, report reasons, and copyright/spam concerns.
           </p>
         </div>
         {reportedItems.length > 0 && (
-          <span className="bg-rose-50 text-rose-700 border border-rose-250 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase">
+          <span className="bg-rose-50 text-rose-700 border border-rose-250 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase">
             {reportedItems.length} Reports
           </span>
         )}
@@ -52,23 +52,23 @@ export default function ReportedRequirements({
                   >
                     {item.title}
                   </h4>
-                  <span className="bg-rose-50 border border-rose-100 text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase text-rose-800 tracking-wider">
+                  <span className="bg-rose-50 border border-rose-100 text-3xs font-black px-1.5 py-0.5 rounded-full uppercase text-rose-800 tracking-wider">
                     {item.id}
                   </span>
                 </div>
                 
-                <div className="text-[10px] text-stone-650 font-semibold space-y-1">
+                <div className="text-2xs text-stone-650 font-semibold space-y-1">
                   <p className="text-rose-900 bg-rose-50/30 p-2 rounded-lg border border-rose-100">
                     ⚠️ <strong>Report Reason:</strong> {item.reportReason || 'Unacceptable content / spam description.'}
                   </p>
-                  <div className="flex gap-4 text-[9px] text-stone-450 font-bold uppercase mt-1">
+                  <div className="flex gap-4 text-3xs text-stone-450 font-bold uppercase mt-1">
                     <span>Flagged By: {item.reportedBy || 'User'}</span>
                     <span>Date: {item.reportDate || '03 Aug 2026'}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex gap-2 w-full md:w-auto justify-end text-[9px] font-black uppercase tracking-wider">
+              <div className="flex gap-2 w-full md:w-auto justify-end text-3xs font-black uppercase tracking-wider">
                 <button
                   onClick={() => onSelectRequirement(item)}
                   className="px-3 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 font-bold rounded-lg transition"

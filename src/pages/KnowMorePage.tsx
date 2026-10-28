@@ -224,7 +224,7 @@ export function KnowMorePage() {
           
           {/* Hero Left Content */}
           <div className="lg:col-span-6 space-y-6 text-left">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-stone-900 font-serif tracking-tight leading-[1.15]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-stone-900 font-display tracking-tight leading-[1.15]">
               Building Better Spaces. <br />
               Building Better Businesses. <br />
               <span className="text-emerald-700">Together.</span>
@@ -248,7 +248,7 @@ export function KnowMorePage() {
                 className="h-12 px-6 rounded-xl bg-white hover:bg-stone-50 border border-stone-200 text-stone-800 text-xs font-bold uppercase tracking-wider transition shadow-2xs cursor-pointer flex items-center gap-2"
               >
                 <span>How It Works</span>
-                <span className="text-[10px] text-emerald-700">▷</span>
+                <span className="text-2xs text-emerald-700">▷</span>
               </button>
             </div>
           </div>
@@ -268,15 +268,15 @@ export function KnowMorePage() {
                 {/* Architectural Blueprint Vector Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-stone-950/20 to-transparent flex flex-col justify-end p-5 sm:p-6 text-white text-left">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 rounded bg-emerald-600/90 text-white text-[9px] font-black uppercase tracking-wider">
+                    <span className="px-2 py-0.5 rounded bg-emerald-600/90 text-white text-3xs font-black uppercase tracking-wider">
                       Verified Layout
                     </span>
-                    <span className="text-[10px] text-stone-300 font-mono">CAD • DWG-V3.2</span>
+                    <span className="text-2xs text-stone-300 font-mono">CAD • DWG-V3.2</span>
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold font-serif leading-tight">
+                  <h3 className="text-base sm:text-lg font-bold font-display leading-tight">
                     End-to-End Architectural Coordination
                   </h3>
-                  <p className="text-[11px] text-stone-300 font-medium mt-0.5">
+                  <p className="text-2xs text-stone-300 font-medium mt-0.5">
                     From spatial blueprints to on-site concrete execution.
                   </p>
                 </div>
@@ -345,7 +345,7 @@ export function KnowMorePage() {
                 <h4 className="text-xs font-bold text-stone-900 leading-tight">
                   {item.title}
                 </h4>
-                <p className="text-[11px] text-stone-500 font-medium mt-1 leading-normal">
+                <p className="text-2xs text-stone-500 font-medium mt-1 leading-normal">
                   {item.desc}
                 </p>
               </div>
@@ -362,7 +362,7 @@ export function KnowMorePage() {
           
           {/* Left Text Explanation */}
           <div className="lg:col-span-5 space-y-5 text-left">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-stone-900 font-serif tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-stone-900 font-display tracking-tight leading-tight">
               Solving What Most Projects Lack – The 5M's
             </h2>
 
@@ -376,10 +376,10 @@ export function KnowMorePage() {
                 <div className="flex items-center gap-2.5">
                   <span className="text-xl">{fiveMPillars[activeMIndex].icon}</span>
                   <div>
-                    <h3 className="text-sm font-bold text-stone-900 font-serif">
+                    <h3 className="text-sm font-bold text-stone-900 font-display">
                       {fiveMPillars[activeMIndex].title} — {fiveMPillars[activeMIndex].subtitle}
                     </h3>
-                    <span className="text-[9px] font-black text-emerald-700 uppercase tracking-widest">
+                    <span className="text-3xs font-black text-emerald-700 uppercase tracking-widest">
                       {fiveMPillars[activeMIndex].tag}
                     </span>
                   </div>
@@ -390,7 +390,7 @@ export function KnowMorePage() {
                 {fiveMPillars[activeMIndex].desc}
               </p>
 
-              <div className="pt-2 border-t border-stone-100 space-y-1.5 text-[11px]">
+              <div className="pt-2 border-t border-stone-100 space-y-1.5 text-2xs">
                 <div className="text-rose-700 font-semibold flex items-start gap-1.5">
                   <span className="font-bold">Challenge:</span> {fiveMPillars[activeMIndex].challenge}
                 </div>
@@ -419,9 +419,9 @@ export function KnowMorePage() {
 
               {/* Center Hub: The 5M's */}
               <div className="relative z-10 w-36 h-36 rounded-full bg-white border-2 border-emerald-600 shadow-md flex flex-col items-center justify-center text-center p-3 select-none">
-                <span className="text-[10px] uppercase font-bold text-stone-400 tracking-wider">The</span>
-                <span className="text-2xl font-black text-stone-900 font-serif leading-none mt-0.5">5M's</span>
-                <span className="text-[9px] font-black text-emerald-800 uppercase tracking-widest mt-1">DBC's Core Focus</span>
+                <span className="text-2xs uppercase font-bold text-stone-400 tracking-wider">The</span>
+                <span className="text-2xl font-black text-stone-900 font-display leading-none mt-0.5">5M's</span>
+                <span className="text-3xs font-black text-emerald-800 uppercase tracking-widest mt-1">DBC's Core Focus</span>
               </div>
 
               {/* Node 1: MANPOWER (Top) */}
@@ -432,7 +432,7 @@ export function KnowMorePage() {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm border ${activeMIndex === 0 ? 'bg-emerald-700 text-white border-emerald-600 ring-4 ring-emerald-100' : 'bg-emerald-100 text-emerald-900 border-emerald-300'}`}>
                   👥
                 </div>
-                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-[10px] font-bold text-stone-800 shadow-2xs mt-1">
+                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-2xs font-bold text-stone-800 shadow-2xs mt-1">
                   Manpower
                 </div>
               </div>
@@ -445,7 +445,7 @@ export function KnowMorePage() {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm border ${activeMIndex === 2 ? 'bg-emerald-700 text-white border-emerald-600 ring-4 ring-emerald-100' : 'bg-emerald-100 text-emerald-900 border-emerald-300'}`}>
                   🧱
                 </div>
-                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-[10px] font-bold text-stone-800 shadow-2xs mt-1">
+                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-2xs font-bold text-stone-800 shadow-2xs mt-1">
                   Material
                 </div>
               </div>
@@ -458,7 +458,7 @@ export function KnowMorePage() {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm border ${activeMIndex === 3 ? 'bg-emerald-700 text-white border-emerald-600 ring-4 ring-emerald-100' : 'bg-emerald-100 text-emerald-900 border-emerald-300'}`}>
                   🏗️
                 </div>
-                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-[10px] font-bold text-stone-800 shadow-2xs mt-1">
+                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-2xs font-bold text-stone-800 shadow-2xs mt-1">
                   Machine
                 </div>
               </div>
@@ -471,7 +471,7 @@ export function KnowMorePage() {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm border ${activeMIndex === 4 ? 'bg-emerald-700 text-white border-emerald-600 ring-4 ring-emerald-100' : 'bg-emerald-100 text-emerald-900 border-emerald-300'}`}>
                   📐
                 </div>
-                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-[10px] font-bold text-stone-800 shadow-2xs mt-1">
+                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-2xs font-bold text-stone-800 shadow-2xs mt-1">
                   Method
                 </div>
               </div>
@@ -484,7 +484,7 @@ export function KnowMorePage() {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm border ${activeMIndex === 1 ? 'bg-emerald-700 text-white border-emerald-600 ring-4 ring-emerald-100' : 'bg-amber-100 text-amber-900 border-amber-300'}`}>
                   💰
                 </div>
-                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-[10px] font-bold text-stone-800 shadow-2xs mt-1">
+                <div className="bg-white px-2 py-0.5 rounded-md border border-stone-200 text-2xs font-bold text-stone-800 shadow-2xs mt-1">
                   Money
                 </div>
               </div>
@@ -500,7 +500,7 @@ export function KnowMorePage() {
       {/* ========================================================================= */}
       <section id="why-dbc" className="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-200/80">
         <div className="text-center space-y-2 mb-10 sm:mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-serif text-stone-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-stone-900 tracking-tight">
             Why DBC?
           </h2>
           <p className="text-xs sm:text-sm text-stone-500 font-medium max-w-xl mx-auto">
@@ -516,17 +516,17 @@ export function KnowMorePage() {
             >
               <div className="space-y-3">
                 <span className="text-2xl block">{card.icon}</span>
-                <h3 className="text-sm font-bold text-stone-900 font-serif leading-snug group-hover:text-emerald-800 transition">
+                <h3 className="text-sm font-bold text-stone-900 font-display leading-snug group-hover:text-emerald-800 transition">
                   {card.title}
                 </h3>
-                <p className="text-[11px] text-stone-500 font-normal leading-relaxed">
+                <p className="text-2xs text-stone-500 font-normal leading-relaxed">
                   {card.desc}
                 </p>
               </div>
 
               <button
                 onClick={() => scrollToSection('ecosystem')}
-                className="text-[10px] font-extrabold text-emerald-700 hover:text-emerald-900 uppercase tracking-wider flex items-center gap-1 transition pt-2 border-t border-stone-100 cursor-pointer"
+                className="text-2xs font-extrabold text-emerald-700 hover:text-emerald-900 uppercase tracking-wider flex items-center gap-1 transition pt-2 border-t border-stone-100 cursor-pointer"
               >
                 <span>Learn more</span>
                 <span>→</span>
@@ -541,7 +541,7 @@ export function KnowMorePage() {
       {/* ========================================================================= */}
       <section id="how-it-works" className="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-200/80">
         <div className="text-center space-y-2 mb-10 sm:mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-serif text-stone-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-stone-900 tracking-tight">
             How DBC Works
           </h2>
           <p className="text-xs sm:text-sm text-stone-500 font-medium max-w-xl mx-auto">
@@ -562,26 +562,26 @@ export function KnowMorePage() {
                   <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
                     {step.icon}
                   </div>
-                  <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest">
+                  <span className="text-2xs font-black text-stone-400 uppercase tracking-widest">
                     STEP {step.num}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-stone-900 font-serif leading-tight">
+                  <h3 className="text-sm font-bold text-stone-900 font-display leading-tight">
                     {step.title}
                   </h3>
-                  <p className="text-[10px] font-semibold text-emerald-800 uppercase tracking-wider mt-0.5">
+                  <p className="text-2xs font-semibold text-emerald-800 uppercase tracking-wider mt-0.5">
                     {step.subtitle}
                   </p>
                 </div>
 
-                <p className="text-[11px] text-stone-500 leading-relaxed font-normal">
+                <p className="text-2xs text-stone-500 leading-relaxed font-normal">
                   {step.desc}
                 </p>
               </div>
 
-              <div className="text-[10px] font-bold text-stone-400 pt-2 border-t border-stone-100 flex items-center justify-between">
+              <div className="text-2xs font-bold text-stone-400 pt-2 border-t border-stone-100 flex items-center justify-between">
                 <span>Phase {idx + 1} of 4</span>
                 <span className="text-emerald-700">✓</span>
               </div>
@@ -595,7 +595,7 @@ export function KnowMorePage() {
       {/* ========================================================================= */}
       <section id="ecosystem" className="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-200/80">
         <div className="text-center space-y-2 mb-10 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-serif text-stone-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-stone-900 tracking-tight">
             The DBC Connected Ecosystem
           </h2>
           <p className="text-xs sm:text-sm text-stone-500 font-medium max-w-xl mx-auto">
@@ -622,11 +622,11 @@ export function KnowMorePage() {
           return (
             <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
               <div className="lg:col-span-6 space-y-5">
-                <span className="inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <span className="inline-block text-3xs font-black uppercase tracking-widest px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
                   {current.badge}
                 </span>
 
-                <h3 className="text-2xl sm:text-3xl font-extrabold font-serif text-stone-900 tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-stone-900 tracking-tight">
                   {current.title}
                 </h3>
 
@@ -637,7 +637,7 @@ export function KnowMorePage() {
                 <div className="space-y-2.5 pt-2">
                   {current.points.map((pt, i) => (
                     <div key={i} className="flex items-start gap-2.5 text-xs text-stone-700 font-medium">
-                      <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-[9px] flex-shrink-0 mt-0.5">
+                      <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-3xs flex-shrink-0 mt-0.5">
                         ✓
                       </span>
                       <span>{pt}</span>
@@ -683,7 +683,7 @@ export function KnowMorePage() {
             
             {/* Left CTA Info */}
             <div className="lg:col-span-7 space-y-5">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-serif tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display tracking-tight leading-tight">
                 Let's Build Something Great Together
               </h2>
 
@@ -713,26 +713,26 @@ export function KnowMorePage() {
               <div className="bg-white rounded-2xl p-6 text-stone-900 shadow-lg border border-emerald-200/40">
                 <div className="grid grid-cols-2 gap-4 text-center divide-x-0">
                   <div className="p-2">
-                    <span className="block text-2xl sm:text-3xl font-black font-serif text-stone-900">10K+</span>
-                    <span className="block text-[10px] font-bold text-stone-500 uppercase tracking-wider mt-0.5">
+                    <span className="block text-2xl sm:text-3xl font-black font-display text-stone-900">10K+</span>
+                    <span className="block text-2xs font-bold text-stone-500 uppercase tracking-wider mt-0.5">
                       Happy Customers
                     </span>
                   </div>
                   <div className="p-2">
-                    <span className="block text-2xl sm:text-3xl font-black font-serif text-stone-900">25K+</span>
-                    <span className="block text-[10px] font-bold text-stone-500 uppercase tracking-wider mt-0.5">
+                    <span className="block text-2xl sm:text-3xl font-black font-display text-stone-900">25K+</span>
+                    <span className="block text-2xs font-bold text-stone-500 uppercase tracking-wider mt-0.5">
                       Projects Completed
                     </span>
                   </div>
                   <div className="p-2 border-t border-stone-100">
-                    <span className="block text-2xl sm:text-3xl font-black font-serif text-stone-900">5K+</span>
-                    <span className="block text-[10px] font-bold text-stone-500 uppercase tracking-wider mt-0.5">
+                    <span className="block text-2xl sm:text-3xl font-black font-display text-stone-900">5K+</span>
+                    <span className="block text-2xs font-bold text-stone-500 uppercase tracking-wider mt-0.5">
                       Verified Pros
                     </span>
                   </div>
                   <div className="p-2 border-t border-stone-100">
-                    <span className="block text-2xl sm:text-3xl font-black font-serif text-stone-900">4.8/5</span>
-                    <span className="block text-[10px] font-bold text-stone-500 uppercase tracking-wider mt-0.5">
+                    <span className="block text-2xl sm:text-3xl font-black font-display text-stone-900">4.8/5</span>
+                    <span className="block text-2xs font-bold text-stone-500 uppercase tracking-wider mt-0.5">
                       Customer Rating
                     </span>
                   </div>

@@ -14,7 +14,7 @@ export function StarRating({
   interactive = false,
 }: StarRatingProps) {
   const sizeClasses = {
-    sm: 'text-[11px] gap-0.5',
+    sm: 'text-2xs gap-0.5',
     md: 'text-xs gap-1',
     lg: 'text-sm gap-1',
   };

@@ -21,7 +21,7 @@ export default function RequirementsSummary({
   return (
     <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-left select-none space-y-4">
       <div className="border-b border-light-border/40 pb-2">
-        <h4 className="text-[10px] font-black uppercase text-stone-905 tracking-wider">
+        <h4 className="text-2xs font-black uppercase text-stone-905 tracking-wider">
           🛒 Requirements Marketplace summary
         </h4>
       </div>
@@ -29,7 +29,7 @@ export default function RequirementsSummary({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {items.map((it, idx) => (
           <div key={idx} className="bg-stone-50/50 border border-stone-150 p-4 rounded-2xl flex flex-col justify-between">
-            <span className="block text-[8px] font-black text-stone-400 uppercase tracking-widest leading-none">
+            <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest leading-none">
               {it.label}
             </span>
             <span className={`block text-xl font-black mt-2 leading-none ${it.color}`}>

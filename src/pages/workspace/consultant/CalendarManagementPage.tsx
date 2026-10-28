@@ -150,7 +150,7 @@ export default function CalendarManagementPage() {
       {/* 1. Page Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">Scheduler Command Center</span>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Scheduler Command Center</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Appointments & Calendar</h1>
           <p className="text-xs text-stone-500 font-medium">Manage your consultation schedule, buffer durations, and availability preferences.</p>
         </div>
@@ -173,7 +173,7 @@ export default function CalendarManagementPage() {
       </header>
 
       {/* Sync status tracker */}
-      <div className="text-[9px] text-stone-400 font-bold uppercase tracking-wider text-right px-2">
+      <div className="text-3xs text-stone-400 font-bold uppercase tracking-wider text-right px-2">
         🟢 Google / Outlook Integration &bull; {syncStatus}
       </div>
 
@@ -191,7 +191,7 @@ export default function CalendarManagementPage() {
             <span className={`text-base p-2 rounded-xl w-fit ${stat.color}`}>{stat.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{stat.count}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
             </div>
           </div>
         ))}
@@ -210,7 +210,7 @@ export default function CalendarManagementPage() {
                 <button
                   key={v}
                   onClick={() => setCalendarView(v)}
-                  className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg text-3xs font-black uppercase tracking-wider transition cursor-pointer ${
                     calendarView === v ? 'bg-stone-black text-white' : 'text-stone-500 hover:text-stone-900'
                   }`}
                 >
@@ -219,7 +219,7 @@ export default function CalendarManagementPage() {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider text-stone-500">
+            <div className="flex flex-wrap gap-2 text-2xs font-bold uppercase tracking-wider text-stone-500">
               <select
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
@@ -250,10 +250,10 @@ export default function CalendarManagementPage() {
             <div className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
               <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
                 <h3 className="text-xs font-black uppercase text-stone-900">August 2026</h3>
-                <span className="text-[10px] text-stone-400 font-bold uppercase">Standard Slot grid</span>
+                <span className="text-2xs text-stone-400 font-bold uppercase">Standard Slot grid</span>
               </div>
 
-              <div className="grid grid-cols-7 gap-2 text-center text-[9px] font-black uppercase tracking-widest text-stone-400 border-b border-light-border/40 pb-2">
+              <div className="grid grid-cols-7 gap-2 text-center text-3xs font-black uppercase tracking-widest text-stone-400 border-b border-light-border/40 pb-2">
                 <div>Mon</div>
                 <div>Tue</div>
                 <div>Wed</div>
@@ -274,7 +274,7 @@ export default function CalendarManagementPage() {
                     <div
                       key={i}
                       onClick={() => setSelectedDay(dayNum)}
-                      className={`p-2 rounded-2xl border text-[10px] font-bold transition text-left flex flex-col justify-between cursor-pointer ${
+                      className={`p-2 rounded-2xl border text-2xs font-bold transition text-left flex flex-col justify-between cursor-pointer ${
                         isToday
                           ? 'border-brand-emerald bg-brand-emerald/5 text-brand-emerald'
                           : isSelected
@@ -284,7 +284,7 @@ export default function CalendarManagementPage() {
                     >
                       <span className="font-bold">{dayNum}</span>
                       {hasAppointments.length > 0 && (
-                        <span className="block text-[8px] font-black bg-brand-emerald/10 text-brand-emerald px-1 rounded truncate leading-none">
+                        <span className="block text-3xs font-black bg-brand-emerald/10 text-brand-emerald px-1 rounded truncate leading-none">
                           {hasAppointments.length} Appt
                         </span>
                       )}
@@ -300,7 +300,7 @@ export default function CalendarManagementPage() {
             <div className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
               <div>
                 <h3 className="text-xs font-black uppercase text-stone-900">Appointments Schedule</h3>
-                <p className="text-[10px] text-stone-400">List of bookings matching filters</p>
+                <p className="text-2xs text-stone-400">List of bookings matching filters</p>
               </div>
 
               {filteredAppointments.length === 0 ? (
@@ -314,15 +314,15 @@ export default function CalendarManagementPage() {
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <h4 className="text-xs font-black text-stone-900">{apt.customerName}</h4>
-                          <span className={`text-[8.5px] font-black uppercase px-2 py-0.5 rounded-full ${
+                          <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full ${
                             apt.priority === 'High' ? 'bg-rose-50 text-rose-700' : 'bg-stone-100 text-stone-600'
                           }`}>{apt.priority} Priority</span>
-                          <span className={`text-[8.5px] font-black uppercase px-2 py-0.5 rounded-full ${
+                          <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full ${
                             apt.status === 'Completed' ? 'bg-stone-100 text-stone-600' : 'bg-emerald-50 text-emerald-800'
                           }`}>{apt.status}</span>
                         </div>
-                        <p className="text-[11px] text-stone-700 font-semibold">{apt.projectTitle}</p>
-                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-stone-400 font-bold uppercase">
+                        <p className="text-2xs text-stone-700 font-semibold">{apt.projectTitle}</p>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-stone-400 font-bold uppercase">
                           <span>📅 {apt.date} &bull; {apt.time} ({apt.duration})</span>
                           <span>🖥️ {apt.mode}</span>
                         </div>
@@ -366,12 +366,12 @@ export default function CalendarManagementPage() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
               <h2 className="text-sm font-black text-stone-900">Availability Preferences</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Configure work slots and buffer limits</p>
+              <p className="text-2xs text-stone-450 font-medium">Configure work slots and buffer limits</p>
             </div>
 
             <div className="space-y-3.5 text-xs text-stone-700">
               <div className="space-y-1.5">
-                <span className="block text-[8px] font-black text-stone-450 uppercase tracking-wider">Working Days</span>
+                <span className="block text-3xs font-black text-stone-450 uppercase tracking-wider">Working Days</span>
                 <div className="flex flex-wrap gap-1">
                   {Object.keys(workingDays).map(day => {
                     const active = workingDays[day as keyof typeof workingDays];
@@ -379,7 +379,7 @@ export default function CalendarManagementPage() {
                       <button
                         key={day}
                         onClick={() => toggleDayAvailability(day)}
-                        className={`px-2.5 py-1 rounded-lg text-[8.5px] font-bold uppercase border transition cursor-pointer ${
+                        className={`px-2.5 py-1 rounded-lg text-3xs font-bold uppercase border transition cursor-pointer ${
                           active ? 'bg-emerald-50 border-brand-emerald text-brand-emerald font-black' : 'bg-white border-stone-200 text-stone-400'
                         }`}
                       >
@@ -392,7 +392,7 @@ export default function CalendarManagementPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <span className="block text-[8px] font-black text-stone-450 uppercase tracking-wider">Hours Range</span>
+                  <span className="block text-3xs font-black text-stone-450 uppercase tracking-wider">Hours Range</span>
                   <input
                     type="text"
                     value={workingHours}
@@ -401,7 +401,7 @@ export default function CalendarManagementPage() {
                   />
                 </div>
                 <div>
-                  <span className="block text-[8px] font-black text-stone-450 uppercase tracking-wider">Appointment Buffer</span>
+                  <span className="block text-3xs font-black text-stone-450 uppercase tracking-wider">Appointment Buffer</span>
                   <select
                     value={bufferTime}
                     onChange={e => setBufferTime(e.target.value)}
@@ -420,7 +420,7 @@ export default function CalendarManagementPage() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
               <h2 className="text-sm font-black text-stone-900">Time Slot Manager</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Quick block/unblock slots for Aug {selectedDay}</p>
+              <p className="text-2xs text-stone-450 font-medium">Quick block/unblock slots for Aug {selectedDay}</p>
             </div>
 
             <div className="space-y-2.5">
@@ -432,7 +432,7 @@ export default function CalendarManagementPage() {
                   <button
                     onClick={() => handleBlockSlot(slot.id)}
                     disabled={!!slot.appointmentId}
-                    className={`text-[8.5px] font-black uppercase tracking-wider px-2 py-1 rounded transition disabled:opacity-45 cursor-pointer ${
+                    className={`text-3xs font-black uppercase tracking-wider px-2 py-1 rounded transition disabled:opacity-45 cursor-pointer ${
                       slot.isBlocked ? 'bg-emerald-50 text-brand-emerald' : 'bg-rose-50 text-rose-700'
                     }`}
                   >
@@ -449,8 +449,8 @@ export default function CalendarManagementPage() {
 
       {/* Reschedule Confirmation Modal dialog */}
       {rescheduleAppointmentId && (
-        <div className="fixed inset-0 bg-stone-950/45 backdrop-blur-xs flex items-center justify-center z-50 animate-in fade-in">
-          <div className="bg-white border border-light-border p-6 rounded-3xl max-w-sm w-full mx-4 shadow-xl space-y-4 text-left">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4 text-left">
             <div className="space-y-1">
               <h3 className="text-sm font-black text-stone-900 uppercase">Reschedule Consultation</h3>
               <p className="text-xs text-stone-500 font-medium">Select a new date and timeslot for consultation review.</p>
@@ -458,7 +458,7 @@ export default function CalendarManagementPage() {
             
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[8px] font-black text-stone-450 uppercase">Date</label>
+                <label className="block text-3xs font-black text-stone-450 uppercase">Date</label>
                 <input
                   type="date"
                   value={newRescheduleDate}
@@ -467,7 +467,7 @@ export default function CalendarManagementPage() {
                 />
               </div>
               <div>
-                <label className="block text-[8px] font-black text-stone-450 uppercase">Time Slot</label>
+                <label className="block text-3xs font-black text-stone-450 uppercase">Time Slot</label>
                 <select
                   value={newRescheduleTime}
                   onChange={e => setNewRescheduleTime(e.target.value)}

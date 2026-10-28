@@ -14,7 +14,7 @@ function FieldRow({ label, htmlFor, hint, children }: FieldRowProps) {
         <label htmlFor={htmlFor} className="block text-xs font-bold text-stone-700 leading-snug cursor-pointer">
           {label}
         </label>
-        {hint && <p className="text-[10px] text-stone-500 font-medium mt-0.5 leading-relaxed">{hint}</p>}
+        {hint && <p className="text-2xs text-stone-500 font-medium mt-0.5 leading-relaxed">{hint}</p>}
       </div>
       <div className="sm:col-span-2">{children}</div>
     </div>
@@ -75,7 +75,7 @@ export default function GeneralSettingsForm({ values, onChange }: GeneralSetting
             placeholder="India's trusted marketplace for construction and design professionals."
             maxLength={300}
           />
-          <p className="text-[9px] text-stone-400 font-medium mt-1">{values.platformDescription.length}/300 characters</p>
+          <p className="text-3xs text-stone-400 font-medium mt-1">{values.platformDescription.length}/300 characters</p>
         </FieldRow>
 
         <FieldRow label="Support Email" htmlFor="gs-email" hint="Primary contact email for user support.">

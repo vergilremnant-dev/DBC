@@ -14,7 +14,7 @@ export function ProjectTimeline({ progress }: ProjectTimelineProps) {
 
   return (
     <div className="space-y-3.5 text-left text-xs font-semibold text-stone-700">
-      <span className="block text-[9px] uppercase font-bold text-stone-400 tracking-wider">
+      <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
         Operational Pipeline Progress
       </span>
 
@@ -39,7 +39,7 @@ export function ProjectTimeline({ progress }: ProjectTimelineProps) {
               }`}></span>
               
               <div className="space-y-0.5 leading-none">
-                <span className={`text-[11px] font-bold ${
+                <span className={`text-2xs font-bold ${
                   isDone ? 'text-stone-900 font-extrabold' : 'text-stone-400'
                 }`}>
                   {step.label}

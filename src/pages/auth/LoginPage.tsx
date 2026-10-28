@@ -159,7 +159,7 @@ export function LoginPage() {
       {view === 'login' && loginMethod === 'email' && (
         <div className="space-y-4 w-full max-w-sm mx-auto">
           <div className="text-left">
-            <h2 className="text-2xl font-bold text-stone-900 font-serif tracking-tight">Sign In</h2>
+            <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Sign In</h2>
           </div>
           <LoginForm
             values={values}

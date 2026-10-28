@@ -19,10 +19,10 @@ export default function DashboardHeader({ adminName, onTabSelect }: DashboardHea
   return (
     <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm flex flex-col md:flex-row md:items-center justify-between gap-6 relative select-none">
       <div className="space-y-1.5 text-left">
-        <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">
+        <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">
           System Dashboard
         </span>
-        <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-serif leading-tight">
+        <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
           Welcome, {adminName}
         </h1>
         <div className="flex flex-wrap items-center gap-3 text-xs text-stone-500 font-semibold">

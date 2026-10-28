@@ -20,7 +20,7 @@ export default function ProfessionalDashboard() {
         {/* Workspace view switcher header banner */}
         <div className="bg-white border border-light-border rounded-3xl p-4 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-apple-sm">
           <div className="space-y-0.5">
-            <span className="text-[8.5px] font-black uppercase text-stone-gray tracking-wider">Workspace Operating Mode</span>
+            <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Workspace Operating Mode</span>
             <h3 className="text-xs font-black text-stone-black">
               Currently displaying Consultant Advisor Console
             </h3>
@@ -28,13 +28,13 @@ export default function ProfessionalDashboard() {
           <div className="flex border border-light-border p-1 rounded-xl bg-light-stone/30">
             <button
               onClick={() => setWorkspaceView('PRO')}
-              className="px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer text-stone-gray hover:text-stone-black"
+              className="px-3 py-1.5 rounded-lg text-3xs font-black uppercase tracking-wider transition cursor-pointer text-stone-gray hover:text-stone-black"
             >
               Trade Pro
             </button>
             <button
               onClick={() => setWorkspaceView('CONSULTANT')}
-              className="px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer bg-stone-black text-white shadow-xs"
+              className="px-3 py-1.5 rounded-lg text-3xs font-black uppercase tracking-wider transition cursor-pointer bg-stone-black text-white shadow-xs"
             >
               Consultant
             </button>
@@ -52,7 +52,7 @@ export default function ProfessionalDashboard() {
       {/* Workspace view switcher header banner */}
       <div className="bg-white border border-light-border rounded-3xl p-4 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-apple-sm">
         <div className="space-y-0.5">
-          <span className="text-[8.5px] font-black uppercase text-stone-gray tracking-wider">Workspace Operating Mode</span>
+          <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">Workspace Operating Mode</span>
           <h3 className="text-xs font-black text-stone-black">
             Currently displaying Trade Partner Workspace
           </h3>
@@ -60,13 +60,13 @@ export default function ProfessionalDashboard() {
         <div className="flex border border-light-border p-1 rounded-xl bg-light-stone/30">
           <button
             onClick={() => setWorkspaceView('PRO')}
-            className="px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer bg-stone-black text-white shadow-xs"
+            className="px-3 py-1.5 rounded-lg text-3xs font-black uppercase tracking-wider transition cursor-pointer bg-stone-black text-white shadow-xs"
           >
             Trade Pro
           </button>
           <button
             onClick={() => setWorkspaceView('CONSULTANT')}
-            className="px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer text-stone-gray hover:text-stone-black"
+            className="px-3 py-1.5 rounded-lg text-3xs font-black uppercase tracking-wider transition cursor-pointer text-stone-gray hover:text-stone-black"
           >
             Consultant
           </button>

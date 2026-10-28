@@ -70,17 +70,17 @@ export function NotificationSummaryCard({
             <div className="absolute -top-6 -right-6 w-12 h-12 bg-stone-100 rounded-full group-hover:scale-150 transition-all duration-300 pointer-events-none opacity-40"></div>
             
             <div className="flex items-center justify-between">
-              <span className={`text-[10px] font-black uppercase tracking-wider ${isActive ? card.activeText : 'text-stone-400'}`}>
+              <span className={`text-2xs font-black uppercase tracking-wider ${isActive ? card.activeText : 'text-stone-400'}`}>
                 {card.label}
               </span>
               <span className="text-sm">{card.icon}</span>
             </div>
             
             <div className="mt-3 flex items-baseline gap-1">
-              <span className={`text-2xl font-black font-serif ${isActive ? card.countColor : 'text-stone-900'}`}>
+              <span className={`text-2xl font-black font-display ${isActive ? card.countColor : 'text-stone-900'}`}>
                 {card.count}
               </span>
-              <span className="text-[9px] font-bold text-stone-400">items</span>
+              <span className="text-3xs font-bold text-stone-400">items</span>
             </div>
           </div>
         );

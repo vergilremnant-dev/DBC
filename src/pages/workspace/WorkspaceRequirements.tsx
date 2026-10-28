@@ -261,7 +261,7 @@ export default function WorkspaceRequirements() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-stone-200 pb-5">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold text-stone-900 font-serif">My Requirements</h2>
+          <h2 className="text-xl font-bold text-stone-900 font-display">My Requirements</h2>
           <p className="text-xs text-stone-500 font-medium">Manage, edit drafts, and track all of your posted project requirements.</p>
         </div>
         {!isFormOpen && (
@@ -314,7 +314,7 @@ export default function WorkspaceRequirements() {
             </div>
 
             {/* Select options filters */}
-            <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto text-[10px] font-bold text-stone-550 uppercase tracking-wide">
+            <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto text-2xs font-bold text-stone-550 uppercase tracking-wide">
               {/* Status */}
               <select
                 value={statusFilter}

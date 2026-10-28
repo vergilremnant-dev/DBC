@@ -38,10 +38,10 @@ export default function VerificationStatistics({
             <span className="block text-xl font-black text-stone-900 leading-none">
               {stat.count}
             </span>
-            <span className="block text-[9px] font-black text-stone-900 uppercase tracking-wider">
+            <span className="block text-3xs font-black text-stone-900 uppercase tracking-wider">
               {stat.label}
             </span>
-            <span className="block text-[8.5px] text-stone-450 font-medium">
+            <span className="block text-3xs text-stone-450 font-medium">
               {stat.desc}
             </span>
           </div>

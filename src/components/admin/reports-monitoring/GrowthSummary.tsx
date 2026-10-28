@@ -21,7 +21,7 @@ export default function GrowthSummary({
   return (
     <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-left select-none space-y-4">
       <div className="border-b border-light-border/40 pb-2">
-        <h4 className="text-[10px] font-black uppercase text-stone-905 tracking-wider">
+        <h4 className="text-2xs font-black uppercase text-stone-905 tracking-wider">
           📈 User Growth Summary
         </h4>
       </div>
@@ -29,13 +29,13 @@ export default function GrowthSummary({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {metrics.map((m, idx) => (
           <div key={idx} className="bg-stone-50/50 border border-stone-150 p-4 rounded-2xl space-y-1.5">
-            <span className="block text-[8px] font-black text-stone-400 uppercase tracking-widest leading-none">
+            <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest leading-none">
               {m.label}
             </span>
             <span className="block text-xl font-black text-stone-900 leading-none">
               {m.count}
             </span>
-            <div className="flex items-center gap-1 text-[9px] font-semibold">
+            <div className="flex items-center gap-1 text-3xs font-semibold">
               <span className={m.isPositive ? 'text-emerald-700' : 'text-stone-500'}>
                 {m.isPositive ? '▲' : '■'} {m.trend}
               </span>

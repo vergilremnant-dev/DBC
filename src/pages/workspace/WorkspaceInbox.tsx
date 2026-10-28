@@ -131,7 +131,7 @@ function CustomerInbox() {
       
       {/* Page Header */}
       <div className="border-b border-light-border pb-5 space-y-1">
-        <h2 className="text-xl font-bold text-stone-900 font-serif">Message Center</h2>
+        <h2 className="text-xl font-bold text-stone-900 font-display">Message Center</h2>
         <p className="text-xs text-stone-500 font-medium">Communicate directly with trade specialists, builders, and blueprint consultants.</p>
       </div>
 
@@ -144,7 +144,7 @@ function CustomerInbox() {
           <div className="flex border-b border-light-border p-1.5 bg-white">
             <button
               onClick={() => setActiveSubTab('chats')}
-              className={`flex-1 text-center py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer
+              className={`flex-1 text-center py-2 rounded-xl text-3xs font-black uppercase tracking-wider transition cursor-pointer
                 ${activeSubTab === 'chats' ? 'bg-light-stone text-stone-black shadow-xs' : 'text-stone-gray'}
               `}
             >
@@ -152,7 +152,7 @@ function CustomerInbox() {
             </button>
             <button
               onClick={() => setActiveSubTab('pros')}
-              className={`flex-1 text-center py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer
+              className={`flex-1 text-center py-2 rounded-xl text-3xs font-black uppercase tracking-wider transition cursor-pointer
                 ${activeSubTab === 'pros' ? 'bg-light-stone text-stone-black shadow-xs' : 'text-stone-gray'}
               `}
             >
@@ -197,7 +197,7 @@ function CustomerInbox() {
                         <h4 className="text-xs font-black text-stone-black truncate">{c.proName}</h4>
                         {c.unread && <span className="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>}
                       </div>
-                      <p className="text-[10px] text-stone-gray font-semibold truncate mt-0.5">{c.lastMessage}</p>
+                      <p className="text-2xs text-stone-gray font-semibold truncate mt-0.5">{c.lastMessage}</p>
                     </div>
                   </div>
                 );
@@ -217,10 +217,10 @@ function CustomerInbox() {
                     <span className="text-lg">{c.avatar}</span>
                     <div>
                       <h4 className="text-xs font-black text-stone-black">{c.proName}</h4>
-                      <span className="text-[8px] font-black uppercase text-stone-gray tracking-wider">{c.proRole}</span>
+                      <span className="text-3xs font-black uppercase text-stone-gray tracking-wider">{c.proRole}</span>
                     </div>
                   </div>
-                  <span className="text-[8px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded">⭐ {c.proRating}</span>
+                  <span className="text-3xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded">⭐ {c.proRating}</span>
                 </div>
               ))
             )}
@@ -243,7 +243,7 @@ function CustomerInbox() {
                   </button>
                   <div>
                     <h3 className="text-xs font-black text-stone-black leading-tight">{activeChat.proName}</h3>
-                    <span className="text-[8px] font-black uppercase text-brand-emerald tracking-wider">{activeChat.proRole}</span>
+                    <span className="text-3xs font-black uppercase text-brand-emerald tracking-wider">{activeChat.proRole}</span>
                   </div>
                 </div>
                 <div className="flex gap-2">
@@ -273,14 +273,14 @@ function CustomerInbox() {
                         {m.attachment && (
                           <a
                             href={m.attachment.url}
-                            className="inline-flex items-center gap-1 text-[10px] font-bold underline mt-1 text-emerald-200 hover:text-white"
+                            className="inline-flex items-center gap-1 text-2xs font-bold underline mt-1 text-emerald-200 hover:text-white"
                           >
                             <span>📎</span>
                             <span>{m.attachment.name}</span>
                           </a>
                         )}
 
-                        <span className="block text-[7.5px] opacity-75 mt-1 text-right">{m.timestamp}</span>
+                        <span className="block text-3xs opacity-75 mt-1 text-right">{m.timestamp}</span>
                       </div>
                     </div>
                   );
@@ -317,7 +317,7 @@ function CustomerInbox() {
             <div className="flex flex-col justify-center items-center text-center p-8 space-y-2 h-full">
               <span className="text-3xl">💬</span>
               <h3 className="text-xs font-bold text-stone-black uppercase tracking-widest">Select a Conversation</h3>
-              <p className="text-[10px] text-stone-gray font-semibold max-w-xs leading-relaxed">
+              <p className="text-2xs text-stone-gray font-semibold max-w-xs leading-relaxed">
                 Pick a chat thread from the left list or connected professionals directory to begin.
               </p>
             </div>

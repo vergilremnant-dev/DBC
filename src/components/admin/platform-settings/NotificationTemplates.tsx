@@ -42,7 +42,7 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
           <span className="text-base" aria-hidden="true">{icon}</span>
           <div>
             <p className="text-xs font-black text-stone-800">{label}</p>
-            <p className="text-[10px] text-stone-500 font-medium truncate max-w-[240px] mt-0.5">{template.subject}</p>
+            <p className="text-2xs text-stone-500 font-medium truncate max-w-[240px] mt-0.5">{template.subject}</p>
           </div>
         </div>
         <span className="text-stone-400 text-xs font-bold transition-transform duration-200" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
@@ -51,7 +51,7 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
       {isOpen && (
         <div id={`template-body-${template.id}`} className="p-5 space-y-4 border-t border-light-border bg-white">
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">Subject</label>
+            <label className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">Subject</label>
             <input
               type="text"
               value={template.subject}
@@ -61,7 +61,7 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
             />
           </div>
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5">Message Body</label>
+            <label className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">Message Body</label>
             <textarea
               value={template.body}
               onChange={e => onChange({ ...template, body: e.target.value })}
@@ -72,15 +72,15 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
           </div>
           {template.variables.length > 0 && (
             <div>
-              <p className="text-[10px] font-black uppercase tracking-wider text-stone-500 mb-2">Available Variables</p>
+              <p className="text-2xs font-black uppercase tracking-wider text-stone-500 mb-2">Available Variables</p>
               <div className="flex flex-wrap gap-1.5">
                 {template.variables.map(v => (
-                  <span key={v} className="text-[9px] font-black text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded font-mono">
+                  <span key={v} className="text-3xs font-black text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded font-mono">
                     {`{{${v}}}`}
                   </span>
                 ))}
               </div>
-              <p className="text-[9px] text-stone-400 font-medium mt-1.5">Click a variable to copy; paste it into the subject or body.</p>
+              <p className="text-3xs text-stone-400 font-medium mt-1.5">Click a variable to copy; paste it into the subject or body.</p>
             </div>
           )}
         </div>

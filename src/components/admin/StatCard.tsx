@@ -17,7 +17,7 @@ export default function StatCard({ icon, count, label, description, colorClass =
         <span className={`text-base p-2.5 rounded-xl w-fit transition-colors duration-200 ${colorClass}`}>
           {icon}
         </span>
-        <span className="text-[9px] font-black text-stone-400 uppercase tracking-widest group-hover:text-stone-600 transition-colors">
+        <span className="text-3xs font-black text-stone-400 uppercase tracking-widest group-hover:text-stone-600 transition-colors">
           Metrics
         </span>
       </div>
@@ -25,10 +25,10 @@ export default function StatCard({ icon, count, label, description, colorClass =
         <span className="block text-2xl font-black text-stone-900 font-sans tracking-tight">
           {count}
         </span>
-        <span className="block text-[10px] font-black text-stone-900 uppercase tracking-wider">
+        <span className="block text-2xs font-black text-stone-900 uppercase tracking-wider">
           {label}
         </span>
-        <p className="text-[10px] text-stone-500 font-medium leading-relaxed">
+        <p className="text-2xs text-stone-500 font-medium leading-relaxed">
           {description}
         </p>
       </div>

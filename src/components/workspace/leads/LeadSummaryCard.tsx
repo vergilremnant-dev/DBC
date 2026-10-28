@@ -37,13 +37,13 @@ export function LeadSummaryCard({
             }`}
           >
             <div className="flex justify-between items-center w-full">
-              <span className="text-[10px] uppercase font-bold text-stone-400">
+              <span className="text-2xs uppercase font-bold text-stone-400">
                 {card.label}
               </span>
               <span className="text-sm">{card.icon}</span>
             </div>
 
-            <span className={`text-2xl font-black font-serif block ${card.color}`}>
+            <span className={`text-2xl font-black font-display block ${card.color}`}>
               {card.count}
             </span>
           </button>

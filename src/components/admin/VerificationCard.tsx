@@ -30,7 +30,7 @@ export default function VerificationCard({
         <h3 className="text-xs font-black uppercase text-stone-900 tracking-wider">
           Pending Verifications Backlog
         </h3>
-        <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+        <p className="text-2xs text-stone-500 font-medium mt-0.5">
           Review business registrations and professional qualifications. Showing latest five.
         </p>
       </div>
@@ -49,11 +49,11 @@ export default function VerificationCard({
               <div className="space-y-2">
                 <div className="flex items-center gap-2.5">
                   <h4 className="text-xs font-black text-stone-900">{req.name}</h4>
-                  <span className="bg-amber-50 border border-amber-100 text-[8px] font-black px-2 py-0.5 rounded-full uppercase text-amber-800 tracking-wider">
+                  <span className="bg-amber-50 border border-amber-100 text-3xs font-black px-2 py-0.5 rounded-full uppercase text-amber-800 tracking-wider">
                     {req.category || 'Provider'}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[10px] text-stone-500 font-semibold">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-2xs text-stone-500 font-semibold">
                   <p>📋 License: <span className="text-stone-700">{req.licenseNumber}</span></p>
                   <p>⏱️ Experience: <span className="text-stone-700">{req.experience}</span></p>
                   <p>📄 Document: <span className="text-stone-750 underline cursor-pointer" onClick={() => alert(`Opening document: ${req.documentName}`)}>{req.documentName}</span></p>
@@ -64,19 +64,19 @@ export default function VerificationCard({
               <div className="flex gap-2 w-full md:w-auto justify-end">
                 <button
                   onClick={() => onReview(req.id)}
-                  className="px-3 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 font-bold rounded-lg text-[9px] font-bold uppercase transition cursor-pointer"
+                  className="px-3 py-1.5 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 font-bold rounded-lg text-3xs font-bold uppercase transition cursor-pointer"
                 >
                   Review
                 </button>
                 <button
                   onClick={() => onApprove(req.id, req.name)}
-                  className="px-3 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg text-[9px] font-black uppercase tracking-wider transition cursor-pointer"
+                  className="px-3 py-1.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-lg text-3xs font-black uppercase tracking-wider transition cursor-pointer"
                 >
                   Approve
                 </button>
                 <button
                   onClick={() => onReject(req.id, req.name)}
-                  className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-[9px] font-bold uppercase transition cursor-pointer"
+                  className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-3xs font-bold uppercase transition cursor-pointer"
                 >
                   Reject
                 </button>

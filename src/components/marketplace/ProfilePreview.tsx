@@ -46,7 +46,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
           <div className="space-y-6 overflow-y-auto no-scrollbar pb-6 flex-1">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-stone-100 pb-4">
-              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-800">
+              <span className="text-2xs font-black uppercase tracking-widest text-emerald-800">
                 Partner Profile
               </span>
               <button
@@ -64,10 +64,10 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
                 {getInitials()}
               </div>
               <div className="min-w-0">
-                <h3 className="text-base sm:text-lg font-bold text-stone-900 font-serif leading-snug truncate">
+                <h3 className="text-base sm:text-lg font-bold text-stone-900 font-display leading-snug truncate">
                   {displayName}
                 </h3>
-                <span className="inline-block text-[9px] text-emerald-800 font-extrabold uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 mt-1">
+                <span className="inline-block text-3xs text-emerald-800 font-extrabold uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 mt-1">
                   {professional.category?.name || professional.title || 'Trade Specialist'}
                 </span>
               </div>
@@ -77,21 +77,21 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
             <div className="grid grid-cols-3 gap-2.5 p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80 text-center">
               <div>
                 <span className="block text-sm font-extrabold text-stone-900">{professional.experienceYears || '5'}+ Yrs</span>
-                <span className="text-[9px] text-stone-500 uppercase font-bold tracking-wider">Experience</span>
+                <span className="text-3xs text-stone-500 uppercase font-bold tracking-wider">Experience</span>
               </div>
               <div className="border-x border-stone-200">
-                <span className="block text-sm font-extrabold text-stone-900">⭐ {professional.rating?.toFixed(1) || '4.8'}</span>
-                <span className="text-[9px] text-stone-500 uppercase font-bold tracking-wider">Avg Rating</span>
+                <span className="block text-sm font-extrabold text-stone-900">⭐ {professional.rating ? professional.rating.toFixed(1) : 'New'}</span>
+                <span className="text-3xs text-stone-500 uppercase font-bold tracking-wider">Avg Rating</span>
               </div>
               <div>
                 <span className="block text-sm font-extrabold text-stone-900 truncate">📍 {professional.city || 'Verified'}</span>
-                <span className="text-[9px] text-stone-500 uppercase font-bold tracking-wider">Region</span>
+                <span className="text-3xs text-stone-500 uppercase font-bold tracking-wider">Region</span>
               </div>
             </div>
 
             {/* About / Bio */}
             <div className="space-y-2">
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-stone-400">About Professional</h4>
+              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-400">About Professional</h4>
               <p className="text-xs text-stone-600 font-medium leading-relaxed">
                 {professional.description || 'Verified coordination partner offering expert construction, architectural review, and site execution services.'}
               </p>
@@ -99,12 +99,12 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
 
             {/* Top Skills */}
             <div className="space-y-2">
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-stone-400">Specializations & Skills</h4>
+              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-400">Specializations & Skills</h4>
               <div className="flex flex-wrap gap-1.5">
                 {(professional.skills || ['Civil Engineering', 'Design coordination', 'Layout Planning', 'On-site Inspection']).map((skill: string) => (
                   <span
                     key={skill}
-                    className="text-[9px] font-bold bg-stone-100 text-stone-700 border border-stone-200 px-2.5 py-1 rounded-lg"
+                    className="text-3xs font-bold bg-stone-100 text-stone-700 border border-stone-200 px-2.5 py-1 rounded-lg"
                   >
                     {skill}
                   </span>
@@ -114,7 +114,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
 
             {/* Portfolio Previews */}
             <div className="space-y-2.5">
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-stone-400">Recent Works Gallery</h4>
+              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-400">Recent Works Gallery</h4>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80',
@@ -141,7 +141,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
                 <span>→</span>
               </button>
             </div>
-            <p className="text-[9px] text-stone-400 font-medium text-center">
+            <p className="text-3xs text-stone-400 font-medium text-center">
               Direct connection with verified professionals • Zero hidden commissions
             </p>
           </div>

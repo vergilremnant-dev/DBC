@@ -53,8 +53,8 @@ export default function SettingsQuickActions({ onSave, onReset, isSaving }: Sett
       aria-label="Quick actions"
     >
       <div className="px-5 py-4 border-b border-light-border">
-        <h2 className="text-sm font-black text-stone-900 font-serif">Quick Actions</h2>
-        <p className="text-[10px] text-stone-500 font-medium mt-0.5">Shortcuts and navigation.</p>
+        <h2 className="text-sm font-black text-stone-900 font-display">Quick Actions</h2>
+        <p className="text-2xs text-stone-500 font-medium mt-0.5">Shortcuts and navigation.</p>
       </div>
       <div className="p-4 space-y-2">
         {actions.map(action => (
@@ -71,10 +71,10 @@ export default function SettingsQuickActions({ onSave, onReset, isSaving }: Sett
           >
             <span className="text-base shrink-0" aria-hidden="true">{action.icon}</span>
             <div className="min-w-0">
-              <p className={`text-[10px] font-black uppercase tracking-wider leading-snug ${action.variant === 'primary' ? 'text-white' : 'text-stone-700'}`}>
+              <p className={`text-2xs font-black uppercase tracking-wider leading-snug ${action.variant === 'primary' ? 'text-white' : 'text-stone-700'}`}>
                 {action.label}
               </p>
-              <p className={`text-[9px] font-medium leading-relaxed truncate ${action.variant === 'primary' ? 'text-white/80' : 'text-stone-500'}`}>
+              <p className={`text-3xs font-medium leading-relaxed truncate ${action.variant === 'primary' ? 'text-white/80' : 'text-stone-500'}`}>
                 {action.desc}
               </p>
             </div>

@@ -17,12 +17,12 @@ export default function QuickActions({
         <h3 className="text-xs font-black uppercase text-stone-900 tracking-wider">
           Quick Actions Panel
         </h3>
-        <p className="text-[9.5px] text-stone-450 font-medium">
+        <p className="text-3xs text-stone-450 font-medium">
           Shortcut actions for platform management commands.
         </p>
       </div>
 
-      <div className="grid gap-2 grid-cols-2 text-[9px] font-black uppercase tracking-wider text-center">
+      <div className="grid gap-2 grid-cols-2 text-3xs font-black uppercase tracking-wider text-center">
         <button 
           onClick={() => onTabSelect('users')} 
           className="p-3 bg-stone-50 hover:bg-stone-100 border border-light-border rounded-xl text-stone-800 font-extrabold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald"

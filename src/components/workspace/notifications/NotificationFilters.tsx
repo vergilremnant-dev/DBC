@@ -92,7 +92,7 @@ export function NotificationFilters({
         <div className="flex flex-wrap items-center gap-3">
           {/* Category Dropdown */}
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] uppercase font-bold text-stone-400">Category:</span>
+            <span className="text-2xs uppercase font-bold text-stone-400">Category:</span>
             <select
               value={categoryFilter}
               onChange={(e) => onCategoryChange(e.target.value)}
@@ -108,7 +108,7 @@ export function NotificationFilters({
 
           {/* Priority Dropdown */}
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] uppercase font-bold text-stone-400">Priority:</span>
+            <span className="text-2xs uppercase font-bold text-stone-400">Priority:</span>
             <select
               value={priorityFilter}
               onChange={(e) => onPriorityChange(e.target.value)}
@@ -124,7 +124,7 @@ export function NotificationFilters({
 
           {/* Sort Dropdown */}
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] uppercase font-bold text-stone-400">Sort By:</span>
+            <span className="text-2xs uppercase font-bold text-stone-400">Sort By:</span>
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}

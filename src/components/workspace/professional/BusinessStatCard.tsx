@@ -19,18 +19,18 @@ export function BusinessStatCard({ stats }: BusinessStatCardProps) {
           className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between select-none relative overflow-hidden h-28"
         >
           <div className="flex items-center justify-between">
-            <span className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">
+            <span className="text-3xs uppercase font-bold text-stone-400 tracking-wider">
               {stat.label}
             </span>
             <span className="text-sm select-none">{stat.icon}</span>
           </div>
 
           <div className="space-y-0.5">
-            <span className={`text-xl font-black font-serif block ${stat.colorClass || 'text-stone-900'}`}>
+            <span className={`text-xl font-black font-display block ${stat.colorClass || 'text-stone-900'}`}>
               {stat.value}
             </span>
             {stat.subtext && (
-              <span className="text-[8px] text-stone-400 font-bold block truncate">
+              <span className="text-3xs text-stone-400 font-bold block truncate">
                 {stat.subtext}
               </span>
             )}

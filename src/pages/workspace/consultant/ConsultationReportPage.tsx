@@ -184,21 +184,21 @@ export default function ConsultationReportPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="bg-stone-100 text-stone-700 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="bg-stone-100 text-stone-700 text-3xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
                 ID: {id}
               </span>
-              <span className={`text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+              <span className={`text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
                 status === 'Published' ? 'bg-emerald-50 text-emerald-800' : 'bg-amber-50 text-amber-800'
               }`}>
                 {status}
               </span>
               {isSaving ? (
-                <span className="text-[9px] text-emerald-600 font-bold animate-pulse">Autosaving changes...</span>
+                <span className="text-3xs text-emerald-600 font-bold animate-pulse">Autosaving changes...</span>
               ) : (
-                <span className="text-[9px] text-stone-400 font-bold">{lastSaved}</span>
+                <span className="text-3xs text-stone-400 font-bold">{lastSaved}</span>
               )}
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-serif leading-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
               Villa Spatial Orientation & Design Report
             </h1>
             <p className="text-xs text-stone-500 font-medium">
@@ -251,7 +251,7 @@ export default function ConsultationReportPage() {
             <div className="space-y-4">
               {sections.map(sec => (
                 <div key={sec.id} className="space-y-2">
-                  <label className="block text-[10px] font-black text-stone-450 uppercase tracking-wider">{sec.title}</label>
+                  <label className="block text-2xs font-black text-stone-450 uppercase tracking-wider">{sec.title}</label>
                   <textarea
                     value={sec.content}
                     onChange={e => handleUpdateSection(sec.id, e.target.value)}
@@ -269,14 +269,14 @@ export default function ConsultationReportPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {designRecs.map(rec => (
                 <div key={rec.id} className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-1">
-                  <span className="text-[8.5px] font-black text-brand-emerald uppercase tracking-wider">{rec.category}</span>
+                  <span className="text-3xs font-black text-brand-emerald uppercase tracking-wider">{rec.category}</span>
                   <p className="text-xs text-stone-700 font-semibold">{rec.text}</p>
                 </div>
               ))}
             </div>
 
             <form onSubmit={handleAddDesignRec} className="space-y-3 pt-4 border-t border-light-border/40">
-              <h4 className="text-[10px] font-black uppercase text-stone-850">Add Design Recommendation</h4>
+              <h4 className="text-2xs font-black uppercase text-stone-850">Add Design Recommendation</h4>
               <div className="grid grid-cols-3 gap-2">
                 <select
                   value={newDesignCat}
@@ -312,9 +312,9 @@ export default function ConsultationReportPage() {
                 <div key={mat.id} className="p-4 bg-stone-50 border border-stone-200 rounded-2xl flex justify-between items-start gap-4">
                   <div className="space-y-1">
                     <h4 className="text-xs font-black text-stone-900">{mat.name}</h4>
-                    <p className="text-[11px] text-stone-600 font-semibold">{mat.description}</p>
+                    <p className="text-2xs text-stone-600 font-semibold">{mat.description}</p>
                   </div>
-                  <span className="bg-emerald-50 border border-emerald-100 text-[8.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider text-emerald-800">
+                  <span className="bg-emerald-50 border border-emerald-100 text-3xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider text-emerald-800">
                     {mat.tier}
                   </span>
                 </div>
@@ -322,7 +322,7 @@ export default function ConsultationReportPage() {
             </div>
 
             <form onSubmit={handleAddMaterial} className="space-y-3 pt-4 border-t border-light-border/40">
-              <h4 className="text-[10px] font-black uppercase text-stone-850">Add Material Spec</h4>
+              <h4 className="text-2xs font-black uppercase text-stone-850">Add Material Spec</h4>
               <div className="grid grid-cols-3 gap-2">
                 <input
                   type="text"
@@ -363,7 +363,7 @@ export default function ConsultationReportPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-light-border text-[9px] font-black uppercase text-stone-400">
+                  <tr className="border-b border-light-border text-3xs font-black uppercase text-stone-400">
                     <th className="py-2.5">Solution Option</th>
                     <th className="py-2.5">Advantages</th>
                     <th className="py-2.5">Cost Estimate</th>
@@ -375,7 +375,7 @@ export default function ConsultationReportPage() {
                     <tr key={opt.id}>
                       <td className="py-3">
                         <strong className="block text-stone-900">{opt.name}</strong>
-                        <span className="text-[10px] text-stone-450">{opt.description}</span>
+                        <span className="text-2xs text-stone-450">{opt.description}</span>
                       </td>
                       <td className="py-3">{opt.advantages}</td>
                       <td className="py-3 font-bold text-stone-900">{opt.cost}</td>
@@ -396,10 +396,10 @@ export default function ConsultationReportPage() {
           <section className="bg-gradient-to-br from-stone-950 to-stone-900 border border-stone-850 p-6 rounded-3xl shadow-apple-sm text-white space-y-4 relative overflow-hidden">
             <div className="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
             <div className="space-y-0.5">
-              <span className="text-[8.5px] font-black uppercase text-emerald-400 tracking-wider">Report Smart Assistant</span>
+              <span className="text-3xs font-black uppercase text-emerald-400 tracking-wider">Report Smart Assistant</span>
               <h3 className="text-xs font-black">AI Documentation Suggestions</h3>
             </div>
-            <ul className="space-y-2 text-[10px] text-stone-300 font-medium">
+            <ul className="space-y-2 text-2xs text-stone-300 font-medium">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-400">✦</span>
                 <span>Evaluate cost breakdown breakdown.</span>
@@ -419,12 +419,12 @@ export default function ConsultationReportPage() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm">
             <div>
               <h2 className="text-sm font-black text-stone-900">Budget Analysis</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Estimate review parameters</p>
+              <p className="text-2xs text-stone-450 font-medium">Estimate review parameters</p>
             </div>
             <div className="space-y-3.5 text-xs font-bold text-stone-700">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <span className="block text-[8px] font-black text-stone-450 uppercase tracking-wider">Est. Budget</span>
+                  <span className="block text-3xs font-black text-stone-450 uppercase tracking-wider">Est. Budget</span>
                   <input
                     type="text"
                     value={estBudget}
@@ -433,7 +433,7 @@ export default function ConsultationReportPage() {
                   />
                 </div>
                 <div>
-                  <span className="block text-[8px] font-black text-stone-450 uppercase tracking-wider">Suggested Savings</span>
+                  <span className="block text-3xs font-black text-stone-450 uppercase tracking-wider">Suggested Savings</span>
                   <input
                     type="text"
                     value={suggestedSavings}
@@ -443,7 +443,7 @@ export default function ConsultationReportPage() {
                 </div>
               </div>
               <div>
-                <span className="block text-[8px] font-black text-stone-450 uppercase tracking-wider">Cost Breakdown Description</span>
+                <span className="block text-3xs font-black text-stone-450 uppercase tracking-wider">Cost Breakdown Description</span>
                 <input
                   type="text"
                   value={costBreakdown}
@@ -458,7 +458,7 @@ export default function ConsultationReportPage() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
               <h2 className="text-sm font-black text-stone-900">Risk Assessment</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Severity mitigation register</p>
+              <p className="text-2xs text-stone-450 font-medium">Severity mitigation register</p>
             </div>
 
             <div className="space-y-2.5">
@@ -466,13 +466,13 @@ export default function ConsultationReportPage() {
                 <div key={r.id} className="p-3 bg-stone-50 border border-stone-200 rounded-xl space-y-1.5 text-xs text-left">
                   <div className="flex justify-between items-center">
                     <strong className="text-stone-900 font-black">{r.risk}</strong>
-                    <span className={`text-[8.5px] font-black px-2 py-0.5 rounded-full ${
+                    <span className={`text-3xs font-black px-2 py-0.5 rounded-full ${
                       r.severity === 'High' ? 'bg-rose-50 text-rose-700' : 'bg-amber-50 text-amber-700'
                     }`}>
                       {r.severity} Risk
                     </span>
                   </div>
-                  <p className="text-[10px] text-stone-600 leading-normal font-semibold">
+                  <p className="text-2xs text-stone-600 leading-normal font-semibold">
                     <strong>Mitigation:</strong> {r.mitigation}
                   </p>
                 </div>
@@ -522,7 +522,7 @@ export default function ConsultationReportPage() {
                   setAttachments(prev => [...prev, { name: 'Soil_Hydrology_Report.pdf', size: '1.8 MB', date: new Date().toLocaleDateString('en-IN') }]);
                   alert('Soil Hydrology report attached.');
                 }}
-                className="text-[10px] font-black text-brand-emerald hover:underline"
+                className="text-2xs font-black text-brand-emerald hover:underline"
               >
                 Attach File
               </button>
@@ -533,11 +533,11 @@ export default function ConsultationReportPage() {
                 <div key={idx} className="p-2.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                   <div>
                     <span className="font-bold text-stone-850 block truncate max-w-[150px]">{file.name}</span>
-                    <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">{file.size} &bull; {file.date}</span>
+                    <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{file.size} &bull; {file.date}</span>
                   </div>
                   <button
                     onClick={() => alert(`Downloading attachment: ${file.name}`)}
-                    className="text-brand-emerald text-[9px] font-bold uppercase tracking-wider hover:underline"
+                    className="text-brand-emerald text-3xs font-bold uppercase tracking-wider hover:underline"
                   >
                     Download
                   </button>
@@ -552,12 +552,12 @@ export default function ConsultationReportPage() {
             <div className="space-y-3">
               {versions.map((ver, idx) => (
                 <div key={idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs space-y-1 text-left">
-                  <div className="flex justify-between items-center text-[10px] font-black text-stone-400 uppercase">
+                  <div className="flex justify-between items-center text-2xs font-black text-stone-400 uppercase">
                     <span>Version: {ver.version}</span>
                     <span>{ver.date}</span>
                   </div>
                   <p className="font-semibold text-stone-850">{ver.changes}</p>
-                  <span className="block text-[9px] text-stone-450">Author: {ver.editor}</span>
+                  <span className="block text-3xs text-stone-450">Author: {ver.editor}</span>
                 </div>
               ))}
             </div>

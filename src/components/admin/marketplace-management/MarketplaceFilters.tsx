@@ -32,7 +32,7 @@ export default function MarketplaceFilters({
         </h3>
         <button
           onClick={onReset}
-          className="text-[9px] font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -41,7 +41,7 @@ export default function MarketplaceFilters({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-xs">
         {/* Status */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Listing Status
           </label>
           <select
@@ -60,7 +60,7 @@ export default function MarketplaceFilters({
 
         {/* Category */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Project Category
           </label>
           <select
@@ -79,7 +79,7 @@ export default function MarketplaceFilters({
 
         {/* Budget */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Budget Range
           </label>
           <select
@@ -96,7 +96,7 @@ export default function MarketplaceFilters({
 
         {/* Property Type */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Property Type
           </label>
           <select
@@ -113,7 +113,7 @@ export default function MarketplaceFilters({
 
         {/* Posted Date */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Posted Date
           </label>
           <select
@@ -130,7 +130,7 @@ export default function MarketplaceFilters({
 
         {/* Location search */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             City/Location
           </label>
           <input

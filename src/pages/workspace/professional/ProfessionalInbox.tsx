@@ -191,8 +191,8 @@ export default function ProfessionalInbox() {
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider font-sans">Collaboration workspace</span>
-          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-serif">Messages</h1>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider font-sans">Collaboration workspace</span>
+          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Messages</h1>
           <p className="text-xs text-stone-500 font-medium">Communicate with customers regarding active quotations, milestones, and site visits.</p>
         </div>
 
@@ -221,7 +221,7 @@ export default function ProfessionalInbox() {
             <span className={`text-base p-2 rounded-xl w-fit ${kpi.color}`}>{kpi.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{kpi.count}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
             </div>
           </div>
         ))}
@@ -240,7 +240,7 @@ export default function ProfessionalInbox() {
               onChange={e => setSearchQuery(e.target.value)}
               className="dbc-input text-xs"
             />
-            <div className="flex gap-1.5 flex-wrap text-[9px] font-black uppercase tracking-wider">
+            <div className="flex gap-1.5 flex-wrap text-3xs font-black uppercase tracking-wider">
               <button onClick={() => setStatusFilter('ALL')} className={`px-2 py-0.5 rounded ${statusFilter === 'ALL' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>
                 All
               </button>
@@ -271,17 +271,17 @@ export default function ProfessionalInbox() {
                 >
                   <div className="flex justify-between items-start">
                     <strong className="text-xs text-stone-900 block truncate">{t.customerName}</strong>
-                    <span className="text-[8px] text-stone-400 font-bold shrink-0">{t.timestamp}</span>
+                    <span className="text-3xs text-stone-400 font-bold shrink-0">{t.timestamp}</span>
                   </div>
-                  <span className="block text-[9px] text-stone-450 font-medium truncate mt-0.5">{t.projectName}</span>
-                  <p className="text-[10px] text-stone-600 truncate font-semibold mt-1.5">{t.latestMessage}</p>
+                  <span className="block text-3xs text-stone-450 font-medium truncate mt-0.5">{t.projectName}</span>
+                  <p className="text-2xs text-stone-600 truncate font-semibold mt-1.5">{t.latestMessage}</p>
                   
                   <div className="flex items-center justify-between mt-2 pt-2 border-t border-light-border/40">
-                    <span className="text-[8px] font-black uppercase bg-stone-100 text-stone-600 px-1.5 py-0.5 rounded">
+                    <span className="text-3xs font-black uppercase bg-stone-100 text-stone-600 px-1.5 py-0.5 rounded">
                       {t.type}
                     </span>
                     {t.unreadCount > 0 && (
-                      <span className="w-4 h-4 bg-brand-emerald text-white rounded-full flex items-center justify-center text-[8.5px] font-black">
+                      <span className="w-4 h-4 bg-brand-emerald text-white rounded-full flex items-center justify-center text-3xs font-black">
                         {t.unreadCount}
                       </span>
                     )}
@@ -299,7 +299,7 @@ export default function ProfessionalInbox() {
               {/* Active Conversation header */}
               <div className="p-4 border-b border-light-border bg-stone-50/30">
                 <h4 className="text-xs font-black text-stone-900 leading-none">{activeThread.customerName}</h4>
-                <span className="text-[10px] text-stone-450 font-bold mt-1 block">Project context: {activeThread.projectName}</span>
+                <span className="text-2xs text-stone-450 font-bold mt-1 block">Project context: {activeThread.projectName}</span>
               </div>
 
               {/* Bubbles log stream */}
@@ -313,12 +313,12 @@ export default function ProfessionalInbox() {
                       }`}>
                         <p>{msg.text}</p>
                         {msg.attachment && (
-                          <div className="mt-2 p-2 bg-stone-900/10 rounded-xl flex justify-between items-center gap-2 text-[10px]">
+                          <div className="mt-2 p-2 bg-stone-900/10 rounded-xl flex justify-between items-center gap-2 text-2xs">
                             <span>📁 {msg.attachment.name} ({msg.attachment.size})</span>
                             <button onClick={() => alert('Downloading attachments...')} className="underline font-black">Open</button>
                           </div>
                         )}
-                        <span className="block text-[8px] opacity-60 text-right mt-1 font-bold">{msg.timestamp}</span>
+                        <span className="block text-3xs opacity-60 text-right mt-1 font-bold">{msg.timestamp}</span>
                       </div>
                     </div>
                   );
@@ -329,14 +329,14 @@ export default function ProfessionalInbox() {
               <form onSubmit={handleSendMessage} className="p-4 border-t border-light-border space-y-3">
                 {/* Template selector dropdown */}
                 <div className="flex gap-2 items-center">
-                  <span className="text-[8px] font-black uppercase text-stone-400">Quick Templates:</span>
+                  <span className="text-3xs font-black uppercase text-stone-400">Quick Templates:</span>
                   <select
                     value={selectedTemplate}
                     onChange={e => {
                       setSelectedTemplate(e.target.value);
                       setTypedMessage(e.target.value);
                     }}
-                    className="dbc-input text-[9.5px] bg-white py-0.5 px-2 w-auto"
+                    className="dbc-input text-3xs bg-white py-0.5 px-2 w-auto"
                   >
                     <option value="">Select a template...</option>
                     {templates.map((t, idx) => (
@@ -375,12 +375,12 @@ export default function ProfessionalInbox() {
           <div className="space-y-6">
             {/* Customer notification feed */}
             <div className="space-y-3">
-              <span className="block text-[8px] font-black uppercase text-stone-400 tracking-wider">Latest Notifications</span>
+              <span className="block text-3xs font-black uppercase text-stone-400 tracking-wider">Latest Notifications</span>
               <div className="space-y-2">
                 {notifications.map((n, idx) => (
-                  <div key={idx} className="p-2 bg-white border border-stone-200 rounded-xl text-[10px] text-stone-600 font-semibold leading-tight">
+                  <div key={idx} className="p-2 bg-white border border-stone-200 rounded-xl text-2xs text-stone-600 font-semibold leading-tight">
                     <p>{n.text}</p>
-                    <span className="text-[7.5px] text-stone-400 font-bold block mt-0.5">{n.time}</span>
+                    <span className="text-3xs text-stone-400 font-bold block mt-0.5">{n.time}</span>
                   </div>
                 ))}
               </div>
@@ -388,17 +388,17 @@ export default function ProfessionalInbox() {
 
             {/* Quick Actions links */}
             <div className="space-y-2">
-              <span className="block text-[8px] font-black uppercase text-stone-400 tracking-wider font-sans">Context shortcuts</span>
-              <button onClick={() => alert('Redirecting to project drawings...')} className="w-full text-left p-2.5 bg-white border border-stone-200 hover:bg-stone-50 transition rounded-xl text-[10px] font-bold text-stone-750 flex items-center gap-2">
+              <span className="block text-3xs font-black uppercase text-stone-400 tracking-wider font-sans">Context shortcuts</span>
+              <button onClick={() => alert('Redirecting to project drawings...')} className="w-full text-left p-2.5 bg-white border border-stone-200 hover:bg-stone-50 transition rounded-xl text-2xs font-bold text-stone-750 flex items-center gap-2">
                 🏗️ Open Project files
               </button>
-              <button onClick={() => alert('Opening quotation proposal editor...')} className="w-full text-left p-2.5 bg-white border border-stone-200 hover:bg-stone-50 transition rounded-xl text-[10px] font-bold text-stone-750 flex items-center gap-2">
+              <button onClick={() => alert('Opening quotation proposal editor...')} className="w-full text-left p-2.5 bg-white border border-stone-200 hover:bg-stone-50 transition rounded-xl text-2xs font-bold text-stone-750 flex items-center gap-2">
                 📝 View Quotation draft
               </button>
             </div>
           </div>
 
-          <div className="p-3 bg-amber-50 border border-amber-100 rounded-xl text-[9px] font-medium text-amber-800 leading-normal">
+          <div className="p-3 bg-amber-50 border border-amber-100 rounded-xl text-3xs font-medium text-amber-800 leading-normal">
             🛡️ Privacy guidelines: Real-time socket links are offline; message logs are saved locally inside active project directory drafts.
           </div>
 

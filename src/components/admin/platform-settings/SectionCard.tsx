@@ -17,12 +17,12 @@ export default function SectionCard({ title, subtitle, icon, badge, children, cl
         <div className="flex items-center gap-3">
           {icon && <span className="text-lg shrink-0" aria-hidden="true">{icon}</span>}
           <div>
-            <h2 className="text-sm font-black text-stone-900 font-serif leading-snug">{title}</h2>
-            {subtitle && <p className="text-[10px] text-stone-500 font-medium mt-0.5">{subtitle}</p>}
+            <h2 className="text-sm font-black text-stone-900 font-display leading-snug">{title}</h2>
+            {subtitle && <p className="text-2xs text-stone-500 font-medium mt-0.5">{subtitle}</p>}
           </div>
         </div>
         {badge && (
-          <span className="text-[8px] font-black uppercase tracking-wider text-stone-500 bg-stone-100 border border-stone-200 px-2 py-0.5 rounded-full shrink-0">
+          <span className="text-3xs font-black uppercase tracking-wider text-stone-500 bg-stone-100 border border-stone-200 px-2 py-0.5 rounded-full shrink-0">
             {badge}
           </span>
         )}

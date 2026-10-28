@@ -9,10 +9,10 @@ export default function SettingsHeader({ onSave, onReset, isSaving, hasUnsavedCh
   return (
     <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative select-none text-left">
       <div className="space-y-1">
-        <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">
+        <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">
           Administrator Configuration
         </span>
-        <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-serif leading-tight">
+        <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
           Platform Settings
         </h1>
         <p className="text-xs text-stone-500 font-medium">
@@ -22,7 +22,7 @@ export default function SettingsHeader({ onSave, onReset, isSaving, hasUnsavedCh
 
       <div className="flex items-center gap-2 text-xs font-bold">
         {hasUnsavedChanges && (
-          <span className="text-[9px] font-black uppercase tracking-wider text-amber-600 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full">
+          <span className="text-3xs font-black uppercase tracking-wider text-amber-600 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full">
             Unsaved Changes
           </span>
         )}

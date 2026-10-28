@@ -248,8 +248,8 @@ export default function QuotationManagementPage() {
 
       {/* Delete Draft Modal */}
       {deleteConfirmId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/50 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-stone-200 space-y-4 text-xs">
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal space-y-4 text-xs">
             <h3 className="text-sm font-bold text-stone-900">Delete Quotation Draft</h3>
             <p className="text-stone-600">
               Are you sure you want to delete draft <strong>{deleteConfirmId}</strong>? This action cannot be undone.
@@ -275,8 +275,8 @@ export default function QuotationManagementPage() {
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">Bid & Proposals</span>
-          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-serif">Quotation Management</h1>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Bid & Proposals</span>
+          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Quotation Management</h1>
           <p className="text-xs text-stone-500 font-medium">Create, manage, and submit professional quotations for customer requirements.</p>
         </div>
 
@@ -309,7 +309,7 @@ export default function QuotationManagementPage() {
                 <span className={`text-base p-2 rounded-xl w-fit ${kpi.color}`}>{kpi.icon}</span>
                 <div className="mt-4 space-y-0.5">
                   <span className="block text-2xl font-black text-stone-900">{kpi.count}</span>
-                  <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
+                  <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
                 </div>
               </div>
             ))}
@@ -341,7 +341,7 @@ export default function QuotationManagementPage() {
                 setSearchQuery('');
                 setStatusFilter('ALL');
               }}
-              className="text-brand-emerald text-[10px] font-black uppercase hover:underline"
+              className="text-brand-emerald text-2xs font-black uppercase hover:underline"
             >
               Reset Filters
             </button>
@@ -356,7 +356,7 @@ export default function QuotationManagementPage() {
             ) : (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-light-border text-[9px] font-black uppercase text-stone-450">
+                  <tr className="border-b border-light-border text-3xs font-black uppercase text-stone-450">
                     <th className="py-2.5">Quotation ID</th>
                     <th className="py-2.5">Requirement Details</th>
                     <th className="py-2.5">Client</th>
@@ -371,12 +371,12 @@ export default function QuotationManagementPage() {
                       <td className="py-3 font-bold text-stone-900">{quote.id}</td>
                       <td className="py-3">
                         <strong className="block text-stone-900">{quote.requirementTitle}</strong>
-                        <span className="text-[10px] text-stone-450">{quote.category}</span>
+                        <span className="text-2xs text-stone-450">{quote.category}</span>
                       </td>
                       <td className="py-3 text-stone-500">{quote.customerName}</td>
                       <td className="py-3 font-extrabold text-stone-900">{quote.amount}</td>
                       <td className="py-3">
-                        <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                        <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                           quote.status === 'Draft' ? 'bg-stone-50 border-stone-200 text-stone-700' : quote.status === 'Submitted' ? 'bg-blue-50 border-blue-200 text-blue-800' : 'bg-emerald-50 border-emerald-200 text-emerald-800'
                         }`}>
                           {quote.status}
@@ -385,19 +385,19 @@ export default function QuotationManagementPage() {
                       <td className="py-3 text-right space-x-2 shrink-0">
                         {quote.status === 'Draft' ? (
                           <>
-                            <button onClick={() => handleEdit(quote)} className="text-[9px] font-black uppercase text-brand-emerald hover:underline">
+                            <button onClick={() => handleEdit(quote)} className="text-3xs font-black uppercase text-brand-emerald hover:underline">
                               Edit
                             </button>
-                            <button onClick={() => handleDeleteDraft(quote.id)} className="text-[9px] font-black uppercase text-rose-600 hover:underline">
+                            <button onClick={() => handleDeleteDraft(quote.id)} className="text-3xs font-black uppercase text-rose-600 hover:underline">
                               Delete
                             </button>
                           </>
                         ) : (
-                          <button onClick={() => handlePreview(quote)} className="text-[9px] font-black uppercase text-brand-emerald hover:underline">
+                          <button onClick={() => handlePreview(quote)} className="text-3xs font-black uppercase text-brand-emerald hover:underline">
                             View Proposal
                           </button>
                         )}
-                        <button onClick={() => handleDuplicate(quote)} className="text-[9px] font-black uppercase text-stone-400 hover:underline">
+                        <button onClick={() => handleDuplicate(quote)} className="text-3xs font-black uppercase text-stone-400 hover:underline">
                           Duplicate
                         </button>
                       </td>
@@ -421,7 +421,7 @@ export default function QuotationManagementPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Requirement Target</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Requirement Target</label>
                 <input
                   type="text"
                   value={reqTitle}
@@ -430,7 +430,7 @@ export default function QuotationManagementPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Customer Client Name</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Customer Client Name</label>
                 <input
                   type="text"
                   value={clientName}
@@ -442,7 +442,7 @@ export default function QuotationManagementPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Quoted Amount (INR)</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Quoted Amount (INR)</label>
                 <input
                   type="text"
                   value={quoteAmount}
@@ -452,7 +452,7 @@ export default function QuotationManagementPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Expected duration limits</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Expected duration limits</label>
                 <input
                   type="text"
                   value={quoteDuration}
@@ -464,7 +464,7 @@ export default function QuotationManagementPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Scope of Work details</label>
+              <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Scope of Work details</label>
               <textarea
                 value={quoteScope}
                 onChange={e => setQuoteScope(e.target.value)}
@@ -475,7 +475,7 @@ export default function QuotationManagementPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Exclusions (Out of scope)</label>
+              <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Exclusions (Out of scope)</label>
               <textarea
                 value={quoteExclusions}
                 onChange={e => setQuoteExclusions(e.target.value)}
@@ -486,7 +486,7 @@ export default function QuotationManagementPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Terms and Conditions</label>
+              <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Terms and Conditions</label>
               <textarea
                 value={quoteTerms}
                 onChange={e => setQuoteTerms(e.target.value)}
@@ -538,62 +538,62 @@ export default function QuotationManagementPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Proposal layout column */}
-          <div className="lg:col-span-8 bg-white border border-stone-300 p-8 rounded-3xl shadow-apple-md space-y-6 font-serif">
+          <div className="lg:col-span-8 bg-white border border-stone-300 p-8 rounded-3xl shadow-apple-md space-y-6 font-display">
             
             {/* Header info */}
             <div className="flex justify-between items-start border-b border-stone-200 pb-4">
               <div>
-                <span className="text-[10px] font-black uppercase text-brand-emerald tracking-wider font-sans">Business proposal quotation</span>
+                <span className="text-2xs font-black uppercase text-brand-emerald tracking-wider font-sans">Business proposal quotation</span>
                 <h2 className="text-lg font-black text-stone-900 mt-1">Apex Architecture & Build</h2>
-                <p className="text-[9.5px] text-stone-450 font-sans">Hyderabad, India &bull; License: LIC-ARCH-2024-88</p>
+                <p className="text-3xs text-stone-450 font-sans">Hyderabad, India &bull; License: LIC-ARCH-2024-88</p>
               </div>
               <div className="text-right">
-                <span className="bg-stone-100 px-2 py-0.5 text-[8.5px] font-black text-stone-600 rounded font-sans uppercase">
+                <span className="bg-stone-100 px-2 py-0.5 text-3xs font-black text-stone-600 rounded font-sans uppercase">
                   Quote Ref: {previewQuote.id}
                 </span>
-                <p className="text-[9.5px] text-stone-400 mt-1 font-sans">Last Update: {previewQuote.lastModified}</p>
+                <p className="text-3xs text-stone-400 mt-1 font-sans">Last Update: {previewQuote.lastModified}</p>
               </div>
             </div>
 
             {/* Client summary */}
             <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl font-sans text-xs space-y-1">
-              <span className="block text-[8px] font-black text-stone-400 uppercase tracking-wider">Client Recipient</span>
+              <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">Client Recipient</span>
               <strong className="text-stone-900 block">{previewQuote.customerName}</strong>
               <span className="text-stone-500">Project Target: {previewQuote.requirementTitle}</span>
             </div>
 
             {/* Scope specifications */}
             <div className="space-y-2 text-xs font-sans">
-              <span className="block text-[8px] font-black text-stone-400 uppercase tracking-widest">Scope of work services</span>
+              <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest">Scope of work services</span>
               <p className="text-stone-750 font-semibold leading-relaxed">{previewQuote.scope}</p>
             </div>
 
             {/* Exclusions */}
             <div className="space-y-2 text-xs font-sans pt-3 border-t border-light-border/40">
-              <span className="block text-[8px] font-black text-stone-450 uppercase tracking-widest">Exclusions details</span>
+              <span className="block text-3xs font-black text-stone-450 uppercase tracking-widest">Exclusions details</span>
               <p className="text-stone-700 font-semibold leading-relaxed">{previewQuote.exclusions}</p>
             </div>
 
             {/* Amount details */}
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-stone-200 font-sans text-xs">
               <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl">
-                <span className="block text-[8px] font-black text-emerald-800 uppercase mb-0.5">Estimated Cost</span>
+                <span className="block text-3xs font-black text-emerald-800 uppercase mb-0.5">Estimated Cost</span>
                 <span className="text-lg font-extrabold text-brand-emerald">{previewQuote.amount}</span>
               </div>
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl">
-                <span className="block text-[8px] font-black text-stone-400 uppercase mb-0.5">Expected Timeline Duration</span>
+                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Expected Timeline Duration</span>
                 <span className="text-lg font-bold text-stone-900">{previewQuote.duration}</span>
               </div>
             </div>
 
             {/* Terms and conditions */}
-            <div className="space-y-2 text-[9.5px] font-sans pt-4 border-t border-stone-200">
-              <span className="block text-[8px] font-black text-stone-450 uppercase tracking-widest">Terms & conditions compliance</span>
+            <div className="space-y-2 text-3xs font-sans pt-4 border-t border-stone-200">
+              <span className="block text-3xs font-black text-stone-450 uppercase tracking-widest">Terms & conditions compliance</span>
               <p className="text-stone-400 font-semibold leading-relaxed">{previewQuote.terms}</p>
             </div>
 
             {/* Signatures */}
-            <div className="pt-6 flex justify-between items-end font-sans text-[10px]">
+            <div className="pt-6 flex justify-between items-end font-sans text-2xs">
               <div>
                 <span className="block border-t border-stone-200 pt-1 w-32 font-bold text-stone-450">John Anderson, Apex</span>
               </div>

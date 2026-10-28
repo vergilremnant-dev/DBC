@@ -262,7 +262,7 @@ export function AdminPlatformSettings() {
                 <button
                   key={tab.id}
                   onClick={() => tab.id === 'settings' ? undefined : navigate('/admin/dashboard')}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald
+                  className={`px-3 py-1.5 rounded-lg text-2xs font-black uppercase tracking-wider transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald
                     ${tab.id === 'settings'
                       ? 'bg-brand-emerald text-white'
                       : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100'
@@ -277,7 +277,7 @@ export function AdminPlatformSettings() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/admin/dashboard')}
-              className="text-[10px] font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer focus:outline-none hidden md:block"
+              className="text-2xs font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer focus:outline-none hidden md:block"
             >
               ← Back to Dashboard
             </button>
@@ -354,8 +354,8 @@ export function AdminPlatformSettings() {
               {/* Summary info card */}
               <aside className="bg-white border border-light-border rounded-3xl shadow-apple-sm overflow-hidden">
                 <div className="px-5 py-4 border-b border-light-border">
-                  <h2 className="text-sm font-black text-stone-900 font-serif">Configuration Summary</h2>
-                  <p className="text-[10px] text-stone-500 font-medium mt-0.5">Current platform snapshot.</p>
+                  <h2 className="text-sm font-black text-stone-900 font-display">Configuration Summary</h2>
+                  <p className="text-2xs text-stone-500 font-medium mt-0.5">Current platform snapshot.</p>
                 </div>
                 <div className="p-4 space-y-3">
                   {[
@@ -367,8 +367,8 @@ export function AdminPlatformSettings() {
                     { label: 'Visibility', value: marketplace.publicProfileVisibility ? 'Public' : 'Private', color: marketplace.publicProfileVisibility ? 'text-emerald-700' : 'text-stone-500' },
                   ].map(item => (
                     <div key={item.label} className="flex items-center justify-between gap-2 py-2 border-b border-light-border/60 last:border-0">
-                      <span className="text-[10px] font-bold text-stone-500">{item.label}</span>
-                      <span className={`text-[10px] font-black ${item.color}`}>{item.value}</span>
+                      <span className="text-2xs font-bold text-stone-500">{item.label}</span>
+                      <span className={`text-2xs font-black ${item.color}`}>{item.value}</span>
                     </div>
                   ))}
                 </div>
@@ -379,8 +379,8 @@ export function AdminPlatformSettings() {
                 <div className="flex items-start gap-3">
                   <span className="text-lg shrink-0" aria-hidden="true">ℹ️</span>
                   <div className="space-y-1">
-                    <p className="text-[10px] font-black uppercase tracking-wider text-amber-700">Phase 1 MVP</p>
-                    <p className="text-[10px] text-amber-700 font-medium leading-relaxed">
+                    <p className="text-2xs font-black uppercase tracking-wider text-amber-700">Phase 1 MVP</p>
+                    <p className="text-2xs text-amber-700 font-medium leading-relaxed">
                       Some settings require backend integration (security policies, file uploads, 2FA). These are marked <strong>Read-only</strong> and will be enabled in Phase 2.
                     </p>
                   </div>

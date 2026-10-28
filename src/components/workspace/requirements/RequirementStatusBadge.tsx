@@ -23,7 +23,7 @@ export function RequirementStatusBadge({ status }: RequirementStatusBadgeProps) 
   }
 
   return (
-    <span className={`inline-block text-[8px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded border ${style}`}>
+    <span className={`inline-block text-3xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded border ${style}`}>
       {status}
     </span>
   );

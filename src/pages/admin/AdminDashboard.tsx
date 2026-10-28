@@ -1428,19 +1428,21 @@ export function AdminDashboard() {
       
       {/* 1. Header Shell */}
       <header className="sticky top-0 z-30 border-b border-light-border bg-white shadow-xs">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+          <div className="flex items-center gap-3 min-w-0">
             <BrandLogo variant="header" />
-            <span className="rounded bg-stone-900 px-2.5 py-0.5 text-[8.5px] font-black text-white uppercase tracking-wider">
+            <span className="hidden sm:inline-block whitespace-nowrap rounded bg-stone-900 px-2.5 py-0.5 text-3xs font-black text-white uppercase tracking-wider">
               Control Panel
             </span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <button
               onClick={() => navigate('/admin/analytics')}
-              className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-light-stone/30"
+              className="dbc-btn dbc-btn-sm dbc-btn-secondary"
+              aria-label="BI Analytics"
             >
-              📊 BI Analytics
+              <span aria-hidden="true">📊</span>
+              <span className="hidden sm:inline">BI Analytics</span>
             </button>
             <LogoutButton />
           </div>
@@ -1451,7 +1453,7 @@ export function AdminDashboard() {
       <main className="mx-auto max-w-6xl w-full px-4 py-8 sm:px-6 space-y-6 flex-1 text-left">
         
         {/* Navigation list */}
-        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-[9.5px] font-black uppercase tracking-wider no-scrollbar">
+        <section className="flex gap-2 border-b border-stone-200 overflow-x-auto pb-1 text-3xs font-black uppercase tracking-wider no-scrollbar">
           {([
             { id: 'dashboard', label: 'Platform Reports', icon: '📊' },
             { id: 'users', label: 'User Operations', icon: '👤' },
@@ -1511,12 +1513,12 @@ export function AdminDashboard() {
               {/* Filter Options */}
               <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-left select-none space-y-4">
                 <div className="flex justify-between items-center border-b border-light-border/40 pb-2">
-                  <h4 className="text-[10px] font-black uppercase text-stone-900 tracking-wider">
+                  <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
                     🔍 Filter Operational metrics
                   </h4>
                   <button
                     onClick={handleResetReportFilters}
-                    className="text-[9px] font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+                    className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
                   >
                     Reset Filters
                   </button>
@@ -1525,7 +1527,7 @@ export function AdminDashboard() {
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-xs">
                   {/* Date range filter */}
                   <div className="space-y-1">
-                    <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
                       Date Range
                     </label>
                     <select
@@ -1542,7 +1544,7 @@ export function AdminDashboard() {
 
                   {/* Role filter */}
                   <div className="space-y-1">
-                    <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
                       User Role
                     </label>
                     <select
@@ -1560,7 +1562,7 @@ export function AdminDashboard() {
 
                   {/* Category filter */}
                   <div className="space-y-1">
-                    <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
                       Marketplace Category
                     </label>
                     <select
@@ -1577,7 +1579,7 @@ export function AdminDashboard() {
 
                   {/* Location input filter */}
                   <div className="space-y-1">
-                    <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
                       Location City
                     </label>
                     <input
@@ -1591,7 +1593,7 @@ export function AdminDashboard() {
 
                   {/* Status filter */}
                   <div className="space-y-1">
-                    <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
                       User Status
                     </label>
                     <select
@@ -2203,16 +2205,16 @@ export function AdminDashboard() {
                     <div className="flex justify-between items-start border-b border-light-border/40 pb-2">
                       <div>
                         <h4 className="text-xs font-black text-stone-black">Dispute Ticket {d.id}</h4>
-                        <span className="block text-[8px] text-stone-gray font-bold mt-0.5">
+                        <span className="block text-3xs text-stone-gray font-bold mt-0.5">
                           Client: {d.client} vs. Provider: {d.provider}
                         </span>
                       </div>
-                      <span className={`dbc-badge text-[7.5px] py-0.5 ${
+                      <span className={`dbc-badge text-3xs py-0.5 ${
                         d.status === 'Resolved' ? 'dbc-badge-completed' : 'dbc-badge-priority'
                       }`}>{d.status}</span>
                     </div>
 
-                    <div className="text-[10px] text-stone-gray font-semibold space-y-1.5">
+                    <div className="text-2xs text-stone-gray font-semibold space-y-1.5">
                       <p>📝 <strong>Disputed Subject:</strong> "{d.topic}"</p>
                       <p>💳 <strong>Escrow holding:</strong> ₹{d.amount.toLocaleString()}</p>
                       <div className="p-3 bg-light-stone/40 border border-light-border rounded-xl">
@@ -2225,13 +2227,13 @@ export function AdminDashboard() {
                       <div className="flex gap-2 pt-2 border-t border-light-border/40">
                         <button
                           onClick={() => handleResolveDispute(d.id)}
-                          className="dbc-btn dbc-btn-primary py-2 px-4 text-[9px] font-bold uppercase tracking-wider cursor-pointer"
+                          className="dbc-btn dbc-btn-primary py-2 px-4 text-3xs font-bold uppercase tracking-wider cursor-pointer"
                         >
                           Resolve & Release Escrow
                         </button>
                         <button
                           onClick={() => alert('Requesting mediation evidence call...')}
-                          className="dbc-btn dbc-btn-outline py-2 px-4 text-[9px] font-bold uppercase tracking-wider bg-white cursor-pointer"
+                          className="dbc-btn dbc-btn-outline py-2 px-4 text-3xs font-bold uppercase tracking-wider bg-white cursor-pointer"
                         >
                           Request Mediation Files
                         </button>
@@ -2253,7 +2255,7 @@ export function AdminDashboard() {
               <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Broadcast Announcements</h3>
               
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Audience Target</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Audience Target</label>
                 <select
                   value={announceAudience}
                   onChange={(e) => setAnnounceAudience(e.target.value)}
@@ -2267,7 +2269,7 @@ export function AdminDashboard() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Message details</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Message details</label>
                 <textarea
                   placeholder="Type broadcast text announcement..."
                   value={announcementText}
@@ -2285,11 +2287,11 @@ export function AdminDashboard() {
             {/* Homepage CMS links */}
             <div className="dbc-card space-y-4">
               <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">CMS Operations</h3>
-              <p className="text-[10px] text-stone-gray font-semibold leading-relaxed">
+              <p className="text-2xs text-stone-gray font-semibold leading-relaxed">
                 Review and update static resources, register marketplace categories, edit blog directories, or configure email notifications layouts.
               </p>
               
-              <div className="space-y-2 pt-2 border-t border-light-border/40 text-[9px] font-black uppercase tracking-wider">
+              <div className="space-y-2 pt-2 border-t border-light-border/40 text-3xs font-black uppercase tracking-wider">
                 <button onClick={() => navigate('/admin/articles')} className="w-full p-2.5 bg-light-stone hover:bg-light-stone/80 rounded-xl text-stone-black text-left border border-light-border">
                   ✍️ Edit Blog & Knowledge Hub Articles
                 </button>
@@ -2308,11 +2310,11 @@ export function AdminDashboard() {
             <h3 className="text-xs font-black uppercase tracking-wider text-stone-black">Administrative Trail Event Log</h3>
             <div className="divide-y divide-light-border/40">
               {MOCK_AUDIT_LOGS.map((log) => (
-                <div key={log.id} className="py-3 flex justify-between items-center text-[10px] text-stone-gray font-semibold">
+                <div key={log.id} className="py-3 flex justify-between items-center text-2xs text-stone-gray font-semibold">
                   <div>
                     <strong className="text-stone-black">{log.admin}</strong>: {log.action}
                   </div>
-                  <span className="text-[8px] text-stone-gray/80 font-bold">{log.time}</span>
+                  <span className="text-3xs text-stone-gray/80 font-bold">{log.time}</span>
                 </div>
               ))}
             </div>
@@ -2347,11 +2349,11 @@ export function AdminDashboard() {
                   {[20, 22, 18, 12, 14, 13, 12].map((lat, i) => (
                     <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
                       <div className="w-full bg-brand-emerald rounded-t-md" style={{ height: `${lat * 4}px` }} />
-                      <span className="text-[8px] text-stone-gray/80 font-bold">{lat}ms</span>
+                      <span className="text-3xs text-stone-gray/80 font-bold">{lat}ms</span>
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-between text-[8px] text-stone-gray/80 font-black uppercase tracking-wider mt-3 pt-2 border-t border-light-border/40">
+                <div className="flex justify-between text-3xs text-stone-gray/80 font-black uppercase tracking-wider mt-3 pt-2 border-t border-light-border/40">
                   <span>Mon</span>
                   <span>Wed</span>
                   <span>Sun (Today)</span>
@@ -2366,17 +2368,17 @@ export function AdminDashboard() {
 
       {/* Action Confirmation Modal Dialog */}
       {confirmModal.isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/45 backdrop-blur-xs select-none animate-fade-in" role="dialog" aria-modal="true">
-          <div className="bg-white border border-light-border max-w-sm w-full p-6 rounded-3xl shadow-apple-lg space-y-4 text-left">
+        <div className="dbc-modal-overlay select-none" role="dialog" aria-modal="true">
+          <div className="dbc-modal dbc-modal-sm space-y-4 text-left">
             <div className="space-y-1.5">
               <h3 className="text-xs font-black uppercase text-stone-900 tracking-wider">
                 {confirmModal.title}
               </h3>
-              <p className="text-[10.5px] text-stone-600 font-semibold leading-relaxed">
+              <p className="text-2xs text-stone-600 font-semibold leading-relaxed">
                 {confirmModal.message}
               </p>
             </div>
-            <div className="flex gap-2 justify-end text-[9px] font-black uppercase tracking-wider pt-2">
+            <div className="flex gap-2 justify-end text-3xs font-black uppercase tracking-wider pt-2">
               <button
                 onClick={closeConfirm}
                 className="px-4.5 py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 rounded-xl font-bold transition cursor-pointer"

@@ -17,7 +17,7 @@ export function EmptyState({ title, description, icon, actionLabel, onAction }: 
         <h4 className="text-xs font-bold text-stone-900 leading-snug">
           {title}
         </h4>
-        <p className="text-[10px] text-stone-450 font-medium leading-relaxed">
+        <p className="text-2xs text-stone-450 font-medium leading-relaxed">
           {description}
         </p>
       </div>
@@ -26,7 +26,7 @@ export function EmptyState({ title, description, icon, actionLabel, onAction }: 
         <div className="pt-2">
           <button
             onClick={onAction}
-            className="bg-stone-900 hover:bg-stone-850 text-white font-bold text-[10px] px-4 py-2 rounded-xl transition shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+            className="bg-stone-900 hover:bg-stone-850 text-white font-bold text-2xs px-4 py-2 rounded-xl transition shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
           >
             {actionLabel}
           </button>

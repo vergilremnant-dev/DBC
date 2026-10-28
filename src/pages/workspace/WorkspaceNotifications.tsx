@@ -248,7 +248,7 @@ function CustomerNotifications() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-200 pb-5 gap-4">
         <div className="space-y-1">
-          <h1 className="text-2xl font-black text-stone-900 font-serif">Notifications</h1>
+          <h1 className="text-2xl font-black text-stone-900 font-display">Notifications</h1>
           <p className="text-xs text-stone-500 font-semibold">
             Stay updated with your latest account, planning, and project activities.
           </p>
@@ -389,7 +389,7 @@ function CustomerNotifications() {
               </div>
 
               {/* Mobile overlay sheet */}
-              <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4 lg:hidden">
+              <div className="dbc-modal-overlay lg:hidden">
                 <div className="w-full max-w-lg bg-white rounded-3xl overflow-hidden shadow-2xl h-[90vh]">
                   <NotificationDetail
                     notification={selectedNotification}

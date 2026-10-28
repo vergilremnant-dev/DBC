@@ -64,7 +64,7 @@ export function ProjectFilters({
         <div className="flex flex-wrap items-center gap-3">
           {/* Status Dropdown */}
           <div className="space-y-1">
-            <span className="block text-[8px] font-black uppercase text-stone-400 tracking-widest">Progress status</span>
+            <span className="block text-3xs font-black uppercase text-stone-400 tracking-widest">Progress status</span>
             <select
               value={statusFilter}
               onChange={(e) => onStatusChange(e.target.value)}
@@ -78,7 +78,7 @@ export function ProjectFilters({
 
           {/* Category Dropdown */}
           <div className="space-y-1">
-            <span className="block text-[8px] font-black uppercase text-stone-400 tracking-widest">Service Category</span>
+            <span className="block text-3xs font-black uppercase text-stone-400 tracking-widest">Service Category</span>
             <select
               value={categoryFilter}
               onChange={(e) => onCategoryChange(e.target.value)}
@@ -92,7 +92,7 @@ export function ProjectFilters({
 
           {/* Sort Selector */}
           <div className="space-y-1">
-            <span className="block text-[8px] font-black uppercase text-stone-400 tracking-widest">Sort Sequence</span>
+            <span className="block text-3xs font-black uppercase text-stone-400 tracking-widest">Sort Sequence</span>
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
@@ -110,7 +110,7 @@ export function ProjectFilters({
         {isFiltered && (
           <button
             onClick={onReset}
-            className="text-[10px] font-black uppercase text-rose-700 hover:underline transition cursor-pointer"
+            className="text-2xs font-black uppercase text-rose-700 hover:underline transition cursor-pointer"
           >
             Clear Filters ×
           </button>

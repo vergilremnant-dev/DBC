@@ -12,7 +12,7 @@ export function WelcomeCard({ name, completionPercentage, onCompleteProfile }: W
       
       {/* Greeting info */}
       <div className="space-y-1.5 flex-1">
-        <h2 className="text-xl font-bold text-stone-900 font-serif leading-tight">
+        <h2 className="text-xl font-bold text-stone-900 font-display leading-tight">
           Welcome back, {name || 'Client'}
         </h2>
         <p className="text-xs text-stone-500 font-medium leading-relaxed max-w-xl">
@@ -46,21 +46,21 @@ export function WelcomeCard({ name, completionPercentage, onCompleteProfile }: W
               strokeLinecap="round"
             />
           </svg>
-          <span className="absolute text-[10px] font-black text-stone-900">
+          <span className="absolute text-2xs font-black text-stone-900">
             {completionPercentage}%
           </span>
         </div>
 
         {/* Text and Action */}
         <div className="space-y-0.5">
-          <span className="block text-[9px] uppercase font-black text-stone-400 tracking-wider">Profile Setup</span>
+          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Profile Setup</span>
           <span className="block text-xs font-bold text-stone-700">
             {isComplete ? 'Verification Completed' : 'Profile Incomplete'}
           </span>
           {!isComplete && (
             <button
               onClick={onCompleteProfile}
-              className="text-[10px] font-black text-emerald-700 hover:text-emerald-800 hover:underline transition uppercase tracking-wider block focus:outline-none"
+              className="text-2xs font-black text-emerald-700 hover:text-emerald-800 hover:underline transition uppercase tracking-wider block focus:outline-none"
             >
               Complete Profile →
             </button>

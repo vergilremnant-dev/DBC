@@ -36,7 +36,7 @@ export default function ProjectFilters({
         </h3>
         <button
           onClick={onReset}
-          className="text-[9px] font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -45,7 +45,7 @@ export default function ProjectFilters({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-xs">
         {/* Status */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Project Status
           </label>
           <select
@@ -64,7 +64,7 @@ export default function ProjectFilters({
 
         {/* Category */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Project Category
           </label>
           <select
@@ -83,7 +83,7 @@ export default function ProjectFilters({
 
         {/* Progress Range */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Progress %
           </label>
           <select
@@ -101,7 +101,7 @@ export default function ProjectFilters({
 
         {/* Professional */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Professional Partner
           </label>
           <select
@@ -120,7 +120,7 @@ export default function ProjectFilters({
 
         {/* Customer */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             Customer Owner
           </label>
           <select
@@ -139,7 +139,7 @@ export default function ProjectFilters({
 
         {/* Location search */}
         <div className="space-y-1">
-          <label className="block text-[8px] font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
             City/Location
           </label>
           <input

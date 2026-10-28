@@ -230,8 +230,8 @@ export default function RequirementMarketplace() {
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">Leads Dispatch Feed</span>
-          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-serif">Requirement Marketplace</h1>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Leads Dispatch Feed</span>
+          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Requirement Marketplace</h1>
           <p className="text-xs text-stone-500 font-medium">Discover new customer requirements that match your trades and services.</p>
         </div>
 
@@ -266,7 +266,7 @@ export default function RequirementMarketplace() {
             <span className={`text-base p-2 rounded-xl w-fit ${kpi.color}`}>{kpi.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{kpi.count}</span>
-              <span className="block text-[9.5px] font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
+              <span className="block text-3xs font-bold text-stone-450 uppercase tracking-wider">{kpi.label}</span>
             </div>
           </div>
         ))}
@@ -318,7 +318,7 @@ export default function RequirementMarketplace() {
           </select>
         </div>
 
-        <div className="flex justify-between items-center text-[10px] font-bold text-stone-450">
+        <div className="flex justify-between items-center text-2xs font-bold text-stone-450">
           <span>Found {filteredReqs.length} matching leads</span>
           <button
             onClick={() => {
@@ -341,7 +341,7 @@ export default function RequirementMarketplace() {
           <div className="text-center py-16 bg-white border border-light-border rounded-3xl space-y-3">
             <span className="text-3xl block">📁</span>
             <h3 className="text-xs font-black text-stone-400 uppercase tracking-widest">No matching requirements</h3>
-            <p className="text-[10px] text-stone-500 max-w-xs mx-auto">Adjust search parameters or category filter settings above.</p>
+            <p className="text-2xs text-stone-500 max-w-xs mx-auto">Adjust search parameters or category filter settings above.</p>
           </div>
         ) : (
           paginatedReqs.map(req => (
@@ -349,38 +349,38 @@ export default function RequirementMarketplace() {
               <div className="flex justify-between items-start flex-wrap gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="bg-stone-100 border border-light-border text-stone-700 text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="bg-stone-100 border border-light-border text-stone-700 text-3xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
                       {req.category}
                     </span>
-                    <span className={`text-[8.5px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                    <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
                       req.status === 'New' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-stone-50 border-stone-200 text-stone-600'
                     }`}>
                       {req.status}
                     </span>
                     {req.isCustomerVerified && (
-                      <span className="bg-blue-50 text-blue-800 text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      <span className="bg-blue-50 text-blue-800 text-3xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
                         ✓ Verified Client
                       </span>
                     )}
                   </div>
                   <h3
                     onClick={() => navigate(`/workspace/requirement/${req.id}`)}
-                    className="text-sm font-black text-stone-900 leading-tight font-serif mt-1 hover:text-brand-emerald cursor-pointer transition"
+                    className="text-sm font-black text-stone-900 leading-tight font-display mt-1 hover:text-brand-emerald cursor-pointer transition"
                   >
                     {req.title}
                   </h3>
-                  <p className="text-[10px] text-stone-450 font-bold uppercase">{req.projectType} &bull; {req.location}</p>
+                  <p className="text-2xs text-stone-450 font-bold uppercase">{req.projectType} &bull; {req.location}</p>
                 </div>
 
                 <div className="text-right">
                   <span className="block text-sm font-extrabold text-stone-900">{req.budgetRange}</span>
-                  <span className="block text-[8px] text-stone-450 font-bold uppercase mt-0.5">Timeline: {req.expectedTimeline}</span>
+                  <span className="block text-3xs text-stone-450 font-bold uppercase mt-0.5">Timeline: {req.expectedTimeline}</span>
                 </div>
               </div>
 
               <p className="text-xs text-stone-600 font-semibold leading-relaxed">{req.description}</p>
 
-              <div className="flex justify-between items-center pt-3 border-t border-light-border/40 text-[9px] text-stone-400 font-bold">
+              <div className="flex justify-between items-center pt-3 border-t border-light-border/40 text-3xs text-stone-400 font-bold">
                 <span>📁 {req.documentsCount} documents &bull; 📷 {req.imagesCount} images &bull; Posted {req.datePosted}</span>
                 
                 <div className="flex gap-2">
@@ -467,9 +467,9 @@ export default function RequirementMarketplace() {
 
       {/* Express Interest Confirmation Dialog Modal */}
       {interestModalId && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white border border-light-border max-w-sm w-full p-6 rounded-3xl shadow-apple-lg space-y-4">
-            <h3 className="text-sm font-black text-stone-900 font-serif">Confirm Interest Bid</h3>
+        <div className="dbc-modal-overlay">
+          <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4">
+            <h3 className="text-sm font-black text-stone-900 font-display">Confirm Interest Bid</h3>
             <p className="text-xs text-stone-600 font-semibold leading-relaxed">
               Are you sure you want to express interest in this requirement? Your verification credentials and business profile details will be shared with the client.
             </p>

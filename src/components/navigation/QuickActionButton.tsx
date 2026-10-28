@@ -48,7 +48,7 @@ export function QuickActionButton({ role, className = '', onClickCallback }: Qui
   return (
     <button
       onClick={handleTrigger}
-      className={`dbc-btn dbc-btn-primary tracking-wider text-[10px] font-bold uppercase rounded-lg shadow-apple-sm ${className}`}
+      className={`dbc-btn dbc-btn-primary tracking-wider text-2xs font-bold uppercase rounded-lg shadow-apple-sm ${className}`}
     >
       {label}
     </button>

@@ -42,7 +42,7 @@ export default function RequirementsTable({
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs" aria-label="Marketplace Requirements Detailed Table">
           <thead>
-            <tr className="border-b border-light-border bg-stone-50/50 text-[9px] font-black uppercase text-stone-400">
+            <tr className="border-b border-light-border bg-stone-50/50 text-3xs font-black uppercase text-stone-400">
               <th className="py-3 px-4 cursor-pointer hover:text-stone-900" onClick={() => onSort('id')}>
                 Req ID{renderSortIndicator('id')}
               </th>
@@ -67,7 +67,7 @@ export default function RequirementsTable({
             {requirements.map((req) => (
               <tr key={req.id} className="hover:bg-stone-50/30 transition-colors">
                 {/* ID */}
-                <td className="py-3 px-4 font-mono font-bold text-[10px] text-stone-500">
+                <td className="py-3 px-4 font-mono font-bold text-2xs text-stone-500">
                   {req.id}
                 </td>
 
@@ -79,7 +79,7 @@ export default function RequirementsTable({
                   >
                     {req.title}
                   </strong>
-                  {req.propertyType && <span className="block text-[8px] font-black uppercase tracking-wider text-stone-400">{req.propertyType}</span>}
+                  {req.propertyType && <span className="block text-3xs font-black uppercase tracking-wider text-stone-400">{req.propertyType}</span>}
                 </td>
 
                 {/* Customer */}
@@ -89,7 +89,7 @@ export default function RequirementsTable({
 
                 {/* Category */}
                 <td className="py-3 px-4">
-                  <span className="bg-stone-100 text-stone-700 text-[8.5px] px-2 py-0.5 rounded font-black uppercase">
+                  <span className="bg-stone-100 text-stone-700 text-3xs px-2 py-0.5 rounded font-black uppercase">
                     {req.category}
                   </span>
                 </td>
@@ -117,7 +117,7 @@ export default function RequirementsTable({
                 {/* Flag Count */}
                 <td className="py-3 px-4 text-center">
                   {req.reportCount > 0 ? (
-                    <span className="bg-rose-50 text-rose-700 font-black px-2 py-0.5 rounded-full border border-rose-200 text-[8.5px]">
+                    <span className="bg-rose-50 text-rose-700 font-black px-2 py-0.5 rounded-full border border-rose-200 text-3xs">
                       🚨 {req.reportCount}
                     </span>
                   ) : (
@@ -127,7 +127,7 @@ export default function RequirementsTable({
 
                 {/* Actions */}
                 <td className="py-3 px-4 text-right">
-                  <div className="flex gap-2.5 justify-end text-[9px] font-black uppercase tracking-wider items-center">
+                  <div className="flex gap-2.5 justify-end text-3xs font-black uppercase tracking-wider items-center">
                     <button
                       onClick={() => onSelectRequirement(req)}
                       className="text-brand-emerald hover:underline focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"

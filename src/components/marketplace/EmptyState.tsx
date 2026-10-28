@@ -18,7 +18,7 @@ export function EmptyState({ title, description, onReset, className = '' }: Empt
       </div>
 
       <div className="space-y-1.5">
-        <h3 className="text-sm sm:text-base font-bold text-stone-900 font-serif">
+        <h3 className="text-sm sm:text-base font-bold text-stone-900 font-display">
           {title}
         </h3>
         <p className="text-xs text-stone-500 font-medium leading-relaxed max-w-sm mx-auto">

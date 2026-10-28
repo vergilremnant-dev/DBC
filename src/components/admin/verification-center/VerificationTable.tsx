@@ -37,7 +37,7 @@ export default function VerificationTable({
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs" aria-label="Verification Center Backlog Table">
           <thead>
-            <tr className="border-b border-light-border bg-stone-50/50 text-[9px] font-black uppercase text-stone-400">
+            <tr className="border-b border-light-border bg-stone-50/50 text-3xs font-black uppercase text-stone-400">
               <th className="py-3 px-4 cursor-pointer hover:text-stone-900" onClick={() => onSort('id')}>
                 Request ID{renderSortIndicator('id')}
               </th>
@@ -60,7 +60,7 @@ export default function VerificationTable({
             {requests.map((req) => (
               <tr key={req.id} className="hover:bg-stone-50/30 transition-colors">
                 {/* ID */}
-                <td className="py-3 px-4 font-mono font-bold text-[10px] text-stone-500">
+                <td className="py-3 px-4 font-mono font-bold text-2xs text-stone-500">
                   {req.id}
                 </td>
 
@@ -72,12 +72,12 @@ export default function VerificationTable({
                   >
                     {req.name}
                   </strong>
-                  {req.businessName && <span className="block text-[8.5px] text-stone-450">{req.businessName}</span>}
+                  {req.businessName && <span className="block text-3xs text-stone-450">{req.businessName}</span>}
                 </td>
 
                 {/* Role */}
                 <td className="py-3 px-4">
-                  <span className="bg-stone-100 text-stone-705 text-[8.5px] px-2 py-0.5 rounded font-black uppercase">
+                  <span className="bg-stone-100 text-stone-705 text-3xs px-2 py-0.5 rounded font-black uppercase">
                     {req.role}
                   </span>
                 </td>
@@ -94,7 +94,7 @@ export default function VerificationTable({
 
                 {/* Docs Submitted count */}
                 <td className="py-3 px-4 text-center">
-                  <span className="bg-stone-50 border border-stone-200 text-stone-800 text-[9px] font-black px-2 py-0.5 rounded-full">
+                  <span className="bg-stone-50 border border-stone-200 text-stone-800 text-3xs font-black px-2 py-0.5 rounded-full">
                     📂 {req.documentsSubmitted?.length || 0}
                   </span>
                 </td>
@@ -106,7 +106,7 @@ export default function VerificationTable({
 
                 {/* Actions */}
                 <td className="py-3 px-4 text-right">
-                  <div className="flex gap-2.5 justify-end text-[9px] font-black uppercase tracking-wider">
+                  <div className="flex gap-2.5 justify-end text-3xs font-black uppercase tracking-wider">
                     <button
                       onClick={() => onSelectRequest(req)}
                       className="text-brand-emerald hover:underline focus:outline-none"
@@ -142,7 +142,7 @@ export default function VerificationTable({
         {requests.map((req) => (
           <div key={req.id} className="bg-white border border-light-border p-4 rounded-2xl space-y-3">
             <div className="flex justify-between items-center">
-              <span className="font-mono text-[9px] text-stone-400 font-bold">{req.id}</span>
+              <span className="font-mono text-3xs text-stone-400 font-bold">{req.id}</span>
               <StatusBadge status={req.status} />
             </div>
             <div>
@@ -152,12 +152,12 @@ export default function VerificationTable({
               >
                 {req.name}
               </strong>
-              {req.businessName && <span className="text-[10px] text-stone-500 block mt-0.5">{req.businessName}</span>}
-              <span className="bg-stone-50 border border-stone-150 text-[8px] font-black text-stone-600 px-1.5 py-0.5 rounded uppercase mt-1 inline-block">
+              {req.businessName && <span className="text-2xs text-stone-500 block mt-0.5">{req.businessName}</span>}
+              <span className="bg-stone-50 border border-stone-150 text-3xs font-black text-stone-600 px-1.5 py-0.5 rounded uppercase mt-1 inline-block">
                 {req.role}
               </span>
             </div>
-            <div className="flex justify-between text-[10px] text-stone-500">
+            <div className="flex justify-between text-2xs text-stone-500">
               <span>Submitted: {req.submittedDate}</span>
               <span>Updated: {req.lastUpdated}</span>
             </div>

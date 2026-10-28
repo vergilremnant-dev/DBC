@@ -13,7 +13,7 @@ function ToggleRow({ id, label, description, checked, onChange }: ToggleRowProps
     <div className="flex items-center justify-between gap-4 py-3.5 border-b border-light-border/60 last:border-b-0">
       <div className="min-w-0">
         <label htmlFor={id} className="text-xs font-bold text-stone-700 cursor-pointer block">{label}</label>
-        <p className="text-[10px] text-stone-500 font-medium mt-0.5 leading-relaxed">{description}</p>
+        <p className="text-2xs text-stone-500 font-medium mt-0.5 leading-relaxed">{description}</p>
       </div>
       <button
         id={id}
@@ -47,7 +47,7 @@ function SelectRow({ id, label, description, value, options, onChange }: SelectR
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3.5 border-b border-light-border/60 last:border-b-0">
       <div className="min-w-0 sm:flex-1">
         <label htmlFor={id} className="text-xs font-bold text-stone-700 cursor-pointer block">{label}</label>
-        <p className="text-[10px] text-stone-500 font-medium mt-0.5">{description}</p>
+        <p className="text-2xs text-stone-500 font-medium mt-0.5">{description}</p>
       </div>
       <select
         id={id}

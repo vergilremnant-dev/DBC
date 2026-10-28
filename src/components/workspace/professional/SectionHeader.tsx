@@ -9,11 +9,11 @@ export function SectionHeader({ title, subtitle, actionLabel, onActionClick }: S
   return (
     <div className="flex items-center justify-between border-b border-stone-150 pb-2">
       <div className="space-y-0.5">
-        <h3 className="text-sm font-bold text-stone-900 font-serif leading-none">
+        <h3 className="text-sm font-bold text-stone-900 font-display leading-none">
           {title}
         </h3>
         {subtitle && (
-          <p className="text-[10px] text-stone-400 font-semibold uppercase tracking-wider">
+          <p className="text-2xs text-stone-400 font-semibold uppercase tracking-wider">
             {subtitle}
           </p>
         )}
@@ -22,7 +22,7 @@ export function SectionHeader({ title, subtitle, actionLabel, onActionClick }: S
       {actionLabel && onActionClick && (
         <button
           onClick={onActionClick}
-          className="text-[10px] font-black text-emerald-700 hover:text-emerald-900 transition uppercase tracking-wider cursor-pointer"
+          className="text-2xs font-black text-emerald-700 hover:text-emerald-900 transition uppercase tracking-wider cursor-pointer"
         >
           {actionLabel} &rarr;
         </button>

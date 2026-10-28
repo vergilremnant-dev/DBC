@@ -21,15 +21,15 @@ export function ProjectPreviewCard({ projects }: ProjectPreviewCardProps) {
         >
           <div className="flex justify-between items-start gap-4">
             <div className="space-y-0.5">
-              <h4 className="text-xs font-bold text-stone-900 font-serif leading-none">
+              <h4 className="text-xs font-bold text-stone-900 font-display leading-none">
                 {proj.name}
               </h4>
-              <p className="text-[10px] text-stone-400 font-bold">
+              <p className="text-2xs text-stone-400 font-bold">
                 Client: <strong className="text-stone-600 font-extrabold">{proj.customerName}</strong>
               </p>
             </div>
             
-            <span className="bg-emerald-50 border border-emerald-100 text-emerald-800 rounded px-2.5 py-0.5 text-[8px] font-black uppercase tracking-wider self-start">
+            <span className="bg-emerald-50 border border-emerald-100 text-emerald-800 rounded px-2.5 py-0.5 text-3xs font-black uppercase tracking-wider self-start">
               {proj.status}
             </span>
           </div>
@@ -42,12 +42,12 @@ export function ProjectPreviewCard({ projects }: ProjectPreviewCardProps) {
                 style={{ width: `${proj.progress}%` }}
               ></div>
             </div>
-            <span className="text-[10px] text-stone-400 font-mono font-bold leading-none w-8 text-right">
+            <span className="text-2xs text-stone-400 font-mono font-bold leading-none w-8 text-right">
               {proj.progress}%
             </span>
           </div>
 
-          <div className="text-[9px] text-stone-400 font-bold uppercase tracking-wider">
+          <div className="text-3xs text-stone-400 font-bold uppercase tracking-wider">
             Expected Completion: <strong className="text-stone-600 font-extrabold">{proj.completionDate}</strong>
           </div>
         </div>

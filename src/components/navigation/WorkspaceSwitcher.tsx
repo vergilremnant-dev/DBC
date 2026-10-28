@@ -19,21 +19,21 @@ export function WorkspaceSwitcher({ role, className = '' }: WorkspaceSwitcherPro
       {isAdmin ? (
         <button
           onClick={() => navigate('/admin/dashboard')}
-          className="dbc-btn dbc-btn-secondary py-1.5 px-3 rounded-lg text-[9px] uppercase font-bold tracking-wider hover:bg-light-stone transition"
+          className="dbc-btn dbc-btn-secondary py-1.5 px-3 rounded-lg text-3xs uppercase font-bold tracking-wider hover:bg-light-stone transition"
         >
           Admin Console
         </button>
       ) : isProvider ? (
         <button
           onClick={() => navigate('/workspace/dashboard')}
-          className="dbc-btn dbc-btn-secondary py-1.5 px-3 rounded-lg text-[9px] uppercase font-bold tracking-wider hover:bg-light-stone transition"
+          className="dbc-btn dbc-btn-secondary py-1.5 px-3 rounded-lg text-3xs uppercase font-bold tracking-wider hover:bg-light-stone transition"
         >
           Partner Console
         </button>
       ) : (
         <button
           onClick={() => navigate('/workspace/overview')}
-          className="dbc-btn dbc-btn-secondary py-1.5 px-3 rounded-lg text-[9px] uppercase font-bold tracking-wider hover:bg-light-stone transition"
+          className="dbc-btn dbc-btn-secondary py-1.5 px-3 rounded-lg text-3xs uppercase font-bold tracking-wider hover:bg-light-stone transition"
         >
           Customer Area
         </button>

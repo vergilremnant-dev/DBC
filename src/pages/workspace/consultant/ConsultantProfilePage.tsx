@@ -151,7 +151,7 @@ export default function ConsultantProfilePage() {
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">{fullName}</h1>
-              <span className="bg-emerald-50 text-emerald-800 text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="bg-emerald-50 text-emerald-800 text-3xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
                 ✓ Certified Consultant
               </span>
             </div>
@@ -160,7 +160,7 @@ export default function ConsultantProfilePage() {
         </div>
 
         <div className="flex flex-col gap-2 shrink-0 md:text-right">
-          <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">Profile Completion</span>
+          <span className="text-2xs text-stone-400 font-bold uppercase tracking-wider">Profile Completion</span>
           <div className="flex items-center gap-2">
             <div className="w-32 bg-stone-100 h-1.5 rounded-full overflow-hidden">
               <div className="bg-brand-emerald h-full w-[85%]"></div>
@@ -182,7 +182,7 @@ export default function ConsultantProfilePage() {
             
             <div className="grid gap-4 sm:grid-cols-2 text-xs">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Full Name</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Full Name</label>
                 <input
                   type="text"
                   value={fullName}
@@ -193,7 +193,7 @@ export default function ConsultantProfilePage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Email Address</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Email Address</label>
                 <input
                   type="email"
                   value={email}
@@ -204,7 +204,7 @@ export default function ConsultantProfilePage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Phone Coordinates</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Phone Coordinates</label>
                 <input
                   type="text"
                   value={phone}
@@ -215,7 +215,7 @@ export default function ConsultantProfilePage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Location City</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Location City</label>
                 <input
                   type="text"
                   value={location}
@@ -227,7 +227,7 @@ export default function ConsultantProfilePage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Professional Biography Bio</label>
+              <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Professional Biography Bio</label>
               <textarea
                 value={bio}
                 onChange={e => setBio(e.target.value)}
@@ -243,7 +243,7 @@ export default function ConsultantProfilePage() {
             
             <div className="grid gap-4 sm:grid-cols-2 text-xs">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">License Number</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">License Number</label>
                 <input
                   type="text"
                   value={licenseNumber}
@@ -252,7 +252,7 @@ export default function ConsultantProfilePage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Years Experience</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Years Experience</label>
                 <input
                   type="text"
                   value={experienceYears}
@@ -264,12 +264,12 @@ export default function ConsultantProfilePage() {
 
             {/* Experience list */}
             <div className="space-y-3 pt-4 border-t border-light-border/40">
-              <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider">Experience History</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Experience History</span>
               {experiences.map(exp => (
                 <div key={exp.id} className="p-3.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                   <div>
                     <h5 className="font-bold text-stone-900">{exp.role} &bull; <span className="text-stone-450">{exp.org}</span></h5>
-                    <span className="text-[8px] text-stone-400 font-bold uppercase block mt-1">{exp.duration}</span>
+                    <span className="text-3xs text-stone-400 font-bold uppercase block mt-1">{exp.duration}</span>
                   </div>
                 </div>
               ))}
@@ -277,7 +277,7 @@ export default function ConsultantProfilePage() {
 
             {/* Add Experience form */}
             <div className="space-y-2 pt-3 border-t border-light-border/40 text-xs">
-              <span className="block text-[8.5px] font-black uppercase text-stone-850">Add Experience Position</span>
+              <span className="block text-3xs font-black uppercase text-stone-850">Add Experience Position</span>
               <div className="grid grid-cols-3 gap-2">
                 <input
                   type="text"
@@ -316,12 +316,12 @@ export default function ConsultantProfilePage() {
             <h3 className="text-xs font-black uppercase tracking-wider text-stone-900 border-b border-light-border/40 pb-2">Certifications & Languages Spoken</h3>
             
             <div className="space-y-4">
-              <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider">Active Certifications</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Active Certifications</span>
               {certifications.map(cert => (
                 <div key={cert.id} className="p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs flex justify-between items-center">
                   <div>
                     <h5 className="font-bold text-stone-900">{cert.name}</h5>
-                    <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">{cert.org} &bull; {cert.date}</span>
+                    <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{cert.org} &bull; {cert.date}</span>
                   </div>
                 </div>
               ))}
@@ -352,10 +352,10 @@ export default function ConsultantProfilePage() {
             </div>
 
             <div className="pt-4 border-t border-light-border/40 space-y-3 text-xs">
-              <span className="block text-[8px] font-black uppercase text-stone-450 tracking-wider">Languages proficiency</span>
+              <span className="block text-3xs font-black uppercase text-stone-450 tracking-wider">Languages proficiency</span>
               <div className="flex flex-wrap gap-2">
                 {languages.map((lang, idx) => (
-                  <span key={idx} className="bg-stone-100 text-stone-750 text-[9.5px] font-bold px-2.5 py-1 rounded border border-light-border uppercase">
+                  <span key={idx} className="bg-stone-100 text-stone-750 text-3xs font-bold px-2.5 py-1 rounded border border-light-border uppercase">
                     {lang.name} ({lang.proficiency})
                   </span>
                 ))}
@@ -369,7 +369,7 @@ export default function ConsultantProfilePage() {
             
             <div className="grid gap-4 sm:grid-cols-3 text-xs">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Consultation Fee</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Consultation Fee</label>
                 <input
                   type="text"
                   value={consultationFee}
@@ -379,7 +379,7 @@ export default function ConsultantProfilePage() {
               </div>
               
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Duration limits</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Duration limits</label>
                 <select
                   value={preferredDuration}
                   onChange={e => setPreferredDuration(e.target.value)}
@@ -392,7 +392,7 @@ export default function ConsultantProfilePage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Working Hours</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Working Hours</label>
                 <input
                   type="text"
                   value={workingHours}
@@ -433,7 +433,7 @@ export default function ConsultantProfilePage() {
                 <div key={proj.id} className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-1 text-xs">
                   <div className="flex justify-between items-center">
                     <strong className="text-stone-900">{proj.title}</strong>
-                    <span className="text-[8px] text-stone-400 font-bold uppercase">{proj.year}</span>
+                    <span className="text-3xs text-stone-400 font-bold uppercase">{proj.year}</span>
                   </div>
                   <p className="text-stone-600 font-semibold">{proj.desc}</p>
                 </div>
@@ -479,20 +479,20 @@ export default function ConsultantProfilePage() {
               Save Profile Changes
             </button>
             {saveSuccess && (
-              <p className="text-[10px] text-brand-emerald font-black text-center animate-pulse">✓ Profile saved successfully!</p>
+              <p className="text-2xs text-brand-emerald font-black text-center animate-pulse">✓ Profile saved successfully!</p>
             )}
           </section>
 
           {/* Area of Expertise Selector */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
-              <h2 className="text-sm font-black text-stone-900 font-serif">Specialization Skills</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Areas displayed on search suggestions</p>
+              <h2 className="text-sm font-black text-stone-900 font-display">Specialization Skills</h2>
+              <p className="text-2xs text-stone-450 font-medium">Areas displayed on search suggestions</p>
             </div>
 
             <div className="flex flex-wrap gap-1.5">
               {skills.map((skill, idx) => (
-                <span key={idx} className="bg-stone-50 border border-stone-200 text-stone-750 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+                <span key={idx} className="bg-stone-50 border border-stone-200 text-stone-750 text-3xs font-bold px-2 py-0.5 rounded-full uppercase">
                   {skill}
                 </span>
               ))}
@@ -509,7 +509,7 @@ export default function ConsultantProfilePage() {
               <button
                 type="button"
                 onClick={handleAddSkill}
-                className="text-[9.5px] font-black text-brand-emerald hover:underline"
+                className="text-3xs font-black text-brand-emerald hover:underline"
               >
                 Add
               </button>
@@ -519,14 +519,14 @@ export default function ConsultantProfilePage() {
           {/* Availability Settings Vacation Mode */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
-              <h2 className="text-sm font-black text-stone-900 font-serif">Availability Settings</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Direct slots control toggle</p>
+              <h2 className="text-sm font-black text-stone-900 font-display">Availability Settings</h2>
+              <p className="text-2xs text-stone-450 font-medium">Direct slots control toggle</p>
             </div>
             
             <div className="flex items-center justify-between p-3 bg-stone-50 border border-stone-200 rounded-xl">
               <div>
                 <span className="block text-xs font-bold text-stone-900">Vacation Mode</span>
-                <span className="text-[9px] text-stone-400">Block all incoming requests</span>
+                <span className="text-3xs text-stone-400">Block all incoming requests</span>
               </div>
               <input
                 type="checkbox"
@@ -540,13 +540,13 @@ export default function ConsultantProfilePage() {
           {/* Security Password changes panel */}
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
-              <h2 className="text-sm font-black text-stone-900 font-serif">Security Settings</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Configure credentials checks</p>
+              <h2 className="text-sm font-black text-stone-900 font-display">Security Settings</h2>
+              <p className="text-2xs text-stone-450 font-medium">Configure credentials checks</p>
             </div>
 
             <div className="space-y-3.5 text-xs">
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">Current Password</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Current Password</label>
                 <input
                   type="password"
                   value={currentPassword}
@@ -555,7 +555,7 @@ export default function ConsultantProfilePage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[8px] font-black uppercase tracking-widest text-stone-gray">New Password</label>
+                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">New Password</label>
                 <input
                   type="password"
                   value={newPassword}
@@ -579,7 +579,7 @@ export default function ConsultantProfilePage() {
               </button>
             </div>
 
-            <div className="pt-3 border-t border-light-border/40 text-[9.5px] font-bold text-stone-400 uppercase space-y-1">
+            <div className="pt-3 border-t border-light-border/40 text-3xs font-bold text-stone-400 uppercase space-y-1">
               <p>🔒 2-Factor Authentication: Disabled (Placeholder)</p>
               <p>🖥️ Logout from Other Devices (Placeholder)</p>
             </div>

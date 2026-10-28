@@ -29,11 +29,11 @@ function CategoryModal({ item, onSave, onClose }: CategoryModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/40 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-label={item?.id ? 'Edit Category' : 'Add Category'}>
-      <div className="bg-white rounded-3xl border border-light-border shadow-apple-lg p-6 w-full max-w-md space-y-5">
+    <div className="dbc-modal-overlay" role="dialog" aria-modal="true" aria-label={item?.id ? 'Edit Category' : 'Add Category'}>
+      <div className="dbc-modal space-y-5">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-black text-stone-900 font-serif">{item?.id ? 'Edit Category' : 'Add Category'}</h3>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-700 focus:outline-none text-lg font-bold cursor-pointer" aria-label="Close modal">✕</button>
+          <h3 className="text-sm font-black text-stone-900 font-display">{item?.id ? 'Edit Category' : 'Add Category'}</h3>
+          <button onClick={onClose} className="dbc-modal-close" aria-label="Close modal">✕</button>
         </div>
         <div className="space-y-4">
           <div>
@@ -144,7 +144,7 @@ export default function CategoriesManager({ categories, onChange }: CategoriesMa
                 {search ? 'No categories match your search.' : 'No categories yet.'}
               </p>
               {!search && (
-                <button onClick={() => setModal({})} className="text-[10px] text-brand-emerald font-bold hover:underline cursor-pointer focus:outline-none">
+                <button onClick={() => setModal({})} className="text-2xs text-brand-emerald font-bold hover:underline cursor-pointer focus:outline-none">
                   Add your first category →
                 </button>
               )}
@@ -154,10 +154,10 @@ export default function CategoriesManager({ categories, onChange }: CategoriesMa
               <table className="w-full text-left text-xs" aria-label="Categories table">
                 <thead>
                   <tr className="bg-stone-50 border-b border-light-border">
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500">Name</th>
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500">Type</th>
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500">Status</th>
-                    <th className="px-4 py-3 text-[9px] font-black uppercase tracking-wider text-stone-500 text-right">Actions</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Name</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Type</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Status</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-light-border">
@@ -165,12 +165,12 @@ export default function CategoriesManager({ categories, onChange }: CategoriesMa
                     <tr key={cat.id} className={`hover:bg-stone-50 transition-colors ${!cat.active ? 'opacity-50' : ''}`}>
                       <td className="px-4 py-3 font-semibold text-stone-800">{cat.name}</td>
                       <td className="px-4 py-3">
-                        <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${TYPE_COLORS[cat.type]}`}>
+                        <span className={`text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border ${TYPE_COLORS[cat.type]}`}>
                           {cat.type}
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${cat.active ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-stone-100 text-stone-500 border-stone-200'}`}>
+                        <span className={`text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border ${cat.active ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-stone-100 text-stone-500 border-stone-200'}`}>
                           {cat.active ? 'Active' : 'Inactive'}
                         </span>
                       </td>
@@ -178,14 +178,14 @@ export default function CategoriesManager({ categories, onChange }: CategoriesMa
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => setModal(cat)}
-                            className="text-[9px] font-bold text-stone-600 hover:text-brand-emerald transition focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-emerald rounded cursor-pointer"
+                            className="text-3xs font-bold text-stone-600 hover:text-brand-emerald transition focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-emerald rounded cursor-pointer"
                             aria-label={`Edit ${cat.name}`}
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleToggle(cat.id)}
-                            className={`text-[9px] font-bold transition focus:outline-none focus-visible:ring-1 rounded cursor-pointer ${cat.active ? 'text-amber-600 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700'}`}
+                            className={`text-3xs font-bold transition focus:outline-none focus-visible:ring-1 rounded cursor-pointer ${cat.active ? 'text-amber-600 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700'}`}
                             aria-label={`${cat.active ? 'Deactivate' : 'Activate'} ${cat.name}`}
                           >
                             {cat.active ? 'Deactivate' : 'Activate'}
@@ -199,7 +199,7 @@ export default function CategoriesManager({ categories, onChange }: CategoriesMa
             </div>
           )}
 
-          <p className="text-[9px] text-stone-400 font-medium">
+          <p className="text-3xs text-stone-400 font-medium">
             {categories.filter(c => c.active).length} active · {categories.filter(c => !c.active).length} inactive · {categories.length} total
           </p>
         </div>

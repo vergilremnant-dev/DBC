@@ -16,15 +16,15 @@ export default function ProjectQuickActions({
   return (
     <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-4 text-left select-none">
       <div>
-        <h4 className="text-[10px] font-black uppercase text-stone-900 tracking-wider">
+        <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           Portfolio Shortcuts
         </h4>
-        <span className="block text-[8px] text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
           Execute operations command actions
         </span>
       </div>
 
-      <div className="grid gap-2 grid-cols-2 text-[9px] font-black uppercase tracking-wider text-center">
+      <div className="grid gap-2 grid-cols-2 text-3xs font-black uppercase tracking-wider text-center">
         <button
           onClick={onShowFlaggedOnly}
           className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-stone-50 border border-stone-200 hover:bg-stone-100"

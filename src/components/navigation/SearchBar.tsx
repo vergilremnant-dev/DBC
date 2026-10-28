@@ -67,10 +67,10 @@ export function SearchBar({
         >
           <span className="text-xs">📍</span>
           <div className="flex flex-col text-left leading-none">
-            <span className="text-[10px] font-extrabold text-stone-black max-w-[65px] truncate">{selectedCity}</span>
-            <span className="text-[7px] text-stone-gray font-semibold mt-0.5 tracking-wide">{getServingRegion(selectedCity)}</span>
+            <span className="text-2xs font-extrabold text-stone-black max-w-[65px] truncate">{selectedCity}</span>
+            <span className="text-3xs text-stone-gray font-semibold mt-0.5 tracking-wide">{getServingRegion(selectedCity)}</span>
           </div>
-          <span className="text-[6.5px] text-stone-gray pr-0.5">▼</span>
+          <span className="text-3xs text-stone-gray pr-0.5">▼</span>
         </button>
 
         {/* Separator Divider */}
@@ -115,7 +115,7 @@ export function SearchBar({
           </form>
           
           <div className="space-y-1">
-            <span className="block text-[9px] uppercase tracking-wider font-extrabold text-stone-gray">Popular Cities</span>
+            <span className="block text-3xs uppercase tracking-wider font-extrabold text-stone-gray">Popular Cities</span>
             {popularCities.map((city) => (
               <button
                 key={city}

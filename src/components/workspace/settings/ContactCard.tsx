@@ -47,7 +47,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
   return (
     <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-4 text-left">
       <div className="flex justify-between items-center border-b border-stone-100 pb-2">
-        <h3 className="text-sm font-bold text-stone-900 font-serif">Contact Information</h3>
+        <h3 className="text-sm font-bold text-stone-900 font-display">Contact Information</h3>
         <button
           onClick={() => setIsEditing(!isEditing)}
           className="text-xs font-bold text-emerald-700 hover:underline cursor-pointer"
@@ -57,7 +57,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
       </div>
 
       {error && (
-        <div className="bg-rose-50 border border-rose-100 text-rose-800 text-[10px] font-bold p-3 rounded-xl">
+        <div className="bg-rose-50 border border-rose-100 text-rose-800 text-2xs font-bold p-3 rounded-xl">
           ⚠️ {error}
         </div>
       )}
@@ -65,7 +65,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
       {isEditing ? (
         <form onSubmit={handleSubmit} className="space-y-4 text-xs font-semibold text-stone-700">
           <div className="space-y-1">
-            <label className="block text-[10px] uppercase font-bold text-stone-400">Email Address (Read-only)</label>
+            <label className="block text-2xs uppercase font-bold text-stone-400">Email Address (Read-only)</label>
             <input
               type="email"
               value={values.email}
@@ -76,7 +76,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Phone Number *</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Phone Number *</label>
               <input
                 type="tel"
                 name="phone"
@@ -89,7 +89,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Alternate Phone</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Alternate Phone</label>
               <input
                 type="tel"
                 name="altPhone"
@@ -102,7 +102,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
           </div>
 
           <div className="space-y-1">
-            <label className="block text-[10px] uppercase font-bold text-stone-400">Preferred Contact Method</label>
+            <label className="block text-2xs uppercase font-bold text-stone-400">Preferred Contact Method</label>
             <select
               name="preferredMethod"
               value={values.preferredMethod}
@@ -127,10 +127,10 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
         <div className="grid gap-4 sm:grid-cols-2 text-xs font-semibold text-stone-600">
           <div className="space-y-1 bg-stone-50/50 p-3 rounded-xl border border-stone-100 flex items-center justify-between">
             <div className="space-y-0.5">
-              <span className="block text-[9px] uppercase font-bold text-stone-400">Primary Email</span>
+              <span className="block text-3xs uppercase font-bold text-stone-400">Primary Email</span>
               <span className="text-stone-955 truncate block max-w-xs">{values.email}</span>
             </div>
-            <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${
+            <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded ${
               values.emailVerified ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : 'bg-rose-50 text-rose-800 border border-rose-100'
             }`}>
               {values.emailVerified ? 'Verified ✓' : 'Pending'}
@@ -139,10 +139,10 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
 
           <div className="space-y-1 bg-stone-50/50 p-3 rounded-xl border border-stone-100 flex items-center justify-between">
             <div className="space-y-0.5">
-              <span className="block text-[9px] uppercase font-bold text-stone-400">Primary Phone</span>
+              <span className="block text-3xs uppercase font-bold text-stone-400">Primary Phone</span>
               <span className="text-stone-955 font-mono block">{values.phone || 'Not Added'}</span>
             </div>
-            <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${
+            <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded ${
               values.phoneVerified ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : 'bg-rose-50 text-rose-800 border border-rose-100'
             }`}>
               {values.phoneVerified ? 'Verified ✓' : 'Verify Call'}
@@ -150,12 +150,12 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
           </div>
 
           <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-            <span className="block text-[9px] uppercase font-bold text-stone-400">Alternate Phone</span>
+            <span className="block text-3xs uppercase font-bold text-stone-400">Alternate Phone</span>
             <span className="text-stone-955 font-mono block">{values.altPhone || 'None Provided'}</span>
           </div>
 
           <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-            <span className="block text-[9px] uppercase font-bold text-stone-400">Preferred Contact Channel</span>
+            <span className="block text-3xs uppercase font-bold text-stone-400">Preferred Contact Channel</span>
             <span className="text-stone-955 block">{values.preferredMethod}</span>
           </div>
         </div>

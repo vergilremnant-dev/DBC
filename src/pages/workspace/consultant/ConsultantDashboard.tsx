@@ -118,7 +118,7 @@ export default function ConsultantDashboard() {
       {/* 1. Header Section */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">Good Morning</span>
+          <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Good Morning</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Welcome back, John Anderson</h1>
           <p className="text-xs text-stone-500 font-medium">Saturday, August 1 • "Help homeowners make better decisions through expert guidance."</p>
         </div>
@@ -131,7 +131,7 @@ export default function ConsultantDashboard() {
               availability === 'Available Today' ? 'bg-emerald-500' : availability === 'Busy' ? 'bg-amber-500' : 'bg-rose-500'
             }`}></span>
             {availability}
-            <span className="text-[10px]">▼</span>
+            <span className="text-2xs">▼</span>
           </button>
           
           {availabilityOpen && (
@@ -163,13 +163,13 @@ export default function ConsultantDashboard() {
             <>
               <div className="flex justify-between items-start">
                 <span className={`text-base p-2 rounded-xl ${stat.color}`}>{stat.icon}</span>
-                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
+                <span className={`text-3xs font-black px-2 py-0.5 rounded-full ${
                   stat.trendUp ? 'bg-emerald-50 text-emerald-800' : 'bg-stone-100 text-stone-500'
                 }`}>{stat.trend}</span>
               </div>
               <div className="mt-4 space-y-1">
                 <span className="block text-2xl font-black text-stone-900">{stat.value}</span>
-                <span className="block text-[10px] font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
+                <span className="block text-2xs font-bold text-stone-450 uppercase tracking-wider">{stat.label}</span>
               </div>
             </>
           );
@@ -208,9 +208,9 @@ export default function ConsultantDashboard() {
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="text-sm font-black text-stone-900">Today's Schedule</h2>
-                <p className="text-[11px] text-stone-450">Active timeline for Saturday consultations</p>
+                <p className="text-2xs text-stone-450">Active timeline for Saturday consultations</p>
               </div>
-              <span className="text-[9px] font-black uppercase text-brand-emerald bg-emerald-50 px-2.5 py-1 rounded-lg">3 Sessions Scheduled</span>
+              <span className="text-3xs font-black uppercase text-brand-emerald bg-emerald-50 px-2.5 py-1 rounded-lg">3 Sessions Scheduled</span>
             </div>
 
             {schedule.length === 0 ? (
@@ -233,11 +233,11 @@ export default function ConsultantDashboard() {
                     <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
                       <div>
                         <h4 className="text-xs font-black text-stone-900">{item.customerName}</h4>
-                        <span className="text-[10px] text-stone-450">{item.time}</span>
+                        <span className="text-2xs text-stone-450">{item.time}</span>
                       </div>
                       <div>
-                        <span className="block text-[11px] text-stone-700 font-semibold">{item.projectType}</span>
-                        <span className="text-[9px] text-stone-450 font-bold uppercase tracking-wider">{item.meetingType}</span>
+                        <span className="block text-2xs text-stone-700 font-semibold">{item.projectType}</span>
+                        <span className="text-3xs text-stone-450 font-bold uppercase tracking-wider">{item.meetingType}</span>
                       </div>
                       <div className="flex justify-end gap-2">
                         {item.status === 'Active' ? (
@@ -268,9 +268,9 @@ export default function ConsultantDashboard() {
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="text-sm font-black text-stone-900">Pending Consultation Requests</h2>
-                <p className="text-[11px] text-stone-450">Review incoming specifications and approve bookings</p>
+                <p className="text-2xs text-stone-450">Review incoming specifications and approve bookings</p>
               </div>
-              <button className="text-[10px] font-black uppercase text-brand-emerald hover:text-emerald-800 transition">View All</button>
+              <button className="text-2xs font-black uppercase text-brand-emerald hover:text-emerald-800 transition">View All</button>
             </div>
 
             {requests.length === 0 ? (
@@ -286,12 +286,12 @@ export default function ConsultantDashboard() {
                     <div className="space-y-1.5 flex-1">
                       <div className="flex items-center gap-2">
                         <h4 className="text-xs font-black text-stone-900">{req.customerName}</h4>
-                        <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full ${
+                        <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full ${
                           req.priority === 'High' ? 'bg-rose-50 text-rose-700 border border-rose-200/60' : req.priority === 'Medium' ? 'bg-amber-50 text-amber-700' : 'bg-stone-100 text-stone-500'
                         }`}>{req.priority} Priority</span>
                       </div>
-                      <p className="text-[11px] text-stone-750 font-medium">{req.summary}</p>
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-stone-450 font-semibold">
+                      <p className="text-2xs text-stone-750 font-medium">{req.summary}</p>
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-stone-450 font-semibold">
                         <span>📍 {req.location}</span>
                         <span>📅 Proposed: {req.date}</span>
                         <span>💰 Budget: {req.budget}</span>
@@ -321,7 +321,7 @@ export default function ConsultantDashboard() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
               <h2 className="text-sm font-black text-stone-900">Recent Customer Activity</h2>
-              <p className="text-[11px] text-stone-450">Historical log of incoming client updates and document submittals</p>
+              <p className="text-2xs text-stone-450">Historical log of incoming client updates and document submittals</p>
             </div>
             
             <div className="space-y-4 relative before:absolute before:left-5 before:top-2 before:bottom-2 before:w-px before:bg-light-border">
@@ -329,8 +329,8 @@ export default function ConsultantDashboard() {
                 <div key={act.id} className="flex gap-4 items-start relative">
                   <span className="w-10 h-10 rounded-full border border-light-border bg-stone-50 flex items-center justify-center text-sm shrink-0 z-10">{act.icon}</span>
                   <div className="space-y-0.5 pt-1">
-                    <p className="text-[11px] text-stone-800 font-semibold">{act.description}</p>
-                    <span className="block text-[9px] text-stone-400 font-bold uppercase tracking-wider">{act.timestamp}</span>
+                    <p className="text-2xs text-stone-800 font-semibold">{act.description}</p>
+                    <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{act.timestamp}</span>
                   </div>
                 </div>
               ))}
@@ -346,7 +346,7 @@ export default function ConsultantDashboard() {
           <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
             <div>
               <h2 className="text-sm font-black text-stone-900">Quick Actions</h2>
-              <p className="text-[11px] text-stone-450 font-medium">Frequently accessed consultant views</p>
+              <p className="text-2xs text-stone-450 font-medium">Frequently accessed consultant views</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
               {quickActions.map((act, index) => (
@@ -356,8 +356,8 @@ export default function ConsultantDashboard() {
                   className="p-3 bg-stone-50/50 hover:bg-warm-cream border border-stone-200/50 hover:border-stone-300 rounded-xl transition text-left cursor-pointer space-y-1.5 focus-visible:ring-2 focus-visible:ring-brand-emerald focus:outline-none"
                 >
                   <span className="text-lg block">{act.icon}</span>
-                  <h4 className="text-[10px] font-black text-stone-900 leading-tight">{act.title}</h4>
-                  <p className="text-[8.5px] text-stone-450 leading-none">{act.description}</p>
+                  <h4 className="text-2xs font-black text-stone-900 leading-tight">{act.title}</h4>
+                  <p className="text-3xs text-stone-450 leading-none">{act.description}</p>
                 </button>
               ))}
             </div>
@@ -367,10 +367,10 @@ export default function ConsultantDashboard() {
           <section className="bg-gradient-to-br from-stone-950 to-stone-900 border border-stone-850 p-6 rounded-3xl shadow-apple-sm text-white space-y-4 relative overflow-hidden">
             <div className="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
             <div className="space-y-0.5">
-              <span className="text-[8.5px] font-black uppercase text-emerald-400 tracking-wider">Smart Assistant</span>
+              <span className="text-3xs font-black uppercase text-emerald-400 tracking-wider">Smart Assistant</span>
               <h3 className="text-xs font-black">AI-powered insights coming soon</h3>
             </div>
-            <ul className="space-y-2 text-[10px] text-stone-300 font-medium">
+            <ul className="space-y-2 text-2xs text-stone-300 font-medium">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-400">✦</span>
                 <span>Three pending requests need attention.</span>
@@ -391,9 +391,9 @@ export default function ConsultantDashboard() {
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="text-sm font-black text-stone-900">Notifications</h2>
-                <p className="text-[11px] text-stone-450 font-medium">DBC real-time alerts</p>
+                <p className="text-2xs text-stone-450 font-medium">DBC real-time alerts</p>
               </div>
-              <span className="text-[8.5px] font-black text-stone-400 uppercase">Latest 5</span>
+              <span className="text-3xs font-black text-stone-400 uppercase">Latest 5</span>
             </div>
 
             <div className="space-y-3">
@@ -403,9 +403,9 @@ export default function ConsultantDashboard() {
                     not.type === 'warning' ? 'bg-amber-500 animate-pulse' : not.type === 'success' ? 'bg-emerald-500' : 'bg-blue-500'
                   }`}></span>
                   <div className="space-y-0.5">
-                    <h5 className="text-[10px] font-black text-stone-900 leading-tight">{not.title}</h5>
-                    <p className="text-[9px] text-stone-500 font-semibold leading-normal">{not.message}</p>
-                    <span className="block text-[8px] text-stone-400 font-bold uppercase tracking-wider">{not.time}</span>
+                    <h5 className="text-2xs font-black text-stone-900 leading-tight">{not.title}</h5>
+                    <p className="text-3xs text-stone-500 font-semibold leading-normal">{not.message}</p>
+                    <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{not.time}</span>
                   </div>
                 </div>
               ))}

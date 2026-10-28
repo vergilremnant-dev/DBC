@@ -46,7 +46,7 @@ export function ProfileHeader({
           <button
             type="button"
             onClick={onAvatarChange}
-            className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center text-white text-[10px] font-bold uppercase opacity-0 group-hover:opacity-100 transition duration-200 cursor-pointer"
+            className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center text-white text-2xs font-bold uppercase opacity-0 group-hover:opacity-100 transition duration-200 cursor-pointer"
           >
             Edit 📷
           </button>
@@ -55,10 +55,10 @@ export function ProfileHeader({
         {/* Member metadata */}
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-            <h2 className="text-xl font-black text-stone-900 font-serif leading-none">
+            <h2 className="text-xl font-black text-stone-900 font-display leading-none">
               {fullName}
             </h2>
-            <span className="bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-full px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider">
+            <span className="bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-full px-2.5 py-0.5 text-3xs font-black uppercase tracking-wider">
               {status}
             </span>
           </div>

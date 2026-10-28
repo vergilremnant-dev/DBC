@@ -31,7 +31,7 @@ export function AuthLayout({
         <div className="hidden lg:flex flex-col justify-center bg-stone-900 p-8 lg:p-10 text-white relative">
           <div className="relative z-10">
             <BrandLogo variant="primary" theme="dark" />
-            <h1 className="mt-6 max-w-sm text-3xl font-extrabold font-serif leading-tight text-white">
+            <h1 className="mt-6 max-w-sm text-3xl font-extrabold font-display leading-tight text-white">
               Design. Build. <span className="text-emerald-400">Connect.</span>
             </h1>
             <p className="mt-4 max-w-sm text-xs sm:text-sm text-stone-300 leading-relaxed font-normal">

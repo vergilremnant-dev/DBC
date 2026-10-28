@@ -7,10 +7,10 @@ export default function ReportsHeader({ onRefresh, onExport }: ReportsHeaderProp
   return (
     <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative select-none text-left">
       <div className="space-y-1">
-        <span className="text-[10px] font-black uppercase text-stone-500 tracking-wider">
+        <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">
           System Overview &amp; Analytics
         </span>
-        <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-serif leading-tight">
+        <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
           Platform Reports &amp; Monitoring
         </h1>
         <p className="text-xs text-stone-500 font-medium">

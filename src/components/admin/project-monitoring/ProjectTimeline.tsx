@@ -17,7 +17,7 @@ export default function ProjectTimeline({ timeline, projectName }: ProjectTimeli
           📅 Chronological Execution Timeline
         </h3>
         {projectName && (
-          <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+          <p className="text-2xs text-stone-500 font-medium mt-0.5">
             Audit history tracking for {projectName}
           </p>
         )}
@@ -34,13 +34,13 @@ export default function ProjectTimeline({ timeline, projectName }: ProjectTimeli
               {/* Timeline bubble bullet */}
               <span className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full border-2 border-white bg-brand-emerald shadow-apple-xs shrink-0" />
               
-              <span className="block text-[8.5px] font-black text-stone-400 uppercase tracking-widest">
+              <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest">
                 {new Date(item.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
               </span>
               <h4 className="font-bold text-stone-900 leading-tight">
                 {item.title}
               </h4>
-              <p className="text-stone-500 text-[10px] leading-relaxed font-medium">
+              <p className="text-stone-500 text-2xs leading-relaxed font-medium">
                 {item.desc}
               </p>
             </div>

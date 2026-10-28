@@ -168,7 +168,7 @@ export function MobileBottomNav() {
               <span className="absolute -top-1 w-3.5 h-0.5 rounded-full bg-emerald-700 transition-all" />
             )}
             <NavIcon icon={item.icon} isActive={isActive} />
-            <span className="text-[9px] uppercase tracking-wider font-sans leading-none">{item.label}</span>
+            <span className="text-3xs uppercase tracking-wider font-sans leading-none">{item.label}</span>
           </button>
         );
       })}

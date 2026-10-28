@@ -89,8 +89,8 @@ export function AddressCard({
     <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-4 text-left">
       <div className="flex justify-between items-center border-b border-stone-100 pb-2">
         <div className="space-y-0.5">
-          <h3 className="text-sm font-bold text-stone-900 font-serif">Saved Addresses</h3>
-          <p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">
+          <h3 className="text-sm font-bold text-stone-900 font-display">Saved Addresses</h3>
+          <p className="text-3xs font-bold text-stone-400 uppercase tracking-widest">
             Manage your site delivery or calculation coordinates
           </p>
         </div>
@@ -107,7 +107,7 @@ export function AddressCard({
           <span className="text-2xl block">📍</span>
           <div className="space-y-1">
             <h4 className="text-xs font-bold text-stone-700">No additional addresses added yet</h4>
-            <p className="text-[10px] text-stone-400 max-w-xs mx-auto font-medium">
+            <p className="text-2xs text-stone-400 max-w-xs mx-auto font-medium">
               Save your residential or plot sites to coordinate trade allocations efficiently.
             </p>
           </div>
@@ -132,27 +132,27 @@ export function AddressCard({
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] font-black uppercase bg-stone-100 text-stone-700 px-2 py-0.5 rounded border border-stone-150">
+                    <span className="text-2xs font-black uppercase bg-stone-100 text-stone-700 px-2 py-0.5 rounded border border-stone-150">
                       {addr.tag}
                     </span>
                     {addr.isDefault && (
-                      <span className="text-[10px] font-black uppercase bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded border border-emerald-100">
+                      <span className="text-2xs font-black uppercase bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded border border-emerald-100">
                         Default
                       </span>
                     )}
                   </div>
-                  <strong className="text-xs text-stone-900 font-serif leading-none">
+                  <strong className="text-xs text-stone-900 font-display leading-none">
                     {addr.name}
                   </strong>
                 </div>
 
-                <p className="text-[11px] text-stone-500 font-semibold leading-relaxed">
+                <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
                   {addr.addressLine}, {addr.city}, {addr.state} - {addr.pincode}
                 </p>
               </div>
 
               {/* Actions row */}
-              <div className="mt-4 pt-3 border-t border-stone-50 flex items-center justify-between text-[10px] font-black uppercase tracking-wider text-stone-400">
+              <div className="mt-4 pt-3 border-t border-stone-50 flex items-center justify-between text-2xs font-black uppercase tracking-wider text-stone-400">
                 {!addr.isDefault ? (
                   <button
                     onClick={() => onSetDefaultAddress(addr.id)}
@@ -161,7 +161,7 @@ export function AddressCard({
                     Set Default
                   </button>
                 ) : (
-                  <span className="text-emerald-800 font-extrabold font-serif">Primary Site</span>
+                  <span className="text-emerald-800 font-extrabold font-display">Primary Site</span>
                 )}
 
                 <div className="flex items-center gap-3">
@@ -186,17 +186,17 @@ export function AddressCard({
 
       {/* Address Form Dialog Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+        <div className="dbc-modal-overlay">
           <form
             onSubmit={handleSave}
-            className="w-full max-w-sm rounded-3xl border border-stone-200 bg-white p-6 shadow-2xl text-xs space-y-4 font-semibold text-stone-700 text-left"
+            role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm text-xs space-y-4 font-semibold text-stone-700 text-left"
           >
-            <h3 className="text-sm font-bold text-stone-900 font-serif border-b border-stone-100 pb-2">
+            <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">
               {editingItem ? 'Edit Saved Address' : 'Add New Address'}
             </h3>
 
             <div className="space-y-1">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Label / Name *</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Label / Name *</label>
               <input
                 type="text"
                 value={name}
@@ -208,7 +208,7 @@ export function AddressCard({
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Address Details *</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Address Details *</label>
               <textarea
                 value={addressLine}
                 onChange={(e) => setAddressLine(e.target.value)}
@@ -221,7 +221,7 @@ export function AddressCard({
 
             <div className="grid gap-3 grid-cols-2">
               <div className="space-y-1">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">City</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">City</label>
                 <input
                   type="text"
                   value={city}
@@ -230,7 +230,7 @@ export function AddressCard({
                 />
               </div>
               <div className="space-y-1">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">State</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">State</label>
                 <input
                   type="text"
                   value={state}
@@ -242,7 +242,7 @@ export function AddressCard({
 
             <div className="grid gap-3 grid-cols-2">
               <div className="space-y-1">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">Pincode *</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">Pincode *</label>
                 <input
                   type="text"
                   value={pincode}
@@ -253,7 +253,7 @@ export function AddressCard({
                 />
               </div>
               <div className="space-y-1">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">Type / Tag</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">Type / Tag</label>
                 <select
                   value={tag}
                   onChange={(e) => setTag(e.target.value as 'Home' | 'Work' | 'Site' | 'Other')}

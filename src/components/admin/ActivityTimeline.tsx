@@ -16,7 +16,7 @@ export default function ActivityTimeline({ events }: ActivityTimelineProps) {
         <h3 className="text-xs font-black uppercase text-stone-900 tracking-wider">
           Platform Activity Logs
         </h3>
-        <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+        <p className="text-2xs text-stone-500 font-medium mt-0.5">
           Real-time operations log and audit trail events.
         </p>
       </div>
@@ -33,10 +33,10 @@ export default function ActivityTimeline({ events }: ActivityTimelineProps) {
                 {evt.icon || '🔔'}
               </span>
               <div className="space-y-1 pt-1.5 flex-1 min-w-0">
-                <p className="text-[11px] text-stone-800 font-semibold leading-relaxed">
+                <p className="text-2xs text-stone-800 font-semibold leading-relaxed">
                   {evt.description}
                 </p>
-                <span className="block text-[8px] text-stone-400 font-bold uppercase tracking-wider">
+                <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">
                   {evt.time}
                 </span>
               </div>

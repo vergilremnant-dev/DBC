@@ -96,7 +96,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
         {stepsList.map((s) => (
           <div key={s.num} className="flex items-center gap-2">
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black border transition ${
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-2xs font-black border transition ${
                 step === s.num
                   ? 'bg-emerald-600 border-emerald-700 text-white shadow-sm'
                   : step > s.num
@@ -107,7 +107,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
               {s.num}
             </span>
             <span
-              className={`text-[9px] uppercase tracking-wider font-extrabold hidden sm:inline ${
+              className={`text-3xs uppercase tracking-wider font-extrabold hidden sm:inline ${
                 step === s.num ? 'text-stone-850' : 'text-stone-400'
               }`}
             >
@@ -126,7 +126,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
           <div className="space-y-4">
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 1: Project Title & Details</h4>
             <div className="space-y-1.5">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Requirement Title</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Requirement Title</label>
               <input
                 type="text"
                 name="title"
@@ -138,7 +138,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
               />
             </div>
             <div className="space-y-1.5">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Project Description</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Project Description</label>
               <textarea
                 name="description"
                 value={formData.description}
@@ -157,7 +157,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
           <div className="space-y-4">
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 2: Service Category</h4>
             <div className="space-y-1.5">
-              <label className="block text-[10px] uppercase font-bold text-stone-400">Target Specialist Category</label>
+              <label className="block text-2xs uppercase font-bold text-stone-400">Target Specialist Category</label>
               <select
                 name="category"
                 value={formData.category}
@@ -171,7 +171,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 ))}
               </select>
             </div>
-            <p className="text-[10px] text-stone-400 font-semibold leading-relaxed">
+            <p className="text-2xs text-stone-400 font-semibold leading-relaxed">
               Selecting the appropriate category ensures your requirements are visible to matching verified providers.
             </p>
           </div>
@@ -183,7 +183,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 3: Budget Range Setting</h4>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">Minimum Budget (₹)</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">Minimum Budget (₹)</label>
                 <input
                   type="number"
                   name="budgetMin"
@@ -194,7 +194,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">Maximum Budget (₹)</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">Maximum Budget (₹)</label>
                 <input
                   type="number"
                   name="budgetMax"
@@ -205,7 +205,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 />
               </div>
             </div>
-            <p className="text-[10px] text-stone-400 font-semibold leading-relaxed">
+            <p className="text-2xs text-stone-400 font-semibold leading-relaxed">
               Setting budget thresholds protects you from out-of-range pricing estimates.
             </p>
           </div>
@@ -217,7 +217,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 4: Location details</h4>
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-1 space-y-1.5">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">City</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">City</label>
                 <input
                   type="text"
                   name="city"
@@ -227,7 +227,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 />
               </div>
               <div className="col-span-2 space-y-1.5">
-                <label className="block text-[10px] uppercase font-bold text-stone-400">Street Address & Area</label>
+                <label className="block text-2xs uppercase font-bold text-stone-400">Street Address & Area</label>
                 <input
                   type="text"
                   name="address"
@@ -252,10 +252,10 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 <span className="font-bold text-stone-800">{formData.title || 'Untitled Requirement'}</span>
                 <span className="font-black text-emerald-800 uppercase tracking-wider">{formData.category}</span>
               </div>
-              <p className="text-[10px] text-stone-500 font-semibold leading-relaxed italic">
+              <p className="text-2xs text-stone-500 font-semibold leading-relaxed italic">
                 "{formData.description || 'No description provided.'}"
               </p>
-              <div className="grid grid-cols-2 gap-2 text-[10px] pt-1 text-stone-600">
+              <div className="grid grid-cols-2 gap-2 text-2xs pt-1 text-stone-600">
                 <span>Budget: ₹{formData.budgetMin.toLocaleString()} - ₹{formData.budgetMax.toLocaleString()}</span>
                 <span>Address: {formData.address}, {formData.city}</span>
               </div>

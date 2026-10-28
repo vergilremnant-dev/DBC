@@ -13,7 +13,7 @@ interface MilestoneCardProps {
 export function MilestoneCard({ milestones, onToggleMilestone }: MilestoneCardProps) {
   return (
     <div className="space-y-3.5 text-left text-xs font-semibold text-stone-700">
-      <span className="block text-[9px] uppercase font-bold text-stone-400 tracking-wider">
+      <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
         Project Milestones Checklist
       </span>
 
@@ -41,7 +41,7 @@ export function MilestoneCard({ milestones, onToggleMilestone }: MilestoneCardPr
               }`}>
                 {m.title}
               </span>
-              <span className="block text-[9px] text-stone-400 font-bold uppercase">
+              <span className="block text-3xs text-stone-400 font-bold uppercase">
                 Due: <strong className="text-stone-500 font-extrabold">{m.dueDate}</strong>
               </span>
             </div>

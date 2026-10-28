@@ -20,12 +20,12 @@ export function RatingSummary({ summary }: RatingSummaryProps) {
     <div className="rounded-xl border border-stone-200 bg-stone-50 p-5 grid gap-6 sm:grid-cols-[140px_1fr] items-center">
       {/* Overall Score */}
       <div className="text-center sm:border-r sm:border-stone-200 sm:pr-6 py-2">
-        <p className="text-[9px] font-bold uppercase tracking-wider text-stone-450 text-stone-500">Average Rating</p>
-        <h3 className="text-3xl font-extrabold text-stone-900 font-serif mt-1">{averageRating.toFixed(1)}</h3>
+        <p className="text-3xs font-bold uppercase tracking-wider text-stone-450 text-stone-500">Average Rating</p>
+        <h3 className="text-3xl font-extrabold text-stone-900 font-display mt-1">{averageRating.toFixed(1)}</h3>
         <div className="flex justify-center mt-1.5">
           <StarRating rating={Math.round(averageRating)} size="md" />
         </div>
-        <p className="text-[10px] text-stone-400 mt-2 font-bold uppercase tracking-wider">
+        <p className="text-2xs text-stone-400 mt-2 font-bold uppercase tracking-wider">
           {totalReviews} {totalReviews === 1 ? 'Review' : 'Reviews'}
         </p>
       </div>

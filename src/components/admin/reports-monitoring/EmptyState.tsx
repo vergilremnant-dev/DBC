@@ -39,14 +39,14 @@ export default function EmptyState({ type = 'data', onResetFilters }: EmptyState
         <h4 className="text-xs font-black text-stone-900 uppercase tracking-widest">
           {info.title}
         </h4>
-        <p className="text-[10px] text-stone-500 font-medium leading-relaxed">
+        <p className="text-2xs text-stone-500 font-medium leading-relaxed">
           {info.description}
         </p>
       </div>
       {onResetFilters && (
         <button
           onClick={onResetFilters}
-          className="px-4 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl text-[9px] font-black uppercase tracking-wider transition cursor-pointer"
+          className="px-4 py-2 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl text-3xs font-black uppercase tracking-wider transition cursor-pointer"
         >
           Reset Filters
         </button>

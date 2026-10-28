@@ -173,7 +173,7 @@ export function ChatPanel() {
         
         {/* Conversations Sidebar (Hidden on mobile when chat is active) */}
         <section className={`rounded-2xl border border-light-border bg-white p-4 shadow-xs flex flex-col ${selectedConvo ? 'hidden md:flex' : 'flex'}`}>
-          <h2 className="text-sm font-bold text-stone-900 font-serif border-b border-light-border pb-3">Conversations</h2>
+          <h2 className="text-sm font-bold text-stone-900 font-display border-b border-light-border pb-3">Conversations</h2>
           
           <div className="mt-3 flex-1 space-y-1.5 overflow-y-auto no-scrollbar">
             {loading ? (
@@ -197,18 +197,18 @@ export function ChatPanel() {
                     <div className="flex items-start justify-between gap-2">
                       <div className="truncate">
                         <h4 className="text-xs font-bold truncate">{getRecipientName(convo)}</h4>
-                        <span className={`text-[9px] uppercase tracking-wider font-bold ${isActive ? 'text-stone-200' : 'text-stone-400'}`}>
+                        <span className={`text-3xs uppercase tracking-wider font-bold ${isActive ? 'text-stone-200' : 'text-stone-400'}`}>
                           {getRecipientSub(convo)}
                         </span>
                       </div>
                       {unreadCount > 0 && (
-                        <span className="bg-brand-emerald border border-brand-emerald text-white rounded-full text-[9px] font-bold px-2 py-0.5 animate-bounce">
+                        <span className="bg-brand-emerald border border-brand-emerald text-white rounded-full text-3xs font-bold px-2 py-0.5 animate-bounce">
                           {unreadCount}
                         </span>
                       )}
                     </div>
                     
-                    <p className={`mt-2 text-[10px] truncate ${isActive ? 'text-stone-200' : 'text-stone-500'}`}>
+                    <p className={`mt-2 text-2xs truncate ${isActive ? 'text-stone-200' : 'text-stone-500'}`}>
                       {convo.lastMessage || 'Conversation started'}
                     </p>
                   </div>
@@ -239,7 +239,7 @@ export function ChatPanel() {
                   </button>
                   <div>
                     <h3 className="text-sm font-bold text-stone-900 leading-tight">{getRecipientName(selectedConvo)}</h3>
-                    <p className="text-[9px] text-stone-400 uppercase tracking-wider font-bold mt-0.5 flex items-center gap-1.5">
+                    <p className="text-3xs text-stone-400 uppercase tracking-wider font-bold mt-0.5 flex items-center gap-1.5">
                       <span>{getRecipientSub(selectedConvo)}</span>
                       {selectedConvo.booking && (
                         <span>• Ref: {selectedConvo.booking.bookingNumber}</span>
@@ -283,7 +283,7 @@ export function ChatPanel() {
                                   href={msg.attachmentUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="p-3 text-[10px] font-bold text-wood-brown block hover:underline"
+                                  className="p-3 text-2xs font-bold text-wood-brown block hover:underline"
                                 >
                                   📄 View PDF / Document
                                 </a>
@@ -293,7 +293,7 @@ export function ChatPanel() {
 
                           <p className="leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                           
-                          <div className={`flex items-center gap-1.5 justify-end mt-1 text-[8px] uppercase tracking-wider font-bold ${isOwn ? 'text-emerald-100' : 'text-stone-400'}`}>
+                          <div className={`flex items-center gap-1.5 justify-end mt-1 text-3xs uppercase tracking-wider font-bold ${isOwn ? 'text-emerald-100' : 'text-stone-400'}`}>
                             <span>
                               {new Date(msg.createdAt).toLocaleTimeString('en-IN', {
                                 hour: '2-digit',
@@ -316,7 +316,7 @@ export function ChatPanel() {
 
               {/* Typing Indicator */}
               {isTyping && (
-                <div className="px-5 py-2 text-[10px] text-stone-400 animate-pulse font-medium bg-warm-cream">
+                <div className="px-5 py-2 text-2xs text-stone-400 animate-pulse font-medium bg-warm-cream">
                   💬 Typing reply...
                 </div>
               )}
@@ -329,7 +329,7 @@ export function ChatPanel() {
                     <select
                       value={attachType}
                       onChange={(e) => setAttachType(e.target.value as 'IMAGE' | 'FILE')}
-                      className="rounded border border-light-border bg-white px-2 py-1 text-[10px] font-bold focus:outline-none"
+                      className="rounded border border-light-border bg-white px-2 py-1 text-2xs font-bold focus:outline-none"
                     >
                       <option value="IMAGE">📷 Image Link</option>
                       <option value="FILE">📄 PDF File</option>
@@ -339,7 +339,7 @@ export function ChatPanel() {
                       value={attachUrl}
                       onChange={(e) => setAttachUrl(e.target.value)}
                       placeholder="Paste mockup URL..."
-                      className="flex-1 rounded border border-light-border bg-white px-3 py-1 text-[10px] focus:outline-none focus:border-brand-emerald"
+                      className="flex-1 rounded border border-light-border bg-white px-3 py-1 text-2xs focus:outline-none focus:border-brand-emerald"
                     />
                     <button
                       type="button"
@@ -347,7 +347,7 @@ export function ChatPanel() {
                         setAttachUrl('');
                         setShowAttachInput(false);
                       }}
-                      className="text-[10px] font-bold text-stone-400 hover:text-stone-600 cursor-pointer"
+                      className="text-2xs font-bold text-stone-400 hover:text-stone-600 cursor-pointer"
                     >
                       Cancel
                     </button>

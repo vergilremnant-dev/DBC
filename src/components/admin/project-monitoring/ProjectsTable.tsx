@@ -34,7 +34,7 @@ export default function ProjectsTable({
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs" aria-label="Platform Projects Portfolio Table">
           <thead>
-            <tr className="border-b border-light-border bg-stone-50/50 text-[9px] font-black uppercase text-stone-400">
+            <tr className="border-b border-light-border bg-stone-50/50 text-3xs font-black uppercase text-stone-400">
               <th className="py-3 px-4 cursor-pointer hover:text-stone-900" onClick={() => onSort('id')}>
                 Project ID{renderSortIndicator('id')}
               </th>
@@ -57,7 +57,7 @@ export default function ProjectsTable({
             {projects.map((proj) => (
               <tr key={proj.id} className="hover:bg-stone-50/30 transition-colors">
                 {/* Project ID */}
-                <td className="py-3 px-4 font-mono font-bold text-[10px] text-stone-500">
+                <td className="py-3 px-4 font-mono font-bold text-2xs text-stone-500">
                   {proj.id}
                 </td>
 
@@ -69,7 +69,7 @@ export default function ProjectsTable({
                   >
                     {proj.name}
                   </strong>
-                  {proj.address && <span className="block text-[8.5px] text-stone-400 font-bold uppercase tracking-wider">{proj.address}, {proj.city}</span>}
+                  {proj.address && <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{proj.address}, {proj.city}</span>}
                 </td>
 
                 {/* Customer */}
@@ -84,7 +84,7 @@ export default function ProjectsTable({
 
                 {/* Category */}
                 <td className="py-3 px-4">
-                  <span className="bg-stone-100 text-stone-700 text-[8.5px] px-2 py-0.5 rounded font-black uppercase">
+                  <span className="bg-stone-100 text-stone-700 text-3xs px-2 py-0.5 rounded font-black uppercase">
                     {proj.category}
                   </span>
                 </td>
@@ -92,7 +92,7 @@ export default function ProjectsTable({
                 {/* Progress bar */}
                 <td className="py-3 px-4 min-w-[120px]">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black text-stone-850 shrink-0 w-8">{proj.progress}%</span>
+                    <span className="text-2xs font-black text-stone-850 shrink-0 w-8">{proj.progress}%</span>
                     <div className="w-full bg-stone-100 border border-stone-200 h-2 rounded-full overflow-hidden shrink-0 max-w-[80px]">
                       <div 
                         className={`h-full rounded-full transition-all duration-300 ${
@@ -116,7 +116,7 @@ export default function ProjectsTable({
                 </td>
 
                 {/* Dates */}
-                <td className="py-3 px-4 text-[10px] text-stone-500">
+                <td className="py-3 px-4 text-2xs text-stone-500">
                   <p>Start: {new Date(proj.startDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</p>
                   <p className="mt-0.5">End: {new Date(proj.expectedCompletion).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</p>
                 </td>
@@ -124,7 +124,7 @@ export default function ProjectsTable({
                 {/* Alert flag */}
                 <td className="py-3 px-4 text-center">
                   {proj.flagged ? (
-                    <span className="bg-rose-50 text-rose-700 border border-rose-200 font-black px-2 py-0.5 rounded-full text-[8.5px]" title={proj.flagReason}>
+                    <span className="bg-rose-50 text-rose-700 border border-rose-200 font-black px-2 py-0.5 rounded-full text-3xs" title={proj.flagReason}>
                       ⚠️ Flagged
                     </span>
                   ) : (
@@ -134,7 +134,7 @@ export default function ProjectsTable({
 
                 {/* Actions */}
                 <td className="py-3 px-4 text-right">
-                  <div className="flex gap-2.5 justify-end text-[9px] font-black uppercase tracking-wider">
+                  <div className="flex gap-2.5 justify-end text-3xs font-black uppercase tracking-wider">
                     <button
                       onClick={() => onSelectProject(proj)}
                       className="text-brand-emerald hover:underline focus:outline-none"

@@ -69,7 +69,7 @@ export default function ProjectsTable({
                   >
                     {proj.name}
                   </strong>
-                  {proj.address && <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{proj.address}, {proj.city}</span>}
+                  {proj.address && <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wider">{proj.address}, {proj.city}</span>}
                 </td>
 
                 {/* Customer */}

@@ -67,7 +67,7 @@ export default function ProjectCard({
       </div>
 
       <div className="border-t border-light-border/40 pt-3.5 flex justify-between items-center text-3xs font-black uppercase tracking-wider">
-        <span className="text-3xs text-stone-400 font-bold">
+        <span className="text-3xs text-stone-500 font-bold">
           Due: {new Date(project.expectedCompletion).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
         </span>
         

@@ -221,8 +221,8 @@ function CustomerBookings() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-stone-200 pb-5">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold text-stone-900 font-display">Project Requests</h2>
-          <p className="text-xs text-stone-500 font-medium">Track timelines, professional assignments, and status of your project requests.</p>
+          <h1 className="text-xl font-bold text-stone-900 font-display">Project Requests</h1>
+          <p className="text-xs text-stone-600 font-medium">Track timelines, professional assignments, and status of your project requests.</p>
         </div>
         <div className="flex gap-2">
           <button

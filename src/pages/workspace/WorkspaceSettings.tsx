@@ -351,7 +351,7 @@ export default function WorkspaceSettings() {
             className={`px-4 py-2 border-b-2 font-bold uppercase tracking-wider transition cursor-pointer whitespace-nowrap ${
               activeTab === tab.id
                 ? 'border-emerald-600 text-emerald-800'
-                : 'border-transparent text-stone-500 hover:text-stone-850'
+                : 'border-transparent text-stone-600 hover:text-stone-850'
             }`}
           >
             {tab.label}
@@ -384,19 +384,19 @@ export default function WorkspaceSettings() {
                     </h3>
                     <div className="grid gap-4 sm:grid-cols-2 text-xs font-semibold text-stone-600">
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-                        <span className="block text-3xs uppercase font-bold text-stone-400">Display / User Name</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-500">Display / User Name</span>
                         <span className="text-stone-900">{personalInfo.displayName || 'Not Set'}</span>
                       </div>
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-                        <span className="block text-3xs uppercase font-bold text-stone-400">Gender</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-500">Gender</span>
                         <span className="text-stone-900">{personalInfo.gender || 'Not Specified'}</span>
                       </div>
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-                        <span className="block text-3xs uppercase font-bold text-stone-400">Date of Birth</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-500">Date of Birth</span>
                         <span className="text-stone-900">{personalInfo.dob || 'Not Specified'}</span>
                       </div>
                       <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100 sm:col-span-2">
-                        <span className="block text-3xs uppercase font-bold text-stone-400">Biography</span>
+                        <span className="block text-3xs uppercase font-bold text-stone-500">Biography</span>
                         <p className="text-stone-600 leading-relaxed mt-0.5">{personalInfo.bio || 'No biography written yet.'}</p>
                       </div>
                     </div>

@@ -324,7 +324,7 @@ export function IntegrationAutomationPage() {
                 <div className="grid gap-4 grid-cols-2 text-xs font-semibold text-stone-gray">
                   <div>
                     <label className="block mb-1">Trigger Event (IF)</label>
-                    <select value={ruleTrigger} onChange={(e) => setRuleTrigger(e.target.value)} className="dbc-input bg-white">
+                    <select aria-label="Trigger Event (IF)" value={ruleTrigger} onChange={(e) => setRuleTrigger(e.target.value)} className="dbc-input bg-white">
                       <option value="Invoice Overdue">Invoice is Overdue</option>
                       <option value="Booking Confirmed">Booking is Confirmed</option>
                       <option value="Project Completed">Project is Completed</option>
@@ -333,7 +333,7 @@ export function IntegrationAutomationPage() {
                   </div>
                   <div>
                     <label className="block mb-1">Target Service (THEN)</label>
-                    <select value={ruleService} onChange={(e) => setRuleService(e.target.value)} className="dbc-input bg-white">
+                    <select aria-label="Target Service (THEN)" value={ruleService} onChange={(e) => setRuleService(e.target.value)} className="dbc-input bg-white">
                       <option value="Twilio SMS">Twilio SMS Gateway</option>
                       <option value="Outlook Calendar">Outlook Calendar Sync</option>
                       <option value="Google Drive">Google Drive storage</option>
@@ -463,7 +463,7 @@ export function IntegrationAutomationPage() {
                 
                 <div className="space-y-1.5">
                   <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Permission Scope</label>
-                  <select
+                  <select aria-label="Permission Scope"
                     value={keyScope}
                     onChange={(e) => setKeyScope(e.target.value as 'Read-Only' | 'Read-Write' | 'Admin')}
                     className="dbc-input bg-white"

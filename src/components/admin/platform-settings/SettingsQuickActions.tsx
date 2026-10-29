@@ -74,7 +74,7 @@ export default function SettingsQuickActions({ onSave, onReset, isSaving }: Sett
               <p className={`text-2xs font-black uppercase tracking-wider leading-snug ${action.variant === 'primary' ? 'text-white' : 'text-stone-700'}`}>
                 {action.label}
               </p>
-              <p className={`text-3xs font-medium leading-relaxed truncate ${action.variant === 'primary' ? 'text-white/80' : 'text-stone-500'}`}>
+              <p className={`text-3xs font-medium leading-relaxed truncate ${action.variant === 'primary' ? 'text-white/90' : 'text-stone-500'}`}>
                 {action.desc}
               </p>
             </div>

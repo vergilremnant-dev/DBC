@@ -79,7 +79,7 @@ export default function RequirementsTable({
                   >
                     {req.title}
                   </strong>
-                  {req.propertyType && <span className="block text-3xs font-black uppercase tracking-wider text-stone-400">{req.propertyType}</span>}
+                  {req.propertyType && <span className="block text-3xs font-black uppercase tracking-wider text-stone-600">{req.propertyType}</span>}
                 </td>
 
                 {/* Customer */}

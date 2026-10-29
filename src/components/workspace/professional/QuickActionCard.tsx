@@ -25,7 +25,7 @@ export function QuickActionCard({ actions }: QuickActionCardProps) {
             <h3 className="text-xs font-black text-stone-900 uppercase tracking-wider group-hover:text-emerald-800 transition">
               {act.title}
             </h3>
-            <p className="text-2xs text-stone-400 font-semibold leading-relaxed">
+            <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
               {act.description}
             </p>
           </div>

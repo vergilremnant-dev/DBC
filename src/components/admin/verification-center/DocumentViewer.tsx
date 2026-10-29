@@ -118,7 +118,7 @@ export default function DocumentViewer({ documents }: DocumentViewerProps) {
             >
               <span className="text-2xl">📄</span>
               <strong className="text-2xs text-stone-850 truncate max-w-[200px]">{currentDoc.name}</strong>
-              <p className="text-3xs text-stone-400 font-bold uppercase tracking-widest">{currentDoc.type}</p>
+              <p className="text-3xs text-stone-500 font-bold uppercase tracking-widest">{currentDoc.type}</p>
               <span className="text-3xs text-stone-300 font-mono mt-1 select-none">
                 [Certified DBC Encrypted Sandboxed File Review]
               </span>

@@ -19,7 +19,7 @@ export default function ProjectQuickActions({
         <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           Portfolio Shortcuts
         </h4>
-        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">
           Execute operations command actions
         </span>
       </div>

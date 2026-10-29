@@ -43,7 +43,7 @@ export function ReviewCard({ review, onReplyClick, canReply = false }: ReviewCar
           </div>
           <div className="flex items-center gap-2 mt-1.5">
             <StarRating rating={review.rating} size="sm" />
-            <span className="text-2xs text-stone-400 font-semibold">{formatDate(review.createdAt)}</span>
+            <span className="text-2xs text-stone-500 font-semibold">{formatDate(review.createdAt)}</span>
           </div>
         </div>
 

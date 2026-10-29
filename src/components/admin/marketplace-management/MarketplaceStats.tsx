@@ -41,7 +41,7 @@ export default function MarketplaceStats({
             <span className="block text-3xs font-black text-stone-900 uppercase tracking-wider">
               {stat.label}
             </span>
-            <span className="block text-3xs text-stone-400 font-medium">
+            <span className="block text-3xs text-stone-500 font-medium">
               {stat.desc}
             </span>
           </div>

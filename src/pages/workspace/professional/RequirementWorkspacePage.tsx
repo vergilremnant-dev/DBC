@@ -113,7 +113,7 @@ export default function RequirementWorkspacePage() {
       {/* Back button */}
       <button
         onClick={() => navigate('/workspace/leads')}
-        className="text-xs font-bold text-stone-500 hover:text-stone-900 transition flex items-center gap-1 cursor-pointer"
+        className="text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1 cursor-pointer"
       >
         ← Back to Requirement Marketplace
       </button>
@@ -133,7 +133,7 @@ export default function RequirementWorkspacePage() {
             </span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">{reqData.title}</h1>
-          <p className="text-xs text-stone-500 font-medium">{reqData.category} &bull; {reqData.location} &bull; Posted {reqData.postedDate}</p>
+          <p className="text-xs text-stone-600 font-medium">{reqData.category} &bull; {reqData.location} &bull; Posted {reqData.postedDate}</p>
         </div>
 
         <div className="flex flex-wrap gap-2 text-xs shrink-0">
@@ -201,19 +201,19 @@ export default function RequirementWorkspacePage() {
             
             <div className="grid gap-4 sm:grid-cols-2 text-xs font-semibold text-stone-600">
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Construction Stage</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase mb-0.5">Construction Stage</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.stage}</span>
               </div>
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Area / Size</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase mb-0.5">Area / Size</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.size}</span>
               </div>
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Preferred Materials</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase mb-0.5">Preferred Materials</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.materials}</span>
               </div>
               <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Style Preferences</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase mb-0.5">Style Preferences</span>
                 <span className="text-stone-900 font-bold">{reqData.specs.style}</span>
               </div>
             </div>
@@ -246,7 +246,7 @@ export default function RequirementWorkspacePage() {
                   <div key={idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                     <div>
                       <strong className="text-stone-850 block">{doc.name}</strong>
-                      <span className="text-3xs text-stone-400 font-bold uppercase mt-0.5">{doc.size}</span>
+                      <span className="text-3xs text-stone-500 font-bold uppercase mt-0.5">{doc.size}</span>
                     </div>
                     <button
                       onClick={() => alert(`Downloading attachment: ${doc.name}`)}
@@ -320,7 +320,7 @@ export default function RequirementWorkspacePage() {
               {activityTrail.map((item, idx) => (
                 <div key={idx} className="relative space-y-0.5 text-xs font-semibold">
                   <span className="absolute -left-[23px] top-0 w-2 h-2 rounded-full bg-brand-emerald"></span>
-                  <span className="block text-3xs font-bold text-stone-400 uppercase tracking-widest">{item.date}</span>
+                  <span className="block text-3xs font-bold text-stone-500 uppercase tracking-widest">{item.date}</span>
                   <h4 className="font-bold text-stone-900 leading-tight">{item.action}</h4>
                   <p className="text-stone-500 text-2xs leading-relaxed font-medium">By {item.user}</p>
                 </div>

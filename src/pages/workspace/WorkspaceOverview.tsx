@@ -158,7 +158,7 @@ export default function WorkspaceOverview() {
       
       {/* Toast / Notification Banner */}
       {noticeMessage && (
-        <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-3 rounded-2xl text-xs font-semibold shadow-apple-sm flex items-center justify-between animate-fade-in">
+        <div role="status" className="bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-3 rounded-2xl text-xs font-semibold shadow-apple-sm flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
             <span>ℹ️</span>
             <span>{noticeMessage}</span>
@@ -206,7 +206,7 @@ export default function WorkspaceOverview() {
 
           {/* ACTION CENTER */}
           <div className="space-y-3">
-            <h3 className="text-2xs font-black uppercase tracking-wider text-stone-400">Action Required</h3>
+            <h3 className="text-2xs font-black uppercase tracking-wider text-stone-600">Action Required</h3>
             {payments.filter(p => p.status === 'Pending').length > 0 ? (
               <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left">
                 <div className="flex items-start sm:items-center gap-3">
@@ -232,7 +232,7 @@ export default function WorkspaceOverview() {
                 </button>
               </div>
             ) : (
-              <div className="bg-stone-50 border border-stone-200/50 rounded-2xl p-4 text-left text-xs font-semibold text-stone-500 flex items-center gap-2">
+              <div className="bg-stone-50 border border-stone-200/50 rounded-2xl p-4 text-left text-xs font-semibold text-stone-600 flex items-center gap-2">
                 <span className="text-emerald-700 font-extrabold text-sm">✓</span>
                 <span>You're all caught up. No pending actions require your attention.</span>
               </div>
@@ -247,7 +247,7 @@ export default function WorkspaceOverview() {
               </div>
               <div className="space-y-2 text-center">
                 <h3 className="text-base font-black text-stone-900 font-display">Start Your First Project</h3>
-                <p className="text-xs text-stone-500 max-w-md mx-auto leading-relaxed">
+                <p className="text-xs text-stone-600 max-w-md mx-auto leading-relaxed">
                   Find a construction or design professional, share your project requirements, receive custom quotations, and manage milestones end-to-end.
                 </p>
               </div>

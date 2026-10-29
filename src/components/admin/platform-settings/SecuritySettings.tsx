@@ -17,7 +17,7 @@ interface SecuritySettingsProps {
 
 function ReadOnlyBadge() {
   return (
-    <span className="text-3xs font-black uppercase tracking-wider text-stone-400 bg-stone-100 border border-stone-200 px-1.5 py-0.5 rounded ml-2">
+    <span className="text-3xs font-black uppercase tracking-wider text-stone-600 bg-stone-100 border border-stone-200 px-1.5 py-0.5 rounded ml-2">
       Read-only · Backend Required
     </span>
   );

@@ -152,7 +152,7 @@ export default function CalendarManagementPage() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Scheduler Command Center</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Appointments & Calendar</h1>
-          <p className="text-xs text-stone-500 font-medium">Manage your consultation schedule, buffer durations, and availability preferences.</p>
+          <p className="text-xs text-stone-600 font-medium">Manage your consultation schedule, buffer durations, and availability preferences.</p>
         </div>
         
         <div className="flex flex-wrap gap-2">
@@ -173,7 +173,7 @@ export default function CalendarManagementPage() {
       </header>
 
       {/* Sync status tracker */}
-      <div className="text-3xs text-stone-400 font-bold uppercase tracking-wider text-right px-2">
+      <div className="text-3xs text-stone-600 font-bold uppercase tracking-wider text-right px-2">
         🟢 Google / Outlook Integration &bull; {syncStatus}
       </div>
 
@@ -250,10 +250,10 @@ export default function CalendarManagementPage() {
             <div className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
               <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
                 <h3 className="text-xs font-black uppercase text-stone-900">August 2026</h3>
-                <span className="text-2xs text-stone-400 font-bold uppercase">Standard Slot grid</span>
+                <span className="text-2xs text-stone-500 font-bold uppercase">Standard Slot grid</span>
               </div>
 
-              <div className="grid grid-cols-7 gap-2 text-center text-3xs font-black uppercase tracking-widest text-stone-400 border-b border-light-border/40 pb-2">
+              <div className="grid grid-cols-7 gap-2 text-center text-3xs font-black uppercase tracking-widest text-stone-500 border-b border-light-border/40 pb-2">
                 <div>Mon</div>
                 <div>Tue</div>
                 <div>Wed</div>
@@ -300,7 +300,7 @@ export default function CalendarManagementPage() {
             <div className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
               <div>
                 <h3 className="text-xs font-black uppercase text-stone-900">Appointments Schedule</h3>
-                <p className="text-2xs text-stone-400">List of bookings matching filters</p>
+                <p className="text-2xs text-stone-500">List of bookings matching filters</p>
               </div>
 
               {filteredAppointments.length === 0 ? (
@@ -322,7 +322,7 @@ export default function CalendarManagementPage() {
                           }`}>{apt.status}</span>
                         </div>
                         <p className="text-2xs text-stone-700 font-semibold">{apt.projectTitle}</p>
-                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-stone-400 font-bold uppercase">
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-stone-500 font-bold uppercase">
                           <span>📅 {apt.date} &bull; {apt.time} ({apt.duration})</span>
                           <span>🖥️ {apt.mode}</span>
                         </div>
@@ -453,13 +453,13 @@ export default function CalendarManagementPage() {
           <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4 text-left">
             <div className="space-y-1">
               <h3 className="text-sm font-black text-stone-900 uppercase">Reschedule Consultation</h3>
-              <p className="text-xs text-stone-500 font-medium">Select a new date and timeslot for consultation review.</p>
+              <p className="text-xs text-stone-600 font-medium">Select a new date and timeslot for consultation review.</p>
             </div>
             
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-3xs font-black text-stone-450 uppercase">Date</label>
-                <input
+                <input aria-label="Date"
                   type="date"
                   value={newRescheduleDate}
                   onChange={e => setNewRescheduleDate(e.target.value)}
@@ -468,7 +468,7 @@ export default function CalendarManagementPage() {
               </div>
               <div>
                 <label className="block text-3xs font-black text-stone-450 uppercase">Time Slot</label>
-                <select
+                <select aria-label="Time Slot"
                   value={newRescheduleTime}
                   onChange={e => setNewRescheduleTime(e.target.value)}
                   className="dbc-input bg-white text-xs py-1.5 px-3"

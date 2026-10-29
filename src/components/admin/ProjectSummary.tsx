@@ -34,7 +34,7 @@ export default function ProjectSummary({
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-bold text-stone-700">
         <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-          <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">
+          <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">
             Active
           </span>
           <span className="text-base font-extrabold text-stone-900">{activeCount}</span>
@@ -52,7 +52,7 @@ export default function ProjectSummary({
           <span className="text-base font-extrabold text-amber-700">{onHoldCount}</span>
         </div>
         <div className="p-3 bg-stone-100/50 border border-stone-200 rounded-xl">
-          <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">
+          <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">
             Cancelled
           </span>
           <span className="text-base font-extrabold text-stone-600">{cancelledCount}</span>

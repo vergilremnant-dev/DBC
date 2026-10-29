@@ -140,7 +140,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-light-border/40">
             <div className="space-y-1">
               <label className="text-3xs font-black uppercase tracking-wider text-stone-gray block">Project Location (City / Region)</label>
-              <input
+              <input aria-label="Project Location (City / Region)"
                 type="text"
                 placeholder="e.g. Hyderabad, Bengaluru, Mumbai"
                 value={locationCity}
@@ -150,7 +150,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
             </div>
             <div className="space-y-1">
               <label className="text-3xs font-black uppercase tracking-wider text-stone-gray block">Estimated Start Timeline</label>
-              <select
+              <select aria-label="Estimated Start Timeline"
                 value={timeline}
                 onChange={(e) => setTimeline(e.target.value)}
                 className="w-full px-3 py-2 text-xs border border-light-border rounded-lg focus:outline-none focus:border-brand-emerald bg-white"
@@ -217,7 +217,7 @@ export function WelcomeScreen({ user, onCompleteOnboarding }: WelcomeScreenProps
         <button
           type="button"
           onClick={onCompleteOnboarding}
-          className="text-stone-500 hover:text-stone-900 text-xs font-semibold hover:underline cursor-pointer focus:outline-none"
+          className="text-stone-600 hover:text-stone-900 text-xs font-semibold hover:underline cursor-pointer focus:outline-none"
         >
           Skip for now
         </button>

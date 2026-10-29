@@ -76,11 +76,11 @@ export function ServiceCard({ service, onBook }: ServiceCardProps) {
           {/* Pricing & Rating strip */}
           <div className="p-2.5 rounded-xl border border-stone-200/80 bg-stone-50/60 flex items-center justify-between">
             <div>
-              <span className="block text-3xs font-bold uppercase text-stone-400">Estimated Cost</span>
+              <span className="block text-3xs font-bold uppercase text-stone-500">Estimated Cost</span>
               <span className="text-xs font-bold text-stone-900">{service.priceRange}</span>
             </div>
             <div className="text-right">
-              <span className="block text-3xs font-bold uppercase text-stone-400">Rating</span>
+              <span className="block text-3xs font-bold uppercase text-stone-500">Rating</span>
               <span className="text-xs font-bold text-amber-800">⭐ {service.rating.toFixed(1)}</span>
             </div>
           </div>

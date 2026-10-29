@@ -49,7 +49,7 @@ export function BookingCard({ booking, onSelect }: BookingCardProps) {
         </div>
       </div>
 
-      <div className="border-t border-stone-100 pt-3 flex justify-between items-center text-3xs font-bold text-stone-400 uppercase tracking-wider">
+      <div className="border-t border-stone-100 pt-3 flex justify-between items-center text-3xs font-bold text-stone-600 uppercase tracking-wider">
         {/* Next Action */}
         <span className="text-brand-emerald font-black group-hover:underline min-h-[44px] flex items-center">
           View Request details →

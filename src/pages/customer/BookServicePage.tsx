@@ -293,7 +293,7 @@ export function BookServicePage() {
 
         {/* Status Messages */}
         {message && (
-          <div className="rounded-2xl bg-emerald-50/90 border border-emerald-200 p-4 text-xs font-bold text-emerald-900 flex items-center gap-3 shadow-xs animate-in fade-in">
+          <div role="status" className="rounded-2xl bg-emerald-50/90 border border-emerald-200 p-4 text-xs font-bold text-emerald-900 flex items-center gap-3 shadow-xs animate-in fade-in">
             <span className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs flex-shrink-0">
               ✓
             </span>
@@ -302,7 +302,7 @@ export function BookServicePage() {
         )}
 
         {error && (
-          <div className="rounded-2xl bg-rose-50/90 border border-rose-200 p-4 text-xs font-bold text-rose-900 flex items-center gap-3 shadow-xs animate-in fade-in">
+          <div role="alert" className="rounded-2xl bg-rose-50/90 border border-rose-200 p-4 text-xs font-bold text-rose-900 flex items-center gap-3 shadow-xs animate-in fade-in">
             <span className="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs flex-shrink-0">
               ⚠️
             </span>
@@ -446,7 +446,7 @@ export function BookServicePage() {
                       Expected Project Start & Timeline
                     </h3>
                   </div>
-                  <p className="text-xs text-stone-500 font-medium mt-1 ml-7">
+                  <p className="text-xs text-stone-600 font-medium mt-1 ml-7">
                     Select your expected project start date.
                   </p>
                 </div>
@@ -482,7 +482,7 @@ export function BookServicePage() {
                       Project Location & Scope
                     </h3>
                   </div>
-                  <p className="text-xs text-stone-500 font-medium mt-1 ml-7">
+                  <p className="text-xs text-stone-600 font-medium mt-1 ml-7">
                     Provide the property address, timeline, budget range, and project scope details.
                   </p>
                 </div>
@@ -705,7 +705,7 @@ export function BookServicePage() {
                   )}
                 </button>
 
-                <p className="text-2xs text-stone-400 text-center font-medium">
+                <p className="text-2xs text-stone-500 text-center font-medium">
                   By confirming, a project quote request is dispatched to the professional.
                 </p>
 

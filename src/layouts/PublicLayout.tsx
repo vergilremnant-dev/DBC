@@ -16,7 +16,7 @@ export function PublicLayout() {
       <MobileBottomNav />
 
       {/* Shared Persistent Footer */}
-      <footer className="border-t border-light-border bg-white py-12 text-center text-stone-500 text-xs">
+      <footer className="border-t border-light-border bg-white py-12 text-center text-stone-600 text-xs">
         <div className="mx-auto max-w-6xl px-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <p>© 2026 {BRAND.fullName} Inc. All rights reserved.</p>
           <div className="flex gap-4">

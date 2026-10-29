@@ -21,7 +21,7 @@ export function EmptyState({ title, description, onReset, className = '' }: Empt
         <h3 className="text-sm sm:text-base font-bold text-stone-900 font-display">
           {title}
         </h3>
-        <p className="text-xs text-stone-500 font-medium leading-relaxed max-w-sm mx-auto">
+        <p className="text-xs text-stone-600 font-medium leading-relaxed max-w-sm mx-auto">
           {description}
         </p>
       </div>

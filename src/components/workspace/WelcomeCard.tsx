@@ -12,10 +12,10 @@ export function WelcomeCard({ name, completionPercentage, onCompleteProfile }: W
       
       {/* Greeting info */}
       <div className="space-y-1.5 flex-1">
-        <h2 className="text-xl font-bold text-stone-900 font-display leading-tight">
+        <h1 className="text-xl font-bold text-stone-900 font-display leading-tight">
           Welcome back, {name || 'Client'}
-        </h2>
-        <p className="text-xs text-stone-500 font-medium leading-relaxed max-w-xl">
+        </h1>
+        <p className="text-xs text-stone-600 font-medium leading-relaxed max-w-xl">
           Here's what's happening with your project requests and active projects.
         </p>
       </div>
@@ -53,7 +53,7 @@ export function WelcomeCard({ name, completionPercentage, onCompleteProfile }: W
 
         {/* Text and Action */}
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Profile Setup</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Profile Setup</span>
           <span className="block text-xs font-bold text-stone-700">
             {isComplete ? 'Verification Completed' : 'Profile Incomplete'}
           </span>

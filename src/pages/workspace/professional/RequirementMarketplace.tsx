@@ -232,7 +232,7 @@ export default function RequirementMarketplace() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Leads Dispatch Feed</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Requirement Marketplace</h1>
-          <p className="text-xs text-stone-500 font-medium">Discover new customer requirements that match your trades and services.</p>
+          <p className="text-xs text-stone-600 font-medium">Discover new customer requirements that match your trades and services.</p>
         </div>
 
         <div className="flex gap-2 text-xs">
@@ -380,7 +380,7 @@ export default function RequirementMarketplace() {
 
               <p className="text-xs text-stone-600 font-semibold leading-relaxed">{req.description}</p>
 
-              <div className="flex justify-between items-center pt-3 border-t border-light-border/40 text-3xs text-stone-400 font-bold">
+              <div className="flex justify-between items-center pt-3 border-t border-light-border/40 text-3xs text-stone-500 font-bold">
                 <span>📁 {req.documentsCount} documents &bull; 📷 {req.imagesCount} images &bull; Posted {req.datePosted}</span>
                 
                 <div className="flex gap-2">
@@ -403,7 +403,7 @@ export default function RequirementMarketplace() {
                     onClick={() => handleExpressInterestClick(req.id)}
                     disabled={req.interestSubmitted}
                     className={`dbc-btn dbc-btn-sm ${
-                      req.interestSubmitted ? 'bg-stone-105 text-stone-400 border border-stone-200 cursor-not-allowed' : 'dbc-btn-primary'
+                      req.interestSubmitted ? 'bg-stone-105 text-stone-500 border border-stone-200 cursor-not-allowed' : 'dbc-btn-primary'
                     }`}
                   >
                     {req.interestSubmitted ? '✓ Interest Submitted' : 'Express Interest'}

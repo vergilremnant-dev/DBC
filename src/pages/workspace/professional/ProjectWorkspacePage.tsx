@@ -143,7 +143,7 @@ export default function ProjectWorkspacePage() {
       {/* Back button */}
       <button
         onClick={() => navigate('/workspace/projects')}
-        className="text-xs font-bold text-stone-500 hover:text-stone-900 transition flex items-center gap-1 cursor-pointer"
+        className="text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1 cursor-pointer"
       >
         ← Back to Projects List
       </button>
@@ -163,7 +163,7 @@ export default function ProjectWorkspacePage() {
             </span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Jubilee Hills Duplex Foundation</h1>
-          <p className="text-xs text-stone-500 font-medium">Customer: Ramesh Kumar &bull; Civil/Architecture &bull; Start Date: 2026-07-10</p>
+          <p className="text-xs text-stone-600 font-medium">Customer: Ramesh Kumar &bull; Civil/Architecture &bull; Start Date: 2026-07-10</p>
         </div>
 
         <div className="flex flex-wrap gap-2 text-xs shrink-0">
@@ -241,7 +241,7 @@ export default function ProjectWorkspacePage() {
                       <strong className={`block text-stone-850 ${task.status === 'Completed' ? 'line-through text-stone-400' : ''}`}>
                         {task.name}
                       </strong>
-                      <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">Assignee: {task.assignedTo} &bull; Due: {task.dueDate}</span>
+                      <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">Assignee: {task.assignedTo} &bull; Due: {task.dueDate}</span>
                     </div>
                   </div>
 
@@ -342,7 +342,7 @@ export default function ProjectWorkspacePage() {
                 <div key={idx} className="p-2.5 bg-stone-50 border border-stone-100 rounded-xl flex justify-between items-center text-xs">
                   <div>
                     <span className="font-bold text-stone-850 block truncate max-w-[120px]">{doc.name}</span>
-                    <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{doc.type} &bull; {doc.date}</span>
+                    <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">{doc.type} &bull; {doc.date}</span>
                   </div>
                   <button
                     onClick={() => alert(`Downloading project file: ${doc.name}`)}
@@ -366,7 +366,7 @@ export default function ProjectWorkspacePage() {
               {activityTrail.map((item, idx) => (
                 <div key={idx} className="relative space-y-0.5 text-xs font-semibold">
                   <span className="absolute -left-[23px] top-0 w-2 h-2 rounded-full bg-brand-emerald"></span>
-                  <span className="block text-3xs font-bold text-stone-400 uppercase tracking-widest">{item.date}</span>
+                  <span className="block text-3xs font-bold text-stone-500 uppercase tracking-widest">{item.date}</span>
                   <h4 className="font-bold text-stone-900 leading-tight">{item.action}</h4>
                   <p className="text-stone-500 text-2xs leading-relaxed font-medium">By {item.user}</p>
                 </div>

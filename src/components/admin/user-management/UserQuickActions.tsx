@@ -15,7 +15,7 @@ export default function UserQuickActions({
 }: UserQuickActionsProps) {
   if (!user) {
     return (
-      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-2xs text-stone-400 font-medium select-none">
+      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-2xs text-stone-500 font-medium select-none">
         No active user selected for quick commands.
       </div>
     );
@@ -27,7 +27,7 @@ export default function UserQuickActions({
         <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           Quick Commands: {user.name}
         </h4>
-        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">
           Role: {user.role} &bull; Status: {user.status}
         </span>
       </div>
@@ -71,7 +71,7 @@ export default function UserQuickActions({
         ) : (
           <button
             onClick={() => alert(`Verification already ${user.verificationStatus}.`)}
-            className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary text-stone-400 border border-light-border opacity-50 cursor-not-allowed"
+            className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary text-stone-500 border border-light-border opacity-50 cursor-not-allowed"
           >
             ✓ Verified Status
           </button>

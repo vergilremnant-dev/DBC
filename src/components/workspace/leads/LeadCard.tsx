@@ -54,14 +54,14 @@ export function LeadCard({ lead, isSelected, onSelect, onToggleSave }: LeadCardP
           <h3 className="text-sm font-bold text-stone-900 font-display leading-snug">
             {lead.title}
           </h3>
-          <p className="text-2xs text-stone-400 font-semibold leading-relaxed line-clamp-2">
+          <p className="text-2xs text-stone-500 font-semibold leading-relaxed line-clamp-2">
             {lead.descriptionPreview}
           </p>
         </div>
       </div>
 
       {/* Sizing & Timeline Attributes Grid */}
-      <div className="grid grid-cols-3 gap-2 bg-stone-50/50 border border-stone-100 rounded-xl p-2.5 text-3xs font-bold text-stone-400 uppercase tracking-wider">
+      <div className="grid grid-cols-3 gap-2 bg-stone-50/50 border border-stone-100 rounded-xl p-2.5 text-3xs font-bold text-stone-600 uppercase tracking-wider">
         <div className="space-y-0.5">
           <span>Budget</span>
           <strong className="block text-emerald-800 font-mono text-xs mt-0.5">{lead.budget}</strong>
@@ -77,7 +77,7 @@ export function LeadCard({ lead, isSelected, onSelect, onToggleSave }: LeadCardP
       </div>
 
       {/* Footer Info Row */}
-      <div className="flex items-center justify-between border-t border-stone-50 pt-3 text-2xs font-black uppercase tracking-wider text-stone-400">
+      <div className="flex items-center justify-between border-t border-stone-50 pt-3 text-2xs font-black uppercase tracking-wider text-stone-600">
         <span>📍 {lead.location} • {lead.postedDate}</span>
         
         <div className="flex items-center gap-3">

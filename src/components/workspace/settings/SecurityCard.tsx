@@ -70,13 +70,13 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
           Change Password
         </h3>
 
-        {pwError && <div className="bg-rose-50 border border-rose-100 text-rose-800 p-3 rounded-xl">{pwError}</div>}
-        {pwSuccess && <div className="bg-emerald-50 border border-emerald-100 text-emerald-850 p-3 rounded-xl">{pwSuccess}</div>}
+        {pwError && <div role="alert" className="bg-rose-50 border border-rose-100 text-rose-800 p-3 rounded-xl">{pwError}</div>}
+        {pwSuccess && <div role="status" className="bg-emerald-50 border border-emerald-100 text-emerald-850 p-3 rounded-xl">{pwSuccess}</div>}
 
         <form onSubmit={handlePasswordSubmit} className="space-y-3.5">
           <div className="space-y-1">
-            <label className="block text-2xs uppercase font-bold text-stone-400">Current Password</label>
-            <input
+            <label className="block text-2xs uppercase font-bold text-stone-500">Current Password</label>
+            <input aria-label="Current Password"
               type="password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
@@ -87,8 +87,8 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1">
-              <label className="block text-2xs uppercase font-bold text-stone-400">New Password</label>
-              <input
+              <label className="block text-2xs uppercase font-bold text-stone-500">New Password</label>
+              <input aria-label="New Password"
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -98,8 +98,8 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
             </div>
 
             <div className="space-y-1">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Confirm Password</label>
-              <input
+              <label className="block text-2xs uppercase font-bold text-stone-500">Confirm Password</label>
+              <input aria-label="Confirm Password"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -135,7 +135,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Show Profile in Marketplace Search</span>
-              <p className="text-2xs text-stone-400 font-medium leading-normal">
+              <p className="text-2xs text-stone-500 font-medium leading-normal">
                 Allow certified coordinators and contractors to view my project interests and contact card.
               </p>
             </div>
@@ -150,7 +150,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
             />
             <div className="space-y-0.5">
               <span className="block text-xs font-bold text-stone-900">Share Anonymous Telemetry</span>
-              <p className="text-2xs text-stone-400 font-medium leading-normal">
+              <p className="text-2xs text-stone-500 font-medium leading-normal">
                 Help us improve {BRAND.name} by sending anonymous user experience click reports.
               </p>
             </div>
@@ -179,7 +179,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
                       </span>
                     )}
                   </div>
-                  <div className="text-2xs text-stone-400 font-medium">
+                  <div className="text-2xs text-stone-500 font-medium">
                     IP: {sess.ip} • {sess.location}
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
       <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 border-l-4 border-l-rose-500">
         <div className="space-y-1 text-center sm:text-left">
           <h3 className="text-xs font-extrabold text-stone-900 uppercase">Export & Account Management</h3>
-          <p className="text-2xs text-stone-400 font-semibold max-w-md">
+          <p className="text-2xs text-stone-500 font-semibold max-w-md">
             Download your personal coordination data files in JSON structure, or request to permanently delete your account.
           </p>
         </div>

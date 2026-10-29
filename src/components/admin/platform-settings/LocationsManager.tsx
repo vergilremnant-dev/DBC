@@ -153,7 +153,7 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
           {filtered.length === 0 ? (
             <div className="text-center py-10 space-y-2">
               <span className="text-2xl block">📍</span>
-              <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">
+              <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">
                 {search ? 'No locations match your search.' : 'No locations configured.'}
               </p>
               {!search && (
@@ -167,11 +167,11 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
               <table className="w-full text-left text-xs" aria-label="Locations table">
                 <thead>
                   <tr className="bg-stone-50 border-b border-light-border">
-                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Location</th>
-                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Type</th>
-                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500 hidden sm:table-cell">Parent</th>
-                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500">Status</th>
-                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-500 text-right">Actions</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-600">Location</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-600">Type</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-600 hidden sm:table-cell">Parent</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-600">Status</th>
+                    <th className="px-4 py-3 text-3xs font-black uppercase tracking-wider text-stone-600 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-light-border">
@@ -183,14 +183,14 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
                       </td>
                       <td className="px-4 py-3 text-stone-500 font-medium hidden sm:table-cell">{loc.parent || '—'}</td>
                       <td className="px-4 py-3">
-                        <span className={`text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border ${loc.active ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-stone-100 text-stone-500 border-stone-200'}`}>
+                        <span className={`text-3xs font-black uppercase tracking-wider px-2 py-0.5 rounded border ${loc.active ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-stone-100 text-stone-600 border-stone-200'}`}>
                           {loc.active ? 'Active' : 'Inactive'}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => setModal(loc)} className="text-3xs font-bold text-stone-600 hover:text-brand-emerald transition cursor-pointer focus:outline-none" aria-label={`Edit ${loc.name}`}>Edit</button>
-                          <button onClick={() => handleToggle(loc.id)} className={`text-3xs font-bold transition cursor-pointer focus:outline-none ${loc.active ? 'text-amber-600 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700'}`} aria-label={`${loc.active ? 'Deactivate' : 'Activate'} ${loc.name}`}>
+                          <button onClick={() => setModal(loc)} className="inline-flex items-center min-h-[28px] px-2 rounded-md hover:bg-stone-50 text-2xs font-bold text-stone-600 hover:text-brand-emerald transition cursor-pointer focus:outline-none" aria-label={`Edit ${loc.name}`}>Edit</button>
+                          <button onClick={() => handleToggle(loc.id)} className={`inline-flex items-center min-h-[28px] px-2 rounded-md hover:bg-stone-50 text-2xs font-bold transition cursor-pointer focus:outline-none ${loc.active ? 'text-amber-700 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700'}`} aria-label={`${loc.active ? 'Deactivate' : 'Activate'} ${loc.name}`}>
                             {loc.active ? 'Deactivate' : 'Activate'}
                           </button>
                         </div>
@@ -202,7 +202,7 @@ export default function LocationsManager({ locations, onChange }: LocationsManag
             </div>
           )}
 
-          <p className="text-3xs text-stone-400 font-medium">
+          <p className="text-3xs text-stone-500 font-medium">
             {locations.filter(l => l.active).length} active · {locations.filter(l => !l.active).length} inactive · {locations.length} total
           </p>
         </div>

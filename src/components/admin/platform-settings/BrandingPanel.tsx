@@ -24,7 +24,7 @@ function UploadPlaceholder({ label, hint }: { label: string; hint: string }) {
       >
         <span className="text-2xl block mb-2" aria-hidden="true">🖼️</span>
         <p className="text-xs font-bold text-stone-600">Drag & drop or click to upload</p>
-        <p className="text-2xs text-stone-400 font-medium mt-1">{hint}</p>
+        <p className="text-2xs text-stone-500 font-medium mt-1">{hint}</p>
         <button
           type="button"
           className="mt-3 dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-light-border text-stone-600"
@@ -32,7 +32,7 @@ function UploadPlaceholder({ label, hint }: { label: string; hint: string }) {
         >
           Choose File
         </button>
-        <p className="text-3xs text-amber-600 font-bold mt-2 bg-amber-50 border border-amber-200 px-2 py-1 rounded-lg">
+        <p className="text-3xs text-amber-700 font-bold mt-2 bg-amber-50 border border-amber-200 px-2 py-1 rounded-lg">
           ⚠️ File upload requires backend storage integration (Phase 2)
         </p>
       </div>

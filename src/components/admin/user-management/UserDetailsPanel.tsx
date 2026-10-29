@@ -22,7 +22,7 @@ export default function UserDetailsPanel({
     return (
       <div className="bg-white border border-light-border p-8 rounded-3xl text-center space-y-2.5 shadow-apple-sm text-stone-450 h-full flex flex-col justify-center select-none">
         <span className="text-3xl">👤</span>
-        <h4 className="text-xs font-black uppercase text-stone-400 tracking-wider">Select a User</h4>
+        <h4 className="text-xs font-black uppercase text-stone-500 tracking-wider">Select a User</h4>
         <p className="text-2xs text-stone-500 font-medium">Click on a user profile to view detailed diagnostics and management actions.</p>
       </div>
     );
@@ -72,7 +72,7 @@ export default function UserDetailsPanel({
           </div>
           <div>
             <h3 className="text-xs font-black text-stone-900 leading-none">{user.name}</h3>
-            <span className="text-3xs text-stone-400 font-bold uppercase block mt-1">User ID: {user.id}</span>
+            <span className="text-3xs text-stone-500 font-bold uppercase block mt-1">User ID: {user.id}</span>
           </div>
         </div>
         <button 

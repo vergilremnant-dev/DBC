@@ -91,7 +91,7 @@ export function LoginForm({
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer focus:outline-none transition"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-500 hover:text-stone-700 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer focus:outline-none transition"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? (
@@ -155,7 +155,7 @@ export function LoginForm({
       {/* Divider */}
       <div className="relative flex items-center justify-center my-4">
         <div className="w-full border-t border-stone-200"></div>
-        <span className="relative bg-white px-3 text-2xs font-bold uppercase tracking-widest text-stone-400">
+        <span className="relative bg-white px-3 text-2xs font-bold uppercase tracking-widest text-stone-500">
           Or continue with
         </span>
       </div>
@@ -238,7 +238,7 @@ export function LoginForm({
       {/* Sign Up Redirect */}
       {onSignUpClick && (
         <div className="pt-2 text-center border-t border-stone-100">
-          <p className="text-xs text-stone-500">
+          <p className="text-xs text-stone-600">
             Don't have an account?{' '}
             <button
               type="button"

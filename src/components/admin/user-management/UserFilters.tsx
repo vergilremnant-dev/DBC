@@ -25,7 +25,7 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
         </h3>
         <button
           onClick={onReset}
-          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-600 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -34,10 +34,10 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
         {/* Role Filter */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Platform Role
           </label>
-          <select
+          <select aria-label="Platform Role"
             value={filters.role}
             onChange={(e) => handleChange('role', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -52,10 +52,10 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Status Filter */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Account Status
           </label>
-          <select
+          <select aria-label="Account Status"
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -70,10 +70,10 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Verification Status */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Verification Status
           </label>
-          <select
+          <select aria-label="Verification Status"
             value={filters.verificationStatus}
             onChange={(e) => handleChange('verificationStatus', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -87,10 +87,10 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Registration Date */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Registration Date
           </label>
-          <select
+          <select aria-label="Registration Date"
             value={filters.registrationDate}
             onChange={(e) => handleChange('registrationDate', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -104,10 +104,10 @@ export default function UserFilters({ filters, onFilterChange, onReset }: UserFi
 
         {/* Location search input */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Location/City
           </label>
-          <input
+          <input aria-label="Location/City"
             type="text"
             placeholder="e.g. Hyderabad..."
             value={filters.location}

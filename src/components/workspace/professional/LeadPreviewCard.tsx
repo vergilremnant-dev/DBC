@@ -24,12 +24,12 @@ export function LeadPreviewCard({ leads }: LeadPreviewCardProps) {
               <h4 className="text-xs font-bold text-stone-900 font-display leading-none">
                 {lead.title}
               </h4>
-              <span className="bg-stone-50 border border-stone-200 text-stone-500 rounded px-2 py-0.5 text-3xs font-black uppercase">
+              <span className="bg-stone-50 border border-stone-200 text-stone-600 rounded px-2 py-0.5 text-3xs font-black uppercase">
                 {lead.category}
               </span>
             </div>
             
-            <div className="flex items-center gap-3 text-2xs text-stone-400 font-bold">
+            <div className="flex items-center gap-3 text-2xs text-stone-500 font-bold">
               <span>📍 {lead.location}</span>
               <span>•</span>
               <span>Posted {lead.postedDate}</span>
@@ -37,7 +37,7 @@ export function LeadPreviewCard({ leads }: LeadPreviewCardProps) {
           </div>
 
           <div className="text-right">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Budget</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Budget</span>
             <span className="text-xs font-black text-emerald-800 font-mono">
               {lead.budget}
             </span>

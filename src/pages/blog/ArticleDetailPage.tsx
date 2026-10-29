@@ -101,7 +101,7 @@ export function ArticleDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <div className="text-xs text-stone-500 animate-pulse">🔄 Loading educational guide...</div>
+        <div className="text-xs text-stone-600 animate-pulse">🔄 Loading educational guide...</div>
       </div>
     );
   }
@@ -110,7 +110,7 @@ export function ArticleDetailPage() {
     return (
       <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-4">
         <h2 className="text-lg font-bold text-stone-900 font-display">Guide Not Found</h2>
-        <p className="text-xs text-stone-500 mt-2">The article you are looking for may have been retired or moved.</p>
+        <p className="text-xs text-stone-600 mt-2">The article you are looking for may have been retired or moved.</p>
         <button
           onClick={() => navigate('/blog')}
           className="mt-4 rounded bg-stone-900 px-4 py-2 text-xs font-bold text-white cursor-pointer"
@@ -133,7 +133,7 @@ export function ArticleDetailPage() {
       <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
         <button
           onClick={() => navigate('/blog')}
-          className="mb-4 text-xs font-bold text-stone-500 hover:text-stone-905 transition cursor-pointer"
+          className="mb-4 text-xs font-bold text-stone-600 hover:text-stone-905 transition cursor-pointer"
         >
           ← Back to Articles
         </button>
@@ -152,7 +152,7 @@ export function ArticleDetailPage() {
           </h1>
 
           {/* Meta Detail */}
-          <div className="flex items-center justify-between border-y border-stone-100 py-3 text-xs text-stone-500 font-medium">
+          <div className="flex items-center justify-between border-y border-stone-100 py-3 text-xs text-stone-600 font-medium">
             <div className="flex items-center gap-2">
               <span>✍️ Authored by:</span>
               <span className="font-bold text-stone-900">
@@ -215,7 +215,7 @@ export function ArticleDetailPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => handleCtaClick('consultation')}
-              className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-6 py-2.5 shadow transition cursor-pointer"
+              className="rounded-lg bg-emerald-700 hover:bg-emerald-700 text-white text-xs font-bold px-6 py-2.5 shadow transition cursor-pointer"
             >
               Book an Expert Consultation
             </button>
@@ -256,7 +256,7 @@ export function ArticleDetailPage() {
                       {art.excerpt}
                     </p>
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-3xs text-stone-400 font-bold uppercase tracking-wider pt-2 border-t border-stone-50">
+                  <div className="mt-3 flex items-center justify-between text-3xs text-stone-600 font-bold uppercase tracking-wider pt-2 border-t border-stone-50">
                     <span>⏱️ {art.readTime} Min Read</span>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export function ArticleDetailPage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 border-t border-stone-200 bg-stone-50 py-8 text-center text-2xs text-stone-400 font-bold uppercase tracking-wider">
+      <footer className="mt-20 border-t border-stone-200 bg-stone-50 py-8 text-center text-2xs text-stone-500 font-bold uppercase tracking-wider">
         {BRAND.fullName} Handbook Series — Verified Structural & Service Guidelines.
       </footer>
     </div>

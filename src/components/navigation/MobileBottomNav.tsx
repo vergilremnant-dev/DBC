@@ -161,7 +161,7 @@ export function MobileBottomNav() {
             className={`relative flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 px-1 min-h-[44px] min-w-[44px] rounded-xl transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-1 focus:outline-none ${
               isActive
                 ? 'bg-emerald-50/90 text-emerald-700 font-extrabold shadow-2xs border border-emerald-200/60 scale-[1.02]'
-                : 'text-stone-400 hover:text-stone-700 hover:bg-stone-100/50 font-bold border border-transparent'
+                : 'text-stone-500 hover:text-stone-700 hover:bg-stone-100/50 font-bold border border-transparent'
             }`}
           >
             {isActive && (

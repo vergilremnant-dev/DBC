@@ -13,7 +13,7 @@ export function SectionHeader({ title, subtitle, actionLabel, onActionClick }: S
           {title}
         </h3>
         {subtitle && (
-          <p className="text-2xs text-stone-400 font-semibold uppercase tracking-wider">
+          <p className="text-2xs text-stone-500 font-semibold uppercase tracking-wider">
             {subtitle}
           </p>
         )}

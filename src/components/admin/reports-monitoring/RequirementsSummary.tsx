@@ -29,7 +29,7 @@ export default function RequirementsSummary({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {items.map((it, idx) => (
           <div key={idx} className="bg-stone-50/50 border border-stone-150 p-4 rounded-2xl flex flex-col justify-between">
-            <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest leading-none">
+            <span className="block text-3xs font-black text-stone-500 uppercase tracking-widest leading-none">
               {it.label}
             </span>
             <span className={`block text-xl font-black mt-2 leading-none ${it.color}`}>

@@ -61,14 +61,14 @@ export function FilterPanel({
           {activeFilterCount > 0 && (
             <button
               onClick={onReset}
-              className="text-2xs font-black uppercase tracking-wider text-rose-600 hover:text-rose-800 transition cursor-pointer"
+              className="text-2xs font-black uppercase tracking-wider text-rose-700 hover:text-rose-800 transition cursor-pointer"
             >
               Clear All
             </button>
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="md:hidden text-2xs font-bold uppercase tracking-wider text-stone-500 hover:text-stone-900 cursor-pointer"
+            className="md:hidden text-2xs font-bold uppercase tracking-wider text-stone-600 hover:text-stone-900 cursor-pointer"
           >
             {collapsed ? 'Show' : 'Hide'}
           </button>

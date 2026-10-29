@@ -37,7 +37,7 @@ export function ActivityFeed({ activities }: ActivityFeedProps) {
             </span>
             <div className="space-y-0.5 flex-1">
               <p className="text-stone-700 leading-normal text-2xs">{act.content}</p>
-              <span className="text-3xs text-stone-400 font-bold block">
+              <span className="text-3xs text-stone-500 font-bold block">
                 {act.timestamp}
               </span>
             </div>

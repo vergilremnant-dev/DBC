@@ -34,7 +34,7 @@ export default function ProjectTimeline({ timeline, projectName }: ProjectTimeli
               {/* Timeline bubble bullet */}
               <span className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full border-2 border-white bg-brand-emerald shadow-apple-xs shrink-0" />
               
-              <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest">
+              <span className="block text-3xs font-black text-stone-500 uppercase tracking-widest">
                 {new Date(item.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
               </span>
               <h4 className="font-bold text-stone-900 leading-tight">

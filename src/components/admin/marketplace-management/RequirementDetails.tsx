@@ -24,7 +24,7 @@ export default function RequirementDetails({
     return (
       <div className="bg-white border border-light-border p-8 rounded-3xl text-center space-y-2.5 shadow-apple-sm text-stone-450 h-full flex flex-col justify-center select-none">
         <span className="text-3xl">📋</span>
-        <h4 className="text-xs font-black uppercase text-stone-400 tracking-wider">Select a Listing</h4>
+        <h4 className="text-xs font-black uppercase text-stone-500 tracking-wider">Select a Listing</h4>
         <p className="text-2xs text-stone-500 font-medium">Click on a requirement row or card to load the listing moderator detail panel.</p>
       </div>
     );
@@ -40,7 +40,7 @@ export default function RequirementDetails({
       <div className="flex justify-between items-start border-b border-light-border pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-2xs font-mono text-stone-400 font-bold">{requirement.id}</span>
+            <span className="text-2xs font-mono text-stone-500 font-bold">{requirement.id}</span>
             <StatusBadge status={requirement.status} />
           </div>
           <h3 className="text-xs font-black text-stone-900 mt-1 leading-snug">{requirement.title}</h3>

@@ -36,7 +36,7 @@ export default function ProjectFilters({
         </h3>
         <button
           onClick={onReset}
-          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-600 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -45,10 +45,10 @@ export default function ProjectFilters({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-xs">
         {/* Status */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Project Status
           </label>
-          <select
+          <select aria-label="Project Status"
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"
@@ -64,10 +64,10 @@ export default function ProjectFilters({
 
         {/* Category */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Project Category
           </label>
-          <select
+          <select aria-label="Project Category"
             value={filters.category}
             onChange={(e) => handleChange('category', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"
@@ -83,10 +83,10 @@ export default function ProjectFilters({
 
         {/* Progress Range */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Progress %
           </label>
-          <select
+          <select aria-label="Progress %"
             value={filters.progressRange}
             onChange={(e) => handleChange('progressRange', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"
@@ -101,10 +101,10 @@ export default function ProjectFilters({
 
         {/* Professional */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Professional Partner
           </label>
-          <select
+          <select aria-label="Professional Partner"
             value={filters.professional}
             onChange={(e) => handleChange('professional', e.target.value)}
             className="dbc-input bg-white text-stone-755 font-semibold"
@@ -120,10 +120,10 @@ export default function ProjectFilters({
 
         {/* Customer */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Customer Owner
           </label>
-          <select
+          <select aria-label="Customer Owner"
             value={filters.customer}
             onChange={(e) => handleChange('customer', e.target.value)}
             className="dbc-input bg-white text-stone-755 font-semibold"
@@ -139,10 +139,10 @@ export default function ProjectFilters({
 
         {/* Location search */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             City/Location
           </label>
-          <input
+          <input aria-label="City/Location"
             type="text"
             placeholder="e.g. Hyderabad..."
             value={filters.location}

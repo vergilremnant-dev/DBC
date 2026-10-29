@@ -28,7 +28,7 @@ export function AccountInfoCard({
     <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-4 text-left">
       <div className="border-b border-stone-100 pb-2">
         <h3 className="text-sm font-bold text-stone-900 font-display">Account System Information</h3>
-        <p className="text-3xs font-bold text-stone-400 uppercase tracking-widest">
+        <p className="text-3xs font-bold text-stone-500 uppercase tracking-widest">
           Read-only registration metadata & licensing attributes
         </p>
       </div>
@@ -36,7 +36,7 @@ export function AccountInfoCard({
       <div className="grid gap-4 sm:grid-cols-2 text-xs font-semibold text-stone-600">
         {infoItems.map((item, idx) => (
           <div key={idx} className="p-3 bg-stone-50/50 rounded-xl border border-stone-100 flex flex-col justify-between gap-1">
-            <span className="text-3xs uppercase font-bold text-stone-400">{item.label}</span>
+            <span className="text-3xs uppercase font-bold text-stone-500">{item.label}</span>
             {item.isBadge ? (
               <span className="text-emerald-800 bg-emerald-50 border border-emerald-100 rounded self-start px-2 py-0.5 text-3xs font-black uppercase">
                 {item.value}

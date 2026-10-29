@@ -52,7 +52,7 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
         <div id={`template-body-${template.id}`} className="p-5 space-y-4 border-t border-light-border bg-white">
           <div>
             <label className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">Subject</label>
-            <input
+            <input aria-label="Subject"
               type="text"
               value={template.subject}
               onChange={e => onChange({ ...template, subject: e.target.value })}
@@ -62,7 +62,7 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
           </div>
           <div>
             <label className="block text-2xs font-black uppercase tracking-wider text-stone-500 mb-1.5">Message Body</label>
-            <textarea
+            <textarea aria-label="Message Body"
               value={template.body}
               onChange={e => onChange({ ...template, body: e.target.value })}
               className={`${inputCls} resize-y min-h-[100px]`}
@@ -80,7 +80,7 @@ function TemplateEditor({ template, onChange }: TemplateEditorProps) {
                   </span>
                 ))}
               </div>
-              <p className="text-3xs text-stone-400 font-medium mt-1.5">Click a variable to copy; paste it into the subject or body.</p>
+              <p className="text-3xs text-stone-500 font-medium mt-1.5">Click a variable to copy; paste it into the subject or body.</p>
             </div>
           )}
         </div>
@@ -104,7 +104,7 @@ export default function NotificationTemplates({ templates, onChange }: Notificat
       {templates.length === 0 ? (
         <div className="text-center py-10 space-y-2">
           <span className="text-2xl block">📨</span>
-          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">No notification templates configured.</p>
+          <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">No notification templates configured.</p>
         </div>
       ) : (
         <div className="space-y-3">

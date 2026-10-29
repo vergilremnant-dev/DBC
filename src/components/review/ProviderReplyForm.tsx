@@ -31,8 +31,8 @@ export function ProviderReplyForm({ reviewId, onSubmit, onCancel }: ProviderRepl
   return (
     <form onSubmit={handleSubmit} className="border border-stone-200 bg-stone-50 p-4 rounded-xl space-y-3">
       <div>
-        <label className="text-3xs font-bold uppercase tracking-wider text-stone-400">Your Response</label>
-        <textarea
+        <label className="text-3xs font-bold uppercase tracking-wider text-stone-500">Your Response</label>
+        <textarea aria-label="Your Response"
           value={replyText}
           onChange={(e) => setReplyText(e.target.value)}
           placeholder="Write your response to the review..."

@@ -125,15 +125,15 @@ export function RequestCallbackPage() {
           {submittedRequest ? (
             <div className="rounded-2xl border border-emerald-250 bg-white p-8 shadow-sm text-center border-emerald-100">
               <span className="text-5xl">🎉</span>
-              <h2 className="mt-4 text-2xl font-bold text-emerald-950 font-display">Callback Request Submitted!</h2>
+              <h1 className="mt-4 text-2xl font-bold text-emerald-950 font-display">Callback Request Submitted!</h1>
               <p className="mt-2 text-xs sm:text-sm text-stone-600">
                 An expert coordinator from {BRAND.name} will call you to plan your project details.
               </p>
               <div className="mt-6 inline-block bg-stone-50 border border-stone-100 px-6 py-4 rounded-xl">
-                <span className="block text-3xs uppercase font-bold tracking-wider text-stone-400">Your Reference Number</span>
+                <span className="block text-3xs uppercase font-bold tracking-wider text-stone-500">Your Reference Number</span>
                 <strong className="text-xl font-mono text-stone-900 select-all tracking-wide">{submittedRequest.referenceNumber}</strong>
               </div>
-              <p className="mt-4 text-2xs text-stone-400">Copy and save this reference number to track call progress.</p>
+              <p className="mt-4 text-2xs text-stone-500">Copy and save this reference number to track call progress.</p>
               <button
                 onClick={() => setSubmittedRequest(null)}
                 className="mt-8 rounded-lg bg-stone-900 px-6 py-2.5 text-xs font-bold text-white hover:bg-stone-850 hover:shadow transition cursor-pointer"
@@ -143,13 +143,13 @@ export function RequestCallbackPage() {
             </div>
           ) : (
             <div className="rounded-2xl border border-stone-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-2xl font-bold text-stone-900 font-display">Talk to our Experts</h2>
-              <p className="mt-1 text-xs text-stone-500">
+              <h1 className="text-2xl font-bold text-stone-900 font-display">Talk to our Experts</h1>
+              <p className="mt-1 text-xs text-stone-600">
                 Provide your contact information and details. We will call you for a free consultation.
               </p>
 
               {error && (
-                <div className="mt-4 rounded-lg bg-rose-50 border border-rose-100 p-4 text-xs text-rose-800 leading-relaxed">
+                <div role="alert" className="mt-4 rounded-lg bg-rose-50 border border-rose-100 p-4 text-xs text-rose-800 leading-relaxed">
                   ⚠️ {error}
                 </div>
               )}
@@ -157,8 +157,8 @@ export function RequestCallbackPage() {
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Full Name *</label>
-                    <input
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Full Name *</label>
+                    <input aria-label="Full Name"
                       type="text"
                       required
                       placeholder="e.g. Sanjay Chagantipati"
@@ -169,8 +169,8 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Phone Number *</label>
-                    <input
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Phone Number *</label>
+                    <input aria-label="Phone Number"
                       type="tel"
                       required
                       placeholder="e.g. 9876543210"
@@ -182,8 +182,8 @@ export function RequestCallbackPage() {
                 </div>
 
                 <div>
-                  <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Email Address (Optional)</label>
-                  <input
+                  <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Email Address (Optional)</label>
+                  <input aria-label="Email Address (Optional)"
                     type="email"
                     placeholder="e.g. name@example.com"
                     value={email}
@@ -194,8 +194,8 @@ export function RequestCallbackPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">City</label>
-                    <input
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">City</label>
+                    <input aria-label="City"
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
@@ -204,8 +204,8 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Preferred Language</label>
-                    <select
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Preferred Language</label>
+                    <select aria-label="Preferred Language"
                       value={preferredLanguage}
                       onChange={(e) => setPreferredLanguage(e.target.value)}
                       className="mt-1.5 w-full rounded-lg border border-stone-200 bg-white px-3.5 py-2.5 text-xs font-medium text-stone-900 outline-none transition duration-200 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-50/50"
@@ -220,8 +220,8 @@ export function RequestCallbackPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Service Category (Optional)</label>
-                    <select
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Service Category (Optional)</label>
+                    <select aria-label="Service Category (Optional)"
                       value={serviceCategoryId}
                       onChange={(e) => setServiceCategoryId(e.target.value)}
                       className="mt-1.5 w-full rounded-lg border border-stone-200 bg-white px-3.5 py-2.5 text-xs font-medium text-stone-900 outline-none transition duration-200 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-50/50"
@@ -234,8 +234,8 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Project Type</label>
-                    <select
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Project Type</label>
+                    <select aria-label="Project Type"
                       value={projectType}
                       onChange={(e) => setProjectType(e.target.value)}
                       className="mt-1.5 w-full rounded-lg border border-stone-200 bg-white px-3.5 py-2.5 text-xs font-medium text-stone-900 outline-none transition duration-200 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-50/50"
@@ -252,8 +252,8 @@ export function RequestCallbackPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Estimated Budget (Optional)</label>
-                    <input
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Estimated Budget (Optional)</label>
+                    <input aria-label="Estimated Budget (Optional)"
                       type="number"
                       placeholder="e.g. 50000"
                       value={estimatedBudget}
@@ -263,8 +263,8 @@ export function RequestCallbackPage() {
                   </div>
 
                   <div>
-                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Preferred Call Time</label>
-                    <select
+                    <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Preferred Call Time</label>
+                    <select aria-label="Preferred Call Time"
                       value={preferredCallTime}
                       onChange={(e) => setPreferredCallTime(e.target.value)}
                       className="mt-1.5 w-full rounded-lg border border-stone-200 bg-white px-3.5 py-2.5 text-xs font-medium text-stone-900 outline-none transition duration-200 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-50/50"
@@ -278,8 +278,8 @@ export function RequestCallbackPage() {
                 </div>
 
                 <div>
-                  <label className="text-2xs font-bold uppercase tracking-wider text-stone-400">Message / Project Brief</label>
-                  <textarea
+                  <label className="text-2xs font-bold uppercase tracking-wider text-stone-500">Message / Project Brief</label>
+                  <textarea aria-label="Message / Project Brief"
                     placeholder="Provide details about the work required..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -307,7 +307,7 @@ export function RequestCallbackPage() {
             <p className="text-2xs text-stone-500 mt-1">Already submitted a request? Check its status here.</p>
 
             {trackError && (
-              <div className="mt-3 rounded-lg bg-rose-50 border border-rose-100 p-3 text-xs text-rose-800 leading-relaxed">
+              <div role="alert" className="mt-3 rounded-lg bg-rose-50 border border-rose-100 p-3 text-xs text-rose-800 leading-relaxed">
                 ⚠️ {trackError}
               </div>
             )}
@@ -332,22 +332,22 @@ export function RequestCallbackPage() {
             {trackedStatus && (
               <div className="mt-6 border-t border-stone-100 pt-5 space-y-4">
                 <div className="bg-stone-50 p-3 rounded-lg border border-stone-100">
-                  <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Status</span>
+                  <span className="text-3xs font-bold text-stone-500 uppercase tracking-wider block">Status</span>
                   <p className="mt-0.5 text-xs font-extrabold text-emerald-800 uppercase tracking-wide">{trackedStatus.status}</p>
                 </div>
                 <div className="grid gap-4 grid-cols-2">
                   <div>
-                    <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Name</span>
+                    <span className="text-3xs font-bold text-stone-500 uppercase tracking-wider block">Name</span>
                     <p className="text-xs font-semibold text-stone-850">{trackedStatus.fullName}</p>
                   </div>
                   <div>
-                    <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Preferred Time</span>
+                    <span className="text-3xs font-bold text-stone-500 uppercase tracking-wider block">Preferred Time</span>
                     <p className="text-xs font-semibold text-stone-850">{trackedStatus.preferredCallTime}</p>
                   </div>
                 </div>
                 {trackedStatus.category?.name && (
                   <div>
-                    <span className="text-3xs font-bold text-stone-400 uppercase tracking-wider block">Category</span>
+                    <span className="text-3xs font-bold text-stone-500 uppercase tracking-wider block">Category</span>
                     <p className="text-xs font-semibold text-stone-850">{trackedStatus.category.name}</p>
                   </div>
                 )}

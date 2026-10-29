@@ -60,7 +60,7 @@ export default function CustomerProposalViewModal({
         return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Declined</span>;
       case 'WITHDRAWN':
       case 'EXPIRED':
-        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-500 border border-stone-200">{status}</span>;
+        return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-200">{status}</span>;
       default:
         return <span className="text-3xs font-black uppercase px-2.5 py-0.5 rounded bg-stone-100 text-stone-700">{status}</span>;
     }
@@ -144,13 +144,13 @@ export default function CustomerProposalViewModal({
         <div className="p-6 bg-stone-50 border-b border-stone-200 flex justify-between items-start">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xs font-black uppercase tracking-wider text-stone-400">Project Proposal</span>
+              <span className="text-2xs font-black uppercase tracking-wider text-stone-600">Project Proposal</span>
               {getStatusBadge(currentQuotation.status)}
             </div>
             <h2 className="text-lg font-bold text-stone-900 mt-1">
               {currentQuotation.proposal?.title || currentQuotation.requirement?.title || `Proposal #${currentQuotation.id}`}
             </h2>
-            <p className="text-xs text-stone-500 mt-0.5">
+            <p className="text-xs text-stone-600 mt-0.5">
               Professional: <strong className="text-stone-800">{currentQuotation.provider?.businessName || 'Verified Professional'}</strong>
             </p>
           </div>
@@ -167,7 +167,7 @@ export default function CustomerProposalViewModal({
           
           {/* Executive Summary */}
           {currentQuotation.proposal?.summary && (
-            <div className="p-4 bg-emerald-50/60 border border-emerald-100 rounded-2xl space-y-1">
+            <div role="status" className="p-4 bg-emerald-50/60 border border-emerald-100 rounded-2xl space-y-1">
               <span className="text-3xs font-black uppercase text-emerald-800 tracking-wider">Executive Summary</span>
               <p className="text-stone-800 font-medium leading-relaxed">{currentQuotation.proposal.summary}</p>
             </div>
@@ -175,7 +175,7 @@ export default function CustomerProposalViewModal({
 
           {/* Scope of Work */}
           <div className="space-y-2">
-            <h4 className="text-2xs font-black uppercase text-stone-400 tracking-wider">Project Scope & Specifications</h4>
+            <h4 className="text-2xs font-black uppercase text-stone-600 tracking-wider">Project Scope & Specifications</h4>
             <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl text-stone-800 leading-relaxed font-normal whitespace-pre-line">
               {currentQuotation.proposal?.scope || 'Standard professional execution scope provided upon review.'}
             </div>
@@ -184,7 +184,7 @@ export default function CustomerProposalViewModal({
           {/* Deliverables */}
           {currentQuotation.proposal?.deliverables && (
             <div className="space-y-2">
-              <h4 className="text-2xs font-black uppercase text-stone-400 tracking-wider">Project Deliverables</h4>
+              <h4 className="text-2xs font-black uppercase text-stone-600 tracking-wider">Project Deliverables</h4>
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl text-stone-800 leading-relaxed whitespace-pre-line">
                 {currentQuotation.proposal.deliverables}
               </div>
@@ -211,7 +211,7 @@ export default function CustomerProposalViewModal({
 
           {/* Commercial & Pricing Breakdown */}
           <div className="border-t border-stone-200 pt-4 space-y-3">
-            <h4 className="text-2xs font-black uppercase text-stone-400 tracking-wider">Commercial Breakdown</h4>
+            <h4 className="text-2xs font-black uppercase text-stone-600 tracking-wider">Commercial Breakdown</h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl">
                 <span className="text-3xs font-black uppercase text-emerald-800 block">Proposed Total Amount</span>
@@ -220,12 +220,12 @@ export default function CustomerProposalViewModal({
               </div>
 
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl">
-                <span className="text-3xs font-black uppercase text-stone-400 block">Estimated Execution Timeline</span>
+                <span className="text-3xs font-black uppercase text-stone-500 block">Estimated Execution Timeline</span>
                 <span className="text-lg font-bold text-stone-900 block mt-1">{currentQuotation.estimatedDurationDays} Days</span>
               </div>
 
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl">
-                <span className="text-3xs font-black uppercase text-stone-400 block">Warranty Period</span>
+                <span className="text-3xs font-black uppercase text-stone-500 block">Warranty Period</span>
                 <span className="text-lg font-bold text-stone-900 block mt-1">
                   {currentQuotation.warrantyMonths ? `${currentQuotation.warrantyMonths} Months` : 'Standard'}
                 </span>
@@ -241,7 +241,7 @@ export default function CustomerProposalViewModal({
                     <div key={idx} className="p-3 flex justify-between items-center text-xs">
                       <div>
                         <strong className="text-stone-800 block">{m.name}</strong>
-                        {m.description && <span className="text-stone-400 text-2xs">{m.description}</span>}
+                        {m.description && <span className="text-stone-500 text-2xs">{m.description}</span>}
                       </div>
                       <span className="font-bold text-stone-900">₹{m.cost.toLocaleString()}</span>
                     </div>
@@ -290,7 +290,7 @@ export default function CustomerProposalViewModal({
               ✓ Proposal Accepted & Linked to Project
             </span>
           ) : (
-            <span className="text-xs font-bold text-stone-500 bg-stone-100 px-3 py-1.5 rounded-xl border border-stone-200">
+            <span className="text-xs font-bold text-stone-600 bg-stone-100 px-3 py-1.5 rounded-xl border border-stone-200">
               Status: {currentQuotation.status}
             </span>
           )}

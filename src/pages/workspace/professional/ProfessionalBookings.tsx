@@ -283,9 +283,9 @@ export default function ProfessionalBookings() {
       {/* 1. Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-stone-200 p-6 rounded-3xl shadow-sm relative">
         <div className="space-y-1">
-          <span className="text-2xs font-black uppercase text-stone-400 tracking-wider font-sans">Provider Portal</span>
+          <span className="text-2xs font-black uppercase text-stone-600 tracking-wider font-sans">Provider Portal</span>
           <h1 className="text-xl sm:text-2xl font-bold text-stone-900 leading-tight font-display">Project Requests & Schedule</h1>
-          <p className="text-xs text-stone-500 font-medium">Manage inbound project requests, schedule evaluations, and track milestone executions.</p>
+          <p className="text-xs text-stone-600 font-medium">Manage inbound project requests, schedule evaluations, and track milestone executions.</p>
         </div>
 
         <div className="flex items-center gap-2 text-xs">
@@ -335,7 +335,7 @@ export default function ProfessionalBookings() {
             <span className={`text-base p-2 rounded-xl w-fit ${kpi.color}`}>{kpi.icon}</span>
             <div className="mt-4 space-y-0.5">
               <span className="block text-2xl font-black text-stone-900">{kpi.count}</span>
-              <span className="block text-2xs font-bold text-stone-400 uppercase tracking-wider">{kpi.label}</span>
+              <span className="block text-2xs font-bold text-stone-500 uppercase tracking-wider">{kpi.label}</span>
             </div>
           </div>
         ))}
@@ -388,7 +388,7 @@ export default function ProfessionalBookings() {
                 <div className="text-center py-16 bg-white border border-stone-200 rounded-2xl p-6 text-stone-400 text-xs space-y-2">
                   <span className="text-3xl block">📋</span>
                   <p className="font-bold text-stone-700 text-sm">No bookings found</p>
-                  <p className="text-2xs text-stone-400">Customer requests matching your filter criteria will appear here.</p>
+                  <p className="text-2xs text-stone-500">Customer requests matching your filter criteria will appear here.</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -400,7 +400,7 @@ export default function ProfessionalBookings() {
                     >
                       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                         <div className="flex items-center gap-2.5">
-                          <span className="text-2xs font-black uppercase tracking-wider text-stone-400 bg-stone-100 px-2 py-0.5 rounded">
+                          <span className="text-2xs font-black uppercase tracking-wider text-stone-600 bg-stone-100 px-2 py-0.5 rounded">
                             {b.bookingNumber}
                           </span>
                           <span className="text-2xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
@@ -416,7 +416,7 @@ export default function ProfessionalBookings() {
                           <p className="text-2xs text-stone-500 font-medium mt-0.5">
                             Customer: <strong className="text-stone-800">{b.customerName}</strong> {b.customerPhone ? `(${b.customerPhone})` : ''}
                           </p>
-                          <p className="text-2xs text-stone-400">
+                          <p className="text-2xs text-stone-500">
                             📍 {b.customerAddress}, {b.city} {b.state}
                           </p>
                         </div>
@@ -509,7 +509,7 @@ export default function ProfessionalBookings() {
               <div className="flex justify-between items-center pb-2 border-b border-stone-100">
                 <h3 className="text-xs font-black uppercase text-stone-900 tracking-wider">Schedule Calendar</h3>
                 <div className="flex items-center gap-2">
-                  <span className="text-2xs text-stone-400 font-bold uppercase">Pick Date:</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase">Pick Date:</span>
                   <input
                     type="date"
                     value={selectedCalendarDate}
@@ -565,27 +565,27 @@ export default function ProfessionalBookings() {
 
               <div className="space-y-2 text-stone-600">
                 <div className="flex justify-between py-1 border-b border-stone-50">
-                  <span className="text-2xs text-stone-400 font-bold uppercase">Status</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase">Status</span>
                   <BookingStatusBadge status={selectedBooking.status} />
                 </div>
                 <div className="flex justify-between py-1 border-b border-stone-50">
-                  <span className="text-2xs text-stone-400 font-bold uppercase">Category</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase">Category</span>
                   <span className="font-bold text-stone-800">{selectedBooking.categoryName}</span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-stone-50">
-                  <span className="text-2xs text-stone-400 font-bold uppercase">Expected Start Date</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase">Expected Start Date</span>
                   <span className="font-bold text-stone-800">{selectedBooking.preferredDate}</span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-stone-50">
-                  <span className="text-2xs text-stone-400 font-bold uppercase">Estimated Budget</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase">Estimated Budget</span>
                   <span className="font-bold text-emerald-800">₹{selectedBooking.estimatedBudget.toLocaleString()}</span>
                 </div>
                 <div className="py-1">
-                  <span className="text-2xs text-stone-400 font-bold uppercase block mb-0.5">Location</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase block mb-0.5">Location</span>
                   <p className="text-stone-800 font-medium">{selectedBooking.customerAddress}, {selectedBooking.city} {selectedBooking.state}</p>
                 </div>
                 <div className="py-1">
-                  <span className="text-2xs text-stone-400 font-bold uppercase block mb-0.5">Customer Notes</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase block mb-0.5">Customer Notes</span>
                   <p className="text-stone-700 bg-stone-50 p-2.5 rounded-xl border border-stone-100">{selectedBooking.notes}</p>
                 </div>
               </div>
@@ -656,7 +656,7 @@ export default function ProfessionalBookings() {
             
             <div className="space-y-3">
               <div className="space-y-1">
-                <label className="block text-3xs font-black uppercase text-stone-400">Working days</label>
+                <label className="block text-3xs font-black uppercase text-stone-500">Working days</label>
                 <div className="flex gap-1 flex-wrap">
                   {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => {
                     const active = workingDays.includes(d);
@@ -680,8 +680,8 @@ export default function ProfessionalBookings() {
               </div>
 
               <div className="space-y-1 pt-2">
-                <label className="block text-3xs font-black uppercase text-stone-400">Working hours limits</label>
-                <input
+                <label className="block text-3xs font-black uppercase text-stone-500">Working hours limits</label>
+                <input aria-label="Working hours limits"
                   type="text"
                   value={workingHours}
                   onChange={e => setWorkingHours(e.target.value)}
@@ -692,7 +692,7 @@ export default function ProfessionalBookings() {
               <div className="pt-2 flex justify-between items-center border-t border-stone-100">
                 <div>
                   <strong className="text-stone-800 block">Vacation Mode</strong>
-                  <span className="text-2xs text-stone-400 font-normal">Temporarily pause new inbound requests</span>
+                  <span className="text-2xs text-stone-500 font-normal">Temporarily pause new inbound requests</span>
                 </div>
                 <input
                   type="checkbox"

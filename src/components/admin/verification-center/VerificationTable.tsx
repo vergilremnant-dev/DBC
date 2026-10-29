@@ -142,7 +142,7 @@ export default function VerificationTable({
         {requests.map((req) => (
           <div key={req.id} className="bg-white border border-light-border p-4 rounded-2xl space-y-3">
             <div className="flex justify-between items-center">
-              <span className="font-mono text-3xs text-stone-400 font-bold">{req.id}</span>
+              <span className="font-mono text-3xs text-stone-500 font-bold">{req.id}</span>
               <StatusBadge status={req.status} />
             </div>
             <div>

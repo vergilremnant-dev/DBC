@@ -191,28 +191,29 @@ export function AdminArticlesPage() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 space-y-10">
+        <h1 className="sr-only">Articles management</h1>
         
         {/* Status Alerts */}
-        {error && <div className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
-        {successMsg && <div className="rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-xs font-semibold text-emerald-800">{successMsg}</div>}
+        {error && <div role="alert" className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
+        {successMsg && <div role="status" className="rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-xs font-semibold text-emerald-800">{successMsg}</div>}
 
         {/* Analytics Section */}
         {analytics && (
           <section className="grid gap-4 sm:grid-cols-4">
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Total Articles</span>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-500">Total Articles</span>
               <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">{analytics.totalArticles}</h4>
             </div>
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Hub Views</span>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-500">Hub Views</span>
               <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">👁️ {analytics.totalViews}</h4>
             </div>
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Consultation CVs</span>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-500">Consultation CVs</span>
               <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">💬 {analytics.totalConsultationConversions}</h4>
             </div>
             <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-              <span className="text-2xs font-bold uppercase tracking-wider text-stone-400">Callback CVs</span>
+              <span className="text-2xs font-bold uppercase tracking-wider text-stone-500">Callback CVs</span>
               <h4 className="text-2xl font-extrabold mt-1 text-stone-900 font-display">📞 {analytics.totalCallbackConversions}</h4>
             </div>
           </section>
@@ -236,7 +237,7 @@ export function AdminArticlesPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="font-bold text-stone-700">Article Title</label>
-                <input
+                <input aria-label="Article Title"
                   type="text"
                   value={title}
                   onChange={(e) => {
@@ -251,7 +252,7 @@ export function AdminArticlesPage() {
 
               <div>
                 <label className="font-bold text-stone-700">Category</label>
-                <select
+                <select aria-label="Category"
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
                   required
@@ -269,7 +270,7 @@ export function AdminArticlesPage() {
 
             <div>
               <label className="font-bold text-stone-700">Excerpt / SEO Summary</label>
-              <textarea
+              <textarea aria-label="Excerpt / SEO Summary"
                 value={excerpt}
                 onChange={(e) => {
                   setExcerpt(e.target.value);
@@ -283,7 +284,7 @@ export function AdminArticlesPage() {
 
             <div>
               <label className="font-bold text-stone-700">Article Content</label>
-              <textarea
+              <textarea aria-label="Article Content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Compose full markdown or plaintext educational guidelines..."
@@ -296,7 +297,7 @@ export function AdminArticlesPage() {
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
                 <label className="font-bold text-stone-700">Featured Image URL</label>
-                <input
+                <input aria-label="Featured Image URL"
                   type="text"
                   value={featuredImage}
                   onChange={(e) => setFeaturedImage(e.target.value)}
@@ -307,7 +308,7 @@ export function AdminArticlesPage() {
 
               <div>
                 <label className="font-bold text-stone-700">Tags (comma-separated)</label>
-                <input
+                <input aria-label="Tags (comma-separated)"
                   type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
@@ -318,7 +319,7 @@ export function AdminArticlesPage() {
 
               <div>
                 <label className="font-bold text-stone-700">Estimated Read Time (Minutes)</label>
-                <input
+                <input aria-label="Estimated Read Time (Minutes)"
                   type="number"
                   value={readTime}
                   onChange={(e) => setReadTime(e.target.value)}
@@ -334,7 +335,7 @@ export function AdminArticlesPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="font-bold text-stone-700">SEO Title</label>
-                  <input
+                  <input aria-label="SEO Title"
                     type="text"
                     value={seoTitle}
                     onChange={(e) => setSeoTitle(e.target.value)}
@@ -344,7 +345,7 @@ export function AdminArticlesPage() {
                 </div>
                 <div>
                   <label className="font-bold text-stone-700">SEO Meta Description</label>
-                  <input
+                  <input aria-label="SEO Meta Description"
                     type="text"
                     value={seoDescription}
                     onChange={(e) => setSeoDescription(e.target.value)}
@@ -395,7 +396,7 @@ export function AdminArticlesPage() {
           </h2>
           <table className="mt-4 w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-stone-200 text-stone-400 font-bold uppercase tracking-wider">
+              <tr className="border-b border-stone-200 text-stone-500 font-bold uppercase tracking-wider">
                 <th className="pb-3 pr-2">Title</th>
                 <th className="pb-3 pr-2">Category</th>
                 <th className="pb-3 pr-2">Reads</th>
@@ -407,7 +408,7 @@ export function AdminArticlesPage() {
             <tbody className="divide-y divide-stone-100 font-medium">
               {articles.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-6 text-center text-stone-400">
+                  <td colSpan={6} className="py-6 text-center text-stone-500">
                     No articles drafted yet.
                   </td>
                 </tr>
@@ -461,7 +462,7 @@ export function AdminArticlesPage() {
             
             <div>
               <label className="font-bold text-stone-700">Category Name</label>
-              <input
+              <input aria-label="Category Name"
                 type="text"
                 value={newCatName}
                 onChange={(e) => setNewCatName(e.target.value)}
@@ -473,7 +474,7 @@ export function AdminArticlesPage() {
 
             <div>
               <label className="font-bold text-stone-700">Description</label>
-              <textarea
+              <textarea aria-label="Description"
                 value={newCatDesc}
                 onChange={(e) => setNewCatDesc(e.target.value)}
                 placeholder="Short description of the topic..."

@@ -32,7 +32,7 @@ export default function VerificationDetails({
     return (
       <div className="bg-white border border-light-border p-8 rounded-3xl text-center space-y-2.5 shadow-apple-sm text-stone-450 h-full flex flex-col justify-center select-none">
         <span className="text-3xl">👤</span>
-        <h4 className="text-xs font-black uppercase text-stone-400 tracking-wider">Select an Applicant</h4>
+        <h4 className="text-xs font-black uppercase text-stone-500 tracking-wider">Select an Applicant</h4>
         <p className="text-2xs text-stone-500 font-medium">Click on a verification row or card to inspect documents and take action.</p>
       </div>
     );
@@ -49,7 +49,7 @@ export default function VerificationDetails({
       <div className="flex justify-between items-start border-b border-light-border pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-2xs font-mono text-stone-400 font-bold">{request.id}</span>
+            <span className="text-2xs font-mono text-stone-500 font-bold">{request.id}</span>
             <StatusBadge status={request.status} />
           </div>
           <h3 className="text-xs font-black text-stone-900 mt-1 leading-snug">{request.name}</h3>
@@ -123,7 +123,7 @@ export default function VerificationDetails({
           <label className="block text-3xs font-black uppercase text-stone-455 tracking-wider">
             Internal Moderator Review Notes
           </label>
-          <textarea
+          <textarea aria-label="Internal Moderator Review Notes"
             value={internalNotes}
             onChange={(e) => setInternalNotes(e.target.value)}
             placeholder="Add compliance notes, document validation checklists, structural checks records..."

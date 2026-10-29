@@ -49,7 +49,7 @@ export default function ProfessionalNotifications() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-light-border pb-5 gap-4">
         <div className="space-y-1">
           <h2 className="text-xl font-bold text-stone-900 font-display">Business Notifications</h2>
-          <p className="text-xs text-stone-500 font-medium font-semibold">
+          <p className="text-xs text-stone-600 font-medium font-semibold">
             Track business updates, direct booking alerts, and client payments history.
           </p>
         </div>

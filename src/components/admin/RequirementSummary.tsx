@@ -34,13 +34,13 @@ export default function RequirementSummary({
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-bold text-stone-700">
         <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-          <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">
+          <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">
             Open
           </span>
           <span className="text-base font-extrabold text-stone-900">{openCount}</span>
         </div>
         <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-          <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">
+          <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">
             Closed
           </span>
           <span className="text-base font-extrabold text-stone-900">{closedCount}</span>

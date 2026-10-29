@@ -1473,7 +1473,7 @@ export function AdminDashboard() {
                 className={`px-4 py-2.5 border-b-2 font-bold transition whitespace-nowrap cursor-pointer select-none
                   ${isActive 
                     ? 'border-emerald-600 text-emerald-800 font-extrabold' 
-                    : 'border-transparent text-stone-500 hover:text-stone-900'
+                    : 'border-transparent text-stone-600 hover:text-stone-900'
                   }
                 `}
               >
@@ -1518,7 +1518,7 @@ export function AdminDashboard() {
                   </h4>
                   <button
                     onClick={handleResetReportFilters}
-                    className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+                    className="text-3xs font-black text-stone-600 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
                   >
                     Reset Filters
                   </button>
@@ -1527,10 +1527,10 @@ export function AdminDashboard() {
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-xs">
                   {/* Date range filter */}
                   <div className="space-y-1">
-                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
                       Date Range
                     </label>
-                    <select
+                    <select aria-label="Date Range"
                       value={reportFilters.dateRange}
                       onChange={(e) => setReportFilters({ ...reportFilters, dateRange: e.target.value })}
                       className="dbc-input bg-white text-stone-755 font-semibold"
@@ -1544,10 +1544,10 @@ export function AdminDashboard() {
 
                   {/* Role filter */}
                   <div className="space-y-1">
-                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
                       User Role
                     </label>
-                    <select
+                    <select aria-label="User Role"
                       value={reportFilters.role}
                       onChange={(e) => setReportFilters({ ...reportFilters, role: e.target.value })}
                       className="dbc-input bg-white text-stone-755 font-semibold"
@@ -1562,7 +1562,7 @@ export function AdminDashboard() {
 
                   {/* Category filter */}
                   <div className="space-y-1">
-                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
                       Marketplace Category
                     </label>
                     <select
@@ -1579,10 +1579,10 @@ export function AdminDashboard() {
 
                   {/* Location input filter */}
                   <div className="space-y-1">
-                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
                       Location City
                     </label>
-                    <input
+                    <input aria-label="Location City"
                       type="text"
                       placeholder="e.g. Hyderabad"
                       value={reportFilters.location}
@@ -1593,10 +1593,10 @@ export function AdminDashboard() {
 
                   {/* Status filter */}
                   <div className="space-y-1">
-                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+                    <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
                       User Status
                     </label>
-                    <select
+                    <select aria-label="User Status"
                       value={reportFilters.status}
                       onChange={(e) => setReportFilters({ ...reportFilters, status: e.target.value })}
                       className="dbc-input bg-white text-stone-755 font-semibold"
@@ -2256,7 +2256,7 @@ export function AdminDashboard() {
               
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Audience Target</label>
-                <select
+                <select aria-label="Audience Target"
                   value={announceAudience}
                   onChange={(e) => setAnnounceAudience(e.target.value)}
                   className="dbc-input bg-white"
@@ -2270,7 +2270,7 @@ export function AdminDashboard() {
 
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Message details</label>
-                <textarea
+                <textarea aria-label="Message details"
                   placeholder="Type broadcast text announcement..."
                   value={announcementText}
                   onChange={(e) => setAnnouncementText(e.target.value)}

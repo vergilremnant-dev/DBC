@@ -207,7 +207,7 @@ export function PhoneOtpAuth({ mode = 'login', onAuthenticated, onUseEmailLogin,
       <div className="space-y-1">
         <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">{heading}</h2>
         {state.stage === 'phone' && (
-          <p className="text-xs text-stone-500">
+          <p className="text-xs text-stone-600">
             {mode === 'register'
               ? 'Verify your mobile number to create your DBC account.'
               : 'Enter your mobile number. We will verify it with a one-time code.'}
@@ -298,7 +298,7 @@ export function PhoneOtpAuth({ mode = 'login', onAuthenticated, onUseEmailLogin,
           </form>
 
           {!state.phoneVerified && (
-            <div className="pt-1 text-center text-xs text-stone-500 flex flex-col gap-1 items-center">
+            <div className="pt-1 text-center text-xs text-stone-600 flex flex-col gap-1 items-center">
               <span>Didn't get the code?</span>
               <button
                 type="button"
@@ -387,7 +387,7 @@ export function PhoneOtpAuth({ mode = 'login', onAuthenticated, onUseEmailLogin,
       )}
 
       {state.stage === 'phone' && (onUseEmailLogin || onSwitchMode) && (
-        <div className="pt-2 space-y-2 text-center text-xs text-stone-500">
+        <div className="pt-2 space-y-2 text-center text-xs text-stone-600">
           {onSwitchMode && (
             <p>
               {mode === 'register' ? 'Already have an account?' : 'New to DBC?'}{' '}

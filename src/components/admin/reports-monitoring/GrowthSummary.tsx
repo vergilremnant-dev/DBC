@@ -29,7 +29,7 @@ export default function GrowthSummary({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {metrics.map((m, idx) => (
           <div key={idx} className="bg-stone-50/50 border border-stone-150 p-4 rounded-2xl space-y-1.5">
-            <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest leading-none">
+            <span className="block text-3xs font-black text-stone-500 uppercase tracking-widest leading-none">
               {m.label}
             </span>
             <span className="block text-xl font-black text-stone-900 leading-none">

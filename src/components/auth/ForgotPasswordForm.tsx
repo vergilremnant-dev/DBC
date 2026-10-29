@@ -20,7 +20,7 @@ export function ForgotPasswordForm({ onBackToLogin }: ForgotPasswordFormProps) {
       
       <div className="space-y-1">
         <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Recover Password</h2>
-        <p className="text-xs text-stone-500">Enter your registered email address to receive recovery instructions.</p>
+        <p className="text-xs text-stone-600">Enter your registered email address to receive recovery instructions.</p>
       </div>
 
       {!success ? (
@@ -62,7 +62,7 @@ export function ForgotPasswordForm({ onBackToLogin }: ForgotPasswordFormProps) {
       )}
 
       <div className="pt-2 text-center border-t border-stone-100">
-        <p className="text-xs text-stone-500">
+        <p className="text-xs text-stone-600">
           <button
             type="button"
             onClick={onBackToLogin}

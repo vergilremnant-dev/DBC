@@ -59,7 +59,7 @@ export function RequirementCard({ requirement, onSelect }: RequirementCardProps)
           <div className={`h-full rounded-full transition-all duration-300 ${getProgressWidth(requirement.status)}`} />
         </div>
 
-        <div className="flex justify-between items-center text-3xs font-bold text-stone-400 uppercase tracking-wider">
+        <div className="flex justify-between items-center text-3xs font-bold text-stone-600 uppercase tracking-wider">
           <span>Created: {new Date(requirement.createdAt).toLocaleDateString()}</span>
           <span>
             {requirement.prosInterestedCount || 0} interested pros

@@ -97,7 +97,7 @@ export function MobileDrawer({
               <BrandLogo variant="primary" theme="light" />
               <button
                 onClick={onClose}
-                className="w-10 h-10 rounded-full border border-stone-200 flex items-center justify-center text-stone-500 hover:text-stone-900 hover:bg-stone-50 transition focus:outline-none cursor-pointer"
+                className="w-10 h-10 rounded-full border border-stone-200 flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-stone-50 transition focus:outline-none cursor-pointer"
                 aria-label="Close menu"
               >
                 ✕

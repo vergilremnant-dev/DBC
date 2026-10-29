@@ -186,7 +186,7 @@ export default function ProfessionalProfile() {
                 ✓ Verified Business
               </span>
             </div>
-            <p className="text-xs text-stone-500 font-medium">Category: {profileData.category} &bull; Profile completion: {profileCompletion}%</p>
+            <p className="text-xs text-stone-600 font-medium">Category: {profileData.category} &bull; Profile completion: {profileCompletion}%</p>
           </div>
         </div>
 
@@ -213,7 +213,7 @@ export default function ProfessionalProfile() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Business / Company Name</label>
-                <input
+                <input aria-label="Business / Company Name"
                   type="text"
                   value={profileData.businessName}
                   onChange={e => setProfileData({ ...profileData, businessName: e.target.value })}
@@ -223,7 +223,7 @@ export default function ProfessionalProfile() {
               </div>
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Contact person Name</label>
-                <input
+                <input aria-label="Contact person Name"
                   type="text"
                   value={profileData.ownerName}
                   onChange={e => setProfileData({ ...profileData, ownerName: e.target.value })}
@@ -236,7 +236,7 @@ export default function ProfessionalProfile() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Phone number</label>
-                <input
+                <input aria-label="Phone number"
                   type="text"
                   value={profileData.phone}
                   onChange={e => setProfileData({ ...profileData, phone: e.target.value })}
@@ -246,7 +246,7 @@ export default function ProfessionalProfile() {
               </div>
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Email address</label>
-                <input
+                <input aria-label="Email address"
                   type="email"
                   value={profileData.email}
                   onChange={e => setProfileData({ ...profileData, email: e.target.value })}
@@ -258,7 +258,7 @@ export default function ProfessionalProfile() {
 
             <div className="space-y-1.5">
               <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">About business summary</label>
-              <textarea
+              <textarea aria-label="About business summary"
                 value={profileData.description}
                 onChange={e => setProfileData({ ...profileData, description: e.target.value })}
                 className="dbc-input h-24 resize-none"
@@ -276,19 +276,19 @@ export default function ProfessionalProfile() {
             <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Business Registrations</h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <span className="block text-3xs font-black text-stone-400 uppercase">GST registration ID</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase">GST registration ID</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.gstNo}</strong>
               </div>
               <div>
-                <span className="block text-3xs font-black text-stone-400 uppercase">License registration number</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase">License registration number</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.licenseNo}</strong>
               </div>
               <div>
-                <span className="block text-3xs font-black text-stone-400 uppercase">Business structure</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase">Business structure</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.businessType}</strong>
               </div>
               <div>
-                <span className="block text-3xs font-black text-stone-400 uppercase">Years of market experience</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase">Years of market experience</span>
                 <strong className="text-stone-900 block mt-0.5">{companyInfo.experienceYears}</strong>
               </div>
             </div>
@@ -355,7 +355,7 @@ export default function ProfessionalProfile() {
                       <strong className="text-stone-900 block truncate">{proj.name}</strong>
                       <p className="text-2xs text-stone-500 leading-relaxed font-semibold">{proj.description}</p>
                       
-                      <div className="flex justify-between items-center pt-2 border-t border-light-border/40 text-3xs text-stone-400 font-bold uppercase">
+                      <div className="flex justify-between items-center pt-2 border-t border-light-border/40 text-3xs text-stone-500 font-bold uppercase">
                         <span>{proj.location} &bull; {proj.year}</span>
                         <button onClick={() => handleDeletePortfolioItem(proj.id)} className="text-rose-600 hover:underline">
                           Delete
@@ -401,17 +401,17 @@ export default function ProfessionalProfile() {
             <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Availability Rules</h3>
             <div className="space-y-3">
               <div>
-                <span className="block text-3xs font-black text-stone-400 uppercase">Working Days</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase">Working Days</span>
                 <strong className="text-stone-900 block mt-0.5">{workingDays.join(', ')}</strong>
               </div>
               <div>
-                <span className="block text-3xs font-black text-stone-400 uppercase">Operational Hours</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase">Operational Hours</span>
                 <strong className="text-stone-900 block mt-0.5">{workingHours}</strong>
               </div>
               <div className="pt-2 flex justify-between items-center border-t border-light-border/40">
                 <div>
                   <strong className="text-stone-850 block">Vacation Mode</strong>
-                   <span className="text-2xs text-stone-400 font-bold block">Pause inbound project requests</span>
+                   <span className="text-2xs text-stone-500 font-bold block">Pause inbound project requests</span>
                 </div>
                 <input
                   type="checkbox"

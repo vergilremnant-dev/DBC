@@ -243,7 +243,7 @@ export default function ConsultationRequestsPage() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Expert Center</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Consultation Requests</h1>
-          <p className="text-xs text-stone-500 font-medium">Review, prioritize, and respond to customer consultation requests.</p>
+          <p className="text-xs text-stone-600 font-medium">Review, prioritize, and respond to customer consultation requests.</p>
         </div>
         <div className="flex gap-2">
           <button
@@ -328,7 +328,7 @@ export default function ConsultationRequestsPage() {
         {/* Row 2: Status & Priority Pills */}
         <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-light-border/40">
           <div className="flex items-center gap-3">
-            <span className="text-2xs font-black uppercase text-stone-400">Status:</span>
+            <span className="text-2xs font-black uppercase text-stone-500">Status:</span>
             <div className="flex flex-wrap gap-1.5">
               {['ALL', 'New', 'Pending Review', 'Accepted', 'Scheduled', 'Completed', 'Rejected'].map(s => (
                 <button
@@ -345,7 +345,7 @@ export default function ConsultationRequestsPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-2xs font-black uppercase text-stone-400">Priority:</span>
+            <span className="text-2xs font-black uppercase text-stone-500">Priority:</span>
             <div className="flex gap-1.5">
               {['ALL', 'High', 'Medium', 'Low'].map(p => (
                 <button
@@ -371,7 +371,7 @@ export default function ConsultationRequestsPage() {
           {filteredRequests.length === 0 ? (
             <div className="bg-white border border-light-border p-12 rounded-3xl text-center space-y-4 shadow-apple-sm">
               <span className="text-3xl block">📋</span>
-              <h3 className="text-xs font-black text-stone-500 uppercase tracking-widest">No matching requests found</h3>
+              <h3 className="text-xs font-black text-stone-600 uppercase tracking-widest">No matching requests found</h3>
               <p className="text-xs text-stone-450 max-w-sm mx-auto">Try clearing search inputs or relaxing your filter combinations.</p>
             </div>
           ) : (
@@ -388,7 +388,7 @@ export default function ConsultationRequestsPage() {
                 >
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-3 pb-3 border-b border-light-border/40">
                     <div className="space-y-1">
-                      <span className="text-3xs font-black text-stone-400 uppercase tracking-wider">{req.id} • {req.category}</span>
+                      <span className="text-3xs font-black text-stone-600 uppercase tracking-wider">{req.id} • {req.category}</span>
                       <h4 className="text-xs font-black text-stone-900">{req.requirementTitle}</h4>
                       <p className="text-2xs text-stone-600 font-semibold">Client: {req.customerName}</p>
                     </div>
@@ -526,17 +526,17 @@ export default function ConsultationRequestsPage() {
               </div>
 
               <div className="space-y-1">
-                <span className="text-2xs font-black uppercase text-stone-400">Detailed Description</span>
+                <span className="text-2xs font-black uppercase text-stone-500">Detailed Description</span>
                 <p className="leading-relaxed bg-stone-50/40 p-3 rounded-xl border border-stone-100">{selectedRequest.description}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-2xs">
                 <div className="p-3 bg-stone-50 rounded-xl border border-stone-100">
-                  <span className="block text-3xs font-black uppercase text-stone-400">Consult Mode</span>
+                  <span className="block text-3xs font-black uppercase text-stone-500">Consult Mode</span>
                   <span className="font-bold text-stone-850">🖥️ {selectedRequest.consultationMode}</span>
                 </div>
                 <div className="p-3 bg-stone-50 rounded-xl border border-stone-100">
-                  <span className="block text-3xs font-black uppercase text-stone-400">Expected Timeline</span>
+                  <span className="block text-3xs font-black uppercase text-stone-500">Expected Timeline</span>
                   <span className="font-bold text-stone-850">⏳ {selectedRequest.expectedTimeline}</span>
                 </div>
               </div>
@@ -549,7 +549,7 @@ export default function ConsultationRequestsPage() {
               </div>
 
               <div className="space-y-1">
-                <span className="text-2xs font-black uppercase text-stone-400">Client Notes</span>
+                <span className="text-2xs font-black uppercase text-stone-500">Client Notes</span>
                 <p className="italic bg-light-stone/20 p-3 rounded-xl border border-light-border/40">"{selectedRequest.notes}"</p>
               </div>
             </div>
@@ -588,7 +588,7 @@ export default function ConsultationRequestsPage() {
           <div role="dialog" aria-modal="true" className="dbc-modal dbc-modal-sm space-y-4 text-left select-none">
             <div className="space-y-1">
               <h3 className="text-sm font-black text-stone-900 uppercase">Confirm Action</h3>
-              <p className="text-xs text-stone-500 font-medium">Are you sure you want to {confirmDialog.action.toLowerCase()} this consultation request?</p>
+              <p className="text-xs text-stone-600 font-medium">Are you sure you want to {confirmDialog.action.toLowerCase()} this consultation request?</p>
             </div>
             <div className="flex justify-end gap-2">
               <button

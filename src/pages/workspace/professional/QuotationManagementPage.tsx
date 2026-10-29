@@ -277,7 +277,7 @@ export default function QuotationManagementPage() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Bid & Proposals</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Quotation Management</h1>
-          <p className="text-xs text-stone-500 font-medium">Create, manage, and submit professional quotations for customer requirements.</p>
+          <p className="text-xs text-stone-600 font-medium">Create, manage, and submit professional quotations for customer requirements.</p>
         </div>
 
         <div className="flex gap-2 text-xs">
@@ -397,7 +397,7 @@ export default function QuotationManagementPage() {
                             View Proposal
                           </button>
                         )}
-                        <button onClick={() => handleDuplicate(quote)} className="text-3xs font-black uppercase text-stone-400 hover:underline">
+                        <button onClick={() => handleDuplicate(quote)} className="text-3xs font-black uppercase text-stone-500 hover:underline">
                           Duplicate
                         </button>
                       </td>
@@ -422,7 +422,7 @@ export default function QuotationManagementPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Requirement Target</label>
-                <input
+                <input aria-label="Requirement Target"
                   type="text"
                   value={reqTitle}
                   disabled
@@ -431,7 +431,7 @@ export default function QuotationManagementPage() {
               </div>
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Customer Client Name</label>
-                <input
+                <input aria-label="Customer Client Name"
                   type="text"
                   value={clientName}
                   disabled
@@ -443,7 +443,7 @@ export default function QuotationManagementPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Quoted Amount (INR)</label>
-                <input
+                <input aria-label="Quoted Amount (INR)"
                   type="text"
                   value={quoteAmount}
                   onChange={e => setQuoteAmount(e.target.value)}
@@ -453,7 +453,7 @@ export default function QuotationManagementPage() {
               </div>
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Expected duration limits</label>
-                <input
+                <input aria-label="Expected duration limits"
                   type="text"
                   value={quoteDuration}
                   onChange={e => setQuoteDuration(e.target.value)}
@@ -465,7 +465,7 @@ export default function QuotationManagementPage() {
 
             <div className="space-y-1.5">
               <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Scope of Work details</label>
-              <textarea
+              <textarea aria-label="Scope of Work details"
                 value={quoteScope}
                 onChange={e => setQuoteScope(e.target.value)}
                 placeholder="List services, measurements coordination, and structural layouts checks..."
@@ -476,7 +476,7 @@ export default function QuotationManagementPage() {
 
             <div className="space-y-1.5">
               <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Exclusions (Out of scope)</label>
-              <textarea
+              <textarea aria-label="Exclusions (Out of scope)"
                 value={quoteExclusions}
                 onChange={e => setQuoteExclusions(e.target.value)}
                 placeholder="List exclusions details (e.g. material bills, site transport fees)..."
@@ -487,7 +487,7 @@ export default function QuotationManagementPage() {
 
             <div className="space-y-1.5">
               <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Terms and Conditions</label>
-              <textarea
+              <textarea aria-label="Terms and Conditions"
                 value={quoteTerms}
                 onChange={e => setQuoteTerms(e.target.value)}
                 className="dbc-input h-20 resize-none"
@@ -557,14 +557,14 @@ export default function QuotationManagementPage() {
 
             {/* Client summary */}
             <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl font-sans text-xs space-y-1">
-              <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">Client Recipient</span>
+              <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">Client Recipient</span>
               <strong className="text-stone-900 block">{previewQuote.customerName}</strong>
               <span className="text-stone-500">Project Target: {previewQuote.requirementTitle}</span>
             </div>
 
             {/* Scope specifications */}
             <div className="space-y-2 text-xs font-sans">
-              <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest">Scope of work services</span>
+              <span className="block text-3xs font-black text-stone-500 uppercase tracking-widest">Scope of work services</span>
               <p className="text-stone-750 font-semibold leading-relaxed">{previewQuote.scope}</p>
             </div>
 
@@ -581,7 +581,7 @@ export default function QuotationManagementPage() {
                 <span className="text-lg font-extrabold text-brand-emerald">{previewQuote.amount}</span>
               </div>
               <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl">
-                <span className="block text-3xs font-black text-stone-400 uppercase mb-0.5">Expected Timeline Duration</span>
+                <span className="block text-3xs font-black text-stone-500 uppercase mb-0.5">Expected Timeline Duration</span>
                 <span className="text-lg font-bold text-stone-900">{previewQuote.duration}</span>
               </div>
             </div>

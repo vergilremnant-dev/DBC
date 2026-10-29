@@ -25,7 +25,7 @@ export function RatingSummary({ summary }: RatingSummaryProps) {
         <div className="flex justify-center mt-1.5">
           <StarRating rating={Math.round(averageRating)} size="md" />
         </div>
-        <p className="text-2xs text-stone-400 mt-2 font-bold uppercase tracking-wider">
+        <p className="text-2xs text-stone-500 mt-2 font-bold uppercase tracking-wider">
           {totalReviews} {totalReviews === 1 ? 'Review' : 'Reviews'}
         </p>
       </div>

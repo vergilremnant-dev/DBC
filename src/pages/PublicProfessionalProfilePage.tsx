@@ -78,7 +78,7 @@ export function PublicProfessionalProfilePage() {
       <div className="min-h-screen bg-stone-50 py-12 px-4 flex items-center justify-center">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 rounded-full border-4 border-stone-200 border-t-emerald-700 animate-spin mx-auto"></div>
-          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">Loading Professional Profile...</p>
+          <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">Loading Professional Profile...</p>
         </div>
       </div>
     );
@@ -90,7 +90,7 @@ export function PublicProfessionalProfilePage() {
         <div className="max-w-md mx-auto text-center bg-white border border-stone-200 rounded-3xl p-8 space-y-4 shadow-sm">
           <span className="text-3xl block">🔍</span>
           <h2 className="text-lg font-bold text-stone-900 font-display">Professional Not Found</h2>
-          <p className="text-xs text-stone-500 font-medium leading-relaxed">{errorMsg || 'We could not locate the requested professional profile.'}</p>
+          <p className="text-xs text-stone-600 font-medium leading-relaxed">{errorMsg || 'We could not locate the requested professional profile.'}</p>
           <button
             onClick={() => navigate('/search')}
             className="dbc-btn dbc-btn-primary py-2.5 px-5 rounded-xl text-xs font-bold uppercase tracking-wider"
@@ -154,7 +154,7 @@ export function PublicProfessionalProfilePage() {
               <p className="text-xs font-bold uppercase tracking-wider text-emerald-800">
                 {provider.category?.name || 'Construction & Design Partner'}
               </p>
-              <div className="flex flex-wrap items-center gap-3 text-xs text-stone-500 font-medium pt-1">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-stone-600 font-medium pt-1">
                 <span>📍 {provider.city}, {provider.state}</span>
                 <span>•</span>
                 <span>💼 {provider.experienceYears || 5}+ Years Experience</span>
@@ -183,7 +183,7 @@ export function PublicProfessionalProfilePage() {
             
             {/* Overview / Bio */}
             <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-3 shadow-xs">
-              <h3 className="text-xs font-black uppercase tracking-wider text-stone-400">About Professional</h3>
+              <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">About Professional</h3>
               <p className="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
                 {provider.description || 'Verified coordination specialist offering certified layout drafting, architectural oversight, and on-site construction execution.'}
               </p>
@@ -191,7 +191,7 @@ export function PublicProfessionalProfilePage() {
 
             {/* Specializations & Skills */}
             <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
-              <h3 className="text-xs font-black uppercase tracking-wider text-stone-400">Services & Specializations</h3>
+              <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">Services & Specializations</h3>
               <div className="flex flex-wrap gap-2">
                 {(provider.serviceAreas ? provider.serviceAreas.split(',') : ['Civil Engineering', 'Design Coordination', 'Structural Audits', 'Site Inspection', 'Permit Assistance']).map((skill) => (
                   <span
@@ -207,8 +207,8 @@ export function PublicProfessionalProfilePage() {
             {/* Portfolio Showcase */}
             <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
               <div className="flex justify-between items-center">
-                <h3 className="text-xs font-black uppercase tracking-wider text-stone-400">Featured Projects Gallery</h3>
-                <span className="text-2xs font-bold uppercase text-stone-400">Verified Work</span>
+                <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">Featured Projects Gallery</h3>
+                <span className="text-2xs font-bold uppercase text-stone-500">Verified Work</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -246,7 +246,7 @@ export function PublicProfessionalProfilePage() {
             
             {/* Quick Summary Card */}
             <div className="bg-white border border-stone-200 rounded-3xl p-6 space-y-4 shadow-xs">
-              <h3 className="text-xs font-black uppercase tracking-wider text-stone-400">Professional Summary</h3>
+              <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">Professional Summary</h3>
               
               <div className="space-y-3 text-xs font-semibold text-stone-700">
                 <div className="flex justify-between py-1.5 border-b border-stone-100">

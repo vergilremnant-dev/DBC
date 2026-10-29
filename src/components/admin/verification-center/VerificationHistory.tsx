@@ -36,7 +36,7 @@ export default function VerificationHistory({ timeline, applicantName }: Verific
               {/* timeline bullet */}
               <span className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full border-2 border-white bg-brand-emerald shadow-apple-xs shrink-0" />
               
-              <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest">
+              <span className="block text-3xs font-black text-stone-500 uppercase tracking-widest">
                 {item.date}
               </span>
               <h4 className="font-bold text-stone-900 leading-tight">

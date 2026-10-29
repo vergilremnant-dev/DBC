@@ -17,7 +17,7 @@ export default function QuickActions({
 }: QuickActionsProps) {
   if (!request) {
     return (
-      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-2xs text-stone-400 font-medium select-none">
+      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-2xs text-stone-500 font-medium select-none">
         No verification request selected for quick shortcuts.
       </div>
     );
@@ -29,7 +29,7 @@ export default function QuickActions({
         <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           Verification Shortcuts
         </h4>
-        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">
           Applicant: {request.name} &bull; Status: {request.status}
         </span>
       </div>
@@ -64,7 +64,7 @@ export default function QuickActions({
             </button>
           </>
         ) : (
-          <span className="col-span-2 text-3xs text-center font-bold text-stone-400 py-2 border border-dashed border-stone-200 rounded-xl">
+          <span className="col-span-2 text-3xs text-center font-bold text-stone-500 py-2 border border-dashed border-stone-200 rounded-xl">
             Decision Finalized: status is {request.status}
           </span>
         )}

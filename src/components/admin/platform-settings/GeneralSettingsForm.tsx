@@ -75,7 +75,7 @@ export default function GeneralSettingsForm({ values, onChange }: GeneralSetting
             placeholder="India's trusted marketplace for construction and design professionals."
             maxLength={300}
           />
-          <p className="text-3xs text-stone-400 font-medium mt-1">{values.platformDescription.length}/300 characters</p>
+          <p className="text-3xs text-stone-500 font-medium mt-1">{values.platformDescription.length}/300 characters</p>
         </FieldRow>
 
         <FieldRow label="Support Email" htmlFor="gs-email" hint="Primary contact email for user support.">

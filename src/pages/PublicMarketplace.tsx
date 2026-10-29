@@ -143,14 +143,6 @@ export function PublicMarketplace() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Close the detail dialog with Escape
-  useEffect(() => {
-    if (!selectedProject) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedProject(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [selectedProject]);
-
   // Location-dependent data states
   const [cityProviders, setCityProviders] = useState<ProviderProfile[]>([]);
   const [allProviders, setAllProviders] = useState<ProviderProfile[]>([]);
@@ -351,7 +343,7 @@ export function PublicMarketplace() {
                       <span className="block text-3xs uppercase tracking-wider font-extrabold text-stone-gray">Advanced Criteria</span>
                       <div className="space-y-1.5">
                         <label className="block text-2xs font-bold text-stone-750">Min Rating</label>
-                        <select className="w-full text-xs border border-light-border rounded-lg p-1.5 focus:outline-none bg-white">
+                        <select aria-label="Min Rating" className="w-full text-xs border border-light-border rounded-lg p-1.5 focus:outline-none bg-white">
                           <option>Any rating</option>
                           <option>4.5+ Stars</option>
                           <option>4.0+ Stars</option>
@@ -359,7 +351,7 @@ export function PublicMarketplace() {
                       </div>
                       <div className="space-y-1.5">
                         <label className="block text-2xs font-bold text-stone-750">Experience</label>
-                        <select className="w-full text-xs border border-light-border rounded-lg p-1.5 focus:outline-none bg-white">
+                        <select aria-label="Experience" className="w-full text-xs border border-light-border rounded-lg p-1.5 focus:outline-none bg-white">
                           <option>Any experience</option>
                           <option>5+ Years</option>
                           <option>2+ Years</option>
@@ -652,7 +644,7 @@ export function PublicMarketplace() {
                       </p>
                     </div>
                   </div>
-                  <div className="p-4 pt-0 flex items-center justify-between text-3xs font-bold text-brand-emerald uppercase tracking-wider group-hover:text-white transition duration-200">
+                  <div className="p-4 pt-0 flex items-center justify-between text-3xs font-bold text-emerald-400 uppercase tracking-wider group-hover:text-white transition duration-200">
                     <span>Explore Parameters</span>
                     <span>→</span>
                   </div>

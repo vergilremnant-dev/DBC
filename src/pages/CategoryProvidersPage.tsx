@@ -70,14 +70,6 @@ export function CategoryProvidersPage() {
 
   const categoryId = id ? parseInt(id, 10) : null;
 
-  // Close the detail dialog with Escape
-  useEffect(() => {
-    if (!selectedProvider) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedProvider(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [selectedProvider]);
-
   useEffect(() => {
     if (!categoryId || isNaN(categoryId)) {
       startTransition(() => {
@@ -180,7 +172,7 @@ export function CategoryProvidersPage() {
                     {category.categoryType === 'BLUE_COLLAR' ? 'Blue Collar' : 'White Collar'}
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-stone-500 font-medium mt-1 leading-relaxed max-w-2xl">{category.description || 'Verified local partners for construction, design, and long-term project requirements.'}</p>
+                <p className="text-xs sm:text-sm text-stone-600 font-medium mt-1 leading-relaxed max-w-2xl">{category.description || 'Verified local partners for construction, design, and long-term project requirements.'}</p>
               </div>
             </div>
             
@@ -188,19 +180,19 @@ export function CategoryProvidersPage() {
             <div className="flex bg-warm-cream p-0.5 rounded-full border border-light-border">
               <button
                 onClick={() => setWorkforceFilter('ALL')}
-                className={`text-3xs font-bold px-2.5 py-1 rounded-full transition cursor-pointer ${workforceFilter === 'ALL' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-850'}`}
+                className={`text-2xs font-bold px-3 min-h-[28px] rounded-full transition cursor-pointer ${workforceFilter === 'ALL' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600 hover:text-stone-850'}`}
               >
                 All
               </button>
               <button
                 onClick={() => setWorkforceFilter('BLUE_COLLAR')}
-                className={`text-3xs font-bold px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'BLUE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-500 hover:text-stone-850'}`}
+                className={`text-2xs font-bold px-3 min-h-[28px] rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'BLUE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-600 hover:text-stone-850'}`}
               >
                 Blue
               </button>
               <button
                 onClick={() => setWorkforceFilter('WHITE_COLLAR')}
-                className={`text-3xs font-bold px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'WHITE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-500 hover:text-stone-850'}`}
+                className={`text-2xs font-bold px-3 min-h-[28px] rounded-full transition flex items-center gap-1 cursor-pointer ${workforceFilter === 'WHITE_COLLAR' ? 'bg-white text-stone-900 shadow-xs border border-light-border' : 'text-stone-600 hover:text-stone-850'}`}
               >
                 White
               </button>
@@ -210,7 +202,7 @@ export function CategoryProvidersPage() {
 
         {/* Error Alert */}
         {errorMsg && (
-          <div className="rounded-lg bg-rose-50 border border-rose-100 p-4 text-xs font-semibold text-rose-700">
+          <div role="alert" className="rounded-lg bg-rose-50 border border-rose-100 p-4 text-xs font-semibold text-rose-700">
             {errorMsg}
           </div>
         )}
@@ -219,7 +211,7 @@ export function CategoryProvidersPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-light-border pb-4">
           <div>
             <h2 className="text-lg font-bold font-display text-stone-900">Available Professionals</h2>
-            <p className="text-xs text-stone-500">Showing {filteredProviders.length} active service partners</p>
+            <p className="text-xs text-stone-600">Showing {filteredProviders.length} active service partners</p>
           </div>
           <div className="flex items-center gap-2">
             <select
@@ -276,14 +268,14 @@ export function CategoryProvidersPage() {
                           {isBlueCollar ? 'Blue Collar' : 'White Collar'}
                         </span>
                       </div>
-                      <span className="text-2xs font-bold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full">{p.averageRating > 0 ? `⭐ ${p.averageRating.toFixed(1)}` : 'New'}</span>
+                      <span className="text-2xs font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full">{p.averageRating > 0 ? `⭐ ${p.averageRating.toFixed(1)}` : 'New'}</span>
                     </div>
 
                     <h3 className="mt-4 text-base font-extrabold text-stone-900 leading-tight font-display">{p.fullName}</h3>
-                    {p.businessName && <p className="text-xs font-semibold text-stone-400 mt-0.5">{p.businessName}</p>}
+                    {p.businessName && <p className="text-xs font-semibold text-stone-600 mt-0.5">{p.businessName}</p>}
                     
-                    <p className="mt-3 text-xs text-stone-500 font-semibold">📍 {p.city}, {p.state}</p>
-                    <p className="text-2xs text-stone-400 font-bold uppercase tracking-wider mt-1">💼 {p.experienceYears} Years Experience</p>
+                    <p className="mt-3 text-xs text-stone-600 font-semibold">📍 {p.city}, {p.state}</p>
+                    <p className="text-2xs text-stone-500 font-bold uppercase tracking-wider mt-1">💼 {p.experienceYears} Years Experience</p>
                     
                     <p className="mt-4 text-xs text-stone-600 line-clamp-3 leading-relaxed">
                       {p.description || 'No business description provided.'}
@@ -325,7 +317,7 @@ export function CategoryProvidersPage() {
               <div className="w-16 h-16 rounded-full bg-warm-cream flex items-center justify-center text-3xl">👤</div>
               <div>
                 <h3 className="text-xl font-bold font-display text-stone-955">{selectedProvider.fullName}</h3>
-                <p className="text-xs text-stone-500 font-medium">{selectedProvider.businessName || 'Independent Partner'}</p>
+                <p className="text-xs text-stone-600 font-medium">{selectedProvider.businessName || 'Independent Partner'}</p>
                 <p className="text-xs text-stone-450 mt-1">📍 {selectedProvider.city}, {selectedProvider.state}</p>
               </div>
             </div>

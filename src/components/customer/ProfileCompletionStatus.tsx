@@ -6,7 +6,7 @@ interface ProfileCompletionStatusProps {
 export function ProfileCompletionStatus({ percentage, missingFields }: ProfileCompletionStatusProps) {
   return (
     <section className="rounded-xl border border-stone-200 bg-stone-50/50 p-5 space-y-3">
-      <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-stone-500">
+      <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-stone-600">
         <h4 className="font-display text-stone-900 text-sm normal-case">Profile Completeness Status</h4>
         <span className="text-emerald-850 font-extrabold text-sm">{percentage}%</span>
       </div>
@@ -20,7 +20,7 @@ export function ProfileCompletionStatus({ percentage, missingFields }: ProfileCo
 
       {missingFields.length > 0 ? (
         <div className="text-2xs text-amber-800 font-semibold space-y-1 pt-1">
-          <p className="font-bold uppercase tracking-wider text-3xs text-stone-400">Missing required profile inputs:</p>
+          <p className="font-bold uppercase tracking-wider text-3xs text-stone-500">Missing required profile inputs:</p>
           <ul className="list-disc pl-4 space-y-0.5">
             {missingFields.map((field) => (
               <li key={field}>{field}</li>

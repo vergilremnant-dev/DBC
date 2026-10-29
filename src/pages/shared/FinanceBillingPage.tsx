@@ -264,7 +264,7 @@ export function FinanceBillingPage() {
       <main className="mx-auto max-w-6xl w-full px-4 py-8 sm:px-6 space-y-6 flex-1 text-left">
         
         {noticeMessage && (
-          <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold shadow-xs animate-in fade-in flex items-center justify-between">
+          <div role="status" className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold shadow-xs animate-in fade-in flex items-center justify-between">
             <span>{noticeMessage}</span>
             <button onClick={() => setNoticeMessage('')} className="text-emerald-600 hover:text-emerald-900">✕</button>
           </div>
@@ -408,7 +408,7 @@ export function FinanceBillingPage() {
                 <div className="grid gap-4 grid-cols-3 text-xs font-semibold text-stone-gray">
                   <div>
                     <label className="block mb-1">Materials Cost</label>
-                    <input
+                    <input aria-label="Materials Cost"
                       type="number"
                       placeholder="INR"
                       value={estMaterials}
@@ -419,7 +419,7 @@ export function FinanceBillingPage() {
                   </div>
                   <div>
                     <label className="block mb-1">Labor Cost</label>
-                    <input
+                    <input aria-label="Labor Cost"
                       type="number"
                       placeholder="INR"
                       value={estLabor}
@@ -430,7 +430,7 @@ export function FinanceBillingPage() {
                   </div>
                   <div>
                     <label className="block mb-1">Equipment Cost</label>
-                    <input
+                    <input aria-label="Equipment Cost"
                       type="number"
                       placeholder="INR"
                       value={estEquipment}
@@ -589,7 +589,7 @@ export function FinanceBillingPage() {
                 
                 <div className="space-y-1.5">
                   <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Expense category</label>
-                  <select
+                  <select aria-label="Expense category"
                     value={expCategory}
                     onChange={(e) => setExpCategory(e.target.value as 'Materials' | 'Labor' | 'Equipment' | 'Travel' | 'Miscellaneous')}
                     className="dbc-input bg-white"

@@ -19,7 +19,7 @@ export default function QuickActions({ onTabSelect, onExport }: QuickActionsProp
         <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           ⚡ Administrative Quick Shortcuts
         </h4>
-        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">
           Access specific dashboard operations
         </span>
       </div>

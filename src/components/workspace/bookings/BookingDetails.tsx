@@ -61,13 +61,13 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
             <h3 className="text-sm font-bold text-stone-900 font-display">{booking.serviceCategory}</h3>
             <BookingStatusBadge status={booking.status} />
           </div>
-          <p className="text-3xs font-black uppercase text-stone-400 tracking-wider">
+          <p className="text-3xs font-black uppercase text-stone-600 tracking-wider">
             Request ID: {booking.id}
           </p>
         </div>
-        <button
+        <button aria-label="Close details"
           onClick={onClose}
-          className="text-stone-400 hover:text-stone-700 h-6 w-6 rounded-full hover:bg-stone-50 border border-stone-150 flex items-center justify-center transition cursor-pointer"
+          className="text-stone-500 hover:text-stone-700 h-6 w-6 rounded-full hover:bg-stone-50 border border-stone-150 flex items-center justify-center transition cursor-pointer"
         >
           ✕
         </button>
@@ -86,31 +86,31 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
       {/* Main Metadata Grid */}
       <div className="grid grid-cols-2 gap-4 text-xs">
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Professional Assignment</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Professional Assignment</span>
           <span className="block font-bold text-stone-700">{booking.professionalName}</span>
-          <span className="block text-3xs text-stone-400 font-semibold">{booking.professionalCategory}</span>
+          <span className="block text-3xs text-stone-500 font-semibold">{booking.professionalCategory}</span>
         </div>
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Service Scope</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Service Scope</span>
           <span className="block font-bold text-stone-700">{booking.serviceCategory}</span>
         </div>
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Estimated Budget</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Estimated Budget</span>
           <span className="block font-bold text-stone-750">₹{booking.amount.toLocaleString()}</span>
         </div>
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Target Start Date</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Target Start Date</span>
           <span className="block font-bold text-stone-700">{new Date(booking.scheduledDate).toLocaleDateString()}</span>
         </div>
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Submitted Date</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Submitted Date</span>
           <span className="block font-bold text-stone-700">{new Date(booking.createdAt).toLocaleDateString()}</span>
         </div>
         <div className="space-y-0.5">
           {/* Empty spacer for alignment */}
         </div>
         <div className="col-span-2 space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Project Location</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Project Location</span>
           <span className="block font-semibold text-stone-600 leading-relaxed">{booking.address}, {booking.city}</span>
         </div>
       </div>
@@ -122,7 +122,7 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
 
       {/* Booking Notes section */}
       <div className="space-y-1.5 border-t border-stone-100 pt-4 text-xs">
-        <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Project Scope & Details</span>
+        <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Project Scope & Details</span>
         <p className="text-2xs text-stone-600 font-medium leading-relaxed whitespace-pre-line bg-stone-50 p-2.5 rounded-xl border border-stone-100">
           {booking.projectTitle}
         </p>
@@ -131,12 +131,12 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
       {/* Payments and Messaging Placeholders */}
       <div className="grid grid-cols-2 gap-3 border-t border-stone-100 pt-4">
         <div className="border border-stone-200 rounded-xl p-3 bg-stone-50/50 space-y-1 text-center">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Payments Info</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Payments Info</span>
           <span className="block text-2xs font-black text-emerald-800">💸 Paid Securely</span>
-          <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wide">Secure Transaction</span>
+          <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wide">Secure Transaction</span>
         </div>
         <div className="border border-stone-200 rounded-xl p-3 bg-stone-50/50 space-y-1 text-center">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Messaging Chat</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Messaging Chat</span>
           {!['requested', 'pending', 'request submitted'].includes(norm) ? (
             <button
               onClick={() => navigate('/workspace/inbox')}
@@ -146,13 +146,13 @@ export function BookingDetails({ booking, onClose, onReschedule, onCancel }: Boo
             </button>
           ) : (
             <button
-              className="text-2xs font-bold text-stone-400 block mx-auto cursor-not-allowed"
+              className="text-2xs font-bold text-stone-500 block mx-auto cursor-not-allowed"
               disabled
             >
               💬 Open Thread
             </button>
           )}
-          <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wide leading-relaxed">
+          <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wide leading-relaxed">
             {!['requested', 'pending', 'request submitted'].includes(norm)
               ? 'Chat Active'
               : 'Messaging becomes available once a professional is matched to your request'}

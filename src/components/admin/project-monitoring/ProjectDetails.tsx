@@ -16,7 +16,7 @@ export default function ProjectDetails({
     return (
       <div className="bg-white border border-light-border p-8 rounded-3xl text-center space-y-2.5 shadow-apple-sm text-stone-450 h-full flex flex-col justify-center select-none">
         <span className="text-3xl">💼</span>
-        <h4 className="text-xs font-black uppercase text-stone-400 tracking-wider">Select a Project</h4>
+        <h4 className="text-xs font-black uppercase text-stone-500 tracking-wider">Select a Project</h4>
         <p className="text-2xs text-stone-500 font-medium">Click on a project row or card to load the read-only monitoring inspector.</p>
       </div>
     );
@@ -28,7 +28,7 @@ export default function ProjectDetails({
       <div className="flex justify-between items-start border-b border-light-border pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-2xs font-mono text-stone-400 font-bold">{project.id}</span>
+            <span className="text-2xs font-mono text-stone-500 font-bold">{project.id}</span>
             <StatusBadge status={project.status} />
           </div>
           <h3 className="text-xs font-black text-stone-900 mt-1 leading-snug">{project.name}</h3>
@@ -44,7 +44,7 @@ export default function ProjectDetails({
 
       {/* Flag Alert */}
       {project.flagged && (
-        <div className="bg-rose-50/70 border border-rose-200 p-3.5 rounded-xl text-2xs font-semibold text-rose-900 space-y-1">
+        <div role="alert" className="bg-rose-50/70 border border-rose-200 p-3.5 rounded-xl text-2xs font-semibold text-rose-900 space-y-1">
           <p>⚠️ <strong>Flagged for Review:</strong> {project.flagReason}</p>
         </div>
       )}

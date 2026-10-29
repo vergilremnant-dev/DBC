@@ -155,12 +155,12 @@ export default function ConsultantProfilePage() {
                 ✓ Certified Consultant
               </span>
             </div>
-            <p className="text-xs text-stone-500 font-medium">Senior Architectural Design Consultant &bull; Hyderabad</p>
+            <p className="text-xs text-stone-600 font-medium">Senior Architectural Design Consultant &bull; Hyderabad</p>
           </div>
         </div>
 
         <div className="flex flex-col gap-2 shrink-0 md:text-right">
-          <span className="text-2xs text-stone-400 font-bold uppercase tracking-wider">Profile Completion</span>
+          <span className="text-2xs text-stone-500 font-bold uppercase tracking-wider">Profile Completion</span>
           <div className="flex items-center gap-2">
             <div className="w-32 bg-stone-100 h-1.5 rounded-full overflow-hidden">
               <div className="bg-brand-emerald h-full w-[85%]"></div>
@@ -183,7 +183,7 @@ export default function ConsultantProfilePage() {
             <div className="grid gap-4 sm:grid-cols-2 text-xs">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Full Name</label>
-                <input
+                <input aria-label="Full Name"
                   type="text"
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
@@ -194,7 +194,7 @@ export default function ConsultantProfilePage() {
 
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Email Address</label>
-                <input
+                <input aria-label="Email Address"
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
@@ -205,7 +205,7 @@ export default function ConsultantProfilePage() {
 
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Phone Coordinates</label>
-                <input
+                <input aria-label="Phone Coordinates"
                   type="text"
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
@@ -216,7 +216,7 @@ export default function ConsultantProfilePage() {
 
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Location City</label>
-                <input
+                <input aria-label="Location City"
                   type="text"
                   value={location}
                   onChange={e => setLocation(e.target.value)}
@@ -228,7 +228,7 @@ export default function ConsultantProfilePage() {
 
             <div className="space-y-1.5">
               <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Professional Biography Bio</label>
-              <textarea
+              <textarea aria-label="Professional Biography Bio"
                 value={bio}
                 onChange={e => setBio(e.target.value)}
                 className="dbc-input h-28 resize-none"
@@ -244,7 +244,7 @@ export default function ConsultantProfilePage() {
             <div className="grid gap-4 sm:grid-cols-2 text-xs">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">License Number</label>
-                <input
+                <input aria-label="License Number"
                   type="text"
                   value={licenseNumber}
                   onChange={e => setLicenseNumber(e.target.value)}
@@ -253,7 +253,7 @@ export default function ConsultantProfilePage() {
               </div>
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Years Experience</label>
-                <input
+                <input aria-label="Years Experience"
                   type="text"
                   value={experienceYears}
                   onChange={e => setExperienceYears(e.target.value)}
@@ -269,7 +269,7 @@ export default function ConsultantProfilePage() {
                 <div key={exp.id} className="p-3.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                   <div>
                     <h5 className="font-bold text-stone-900">{exp.role} &bull; <span className="text-stone-450">{exp.org}</span></h5>
-                    <span className="text-3xs text-stone-400 font-bold uppercase block mt-1">{exp.duration}</span>
+                    <span className="text-3xs text-stone-500 font-bold uppercase block mt-1">{exp.duration}</span>
                   </div>
                 </div>
               ))}
@@ -321,7 +321,7 @@ export default function ConsultantProfilePage() {
                 <div key={cert.id} className="p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs flex justify-between items-center">
                   <div>
                     <h5 className="font-bold text-stone-900">{cert.name}</h5>
-                    <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{cert.org} &bull; {cert.date}</span>
+                    <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">{cert.org} &bull; {cert.date}</span>
                   </div>
                 </div>
               ))}
@@ -370,7 +370,7 @@ export default function ConsultantProfilePage() {
             <div className="grid gap-4 sm:grid-cols-3 text-xs">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Consultation Fee</label>
-                <input
+                <input aria-label="Consultation Fee"
                   type="text"
                   value={consultationFee}
                   onChange={e => setConsultationFee(e.target.value)}
@@ -380,7 +380,7 @@ export default function ConsultantProfilePage() {
               
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Duration limits</label>
-                <select
+                <select aria-label="Duration limits"
                   value={preferredDuration}
                   onChange={e => setPreferredDuration(e.target.value)}
                   className="dbc-input bg-white text-xs py-1.5 px-3"
@@ -393,7 +393,7 @@ export default function ConsultantProfilePage() {
 
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Working Hours</label>
-                <input
+                <input aria-label="Working Hours"
                   type="text"
                   value={workingHours}
                   onChange={e => setWorkingHours(e.target.value)}
@@ -433,7 +433,7 @@ export default function ConsultantProfilePage() {
                 <div key={proj.id} className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-1 text-xs">
                   <div className="flex justify-between items-center">
                     <strong className="text-stone-900">{proj.title}</strong>
-                    <span className="text-3xs text-stone-400 font-bold uppercase">{proj.year}</span>
+                    <span className="text-3xs text-stone-500 font-bold uppercase">{proj.year}</span>
                   </div>
                   <p className="text-stone-600 font-semibold">{proj.desc}</p>
                 </div>
@@ -547,7 +547,7 @@ export default function ConsultantProfilePage() {
             <div className="space-y-3.5 text-xs">
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Current Password</label>
-                <input
+                <input aria-label="Current Password"
                   type="password"
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
@@ -556,7 +556,7 @@ export default function ConsultantProfilePage() {
               </div>
               <div className="space-y-1.5">
                 <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">New Password</label>
-                <input
+                <input aria-label="New Password"
                   type="password"
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
@@ -579,7 +579,7 @@ export default function ConsultantProfilePage() {
               </button>
             </div>
 
-            <div className="pt-3 border-t border-light-border/40 text-3xs font-bold text-stone-400 uppercase space-y-1">
+            <div className="pt-3 border-t border-light-border/40 text-3xs font-bold text-stone-500 uppercase space-y-1">
               <p>🔒 2-Factor Authentication: Disabled (Placeholder)</p>
               <p>🖥️ Logout from Other Devices (Placeholder)</p>
             </div>

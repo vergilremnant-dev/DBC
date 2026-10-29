@@ -55,7 +55,7 @@ export function NotificationFilters({
           {searchQuery && (
             <button
               onClick={() => onSearchChange('')}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-700 text-xs"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-500 hover:text-stone-700 text-xs"
             >
               ✕
             </button>
@@ -88,11 +88,11 @@ export function NotificationFilters({
       </div>
 
       {/* Bottom row: Dropdowns & Reset */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-stone-100 text-xs font-semibold text-stone-500">
+      <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-stone-100 text-xs font-semibold text-stone-600">
         <div className="flex flex-wrap items-center gap-3">
           {/* Category Dropdown */}
           <div className="flex items-center gap-1.5">
-            <span className="text-2xs uppercase font-bold text-stone-400">Category:</span>
+            <span className="text-2xs uppercase font-bold text-stone-500">Category:</span>
             <select
               value={categoryFilter}
               onChange={(e) => onCategoryChange(e.target.value)}
@@ -108,7 +108,7 @@ export function NotificationFilters({
 
           {/* Priority Dropdown */}
           <div className="flex items-center gap-1.5">
-            <span className="text-2xs uppercase font-bold text-stone-400">Priority:</span>
+            <span className="text-2xs uppercase font-bold text-stone-500">Priority:</span>
             <select
               value={priorityFilter}
               onChange={(e) => onPriorityChange(e.target.value)}
@@ -124,7 +124,7 @@ export function NotificationFilters({
 
           {/* Sort Dropdown */}
           <div className="flex items-center gap-1.5">
-            <span className="text-2xs uppercase font-bold text-stone-400">Sort By:</span>
+            <span className="text-2xs uppercase font-bold text-stone-500">Sort By:</span>
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}

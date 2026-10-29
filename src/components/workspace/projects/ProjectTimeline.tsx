@@ -14,7 +14,7 @@ export function ProjectTimeline({ progress }: ProjectTimelineProps) {
 
   return (
     <div className="space-y-3.5 text-left text-xs font-semibold text-stone-700">
-      <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
+      <span className="block text-3xs uppercase font-bold text-stone-500 tracking-wider">
         Operational Pipeline Progress
       </span>
 

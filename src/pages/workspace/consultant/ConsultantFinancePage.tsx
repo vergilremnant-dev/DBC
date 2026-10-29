@@ -82,7 +82,7 @@ export default function ConsultantFinancePage() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider"> Escrow and Billings </span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Financial Overview</h1>
-          <p className="text-xs text-stone-500 font-medium">Monitor consultation earnings, generate invoices, track settlements, and review revenue trends.</p>
+          <p className="text-xs text-stone-600 font-medium">Monitor consultation earnings, generate invoices, track settlements, and review revenue trends.</p>
         </div>
 
         <div className="flex flex-wrap gap-2 text-xs">
@@ -135,7 +135,7 @@ export default function ConsultantFinancePage() {
             <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
               <div>
                 <h3 className="text-xs font-black uppercase text-stone-900">Revenue Analytics</h3>
-                <p className="text-2xs text-stone-400 font-medium">Cash flow trend timelines</p>
+                <p className="text-2xs text-stone-500 font-medium">Cash flow trend timelines</p>
               </div>
               <div className="flex gap-1 border border-stone-200 p-1 bg-stone-50 rounded-xl text-3xs font-black uppercase tracking-wider">
                 {['Daily', 'Weekly', 'Monthly', 'Yearly'].map(view => (
@@ -162,7 +162,7 @@ export default function ConsultantFinancePage() {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between text-3xs text-stone-400 font-black uppercase tracking-wider mt-4 pt-2 border-t border-light-border/40">
+              <div className="flex justify-between text-3xs text-stone-600 font-black uppercase tracking-wider mt-4 pt-2 border-t border-light-border/40">
                 <span>March 26</span>
                 <span>April 26</span>
                 <span>May 26</span>
@@ -178,7 +178,7 @@ export default function ConsultantFinancePage() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
                 <h3 className="text-xs font-black uppercase text-stone-900">Consultation Earnings Ledger</h3>
-                <p className="text-2xs text-stone-400">Statement breakdown log details</p>
+                <p className="text-2xs text-stone-500">Statement breakdown log details</p>
               </div>
 
               <div className="flex gap-2 w-full sm:w-auto">

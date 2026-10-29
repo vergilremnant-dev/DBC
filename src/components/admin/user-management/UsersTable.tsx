@@ -76,7 +76,7 @@ export default function UsersTable({
                       >
                         {u.name}
                       </strong>
-                      <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">ID: {u.id}</span>
+                      <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wider">ID: {u.id}</span>
                       {u.companyName && <span className="block text-3xs text-stone-500">{u.companyName}</span>}
                     </div>
                   </div>

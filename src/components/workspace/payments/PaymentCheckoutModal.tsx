@@ -68,7 +68,7 @@ export function PaymentCheckoutModal({
         {(stage === 'CHECKOUT' || stage === 'SUCCESS' || stage === 'FAILURE') && (
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 h-11 w-11 flex items-center justify-center rounded-full bg-stone-50 text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition cursor-pointer min-h-[44px] min-w-[44px]"
+            className="absolute top-5 right-5 h-11 w-11 flex items-center justify-center rounded-full bg-stone-50 text-stone-500 hover:text-stone-700 hover:bg-stone-100 transition cursor-pointer min-h-[44px] min-w-[44px]"
             aria-label="Close modal"
           >
             ✕
@@ -85,14 +85,14 @@ export function PaymentCheckoutModal({
               <h2 className="text-xl font-bold text-stone-900 font-display leading-tight mt-3">
                 Project Milestone Payment
               </h2>
-              <p className="text-2xs text-stone-400 font-medium">
+              <p className="text-2xs text-stone-500 font-medium">
                 Verify milestone billing coordinates before triggering payment.
               </p>
             </div>
 
             {/* Project Context Summary */}
             <div className="p-4 bg-stone-50 border border-stone-200/60 rounded-2xl space-y-2">
-              <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">Project Coordinates</span>
+              <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">Project Coordinates</span>
               <div>
                 <strong className="text-stone-900 text-[13px] font-bold block truncate">{projectName}</strong>
                 <span className="text-2xs text-stone-500 font-semibold block mt-0.5">Specialist: {professionalName}</span>
@@ -104,7 +104,7 @@ export function PaymentCheckoutModal({
 
             {/* Payment Summary Breakdown */}
             <div className="space-y-3">
-              <span className="block text-3xs font-black text-stone-400 uppercase tracking-widest">Pricing Ledger</span>
+              <span className="block text-3xs font-black text-stone-500 uppercase tracking-widest">Pricing Ledger</span>
               
               <div className="space-y-2 font-semibold">
                 <div className="flex justify-between text-stone-600">
@@ -153,7 +153,7 @@ export function PaymentCheckoutModal({
             <div className="h-8 w-8 rounded-full border-4 border-stone-200 border-t-emerald-700 animate-spin"></div>
             <div className="space-y-1">
               <strong className="text-xs font-black uppercase text-stone-900 tracking-wider block">Preparing Secure Checkout...</strong>
-              <p className="text-2xs text-stone-400 font-medium">Establishing connection to Sandbox Payment Gateway</p>
+              <p className="text-2xs text-stone-500 font-medium">Establishing connection to Sandbox Payment Gateway</p>
             </div>
           </div>
         )}
@@ -220,19 +220,19 @@ export function PaymentCheckoutModal({
             {/* Receipt Summary details */}
             <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl text-left text-2xs space-y-2 font-sans font-semibold">
               <div className="flex justify-between border-b border-stone-200/55 pb-1.5">
-                <span className="text-stone-400 uppercase text-3xs tracking-wider font-bold">Transaction Reference</span>
+                <span className="text-stone-500 uppercase text-3xs tracking-wider font-bold">Transaction Reference</span>
                 <strong className="text-stone-900 font-mono">TXN-RZP-{Date.now().toString().slice(-8)}</strong>
               </div>
               <div className="flex justify-between border-b border-stone-200/55 pb-1.5">
-                <span className="text-stone-400 uppercase text-3xs tracking-wider font-bold">Payment Target</span>
+                <span className="text-stone-500 uppercase text-3xs tracking-wider font-bold">Payment Target</span>
                 <strong className="text-stone-900 truncate max-w-[180px]">{milestoneName}</strong>
               </div>
               <div className="flex justify-between border-b border-stone-200/55 pb-1.5">
-                <span className="text-stone-400 uppercase text-3xs tracking-wider font-bold">Total Paid</span>
+                <span className="text-stone-500 uppercase text-3xs tracking-wider font-bold">Total Paid</span>
                 <strong className="text-stone-900">₹{totalPayable.toLocaleString()}</strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-stone-400 uppercase text-3xs tracking-wider font-bold">Billing Date</span>
+                <span className="text-stone-500 uppercase text-3xs tracking-wider font-bold">Billing Date</span>
                 <strong className="text-stone-900">{new Date().toLocaleDateString('en-IN')}</strong>
               </div>
             </div>

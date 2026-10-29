@@ -120,7 +120,7 @@ export default function ConsultantDashboard() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Good Morning</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Welcome back, John Anderson</h1>
-          <p className="text-xs text-stone-500 font-medium">Saturday, August 1 • "Help homeowners make better decisions through expert guidance."</p>
+          <p className="text-xs text-stone-600 font-medium">Saturday, August 1 • "Help homeowners make better decisions through expert guidance."</p>
         </div>
         <div className="relative">
           <button
@@ -330,7 +330,7 @@ export default function ConsultantDashboard() {
                   <span className="w-10 h-10 rounded-full border border-light-border bg-stone-50 flex items-center justify-center text-sm shrink-0 z-10">{act.icon}</span>
                   <div className="space-y-0.5 pt-1">
                     <p className="text-2xs text-stone-800 font-semibold">{act.description}</p>
-                    <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{act.timestamp}</span>
+                    <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wider">{act.timestamp}</span>
                   </div>
                 </div>
               ))}
@@ -405,7 +405,7 @@ export default function ConsultantDashboard() {
                   <div className="space-y-0.5">
                     <h5 className="text-2xs font-black text-stone-900 leading-tight">{not.title}</h5>
                     <p className="text-3xs text-stone-500 font-semibold leading-normal">{not.message}</p>
-                    <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{not.time}</span>
+                    <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wider">{not.time}</span>
                   </div>
                 </div>
               ))}
@@ -468,7 +468,7 @@ function EmptyState({ message, actionLabel, onAction }: { message: string; actio
   return (
     <div className="p-8 text-center border border-dashed border-stone-200 rounded-2xl bg-stone-50/50 space-y-3 select-none">
       <span className="text-2xl block">📁</span>
-      <p className="text-xs font-bold text-stone-500 uppercase tracking-widest leading-normal">{message}</p>
+      <p className="text-xs font-bold text-stone-600 uppercase tracking-widest leading-normal">{message}</p>
       {actionLabel && onAction && (
         <button
           onClick={onAction}

@@ -32,7 +32,7 @@ export default function MarketplaceFilters({
         </h3>
         <button
           onClick={onReset}
-          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-600 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -41,10 +41,10 @@ export default function MarketplaceFilters({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-xs">
         {/* Status */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Listing Status
           </label>
-          <select
+          <select aria-label="Listing Status"
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -60,10 +60,10 @@ export default function MarketplaceFilters({
 
         {/* Category */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Project Category
           </label>
-          <select
+          <select aria-label="Project Category"
             value={filters.category}
             onChange={(e) => handleChange('category', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -79,10 +79,10 @@ export default function MarketplaceFilters({
 
         {/* Budget */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Budget Range
           </label>
-          <select
+          <select aria-label="Budget Range"
             value={filters.budgetRange}
             onChange={(e) => handleChange('budgetRange', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -96,10 +96,10 @@ export default function MarketplaceFilters({
 
         {/* Property Type */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Property Type
           </label>
-          <select
+          <select aria-label="Property Type"
             value={filters.propertyType}
             onChange={(e) => handleChange('propertyType', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -113,10 +113,10 @@ export default function MarketplaceFilters({
 
         {/* Posted Date */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Posted Date
           </label>
-          <select
+          <select aria-label="Posted Date"
             value={filters.postedDate}
             onChange={(e) => handleChange('postedDate', e.target.value)}
             className="dbc-input bg-white text-stone-700 font-semibold"
@@ -130,10 +130,10 @@ export default function MarketplaceFilters({
 
         {/* Location search */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             City/Location
           </label>
-          <input
+          <input aria-label="City/Location"
             type="text"
             placeholder="e.g. Hyderabad..."
             value={filters.location}

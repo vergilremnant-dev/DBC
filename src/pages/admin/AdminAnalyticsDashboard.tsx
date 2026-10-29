@@ -229,7 +229,7 @@ export function AdminAnalyticsDashboard() {
         </svg>
         
         {/* X labels */}
-        <div className="flex justify-between mt-2 text-3xs font-bold text-stone-400 uppercase tracking-wider px-2">
+        <div className="flex justify-between mt-2 text-3xs font-bold text-stone-600 uppercase tracking-wider px-2">
           <span>{trend[0].label}</span>
           {trend.length > 2 && <span>{trend[Math.floor(trend.length / 2)].label}</span>}
           <span>{trend[trend.length - 1].label}</span>
@@ -261,11 +261,12 @@ export function AdminAnalyticsDashboard() {
       </header>
 
       <main className="mx-auto max-w-6xl w-full px-4 py-8 sm:px-6 space-y-8 flex-1">
+        <h1 className="sr-only">Business intelligence analytics</h1>
         
         {/* Filters Section */}
         <form onSubmit={handleApplyFilters} className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-stone-400">📊 Filter Options</h2>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-stone-500">📊 Filter Options</h2>
             <div className="flex gap-2">
               <button
                 type="button"
@@ -286,7 +287,7 @@ export function AdminAnalyticsDashboard() {
           <div className="grid gap-4 sm:grid-cols-4 text-xs font-medium text-stone-700">
             <div>
               <label className="block mb-1">Start Date</label>
-              <input
+              <input aria-label="Start Date"
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
@@ -295,7 +296,7 @@ export function AdminAnalyticsDashboard() {
             </div>
             <div>
               <label className="block mb-1">End Date</label>
-              <input
+              <input aria-label="End Date"
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
@@ -304,7 +305,7 @@ export function AdminAnalyticsDashboard() {
             </div>
             <div>
               <label className="block mb-1">Target City</label>
-              <input
+              <input aria-label="Target City"
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
@@ -314,7 +315,7 @@ export function AdminAnalyticsDashboard() {
             </div>
             <div>
               <label className="block mb-1">Service Category</label>
-              <select
+              <select aria-label="Service Category"
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
                 className="dbc-input bg-white"
@@ -339,7 +340,7 @@ export function AdminAnalyticsDashboard() {
               className={`px-4 py-2 border-b-2 font-bold uppercase tracking-wider transition ${
                 activeTab === tab 
                   ? 'border-emerald-600 text-emerald-800' 
-                  : 'border-transparent text-stone-500 hover:text-stone-850'
+                  : 'border-transparent text-stone-600 hover:text-stone-850'
               }`}
             >
               {tab}
@@ -348,7 +349,7 @@ export function AdminAnalyticsDashboard() {
         </section>
 
         {/* Status Alerts */}
-        {error && <div className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
+        {error && <div role="alert" className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
         {loading && <div className="text-xs text-stone-400 py-4 animate-pulse">Syncing metrics data store...</div>}
 
         {/* Tab Contents */}
@@ -360,19 +361,19 @@ export function AdminAnalyticsDashboard() {
               <div className="space-y-6">
                 <div className="grid gap-4 sm:grid-cols-4">
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Total Customers</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Total Customers</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{overview.totalCustomers}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Active Providers</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Active Providers</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{overview.activeProviders} <span className="text-xs text-stone-400 font-sans">/ {overview.totalProviders}</span></h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Total Bookings</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Total Bookings</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{overview.totalBookings}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Avg Provider Rating</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Avg Provider Rating</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">⭐ {overview.avgProviderRating}</h4>
                   </div>
                 </div>
@@ -407,7 +408,7 @@ export function AdminAnalyticsDashboard() {
                   <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm flex flex-col justify-between">
                     <div>
                       <h3 className="text-sm font-bold text-stone-900 font-display border-b border-stone-100 pb-2">Actionable Reporting</h3>
-                      <p className="text-xs text-stone-500 mt-2 leading-relaxed">Download overview parameters or specific tab segment metrics directly in CSV spreadsheet format for external reporting.</p>
+                      <p className="text-xs text-stone-600 mt-2 leading-relaxed">Download overview parameters or specific tab segment metrics directly in CSV spreadsheet format for external reporting.</p>
                     </div>
                     <button
                       onClick={handleExportCSV}
@@ -425,15 +426,15 @@ export function AdminAnalyticsDashboard() {
               <div className="space-y-6">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Total Active ARR</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Total Active ARR</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-emerald-800 font-display">₹{revenue.totalActiveRevenue}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Active Subscriptions</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Active Subscriptions</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{revenue.statusBreakdown.active}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Expired Tiers</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Expired Tiers</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-400 font-display">{revenue.statusBreakdown.expired}</h4>
                   </div>
                 </div>
@@ -468,7 +469,7 @@ export function AdminAnalyticsDashboard() {
             {activeTab === 'bookings' && bookings && (
               <div className="space-y-6">
                 <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm max-w-xs">
-                  <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Total Bookings</span>
+                  <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Total Bookings</span>
                   <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{bookings.total}</h4>
                 </div>
 
@@ -528,7 +529,7 @@ export function AdminAnalyticsDashboard() {
                         <div key={p.id} className="py-2.5 flex justify-between items-center text-xs">
                           <div>
                             <h4 className="font-bold text-stone-900">{p.fullName}</h4>
-                            <p className="text-2xs text-stone-400">{p.businessName || 'Freelance'}</p>
+                            <p className="text-2xs text-stone-500">{p.businessName || 'Freelance'}</p>
                           </div>
                           <span className="font-bold text-stone-800">⭐ {p.avgRating}</span>
                         </div>
@@ -544,7 +545,7 @@ export function AdminAnalyticsDashboard() {
                         <div key={p.id} className="py-2.5 flex justify-between items-center text-xs">
                           <div>
                             <h4 className="font-bold text-stone-900">{p.fullName}</h4>
-                            <p className="text-2xs text-stone-400">{p.city}</p>
+                            <p className="text-2xs text-stone-500">{p.city}</p>
                           </div>
                           <span className="font-bold text-stone-800">{p.bookingCount} Bookings</span>
                         </div>
@@ -602,15 +603,15 @@ export function AdminAnalyticsDashboard() {
               <div className="space-y-6">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Total Customers</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Total Customers</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{customers.totalCustomers}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Subscription Adoption</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Subscription Adoption</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-emerald-800 font-display">{(customers.subscriptionAdoptionRate * 100).toFixed(1)}%</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Retention Splits</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Retention Splits</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{customers.returningCustomers} <span className="text-xs text-stone-400 font-sans">Returning</span></h4>
                   </div>
                 </div>
@@ -660,19 +661,19 @@ export function AdminAnalyticsDashboard() {
               <div className="space-y-6">
                 <div className="grid gap-4 sm:grid-cols-4">
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Consultation Bookings</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Consultation Bookings</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{consultations.totalConsultations}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Consultation Conversion</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Consultation Conversion</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-emerald-800 font-display">{(consultations.conversionRate * 100).toFixed(1)}%</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Callback Requests</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Callback Requests</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{callbacks.totalCallbacks}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Avg Callback Response Time</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Avg Callback Response Time</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-stone-900 font-display">{callbacks.avgResponseTimeHours}h</h4>
                   </div>
                 </div>
@@ -723,11 +724,11 @@ export function AdminAnalyticsDashboard() {
               <div className="space-y-6">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Consultation Bookings Generated</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Consultation Bookings Generated</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-emerald-800 font-display">{content.totalConsultationConversions}</h4>
                   </div>
                   <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-                    <span className="text-3xs font-black uppercase tracking-wider text-stone-400">Callback Requests Generated</span>
+                    <span className="text-3xs font-black uppercase tracking-wider text-stone-600">Callback Requests Generated</span>
                     <h4 className="text-3xl font-extrabold mt-1 text-emerald-800 font-display">{content.totalCallbackConversions}</h4>
                   </div>
                 </div>

@@ -179,13 +179,13 @@ export function SubscriptionsPage() {
             <h1 className="text-3xl font-extrabold text-stone-900 font-display sm:text-5xl leading-tight">
               Manage Your Pass
             </h1>
-            <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-medium">
               View your current active subscription benefits or upgrade to a higher tier plan.
             </p>
           </div>
 
-          {error && <div className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
-          {successMsg && <div className="rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-xs font-semibold text-emerald-800">{successMsg}</div>}
+          {error && <div role="alert" className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
+          {successMsg && <div role="status" className="rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-xs font-semibold text-emerald-800">{successMsg}</div>}
 
           <div className="grid gap-8 md:grid-cols-3">
             {/* Active Subscription Details */}
@@ -195,7 +195,7 @@ export function SubscriptionsPage() {
                   <span className="text-2xs font-black uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
                     Active Plan
                   </span>
-                  <span className="text-xs text-stone-500 font-semibold">
+                  <span className="text-xs text-stone-600 font-semibold">
                     Expires {new Date(activeSub.endDate).toLocaleDateString()}
                   </span>
                 </div>
@@ -205,7 +205,7 @@ export function SubscriptionsPage() {
                 <div className="text-3xl font-black text-emerald-700 font-display">
                   ₹{currentPlan?.price || 0}
                 </div>
-                <p className="text-xs text-stone-500 leading-relaxed">
+                <p className="text-xs text-stone-600 leading-relaxed">
                   You are currently subscribed to this tier. Enjoy your full premium features!
                 </p>
 
@@ -248,7 +248,7 @@ export function SubscriptionsPage() {
                 Upgrade / Change Plan
               </h2>
               {upgradePlans.length === 0 ? (
-                <p className="text-xs text-stone-500">No other plans available for upgrade.</p>
+                <p className="text-xs text-stone-600">No other plans available for upgrade.</p>
               ) : (
                 <div className="grid gap-6 sm:grid-cols-1">
                   {upgradePlans.map((up) => {
@@ -263,11 +263,11 @@ export function SubscriptionsPage() {
                             <h3 className="text-sm font-bold text-stone-900 font-display">
                               {up.name}
                             </h3>
-                            <span className="text-3xs font-black uppercase tracking-widest text-stone-500 bg-stone-50 border border-stone-200 px-2 py-0.5 rounded-full">
+                            <span className="text-3xs font-black uppercase tracking-widest text-stone-600 bg-stone-50 border border-stone-200 px-2 py-0.5 rounded-full">
                               Upgrade Option
                             </span>
                           </div>
-                          <p className="text-xs text-stone-500">
+                          <p className="text-xs text-stone-600">
                             {up.description || "Unlock higher tier consultation and WhatsApp coordination access."}
                           </p>
                           <ul className="text-2xs text-stone-600 space-y-1">
@@ -284,7 +284,7 @@ export function SubscriptionsPage() {
 
                         <div className="flex flex-col items-stretch sm:items-end justify-between min-w-[140px] gap-3">
                           <div className="text-right">
-                            <span className="text-2xs text-stone-400 font-semibold line-through block">
+                            <span className="text-2xs text-stone-500 font-semibold line-through block">
                               ₹{isConsultant ? "4,999" : "999"}
                             </span>
                             <span className="text-2xl font-black text-emerald-700 font-display block">
@@ -324,14 +324,14 @@ export function SubscriptionsPage() {
           <h1 className="text-3xl font-extrabold text-stone-900 font-display sm:text-5xl leading-tight">
             Unlock Expert Capabilities
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-medium">
             Get direct WhatsApp contact links, reveal verified partner phone numbers, and book design consultation appointments with industry experts.
           </p>
         </div>
 
         {/* Message Alerts */}
-        {error && <div className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
-        {successMsg && <div className="rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-xs font-semibold text-emerald-800">{successMsg}</div>}
+        {error && <div role="alert" className="rounded-lg bg-red-50 border border-red-100 p-4 text-xs font-semibold text-red-700">{error}</div>}
+        {successMsg && <div role="status" className="rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-xs font-semibold text-emerald-800">{successMsg}</div>}
 
         {/* Plans Grid */}
         {loading && plans.length === 0 ? (
@@ -370,7 +370,7 @@ export function SubscriptionsPage() {
                   Active / Subscribed
                 </span>
               ) : (
-                <span className="text-3xs font-black uppercase tracking-widest text-stone-500 bg-stone-50 border border-stone-200 px-2 py-1 rounded-full">
+                <span className="text-3xs font-black uppercase tracking-widest text-stone-600 bg-stone-50 border border-stone-200 px-2 py-1 rounded-full">
                   Standard Plan
                 </span>
               )}
@@ -418,7 +418,7 @@ export function SubscriptionsPage() {
 
             </div>
 
-            <p className="text-xs text-stone-500 leading-relaxed">
+            <p className="text-xs text-stone-600 leading-relaxed">
               {p.description ||
                 "Unlock premium construction platform benefits."}
             </p>

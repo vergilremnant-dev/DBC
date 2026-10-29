@@ -33,7 +33,7 @@ export default function VerificationFilters({
         </h3>
         <button
           onClick={onReset}
-          className="text-3xs font-black text-stone-500 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
+          className="text-3xs font-black text-stone-600 hover:text-stone-900 uppercase tracking-wider focus:outline-none"
         >
           Reset Filters
         </button>
@@ -42,10 +42,10 @@ export default function VerificationFilters({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-xs">
         {/* Role */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Account Role
           </label>
-          <select
+          <select aria-label="Account Role"
             value={filters.role}
             onChange={(e) => handleChange('role', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"
@@ -61,10 +61,10 @@ export default function VerificationFilters({
 
         {/* Verification Status */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Verification Status
           </label>
-          <select
+          <select aria-label="Verification Status"
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"
@@ -80,10 +80,10 @@ export default function VerificationFilters({
 
         {/* Document Type */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Document Type
           </label>
-          <select
+          <select aria-label="Document Type"
             value={filters.documentType}
             onChange={(e) => handleChange('documentType', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"
@@ -98,10 +98,10 @@ export default function VerificationFilters({
 
         {/* Submission Date */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             Submission Date
           </label>
-          <select
+          <select aria-label="Submission Date"
             value={filters.submissionDate}
             onChange={(e) => handleChange('submissionDate', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"
@@ -115,10 +115,10 @@ export default function VerificationFilters({
 
         {/* Location search */}
         <div className="space-y-1">
-          <label className="block text-3xs font-black uppercase tracking-widest text-stone-400">
+          <label className="block text-3xs font-black uppercase tracking-widest text-stone-500">
             City/Location
           </label>
-          <select
+          <select aria-label="City/Location"
             value={filters.location}
             onChange={(e) => handleChange('location', e.target.value)}
             className="dbc-input bg-white text-stone-750 font-semibold"

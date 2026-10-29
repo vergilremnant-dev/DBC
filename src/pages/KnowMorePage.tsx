@@ -268,7 +268,7 @@ export function KnowMorePage() {
                 {/* Architectural Blueprint Vector Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-stone-950/20 to-transparent flex flex-col justify-end p-5 sm:p-6 text-white text-left">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 rounded bg-emerald-600/90 text-white text-3xs font-black uppercase tracking-wider">
+                    <span className="px-2 py-0.5 rounded bg-emerald-700/90 text-white text-3xs font-black uppercase tracking-wider">
                       Verified Layout
                     </span>
                     <span className="text-2xs text-stone-300 font-mono">CAD • DWG-V3.2</span>
@@ -419,7 +419,7 @@ export function KnowMorePage() {
 
               {/* Center Hub: The 5M's */}
               <div className="relative z-10 w-36 h-36 rounded-full bg-white border-2 border-emerald-600 shadow-md flex flex-col items-center justify-center text-center p-3 select-none">
-                <span className="text-2xs uppercase font-bold text-stone-400 tracking-wider">The</span>
+                <span className="text-2xs uppercase font-bold text-stone-500 tracking-wider">The</span>
                 <span className="text-2xl font-black text-stone-900 font-display leading-none mt-0.5">5M's</span>
                 <span className="text-3xs font-black text-emerald-800 uppercase tracking-widest mt-1">DBC's Core Focus</span>
               </div>
@@ -503,7 +503,7 @@ export function KnowMorePage() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-stone-900 tracking-tight">
             Why DBC?
           </h2>
-          <p className="text-xs sm:text-sm text-stone-500 font-medium max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-stone-600 font-medium max-w-xl mx-auto">
             Engineered to eliminate friction, prevent cost overruns, and deliver predictable architectural quality.
           </p>
         </div>
@@ -544,7 +544,7 @@ export function KnowMorePage() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-stone-900 tracking-tight">
             How DBC Works
           </h2>
-          <p className="text-xs sm:text-sm text-stone-500 font-medium max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-stone-600 font-medium max-w-xl mx-auto">
             From discovering specialists to milestone-verified completion in four structured stages.
           </p>
         </div>
@@ -562,7 +562,7 @@ export function KnowMorePage() {
                   <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
                     {step.icon}
                   </div>
-                  <span className="text-2xs font-black text-stone-400 uppercase tracking-widest">
+                  <span className="text-2xs font-black text-stone-500 uppercase tracking-widest">
                     STEP {step.num}
                   </span>
                 </div>
@@ -581,7 +581,7 @@ export function KnowMorePage() {
                 </p>
               </div>
 
-              <div className="text-2xs font-bold text-stone-400 pt-2 border-t border-stone-100 flex items-center justify-between">
+              <div className="text-2xs font-bold text-stone-500 pt-2 border-t border-stone-100 flex items-center justify-between">
                 <span>Phase {idx + 1} of 4</span>
                 <span className="text-emerald-700">✓</span>
               </div>
@@ -598,7 +598,7 @@ export function KnowMorePage() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-stone-900 tracking-tight">
             The DBC Connected Ecosystem
           </h2>
-          <p className="text-xs sm:text-sm text-stone-500 font-medium max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-stone-600 font-medium max-w-xl mx-auto">
             Tailored digital environments designed for clients, contractors, consulting engineers, and platform governance.
           </p>
         </div>

@@ -15,7 +15,7 @@ export function BookingTimeline({ status }: BookingTimelineProps) {
 
   return (
     <div className="space-y-3">
-      <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Project Timeline</span>
+      <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Project Timeline</span>
       
       {/* Horizontal timeline for larger viewports / Vertical for small */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-1">

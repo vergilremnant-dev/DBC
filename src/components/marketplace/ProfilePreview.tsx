@@ -91,7 +91,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
 
             {/* About / Bio */}
             <div className="space-y-2">
-              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-400">About Professional</h4>
+              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-500">About Professional</h4>
               <p className="text-xs text-stone-600 font-medium leading-relaxed">
                 {professional.description || 'Verified coordination partner offering expert construction, architectural review, and site execution services.'}
               </p>
@@ -99,7 +99,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
 
             {/* Top Skills */}
             <div className="space-y-2">
-              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-400">Specializations & Skills</h4>
+              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-500">Specializations & Skills</h4>
               <div className="flex flex-wrap gap-1.5">
                 {(professional.skills || ['Civil Engineering', 'Design coordination', 'Layout Planning', 'On-site Inspection']).map((skill: string) => (
                   <span
@@ -114,7 +114,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
 
             {/* Portfolio Previews */}
             <div className="space-y-2.5">
-              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-400">Recent Works Gallery</h4>
+              <h4 className="text-2xs font-black uppercase tracking-widest text-stone-500">Recent Works Gallery</h4>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80',
@@ -141,7 +141,7 @@ export function ProfilePreview({ isOpen, onClose, professional, onBook }: Profil
                 <span>→</span>
               </button>
             </div>
-            <p className="text-3xs text-stone-400 font-medium text-center">
+            <p className="text-3xs text-stone-500 font-medium text-center">
               Direct connection with verified professionals • Zero hidden commissions
             </p>
           </div>

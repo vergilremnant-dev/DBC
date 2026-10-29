@@ -193,7 +193,7 @@ export default function ProfessionalInbox() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider font-sans">Collaboration workspace</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">Messages</h1>
-          <p className="text-xs text-stone-500 font-medium">Communicate with customers regarding active quotations, milestones, and site visits.</p>
+          <p className="text-xs text-stone-600 font-medium">Communicate with customers regarding active quotations, milestones, and site visits.</p>
         </div>
 
         <div className="flex gap-2 text-xs">
@@ -271,7 +271,7 @@ export default function ProfessionalInbox() {
                 >
                   <div className="flex justify-between items-start">
                     <strong className="text-xs text-stone-900 block truncate">{t.customerName}</strong>
-                    <span className="text-3xs text-stone-400 font-bold shrink-0">{t.timestamp}</span>
+                    <span className="text-3xs text-stone-500 font-bold shrink-0">{t.timestamp}</span>
                   </div>
                   <span className="block text-3xs text-stone-450 font-medium truncate mt-0.5">{t.projectName}</span>
                   <p className="text-2xs text-stone-600 truncate font-semibold mt-1.5">{t.latestMessage}</p>
@@ -353,7 +353,7 @@ export default function ProfessionalInbox() {
                     onChange={e => setTypedMessage(e.target.value)}
                     className="flex-1 dbc-input text-xs"
                   />
-                  <button type="button" onClick={handleAttachFile} className="dbc-btn dbc-btn-md dbc-btn-secondary p-2 bg-white border border-stone-200 hover:bg-stone-50">
+                  <button aria-label="Attach file" type="button" onClick={handleAttachFile} className="dbc-btn dbc-btn-md dbc-btn-secondary p-2 bg-white border border-stone-200 hover:bg-stone-50">
                     📎
                   </button>
                   <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary">
@@ -375,12 +375,12 @@ export default function ProfessionalInbox() {
           <div className="space-y-6">
             {/* Customer notification feed */}
             <div className="space-y-3">
-              <span className="block text-3xs font-black uppercase text-stone-400 tracking-wider">Latest Notifications</span>
+              <span className="block text-3xs font-black uppercase text-stone-600 tracking-wider">Latest Notifications</span>
               <div className="space-y-2">
                 {notifications.map((n, idx) => (
                   <div key={idx} className="p-2 bg-white border border-stone-200 rounded-xl text-2xs text-stone-600 font-semibold leading-tight">
                     <p>{n.text}</p>
-                    <span className="text-3xs text-stone-400 font-bold block mt-0.5">{n.time}</span>
+                    <span className="text-3xs text-stone-500 font-bold block mt-0.5">{n.time}</span>
                   </div>
                 ))}
               </div>
@@ -388,7 +388,7 @@ export default function ProfessionalInbox() {
 
             {/* Quick Actions links */}
             <div className="space-y-2">
-              <span className="block text-3xs font-black uppercase text-stone-400 tracking-wider font-sans">Context shortcuts</span>
+              <span className="block text-3xs font-black uppercase text-stone-600 tracking-wider font-sans">Context shortcuts</span>
               <button onClick={() => alert('Redirecting to project drawings...')} className="w-full text-left p-2.5 bg-white border border-stone-200 hover:bg-stone-50 transition rounded-xl text-2xs font-bold text-stone-750 flex items-center gap-2">
                 🏗️ Open Project files
               </button>

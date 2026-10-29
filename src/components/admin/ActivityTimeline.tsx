@@ -36,7 +36,7 @@ export default function ActivityTimeline({ events }: ActivityTimelineProps) {
                 <p className="text-2xs text-stone-800 font-semibold leading-relaxed">
                   {evt.description}
                 </p>
-                <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">
+                <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wider">
                   {evt.time}
                 </span>
               </div>

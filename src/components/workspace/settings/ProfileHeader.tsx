@@ -55,15 +55,15 @@ export function ProfileHeader({
         {/* Member metadata */}
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-            <h2 className="text-xl font-black text-stone-900 font-display leading-none">
+            <h1 className="text-xl font-black text-stone-900 font-display leading-none">
               {fullName}
-            </h2>
+            </h1>
             <span className="bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-full px-2.5 py-0.5 text-3xs font-black uppercase tracking-wider">
               {status}
             </span>
           </div>
           
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs text-stone-400 font-bold">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs text-stone-500 font-bold">
             <span>Customer ID: <strong className="text-stone-700 font-mono">{customerId}</strong></span>
             <span className="hidden sm:inline text-stone-250">•</span>
             <span>Member Since: <strong className="text-stone-700">{memberSince}</strong></span>

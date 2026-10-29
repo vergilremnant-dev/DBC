@@ -23,7 +23,7 @@ export function BookingPreviewCard({ bookings }: BookingPreviewCardProps) {
             <h4 className="text-xs font-bold text-stone-900 font-display leading-none">
               {book.projectTitle}
             </h4>
-            <div className="flex flex-wrap items-center gap-2 text-2xs text-stone-400 font-bold">
+            <div className="flex flex-wrap items-center gap-2 text-2xs text-stone-500 font-bold">
               <span>Client: <strong className="text-stone-600 font-extrabold">{book.customerName}</strong></span>
               <span>•</span>
               <span>🕒 {book.timeRange}</span>

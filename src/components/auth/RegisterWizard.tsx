@@ -404,7 +404,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         <>
           <div className="space-y-1">
             <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Create Your Account</h2>
-            <p className="text-xs text-stone-500">Enter your details to get started with your DBC account.</p>
+            <p className="text-xs text-stone-600">Enter your details to get started with your DBC account.</p>
           </div>
 
           <form onSubmit={handleDetailsSubmit} className="space-y-3.5 pt-2">
@@ -593,7 +593,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         <>
           <div className="space-y-1">
             <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Verify Verification Code</h2>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-stone-600">
               {channel === 'email' ? (
                 <>We've sent a verification code to your email address: <strong className="text-stone-700">{maskEmail(email)}</strong>.</>
               ) : (
@@ -657,7 +657,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
           </form>
 
           {/* Resend actions block */}
-          <div className="pt-2 text-center text-xs text-stone-500 flex flex-col gap-1 items-center">
+          <div className="pt-2 text-center text-xs text-stone-600 flex flex-col gap-1 items-center">
             <span>Didn't receive the code?</span>
             <button
               type="button"
@@ -721,7 +721,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
                   </button>
                   , or wait a minute and try resending.
                 </p>
-                <p className="text-2xs text-stone-400">
+                <p className="text-2xs text-stone-500">
                   Note: A successful SMS request does not guarantee handset delivery — carrier routing is outside DBC's control.
                 </p>
               </div>
@@ -735,7 +735,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
         <>
           <div className="space-y-1">
             <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Set Up Your Password</h2>
-            <p className="text-xs text-stone-500">Create a secure password to complete your account setup.</p>
+            <p className="text-xs text-stone-600">Create a secure password to complete your account setup.</p>
           </div>
 
           <form onSubmit={handlePasswordSetupSubmit} className="space-y-3.5 pt-2">
@@ -839,7 +839,7 @@ export function RegisterWizard({ onRegisterComplete, onBackToLogin }: RegisterWi
 
       {/* Switch back link */}
       <div className="pt-3 pb-3 text-center border-t border-stone-100 mt-2">
-        <p className="text-xs text-stone-500">
+        <p className="text-xs text-stone-600">
           Already have an account?{' '}
           <button
             type="button"

@@ -22,7 +22,7 @@
   --color-border: #e7e5e4;
   --color-border-strong: #d6d3d1;
   --color-text: #1a1a1a;
-  --color-text-muted: #78716c;
+  --color-text-muted: #6f6863; /* 5.0:1 on surface-muted, 5.5:1 on white (AA) */
   --color-success: #047857;
   --color-success-soft: #ecfdf5;
   --color-warning: #b45309;
@@ -946,11 +946,6 @@ body {
     linear-gradient(to bottom, rgba(4, 120, 87, 0.03) 1px, transparent 1px);
 }
 
-.bg-dot-grid {
-  background-size: 24px 24px;
-  background-image: radial-gradient(rgba(120, 113, 108, 0.12) 1px, transparent 1px);
-}
-
 .bg-concrete-grain {
   background-image: 
     radial-gradient(rgba(0, 0, 0, 0.008) 1px, transparent 0), 
@@ -959,39 +954,7 @@ body {
   background-position: 0 0, 4px 4px;
 }
 
-/* 2. GLASS REFLECTION SYSTEM */
-.glass-reflection {
-  position: relative;
-  overflow: hidden;
-}
-.glass-reflection::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.25), transparent);
-  transform: skewX(-25deg);
-  transition: left 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.glass-reflection:hover::before {
-  left: 150%;
-}
-
 /* 3. STRUCTURAL MOTION & KEYFRAMES */
-.animate-soft-float {
-  animation: soft-float 5s ease-in-out infinite;
-}
-@keyframes soft-float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
 .animate-gentle-fade {
   animation: gentle-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -1006,16 +969,6 @@ body {
   }
 }
 
-.animate-blueprint-draw {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: blueprint-draw 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-@keyframes blueprint-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
 
 
 

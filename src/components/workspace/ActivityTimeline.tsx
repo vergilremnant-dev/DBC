@@ -31,7 +31,7 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
           
           <div className="flex justify-between items-baseline gap-2">
             <h5 className="text-xs font-bold text-stone-900 leading-snug">{act.title}</h5>
-            <span className="text-3xs text-stone-400 font-extrabold whitespace-nowrap">{act.time}</span>
+            <span className="text-3xs text-stone-500 font-extrabold whitespace-nowrap">{act.time}</span>
           </div>
           <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
             {act.description}

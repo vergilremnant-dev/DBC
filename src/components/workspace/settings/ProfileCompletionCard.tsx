@@ -16,7 +16,7 @@ export function ProfileCompletionCard({ percentage, incompleteItems }: ProfileCo
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
           <h3 className="text-sm font-bold text-stone-900 font-display">Profile Strength</h3>
-          <p className="text-2xs text-stone-400 font-bold uppercase tracking-wider">
+          <p className="text-2xs text-stone-500 font-bold uppercase tracking-wider">
             Complete settings to unlock faster expert callbacks
           </p>
         </div>
@@ -36,7 +36,7 @@ export function ProfileCompletionCard({ percentage, incompleteItems }: ProfileCo
       {/* Checklist items */}
       {incompleteItems.length > 0 ? (
         <div className="space-y-2.5 pt-3 border-t border-stone-50">
-          <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
+          <span className="block text-3xs uppercase font-bold text-stone-500 tracking-wider">
             Remaining Tasks
           </span>
           <div className="grid gap-2 sm:grid-cols-2">

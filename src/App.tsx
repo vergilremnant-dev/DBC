@@ -46,6 +46,7 @@ import { IntegrationAutomationPage } from './pages/shared/IntegrationAutomationP
 import { MobilePwaPage } from './pages/shared/MobilePwaPage';
 import { useAuthDispatch } from './hooks/auth/useAuthStore';
 import { refreshThunk, logout } from './store/auth/authSlice';
+import { DialogFocusManager } from './components/common/DialogFocusManager';
 
 function RootRedirect() {
   return <Navigate to="/" replace />;
@@ -87,13 +88,15 @@ function App() {
       <div className="flex h-screen w-screen items-center justify-center bg-stone-50">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 rounded-full border-4 border-stone-200 border-t-emerald-700 animate-spin mx-auto"></div>
-          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">Securing Session...</p>
+          <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">Securing Session...</p>
         </div>
       </div>
     );
   }
 
   return (
+    <>
+    <DialogFocusManager />
     <Routes>
       <Route element={<PublicLayout />}>
         {/* The root page is the single unified dashboard for everyone */}
@@ -161,7 +164,7 @@ function App() {
                 <div className="flex h-screen w-screen items-center justify-center bg-stone-50">
                   <div className="text-center space-y-3">
                     <div className="h-8 w-8 rounded-full border-4 border-stone-200 border-t-emerald-700 animate-spin mx-auto"></div>
-                    <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">Loading Workspace...</p>
+                    <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">Loading Workspace...</p>
                   </div>
                 </div>
               }
@@ -260,6 +263,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={<RootRedirect />} />
     </Routes>
+    </>
   );
 }
 

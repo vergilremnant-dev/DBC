@@ -283,7 +283,7 @@ export function SearchResultsPage() {
       <section className="relative pt-4 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left">
         
         {/* Navigation Breadcrumb */}
-        <div className="flex items-center gap-1.5 text-2xs font-bold text-stone-400 mb-3.5">
+        <div className="flex items-center gap-1.5 text-2xs font-bold text-stone-500 mb-3.5">
           <button onClick={() => navigate('/')} className="hover:text-stone-900 transition cursor-pointer">
             Home
           </button>
@@ -325,7 +325,8 @@ export function SearchResultsPage() {
                   <button
                     type="button"
                     onClick={() => setSearchInputVal('')}
-                    className="absolute right-2.5 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-2xs font-bold transition cursor-pointer"
+                    aria-label="Clear search"
+                    className="absolute right-1.5 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-2xs font-bold transition cursor-pointer"
                   >
                     ✕
                   </button>
@@ -358,7 +359,7 @@ export function SearchResultsPage() {
               {/* Submit CTA */}
               <button
                 type="submit"
-                className="h-9.5 px-5 rounded-lg sm:rounded-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider transition shadow-sm cursor-pointer flex items-center justify-center gap-1.5 flex-shrink-0"
+                className="h-9.5 px-5 rounded-lg sm:rounded-full bg-emerald-700 hover:bg-emerald-500 active:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider transition shadow-sm cursor-pointer flex items-center justify-center gap-1.5 flex-shrink-0"
               >
                 <span>Find</span>
                 <span>→</span>
@@ -369,7 +370,7 @@ export function SearchResultsPage() {
 
           {/* Quick Specialty Discovery Shortcut Tags */}
           <div className="relative z-10 flex flex-wrap items-center gap-1.5 pt-4 text-xs text-stone-300">
-            <span className="text-3xs font-black uppercase tracking-wider text-stone-400 mr-1">Popular:</span>
+            <span className="text-3xs font-black uppercase tracking-wider text-stone-600 mr-1">Popular:</span>
             {QUICK_SPECIALTIES.map((spec) => {
               const isSelected = filters.category === spec || (spec === 'All Specialties' && !filters.category);
               return (
@@ -382,9 +383,9 @@ export function SearchResultsPage() {
                       setFilters((prev) => ({ ...prev, category: spec }));
                     }
                   }}
-                  className={`px-2.5 py-0.5 rounded-full text-2xs font-medium transition cursor-pointer ${
+                  className={`px-3 min-h-[28px] rounded-full text-2xs font-medium transition cursor-pointer ${
                     isSelected
-                      ? 'bg-emerald-600 text-white font-bold'
+                      ? 'bg-emerald-700 text-white font-bold'
                       : 'bg-white/10 hover:bg-white/20 text-stone-200 border border-white/10'
                   }`}
                 >
@@ -482,7 +483,7 @@ export function SearchResultsPage() {
 
             {/* Sorting Dropdown */}
             <div className="flex items-center gap-1 pl-1.5 border-l border-stone-200">
-              <span className="text-3xs font-bold uppercase tracking-wider text-stone-400">Sort:</span>
+              <span className="text-3xs font-bold uppercase tracking-wider text-stone-500">Sort:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
@@ -537,7 +538,8 @@ export function SearchResultsPage() {
                       p.delete('city');
                       setSearchParams(p);
                     }}
-                    className="text-stone-400 hover:text-rose-600 ml-0.5 font-bold cursor-pointer"
+                    aria-label="Remove filter"
+                    className="inline-flex items-center justify-center w-6 h-6 -my-1 rounded-full text-stone-500 hover:text-rose-600 hover:bg-rose-50 font-bold cursor-pointer"
                   >
                     ✕
                   </button>
@@ -549,7 +551,8 @@ export function SearchResultsPage() {
                   <span>Category: {filters.category}</span>
                   <button
                     onClick={() => setFilters((prev) => ({ ...prev, category: '' }))}
-                    className="text-stone-400 hover:text-rose-600 ml-0.5 font-bold cursor-pointer"
+                    aria-label="Remove filter"
+                    className="inline-flex items-center justify-center w-6 h-6 -my-1 rounded-full text-stone-500 hover:text-rose-600 hover:bg-rose-50 font-bold cursor-pointer"
                   >
                     ✕
                   </button>
@@ -561,7 +564,8 @@ export function SearchResultsPage() {
                   <span>Min {filters.experienceYears}+ Yrs</span>
                   <button
                     onClick={() => setFilters((prev) => ({ ...prev, experienceYears: 0 }))}
-                    className="text-stone-400 hover:text-rose-600 ml-0.5 font-bold cursor-pointer"
+                    aria-label="Remove filter"
+                    className="inline-flex items-center justify-center w-6 h-6 -my-1 rounded-full text-stone-500 hover:text-rose-600 hover:bg-rose-50 font-bold cursor-pointer"
                   >
                     ✕
                   </button>
@@ -582,7 +586,7 @@ export function SearchResultsPage() {
 
               <button
                 onClick={handleResetFilters}
-                className="text-2xs font-bold text-rose-600 hover:text-rose-800 underline ml-1 cursor-pointer"
+                className="text-2xs font-bold text-rose-700 hover:text-rose-800 underline ml-1 cursor-pointer"
               >
                 Clear all
               </button>
@@ -599,7 +603,7 @@ export function SearchResultsPage() {
         
         {/* Error Alert */}
         {errorMsg && (
-          <div className="rounded-xl bg-rose-50 border border-rose-200 p-3.5 text-xs font-semibold text-rose-800 text-left mb-5 shadow-2xs">
+          <div role="alert" className="rounded-xl bg-rose-50 border border-rose-200 p-3.5 text-xs font-semibold text-rose-800 text-left mb-5 shadow-2xs">
             {errorMsg}
           </div>
         )}

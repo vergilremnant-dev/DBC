@@ -255,14 +255,14 @@ export function AdminPlatformSettings() {
       {/* Internal admin nav bar */}
       <header className="sticky top-0 z-40 bg-white border-b border-light-border shadow-apple-sm">
         <div className="mx-auto max-w-[1440px] px-4 md:px-6 lg:px-8 h-[64px] flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 min-w-0">
             <BrandLogo variant="compact" theme="light" />
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-1 min-w-0 overflow-x-auto no-scrollbar">
               {ADMIN_TABS.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => tab.id === 'settings' ? undefined : navigate('/admin/dashboard')}
-                  className={`px-3 py-1.5 rounded-lg text-2xs font-black uppercase tracking-wider transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald
+                  className={`px-3 py-1.5 shrink-0 whitespace-nowrap rounded-lg text-2xs font-black uppercase tracking-wider transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald
                     ${tab.id === 'settings'
                       ? 'bg-brand-emerald text-white'
                       : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100'
@@ -274,10 +274,10 @@ export function AdminPlatformSettings() {
               ))}
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <button
               onClick={() => navigate('/admin/dashboard')}
-              className="text-2xs font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer focus:outline-none hidden md:block"
+              className="text-2xs font-bold text-stone-500 hover:text-stone-900 transition cursor-pointer focus:outline-none hidden lg:block whitespace-nowrap"
             >
               ← Back to Dashboard
             </button>

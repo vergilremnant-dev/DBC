@@ -197,7 +197,7 @@ export function ChatPanel() {
                     <div className="flex items-start justify-between gap-2">
                       <div className="truncate">
                         <h4 className="text-xs font-bold truncate">{getRecipientName(convo)}</h4>
-                        <span className={`text-3xs uppercase tracking-wider font-bold ${isActive ? 'text-stone-200' : 'text-stone-400'}`}>
+                        <span className={`text-3xs uppercase tracking-wider font-bold ${isActive ? 'text-stone-200' : 'text-stone-500'}`}>
                           {getRecipientSub(convo)}
                         </span>
                       </div>
@@ -239,7 +239,7 @@ export function ChatPanel() {
                   </button>
                   <div>
                     <h3 className="text-sm font-bold text-stone-900 leading-tight">{getRecipientName(selectedConvo)}</h3>
-                    <p className="text-3xs text-stone-400 uppercase tracking-wider font-bold mt-0.5 flex items-center gap-1.5">
+                    <p className="text-3xs text-stone-600 uppercase tracking-wider font-bold mt-0.5 flex items-center gap-1.5">
                       <span>{getRecipientSub(selectedConvo)}</span>
                       {selectedConvo.booking && (
                         <span>• Ref: {selectedConvo.booking.bookingNumber}</span>
@@ -293,7 +293,7 @@ export function ChatPanel() {
 
                           <p className="leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                           
-                          <div className={`flex items-center gap-1.5 justify-end mt-1 text-3xs uppercase tracking-wider font-bold ${isOwn ? 'text-emerald-100' : 'text-stone-400'}`}>
+                          <div className={`flex items-center gap-1.5 justify-end mt-1 text-3xs uppercase tracking-wider font-bold ${isOwn ? 'text-emerald-100' : 'text-stone-600'}`}>
                             <span>
                               {new Date(msg.createdAt).toLocaleTimeString('en-IN', {
                                 hour: '2-digit',
@@ -316,7 +316,7 @@ export function ChatPanel() {
 
               {/* Typing Indicator */}
               {isTyping && (
-                <div className="px-5 py-2 text-2xs text-stone-400 animate-pulse font-medium bg-warm-cream">
+                <div className="px-5 py-2 text-2xs text-stone-500 animate-pulse font-medium bg-warm-cream">
                   💬 Typing reply...
                 </div>
               )}
@@ -347,7 +347,7 @@ export function ChatPanel() {
                         setAttachUrl('');
                         setShowAttachInput(false);
                       }}
-                      className="text-2xs font-bold text-stone-400 hover:text-stone-600 cursor-pointer"
+                      className="text-2xs font-bold text-stone-500 hover:text-stone-600 cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -358,7 +358,7 @@ export function ChatPanel() {
                   <button
                     type="button"
                     onClick={() => setShowAttachInput(!showAttachInput)}
-                    className="rounded-lg border border-light-border bg-white hover:bg-warm-cream text-stone-500 h-10 w-10 flex items-center justify-center transition cursor-pointer"
+                    className="rounded-lg border border-light-border bg-white hover:bg-warm-cream text-stone-600 h-10 w-10 flex items-center justify-center transition cursor-pointer"
                     title="Attach mock file"
                   >
                     📎

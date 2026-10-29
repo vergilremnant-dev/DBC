@@ -10,7 +10,7 @@ const STATUS_STYLES = {
   healthy: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   warning: 'bg-amber-50 text-amber-700 border-amber-200',
   error: 'bg-red-50 text-red-700 border-red-200',
-  unknown: 'bg-stone-100 text-stone-500 border-stone-200',
+  unknown: 'bg-stone-100 text-stone-600 border-stone-200',
 };
 
 const STATUS_LABELS = {
@@ -55,7 +55,7 @@ export default function SystemInformation() {
           <InfoRow key={row.label} {...row} />
         ))}
       </div>
-      <p className="text-3xs text-stone-400 font-medium mt-4 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2">
+      <p className="text-3xs text-stone-500 font-medium mt-4 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2">
         ℹ️ Live system metrics require backend health endpoints. Values shown are indicative. Full telemetry available in Phase 2.
       </p>
     </SectionCard>

@@ -13,7 +13,7 @@ export default function VerificationHeader({ onRefresh, onExport }: Verification
         <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
           Verification Center
         </h1>
-        <p className="text-xs text-stone-500 font-medium">
+        <p className="text-xs text-stone-600 font-medium">
           Review and verify professionals, consultants, and business accounts.
         </p>
       </div>

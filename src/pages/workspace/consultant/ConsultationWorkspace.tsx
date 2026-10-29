@@ -180,7 +180,7 @@ export default function ConsultationWorkspace() {
             <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
               Villa Spatial Orientation & Design Consultation
             </h1>
-            <p className="text-xs text-stone-500 font-medium">
+            <p className="text-xs text-stone-600 font-medium">
               Client: <strong>Ramesh Kumar</strong> &bull; Category: Architecture &bull; Location: Hyderabad
             </p>
           </div>
@@ -351,7 +351,7 @@ export default function ConsultationWorkspace() {
             {/* TAB 2: CONSULTATION NOTES */}
             {activeTab === 'notes' && (
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
+                <div className="flex justify-between items-center text-2xs text-stone-500 font-semibold">
                   <span>Last autosaved: {lastSavedNotes}</span>
                   {isSavingNotes && <span className="text-brand-emerald animate-pulse">Saving...</span>}
                 </div>
@@ -417,7 +417,7 @@ export default function ConsultationWorkspace() {
             {activeTab === 'documents' && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-2xs text-stone-400 font-bold uppercase">{documents.length} Attachments</span>
+                  <span className="text-2xs text-stone-500 font-bold uppercase">{documents.length} Attachments</span>
                   <button
                     onClick={handleFileUpload}
                     className="dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
@@ -430,7 +430,7 @@ export default function ConsultationWorkspace() {
                     <div key={doc.id} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                       <div>
                         <h5 className="font-bold text-stone-900">{doc.name}</h5>
-                        <span className="block text-3xs text-stone-400 font-bold uppercase mt-1">
+                        <span className="block text-3xs text-stone-500 font-bold uppercase mt-1">
                           {doc.category} &bull; {doc.size} &bull; Uploaded: {doc.uploadDate}
                         </span>
                       </div>
@@ -454,7 +454,7 @@ export default function ConsultationWorkspace() {
                     <span className="w-10 h-10 rounded-full border border-light-border bg-stone-50 flex items-center justify-center text-sm shrink-0 z-10">{act.icon}</span>
                     <div className="space-y-0.5 pt-1">
                       <p className="text-2xs text-stone-850 font-semibold">{act.description}</p>
-                      <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{act.timestamp}</span>
+                      <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wider">{act.timestamp}</span>
                     </div>
                   </div>
                 ))}
@@ -464,7 +464,7 @@ export default function ConsultationWorkspace() {
             {/* TAB 6: PRIVATE NOTES */}
             {activeTab === 'private' && (
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
+                <div className="flex justify-between items-center text-2xs text-stone-500 font-semibold">
                   <span>🔒 Only visible to you. Never shared with client.</span>
                   {isSavingPrivate && <span className="text-brand-emerald animate-pulse">Saving...</span>}
                 </div>
@@ -480,7 +480,7 @@ export default function ConsultationWorkspace() {
             {/* TAB 7: CHECKLIST */}
             {activeTab === 'checklist' && (
               <div className="space-y-3">
-                <div className="flex justify-between items-center text-2xs text-stone-400 font-bold uppercase">
+                <div className="flex justify-between items-center text-2xs text-stone-500 font-bold uppercase">
                   <span>Task Checklist Completion</span>
                   <span>{checklistProgress}%</span>
                 </div>

@@ -131,8 +131,8 @@ function CustomerInbox() {
       
       {/* Page Header */}
       <div className="border-b border-light-border pb-5 space-y-1">
-        <h2 className="text-xl font-bold text-stone-900 font-display">Message Center</h2>
-        <p className="text-xs text-stone-500 font-medium">Communicate directly with trade specialists, builders, and blueprint consultants.</p>
+        <h1 className="text-xl font-bold text-stone-900 font-display">Message Center</h1>
+        <p className="text-xs text-stone-600 font-medium">Communicate directly with trade specialists, builders, and blueprint consultants.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-white border border-light-border rounded-3xl shadow-apple-sm overflow-hidden min-h-[500px]">

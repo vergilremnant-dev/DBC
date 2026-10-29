@@ -57,7 +57,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
       </div>
 
       {error && (
-        <div className="bg-rose-50 border border-rose-100 text-rose-800 text-2xs font-bold p-3 rounded-xl">
+        <div role="alert" className="bg-rose-50 border border-rose-100 text-rose-800 text-2xs font-bold p-3 rounded-xl">
           ⚠️ {error}
         </div>
       )}
@@ -65,8 +65,8 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
       {isEditing ? (
         <form onSubmit={handleSubmit} className="space-y-4 text-xs font-semibold text-stone-700">
           <div className="space-y-1">
-            <label className="block text-2xs uppercase font-bold text-stone-400">Email Address (Read-only)</label>
-            <input
+            <label className="block text-2xs uppercase font-bold text-stone-500">Email Address (Read-only)</label>
+            <input aria-label="Email Address (Read-only)"
               type="email"
               value={values.email}
               disabled
@@ -76,8 +76,8 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Phone Number *</label>
-              <input
+              <label className="block text-2xs uppercase font-bold text-stone-500">Phone Number *</label>
+              <input aria-label="Phone Number"
                 type="tel"
                 name="phone"
                 value={values.phone}
@@ -89,8 +89,8 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
             </div>
 
             <div className="space-y-1">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Alternate Phone</label>
-              <input
+              <label className="block text-2xs uppercase font-bold text-stone-500">Alternate Phone</label>
+              <input aria-label="Alternate Phone"
                 type="tel"
                 name="altPhone"
                 value={values.altPhone}
@@ -102,8 +102,8 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
           </div>
 
           <div className="space-y-1">
-            <label className="block text-2xs uppercase font-bold text-stone-400">Preferred Contact Method</label>
-            <select
+            <label className="block text-2xs uppercase font-bold text-stone-500">Preferred Contact Method</label>
+            <select aria-label="Preferred Contact Method"
               name="preferredMethod"
               value={values.preferredMethod}
               onChange={handleChange}
@@ -127,7 +127,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
         <div className="grid gap-4 sm:grid-cols-2 text-xs font-semibold text-stone-600">
           <div className="space-y-1 bg-stone-50/50 p-3 rounded-xl border border-stone-100 flex items-center justify-between">
             <div className="space-y-0.5">
-              <span className="block text-3xs uppercase font-bold text-stone-400">Primary Email</span>
+              <span className="block text-3xs uppercase font-bold text-stone-500">Primary Email</span>
               <span className="text-stone-955 truncate block max-w-xs">{values.email}</span>
             </div>
             <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded ${
@@ -139,7 +139,7 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
 
           <div className="space-y-1 bg-stone-50/50 p-3 rounded-xl border border-stone-100 flex items-center justify-between">
             <div className="space-y-0.5">
-              <span className="block text-3xs uppercase font-bold text-stone-400">Primary Phone</span>
+              <span className="block text-3xs uppercase font-bold text-stone-500">Primary Phone</span>
               <span className="text-stone-955 font-mono block">{values.phone || 'Not Added'}</span>
             </div>
             <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded ${
@@ -150,12 +150,12 @@ export function ContactCard({ initialValues, onSubmit, saving = false }: Contact
           </div>
 
           <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Alternate Phone</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Alternate Phone</span>
             <span className="text-stone-955 font-mono block">{values.altPhone || 'None Provided'}</span>
           </div>
 
           <div className="space-y-0.5 bg-stone-50/50 p-3 rounded-xl border border-stone-100">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Preferred Contact Channel</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Preferred Contact Channel</span>
             <span className="text-stone-955 block">{values.preferredMethod}</span>
           </div>
         </div>

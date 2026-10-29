@@ -19,7 +19,7 @@ export default function MarketplaceQuickActions({
 }: MarketplaceQuickActionsProps) {
   if (!requirement) {
     return (
-      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-2xs text-stone-400 font-medium select-none">
+      <div className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm text-center text-2xs text-stone-500 font-medium select-none">
         No active listing selected for quick moderation commands.
       </div>
     );
@@ -31,7 +31,7 @@ export default function MarketplaceQuickActions({
         <h4 className="text-2xs font-black uppercase text-stone-900 tracking-wider">
           Listing Commands: {requirement.id}
         </h4>
-        <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">
+        <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">
           Owner: {requirement.customerName} &bull; Status: {requirement.status}
         </span>
       </div>

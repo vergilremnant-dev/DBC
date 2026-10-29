@@ -13,7 +13,7 @@ export default function ProjectMonitoringHeader({ onRefresh, onExport }: Project
         <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
           Project Monitoring
         </h1>
-        <p className="text-xs text-stone-500 font-medium">
+        <p className="text-xs text-stone-600 font-medium">
           Monitor all customer projects across the DBC platform.
         </p>
       </div>

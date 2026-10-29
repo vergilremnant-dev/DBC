@@ -141,7 +141,7 @@ export function BlogCatalog() {
                       className="h-40 w-full object-cover group-hover:scale-102 transition duration-300"
                     />
                   ) : (
-                    <div className="h-40 w-full bg-stone-100 flex items-center justify-center text-stone-400 font-bold uppercase tracking-wider text-2xs">
+                    <div className="h-40 w-full bg-stone-100 flex items-center justify-center text-stone-600 font-bold uppercase tracking-wider text-2xs">
                       {BRAND.name} Guide
                     </div>
                   )}
@@ -153,11 +153,11 @@ export function BlogCatalog() {
                       <h3 className="mt-1 text-sm font-extrabold text-stone-900 font-display group-hover:text-amber-700 transition leading-snug">
                         {art.title}
                       </h3>
-                      <p className="mt-1.5 text-xs text-stone-500 line-clamp-2 leading-relaxed">
+                      <p className="mt-1.5 text-xs text-stone-600 line-clamp-2 leading-relaxed">
                         {art.excerpt}
                       </p>
                     </div>
-                    <div className="mt-4 flex items-center justify-between text-2xs text-stone-400 font-bold uppercase tracking-wider border-t border-stone-50 pt-3">
+                    <div className="mt-4 flex items-center justify-between text-2xs text-stone-500 font-bold uppercase tracking-wider border-t border-stone-50 pt-3">
                       <span>⏱️ {art.readTime} Min Read</span>
                       <span>👁️ {art.viewsCount} Reads</span>
                     </div>
@@ -185,7 +185,7 @@ export function BlogCatalog() {
             </div>
           ) : articles.length === 0 ? (
             <div className="text-center py-10 bg-white border border-stone-200 rounded-xl">
-              <p className="text-xs text-stone-500 font-semibold">No educational guides found matching your filters.</p>
+              <p className="text-xs text-stone-600 font-semibold">No educational guides found matching your filters.</p>
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2">
@@ -208,7 +208,7 @@ export function BlogCatalog() {
                         <span className="text-3xs font-black uppercase tracking-wider text-emerald-700">
                           {art.category?.name}
                         </span>
-                        <span className="text-2xs text-stone-400 font-semibold">
+                        <span className="text-2xs text-stone-500 font-semibold">
                           {new Date(art.publishedAt || art.createdAt).toLocaleDateString('en-IN', {
                             month: 'short',
                             day: 'numeric',
@@ -222,7 +222,7 @@ export function BlogCatalog() {
                         {art.excerpt}
                       </p>
                     </div>
-                    <div className="mt-3 flex items-center justify-between text-3xs text-stone-450 text-stone-500 font-bold uppercase tracking-wider">
+                    <div className="mt-3 flex items-center justify-between text-3xs text-stone-450 text-stone-600 font-bold uppercase tracking-wider">
                       <span>⏱️ {art.readTime} Min Read</span>
                       {art.authorProvider?.fullName && (
                         <span>✍️ {art.authorProvider.fullName}</span>
@@ -238,7 +238,7 @@ export function BlogCatalog() {
 
       {/* Footer */}
       <footer className="mt-16 border-t border-stone-200 bg-stone-50 py-10 text-center">
-        <p className="text-2xs text-stone-400 font-bold uppercase tracking-wider">
+        <p className="text-2xs text-stone-500 font-bold uppercase tracking-wider">
           {BRAND.name} © {new Date().getFullYear()} — Building Trust, Educating Communities.
         </p>
       </footer>

@@ -25,7 +25,7 @@ export function LeadDetails({ lead, onClose, onToggleSave, onExpressInterest }: 
             </h3>
           </div>
           {onClose && (
-            <button
+            <button aria-label="Close details"
               onClick={onClose}
               className="text-stone-400 hover:text-stone-850 text-base font-bold cursor-pointer leading-none p-1 bg-stone-50 rounded-lg hover:bg-stone-100 transition"
             >
@@ -37,29 +37,29 @@ export function LeadDetails({ lead, onClose, onToggleSave, onExpressInterest }: 
         {/* Dynamic statistics overview */}
         <div className="grid grid-cols-2 gap-3 border-t border-b border-stone-100 py-4">
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Budget Bracket</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Budget Bracket</span>
             <strong className="text-emerald-800 font-mono text-sm block mt-0.5">{lead.budget}</strong>
           </div>
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Match Rating</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Match Rating</span>
             <strong className="text-stone-900 text-sm block mt-0.5">{lead.matchScore}% Score</strong>
           </div>
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Project Area Size</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Project Area Size</span>
             <strong className="text-stone-700 block mt-0.5">{lead.projectSize}</strong>
           </div>
           <div className="space-y-0.5 bg-stone-50/40 p-2.5 rounded-xl border border-stone-100">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Target Duration</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Target Duration</span>
             <strong className="text-stone-700 block mt-0.5">{lead.estimatedTimeline}</strong>
           </div>
         </div>
 
         {/* Detailed description */}
         <div className="space-y-2">
-          <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
+          <span className="block text-3xs uppercase font-bold text-stone-500 tracking-wider">
             Project Description
           </span>
-          <p className="text-xs text-stone-500 font-medium leading-relaxed bg-stone-50/20 border border-stone-100 rounded-xl p-3">
+          <p className="text-xs text-stone-600 font-medium leading-relaxed bg-stone-50/20 border border-stone-100 rounded-xl p-3">
             {lead.descriptionPreview} This project requires careful calculations, local municipal permissions, and coordinate verification before foundations planning.
           </p>
         </div>
@@ -67,11 +67,11 @@ export function LeadDetails({ lead, onClose, onToggleSave, onExpressInterest }: 
         {/* Preferred timelines */}
         <div className="grid gap-3 sm:grid-cols-2 text-2xs">
           <div className="space-y-0.5">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Preferred Start Date</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Preferred Start Date</span>
             <span className="text-stone-850 font-bold">15-Aug-2026</span>
           </div>
           <div className="space-y-0.5">
-            <span className="block text-3xs uppercase font-bold text-stone-400">Client Coordinates</span>
+            <span className="block text-3xs uppercase font-bold text-stone-500">Client Coordinates</span>
             <span className="text-stone-850 font-bold">{lead.location}</span>
           </div>
         </div>
@@ -89,7 +89,7 @@ export function LeadDetails({ lead, onClose, onToggleSave, onExpressInterest }: 
 
         {/* Attachment blueprints placeholder */}
         <div className="space-y-2">
-          <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
+          <span className="block text-3xs uppercase font-bold text-stone-500 tracking-wider">
             Attachments & Blueprints (1)
           </span>
           <div className="flex items-center justify-between p-2.5 rounded-xl border border-stone-150 bg-stone-50/50 hover:bg-stone-50 transition cursor-pointer select-none">
@@ -112,7 +112,7 @@ export function LeadDetails({ lead, onClose, onToggleSave, onExpressInterest }: 
 
         {/* Activity Status Timeline placeholder */}
         <div className="space-y-3 pt-3 border-t border-stone-100">
-          <span className="block text-3xs uppercase font-bold text-stone-400 tracking-wider">
+          <span className="block text-3xs uppercase font-bold text-stone-500 tracking-wider">
             Opportunity Activity History
           </span>
           <div className="space-y-2 font-medium text-2xs text-stone-500">

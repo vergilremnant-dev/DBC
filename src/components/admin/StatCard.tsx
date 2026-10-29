@@ -17,7 +17,7 @@ export default function StatCard({ icon, count, label, description, colorClass =
         <span className={`text-base p-2.5 rounded-xl w-fit transition-colors duration-200 ${colorClass}`}>
           {icon}
         </span>
-        <span className="text-3xs font-black text-stone-400 uppercase tracking-widest group-hover:text-stone-600 transition-colors">
+        <span className="text-3xs font-black text-stone-500 uppercase tracking-widest group-hover:text-stone-600 transition-colors">
           Metrics
         </span>
       </div>

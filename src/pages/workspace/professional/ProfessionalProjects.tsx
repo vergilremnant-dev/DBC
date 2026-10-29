@@ -171,7 +171,7 @@ export default function ProfessionalProjects() {
         <div className="space-y-6">
           <div className="border-b border-light-border pb-5 space-y-1">
             <h1 className="text-xl font-bold text-stone-900 font-display">My Consultations</h1>
-            <p className="text-xs text-stone-500 font-medium font-semibold">
+            <p className="text-xs text-stone-600 font-medium font-semibold">
               Track your advisory sessions, write recommendations, and publish structural reports.
             </p>
           </div>
@@ -286,7 +286,7 @@ export default function ProfessionalProjects() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-200 pb-5 gap-4">
             <div className="space-y-1">
               <h1 className="text-xl font-bold text-stone-900 font-display">My Projects</h1>
-              <p className="text-xs text-stone-500 font-medium font-semibold">
+              <p className="text-xs text-stone-600 font-medium font-semibold">
                 Manage your ongoing and completed customer project coordinates.
               </p>
             </div>

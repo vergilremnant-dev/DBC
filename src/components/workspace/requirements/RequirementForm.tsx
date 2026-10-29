@@ -126,8 +126,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
           <div className="space-y-4">
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 1: Project Title & Details</h4>
             <div className="space-y-1.5">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Requirement Title</label>
-              <input
+              <label className="block text-2xs uppercase font-bold text-stone-500">Requirement Title</label>
+              <input aria-label="Requirement Title"
                 type="text"
                 name="title"
                 value={formData.title}
@@ -138,8 +138,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
               />
             </div>
             <div className="space-y-1.5">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Project Description</label>
-              <textarea
+              <label className="block text-2xs uppercase font-bold text-stone-500">Project Description</label>
+              <textarea aria-label="Project Description"
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
@@ -157,8 +157,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
           <div className="space-y-4">
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 2: Service Category</h4>
             <div className="space-y-1.5">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Target Specialist Category</label>
-              <select
+              <label className="block text-2xs uppercase font-bold text-stone-500">Target Specialist Category</label>
+              <select aria-label="Target Specialist Category"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
@@ -171,7 +171,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 ))}
               </select>
             </div>
-            <p className="text-2xs text-stone-400 font-semibold leading-relaxed">
+            <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
               Selecting the appropriate category ensures your requirements are visible to matching verified providers.
             </p>
           </div>
@@ -183,8 +183,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 3: Budget Range Setting</h4>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="block text-2xs uppercase font-bold text-stone-400">Minimum Budget (₹)</label>
-                <input
+                <label className="block text-2xs uppercase font-bold text-stone-500">Minimum Budget (₹)</label>
+                <input aria-label="Minimum Budget (₹)"
                   type="number"
                   name="budgetMin"
                   value={formData.budgetMin}
@@ -194,8 +194,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-2xs uppercase font-bold text-stone-400">Maximum Budget (₹)</label>
-                <input
+                <label className="block text-2xs uppercase font-bold text-stone-500">Maximum Budget (₹)</label>
+                <input aria-label="Maximum Budget (₹)"
                   type="number"
                   name="budgetMax"
                   value={formData.budgetMax}
@@ -205,7 +205,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 />
               </div>
             </div>
-            <p className="text-2xs text-stone-400 font-semibold leading-relaxed">
+            <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
               Setting budget thresholds protects you from out-of-range pricing estimates.
             </p>
           </div>
@@ -217,8 +217,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
             <h4 className="text-xs font-black uppercase text-stone-800 tracking-wider">Step 4: Location details</h4>
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-1 space-y-1.5">
-                <label className="block text-2xs uppercase font-bold text-stone-400">City</label>
-                <input
+                <label className="block text-2xs uppercase font-bold text-stone-500">City</label>
+                <input aria-label="City"
                   type="text"
                   name="city"
                   value={formData.city}
@@ -227,8 +227,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 />
               </div>
               <div className="col-span-2 space-y-1.5">
-                <label className="block text-2xs uppercase font-bold text-stone-400">Street Address & Area</label>
-                <input
+                <label className="block text-2xs uppercase font-bold text-stone-500">Street Address & Area</label>
+                <input aria-label="Street Address & Area"
                   type="text"
                   name="address"
                   value={formData.address}

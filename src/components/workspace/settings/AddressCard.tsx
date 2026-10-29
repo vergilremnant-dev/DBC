@@ -90,7 +90,7 @@ export function AddressCard({
       <div className="flex justify-between items-center border-b border-stone-100 pb-2">
         <div className="space-y-0.5">
           <h3 className="text-sm font-bold text-stone-900 font-display">Saved Addresses</h3>
-          <p className="text-3xs font-bold text-stone-400 uppercase tracking-widest">
+          <p className="text-3xs font-bold text-stone-500 uppercase tracking-widest">
             Manage your site delivery or calculation coordinates
           </p>
         </div>
@@ -107,7 +107,7 @@ export function AddressCard({
           <span className="text-2xl block">📍</span>
           <div className="space-y-1">
             <h4 className="text-xs font-bold text-stone-700">No additional addresses added yet</h4>
-            <p className="text-2xs text-stone-400 max-w-xs mx-auto font-medium">
+            <p className="text-2xs text-stone-500 max-w-xs mx-auto font-medium">
               Save your residential or plot sites to coordinate trade allocations efficiently.
             </p>
           </div>
@@ -152,7 +152,7 @@ export function AddressCard({
               </div>
 
               {/* Actions row */}
-              <div className="mt-4 pt-3 border-t border-stone-50 flex items-center justify-between text-2xs font-black uppercase tracking-wider text-stone-400">
+              <div className="mt-4 pt-3 border-t border-stone-50 flex items-center justify-between text-2xs font-black uppercase tracking-wider text-stone-600">
                 {!addr.isDefault ? (
                   <button
                     onClick={() => onSetDefaultAddress(addr.id)}
@@ -196,8 +196,8 @@ export function AddressCard({
             </h3>
 
             <div className="space-y-1">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Label / Name *</label>
-              <input
+              <label className="block text-2xs uppercase font-bold text-stone-500">Label / Name *</label>
+              <input aria-label="Label / Name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -208,8 +208,8 @@ export function AddressCard({
             </div>
 
             <div className="space-y-1">
-              <label className="block text-2xs uppercase font-bold text-stone-400">Address Details *</label>
-              <textarea
+              <label className="block text-2xs uppercase font-bold text-stone-500">Address Details *</label>
+              <textarea aria-label="Address Details"
                 value={addressLine}
                 onChange={(e) => setAddressLine(e.target.value)}
                 placeholder="Plot no, Street details, Area info..."
@@ -221,8 +221,8 @@ export function AddressCard({
 
             <div className="grid gap-3 grid-cols-2">
               <div className="space-y-1">
-                <label className="block text-2xs uppercase font-bold text-stone-400">City</label>
-                <input
+                <label className="block text-2xs uppercase font-bold text-stone-500">City</label>
+                <input aria-label="City"
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
@@ -230,8 +230,8 @@ export function AddressCard({
                 />
               </div>
               <div className="space-y-1">
-                <label className="block text-2xs uppercase font-bold text-stone-400">State</label>
-                <input
+                <label className="block text-2xs uppercase font-bold text-stone-500">State</label>
+                <input aria-label="State"
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
@@ -242,8 +242,8 @@ export function AddressCard({
 
             <div className="grid gap-3 grid-cols-2">
               <div className="space-y-1">
-                <label className="block text-2xs uppercase font-bold text-stone-400">Pincode *</label>
-                <input
+                <label className="block text-2xs uppercase font-bold text-stone-500">Pincode *</label>
+                <input aria-label="Pincode"
                   type="text"
                   value={pincode}
                   onChange={(e) => setPincode(e.target.value)}
@@ -253,8 +253,8 @@ export function AddressCard({
                 />
               </div>
               <div className="space-y-1">
-                <label className="block text-2xs uppercase font-bold text-stone-400">Type / Tag</label>
-                <select
+                <label className="block text-2xs uppercase font-bold text-stone-500">Type / Tag</label>
+                <select aria-label="Type / Tag"
                   value={tag}
                   onChange={(e) => setTag(e.target.value as 'Home' | 'Work' | 'Site' | 'Other')}
                   className="mt-1 dbc-input bg-white"

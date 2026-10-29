@@ -205,7 +205,7 @@ export function CollaborationWorkspacePage() {
       <div className="flex h-screen items-center justify-center bg-stone-50">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 rounded-full border-4 border-stone-200 border-t-emerald-700 animate-spin mx-auto"></div>
-          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">Entering Chat Rooms...</p>
+          <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">Entering Chat Rooms...</p>
         </div>
       </div>
     );
@@ -261,13 +261,13 @@ export function CollaborationWorkspacePage() {
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         
         {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl text-xs font-semibold flex items-center gap-2 text-left">
+          <div role="alert" className="mb-4 bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl text-xs font-semibold flex items-center gap-2 text-left">
             <span className="w-1.5 h-1.5 bg-red-600 rounded-full" />
             {error}
           </div>
         )}
         {success && (
-          <div className="mb-4 bg-emerald-50 border border-emerald-100 text-emerald-800 p-4 rounded-xl text-xs font-semibold flex items-center gap-2 text-left">
+          <div role="status" className="mb-4 bg-emerald-50 border border-emerald-100 text-emerald-800 p-4 rounded-xl text-xs font-semibold flex items-center gap-2 text-left">
             <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full" />
             {success}
           </div>
@@ -322,7 +322,7 @@ export function CollaborationWorkspacePage() {
               <h3 className="text-xs font-black text-stone-black uppercase tracking-wider border-b border-light-border/40 pb-2">Open Chat Room</h3>
               <div className="space-y-1">
                 <label className="text-3xs font-black text-stone-gray uppercase tracking-widest">Provider UUID</label>
-                <input
+                <input aria-label="Provider UUID"
                   type="text"
                   value={newChatProvider}
                   onChange={(e) => setNewChatProvider(e.target.value)}
@@ -333,7 +333,7 @@ export function CollaborationWorkspacePage() {
               </div>
               <div className="space-y-1">
                 <label className="text-3xs font-black text-stone-gray uppercase tracking-widest">Room Category</label>
-                <select
+                <select aria-label="Room Category"
                   value={newChatType}
                   onChange={(e) => setNewChatType(e.target.value)}
                   className="dbc-input bg-white"

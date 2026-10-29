@@ -15,7 +15,7 @@ export function EmptyState({ icon, title, description, ctaLabel, onCtaClick }: E
         <h4 className="text-xs font-black text-stone-900 uppercase tracking-wider">
           {title}
         </h4>
-        <p className="text-2xs text-stone-400 font-semibold max-w-xs mx-auto leading-relaxed">
+        <p className="text-2xs text-stone-500 font-semibold max-w-xs mx-auto leading-relaxed">
           {description}
         </p>
       </div>

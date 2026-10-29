@@ -44,19 +44,19 @@ export default function UserSummary({
       {/* Mini KPIs */}
       <div className="grid grid-cols-3 gap-4 text-xs font-bold text-stone-700">
         <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl">
-          <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">
+          <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">
             New Registrations
           </span>
           <span className="text-base font-extrabold text-blue-900">{newRegistrations}</span>
         </div>
         <div className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl">
-          <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">
+          <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">
             Active Users
           </span>
           <span className="text-base font-extrabold text-brand-emerald">{activeCount}</span>
         </div>
         <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl">
-          <span className="block text-3xs font-black text-stone-400 uppercase tracking-wider">
+          <span className="block text-3xs font-black text-stone-600 uppercase tracking-wider">
             Inactive Users
           </span>
           <span className="text-base font-extrabold text-stone-800">{inactiveCount}</span>

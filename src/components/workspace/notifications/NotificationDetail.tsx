@@ -45,7 +45,7 @@ export function NotificationDetail({
       <div className="space-y-5">
         {/* Header Actions */}
         <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-          <span className="text-2xs font-black uppercase tracking-wider text-stone-400">
+          <span className="text-2xs font-black uppercase tracking-wider text-stone-600">
             Notification Details
           </span>
           <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export function NotificationDetail({
               <NotificationBadge priority={notification.priority} type="priority" />
             )}
           </div>
-          <span className="text-2xs text-stone-400 font-bold">
+          <span className="text-2xs text-stone-500 font-bold">
             Received: {notification.createdAt}
           </span>
         </div>
@@ -81,7 +81,7 @@ export function NotificationDetail({
           <h2 className="text-base font-extrabold text-stone-950 font-display leading-snug">
             {notification.title}
           </h2>
-          <div className="flex items-center gap-1.5 text-2xs font-bold text-stone-400 uppercase">
+          <div className="flex items-center gap-1.5 text-2xs font-bold text-stone-500 uppercase">
             <span>Module:</span>
             <span className="text-stone-600">{moduleName}</span>
           </div>
@@ -90,17 +90,17 @@ export function NotificationDetail({
         {/* Status Indicators */}
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-stone-50 border border-stone-100 p-2.5 rounded-xl">
-            <span className="block text-3xs font-extrabold uppercase text-stone-400">Read Status</span>
+            <span className="block text-3xs font-extrabold uppercase text-stone-500">Read Status</span>
             <span className={`inline-block mt-0.5 text-2xs font-black uppercase tracking-wider ${
               notification.isRead 
                 ? 'text-emerald-800' 
-                : 'text-rose-600'
+                : 'text-rose-700'
             }`}>
               {notification.isRead ? 'Already Read' : 'Unread Notification'}
             </span>
           </div>
           <div className="bg-stone-50 border border-stone-100 p-2.5 rounded-xl">
-            <span className="block text-3xs font-extrabold uppercase text-stone-400">Archive Status</span>
+            <span className="block text-3xs font-extrabold uppercase text-stone-500">Archive Status</span>
             <span className={`inline-block mt-0.5 text-2xs font-black uppercase tracking-wider ${
               notification.archived 
                 ? 'text-indigo-800' 
@@ -113,7 +113,7 @@ export function NotificationDetail({
 
         {/* Description Body */}
         <div className="space-y-2">
-          <span className="block text-2xs uppercase font-bold text-stone-400">Message Description</span>
+          <span className="block text-2xs uppercase font-bold text-stone-500">Message Description</span>
           <p className="text-xs text-stone-600 font-semibold leading-relaxed bg-stone-50/50 p-4 border border-stone-100 rounded-xl whitespace-pre-line">
             {notification.description || notification.content}
           </p>
@@ -128,7 +128,7 @@ export function NotificationDetail({
             </div>
             <button
               onClick={handleActionClick}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white text-2xs font-extrabold uppercase tracking-wider px-3.5 py-2 rounded-lg transition cursor-pointer whitespace-nowrap shadow-sm"
+              className="bg-emerald-700 hover:bg-emerald-700 text-white text-2xs font-extrabold uppercase tracking-wider px-3.5 py-2 rounded-lg transition cursor-pointer whitespace-nowrap shadow-sm"
             >
               {notification.actionLabel} &rarr;
             </button>
@@ -137,7 +137,7 @@ export function NotificationDetail({
       </div>
 
       {/* Detail Action Panel Footer */}
-      <div className="pt-4 border-t border-stone-100 flex flex-wrap gap-2 items-center justify-between text-xs font-bold text-stone-500">
+      <div className="pt-4 border-t border-stone-100 flex flex-wrap gap-2 items-center justify-between text-xs font-bold text-stone-600">
         <div className="flex gap-2">
           <button
             onClick={onToggleRead}

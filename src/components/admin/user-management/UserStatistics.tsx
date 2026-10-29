@@ -44,7 +44,7 @@ export default function UserStatistics({
             <span className="block text-3xs font-black text-stone-900 uppercase tracking-wider">
               {card.label}
             </span>
-            <span className="block text-3xs text-stone-400 font-medium">
+            <span className="block text-3xs text-stone-500 font-medium">
               {card.desc}
             </span>
           </div>

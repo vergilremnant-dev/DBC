@@ -249,7 +249,7 @@ function CustomerNotifications() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-200 pb-5 gap-4">
         <div className="space-y-1">
           <h1 className="text-2xl font-black text-stone-900 font-display">Notifications</h1>
-          <p className="text-xs text-stone-500 font-semibold">
+          <p className="text-xs text-stone-600 font-semibold">
             Stay updated with your latest account, planning, and project activities.
           </p>
         </div>
@@ -299,7 +299,7 @@ function CustomerNotifications() {
 
       {/* Bulk actions panel (Optional UI) */}
       {filteredNotifications.length > 0 && (
-        <div className="bg-stone-50 border border-stone-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-4 text-xs font-bold text-stone-500">
+        <div className="bg-stone-50 border border-stone-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-4 text-xs font-bold text-stone-600">
           <div className="flex items-center gap-2">
             <input
               type="checkbox"

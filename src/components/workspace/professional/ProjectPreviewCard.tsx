@@ -24,7 +24,7 @@ export function ProjectPreviewCard({ projects }: ProjectPreviewCardProps) {
               <h4 className="text-xs font-bold text-stone-900 font-display leading-none">
                 {proj.name}
               </h4>
-              <p className="text-2xs text-stone-400 font-bold">
+              <p className="text-2xs text-stone-500 font-bold">
                 Client: <strong className="text-stone-600 font-extrabold">{proj.customerName}</strong>
               </p>
             </div>
@@ -42,12 +42,12 @@ export function ProjectPreviewCard({ projects }: ProjectPreviewCardProps) {
                 style={{ width: `${proj.progress}%` }}
               ></div>
             </div>
-            <span className="text-2xs text-stone-400 font-mono font-bold leading-none w-8 text-right">
+            <span className="text-2xs text-stone-500 font-mono font-bold leading-none w-8 text-right">
               {proj.progress}%
             </span>
           </div>
 
-          <div className="text-3xs text-stone-400 font-bold uppercase tracking-wider">
+          <div className="text-3xs text-stone-500 font-bold uppercase tracking-wider">
             Expected Completion: <strong className="text-stone-600 font-extrabold">{proj.completionDate}</strong>
           </div>
         </div>

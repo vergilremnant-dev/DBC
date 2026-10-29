@@ -225,7 +225,7 @@ export default function MessagesCommunicationCenter() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">collaboration central</span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Communication Center</h1>
-          <p className="text-xs text-stone-500 font-medium">Manage discussions and coordinate with clients, builders, and inspectors.</p>
+          <p className="text-xs text-stone-600 font-medium">Manage discussions and coordinate with clients, builders, and inspectors.</p>
         </div>
 
         <div className="flex gap-2 text-xs">
@@ -365,7 +365,7 @@ export default function MessagesCommunicationCenter() {
                     if (isSys) {
                       return (
                         <div key={msg.id} className="text-center">
-                          <span className="inline-block bg-stone-100 border border-light-border/40 text-stone-500 text-3xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                          <span className="inline-block bg-stone-100 border border-light-border/40 text-stone-600 text-3xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                             ⚙️ {msg.text} &bull; {msg.timestamp}
                           </span>
                         </div>
@@ -395,7 +395,7 @@ export default function MessagesCommunicationCenter() {
 
               {/* Message Composer & Templates */}
               <div className="p-4 border-t border-light-border bg-stone-50/50 space-y-3">
-                <div className="flex flex-wrap gap-1.5 text-3xs font-bold text-stone-500">
+                <div className="flex flex-wrap gap-1.5 text-3xs font-bold text-stone-600">
                   {templates.map(tmpl => (
                     <button
                       key={tmpl.title}
@@ -415,7 +415,7 @@ export default function MessagesCommunicationCenter() {
                   }}
                   className="flex gap-2 items-center"
                 >
-                  <button
+                  <button aria-label="Attach file"
                     type="button"
                     onClick={handleAttachFile}
                     className="dbc-btn dbc-btn-md dbc-btn-secondary px-3.5 bg-white border border-stone-200 hover:bg-stone-50"
@@ -455,14 +455,14 @@ export default function MessagesCommunicationCenter() {
           <section className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-4">
             <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Shared Attachments</h3>
             {sharedFiles.length === 0 ? (
-              <p className="text-2xs text-stone-400 font-semibold italic text-center py-2">No attachments shared yet.</p>
+              <p className="text-2xs text-stone-500 font-semibold italic text-center py-2">No attachments shared yet.</p>
             ) : (
               <div className="space-y-2">
                 {sharedFiles.map((file, idx) => (
                   <div key={idx} className="p-2.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                     <div>
                       <span className="font-bold text-stone-850 block truncate max-w-[120px]">{file.name}</span>
-                      <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{file.uploadedBy} &bull; {file.date}</span>
+                      <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">{file.uploadedBy} &bull; {file.date}</span>
                     </div>
                     <button
                       onClick={() => alert(`Downloading shared file: ${file.name}`)}
@@ -478,7 +478,7 @@ export default function MessagesCommunicationCenter() {
 
           {/* Internal Notes */}
           <section className="bg-white border border-light-border p-5 rounded-3xl shadow-apple-sm space-y-3">
-            <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
+            <div className="flex justify-between items-center text-2xs text-stone-500 font-semibold">
               <span>🔒 Internal Notes (Private)</span>
               {isSavingNotes && <span className="text-brand-emerald animate-pulse">Saving...</span>}
             </div>

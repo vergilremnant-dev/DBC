@@ -50,7 +50,7 @@ export function AuthChallengeModal({ isOpen, onClose, onSuccess, message }: Auth
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 h-11 w-11 flex items-center justify-center rounded-full bg-stone-50 text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition cursor-pointer min-h-[44px] min-w-[44px]"
+          className="absolute top-4 right-4 h-11 w-11 flex items-center justify-center rounded-full bg-stone-50 text-stone-500 hover:text-stone-700 hover:bg-stone-100 transition cursor-pointer min-h-[44px] min-w-[44px]"
           aria-label="Close dialog"
         >
           ✕
@@ -64,7 +64,7 @@ export function AuthChallengeModal({ isOpen, onClose, onSuccess, message }: Auth
           Sign In to Continue
         </h2>
         
-        <p className="mt-2 text-xs text-stone-500 font-medium leading-relaxed">
+        <p className="mt-2 text-xs text-stone-600 font-medium leading-relaxed">
           {message || 'You must be signed in to perform this action. Enter your registered credentials below.'}
         </p>
 
@@ -79,7 +79,7 @@ export function AuthChallengeModal({ isOpen, onClose, onSuccess, message }: Auth
         </div>
 
         <div className="mt-4 text-center">
-          <p className="text-2xs text-stone-400 font-medium">
+          <p className="text-2xs text-stone-500 font-medium">
             New to {BRAND.name}? Join as a customer or partner from our registration menu.
           </p>
         </div>

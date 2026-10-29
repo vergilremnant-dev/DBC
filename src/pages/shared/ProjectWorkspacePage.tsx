@@ -461,7 +461,7 @@ export function ProjectWorkspacePage() {
       <div className="flex h-screen items-center justify-center bg-stone-50">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 rounded-full border-4 border-stone-200 border-t-emerald-700 animate-spin mx-auto"></div>
-          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">Loading Project Workspace...</p>
+          <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">Loading Project Workspace...</p>
         </div>
       </div>
     );
@@ -507,14 +507,14 @@ export function ProjectWorkspacePage() {
               <h1 className="text-2xl font-bold text-stone-900 font-display leading-tight">
                 {project.requirement?.title || 'Execution Work Agreement'}
               </h1>
-              <p className="text-xs text-stone-500 font-medium">
+              <p className="text-xs text-stone-600 font-medium">
                 Client: {project.customer?.fullName} &bull; Lead Professional: {project.provider?.fullName}
               </p>
             </div>
             
             {/* Origin Lineage Card */}
             <div className="bg-stone-50 border border-stone-200 p-3 rounded-2xl text-xs text-left space-y-1 shrink-0">
-              <span className="text-3xs font-black uppercase text-stone-400 block tracking-wider">Origin Lineage</span>
+              <span className="text-3xs font-black uppercase text-stone-600 block tracking-wider">Origin Lineage</span>
               <div className="flex items-center gap-1.5 text-2xs font-bold text-stone-800">
                 <span>Project Request</span>
                 <span className="text-stone-400">➔</span>
@@ -579,7 +579,7 @@ export function ProjectWorkspacePage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 w-full">
         
         {noticeMessage && (
-          <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold shadow-xs animate-in fade-in flex items-center justify-between">
+          <div role="status" className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold shadow-xs animate-in fade-in flex items-center justify-between">
             <span>{noticeMessage}</span>
             <button onClick={() => setNoticeMessage('')} className="text-emerald-600 hover:text-emerald-900">✕</button>
           </div>
@@ -842,7 +842,7 @@ export function ProjectWorkspacePage() {
                 </div>
 
                 {(!project.timeline || project.timeline.length === 0) ? (
-                  <p className="text-xs text-stone-500 italic">No project activity recorded yet.</p>
+                  <p className="text-xs text-stone-600 italic">No project activity recorded yet.</p>
                 ) : (
                   <div className="space-y-2.5">
                     {project.timeline.slice(0, 3).map((event: any, idx: number) => {
@@ -978,7 +978,7 @@ export function ProjectWorkspacePage() {
 
                           <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
                             <div className="text-right hidden sm:block">
-                              <span className="text-3xs font-black uppercase text-stone-400 block">Status</span>
+                              <span className="text-3xs font-black uppercase text-stone-500 block">Status</span>
                               <span className="text-xs font-bold text-stone-800">{isPaid ? 'Settled' : 'Unpaid'}</span>
                             </div>
 
@@ -1025,7 +1025,7 @@ export function ProjectWorkspacePage() {
                 </h3>
                 
                 {paidMilestones.length === 0 ? (
-                  <p className="text-xs text-stone-500 italic">No transaction records logged yet.</p>
+                  <p className="text-xs text-stone-600 italic">No transaction records logged yet.</p>
                 ) : (
                   <div className="space-y-2">
                     {paidMilestones.map((m: any, idx: number) => (
@@ -1436,7 +1436,7 @@ export function ProjectWorkspacePage() {
                 <div className="grid gap-4 grid-cols-2 text-xs font-semibold text-stone-gray">
                   <div>
                     <label className="block mb-1">Probability</label>
-                    <select value={riskProb} onChange={(e) => setRiskProb(e.target.value as 'Low' | 'Medium' | 'High')} className="dbc-input bg-white">
+                    <select aria-label="Probability" value={riskProb} onChange={(e) => setRiskProb(e.target.value as 'Low' | 'Medium' | 'High')} className="dbc-input bg-white">
                       <option value="Low">Low</option>
                       <option value="Medium">Medium</option>
                       <option value="High">High</option>
@@ -1444,7 +1444,7 @@ export function ProjectWorkspacePage() {
                   </div>
                   <div>
                     <label className="block mb-1">Impact</label>
-                    <select value={riskImp} onChange={(e) => setRiskImp(e.target.value as 'Low' | 'Medium' | 'Critical')} className="dbc-input bg-white">
+                    <select aria-label="Impact" value={riskImp} onChange={(e) => setRiskImp(e.target.value as 'Low' | 'Medium' | 'Critical')} className="dbc-input bg-white">
                       <option value="Low">Low</option>
                       <option value="Medium">Medium</option>
                       <option value="Critical">Critical</option>
@@ -1494,7 +1494,7 @@ export function ProjectWorkspacePage() {
                 <div className="grid gap-4 grid-cols-2 text-xs font-semibold text-stone-gray">
                   <div>
                     <label className="block mb-1">Weather Condition</label>
-                    <select value={newLogWeather} onChange={(e) => setNewLogWeather(e.target.value)} className="dbc-input bg-white">
+                    <select aria-label="Weather Condition" value={newLogWeather} onChange={(e) => setNewLogWeather(e.target.value)} className="dbc-input bg-white">
                       <option value="Sunny">Sunny</option>
                       <option value="Cloudy">Cloudy</option>
                       <option value="Rainy">Rainy</option>
@@ -1502,7 +1502,7 @@ export function ProjectWorkspacePage() {
                   </div>
                   <div>
                     <label className="block mb-1">Active Workers Count</label>
-                    <input
+                    <input aria-label="Active Workers Count"
                       type="number"
                       value={newLogWorkers}
                       onChange={(e) => setNewLogWorkers(e.target.value)}
@@ -1513,7 +1513,7 @@ export function ProjectWorkspacePage() {
 
                 <div className="space-y-1.5">
                   <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Materials Delivered</label>
-                  <input
+                  <input aria-label="Materials Delivered"
                     type="text"
                     placeholder="e.g. 50 bags sand, 20 steel rods"
                     value={newLogMaterials}
@@ -1524,7 +1524,7 @@ export function ProjectWorkspacePage() {
 
                 <div className="space-y-1.5">
                   <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Scaffolding Work Completed</label>
-                  <textarea
+                  <textarea aria-label="Scaffolding Work Completed"
                     placeholder="Detail today's accomplishments..."
                     value={newLogText}
                     onChange={(e) => setNewLogText(e.target.value)}
@@ -1725,7 +1725,7 @@ export function ProjectWorkspacePage() {
             <form onSubmit={handleAddMilestoneSubmit} className="space-y-3">
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">Milestone Title *</label>
-                <input
+                <input aria-label="Milestone Title"
                   type="text"
                   required
                   placeholder="e.g. Foundation Masonry and Concrete Pouring"
@@ -1736,7 +1736,7 @@ export function ProjectWorkspacePage() {
               </div>
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">Scope Description</label>
-                <textarea
+                <textarea aria-label="Scope Description"
                   placeholder="Details of deliverables for this milestone..."
                   value={addMsDesc}
                   onChange={(e) => setAddMsDesc(e.target.value)}
@@ -1746,7 +1746,7 @@ export function ProjectWorkspacePage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1">Budget Allocation (INR)</label>
-                  <input
+                  <input aria-label="Budget Allocation (INR)"
                     type="number"
                     placeholder="e.g. 250000"
                     value={addMsBudget}
@@ -1756,7 +1756,7 @@ export function ProjectWorkspacePage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1">Planned Target Date</label>
-                  <input
+                  <input aria-label="Planned Target Date"
                     type="date"
                     value={addMsEnd}
                     onChange={(e) => setAddMsEnd(e.target.value)}
@@ -1795,7 +1795,7 @@ export function ProjectWorkspacePage() {
             <form onSubmit={handleUpdateMilestoneSubmit} className="space-y-3">
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">Milestone Title *</label>
-                <input
+                <input aria-label="Milestone Title"
                   type="text"
                   required
                   value={editMsName}
@@ -1805,7 +1805,7 @@ export function ProjectWorkspacePage() {
               </div>
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">Scope Description</label>
-                <textarea
+                <textarea aria-label="Scope Description"
                   value={editMsDesc}
                   onChange={(e) => setEditMsDesc(e.target.value)}
                   className="w-full px-3 py-2 border rounded-xl text-xs font-medium h-20 resize-none"
@@ -1814,7 +1814,7 @@ export function ProjectWorkspacePage() {
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1">Status</label>
-                  <select
+                  <select aria-label="Status"
                     value={editMsStatus}
                     onChange={(e) => setEditMsStatus(e.target.value)}
                     className="w-full px-3 py-2 border rounded-xl text-xs font-medium bg-white"
@@ -1827,7 +1827,7 @@ export function ProjectWorkspacePage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1">Budget Allocation</label>
-                  <input
+                  <input aria-label="Budget Allocation"
                     type="number"
                     value={editMsBudget}
                     onChange={(e) => setEditMsBudget(e.target.value)}
@@ -1836,7 +1836,7 @@ export function ProjectWorkspacePage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1">Target Date</label>
-                  <input
+                  <input aria-label="Target Date"
                     type="date"
                     value={editMsEnd}
                     onChange={(e) => setEditMsEnd(e.target.value)}
@@ -1902,7 +1902,7 @@ export function ProjectWorkspacePage() {
             <form onSubmit={handleUploadDocumentSubmit} className="space-y-3">
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">Document Title *</label>
-                <input
+                <input aria-label="Document Title"
                   type="text"
                   required
                   placeholder="e.g. Approved Floor Plan Drawing v2"
@@ -1914,7 +1914,7 @@ export function ProjectWorkspacePage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1">Document Category</label>
-                  <select
+                  <select aria-label="Document Category"
                     value={uploadDocType}
                     onChange={(e) => setUploadDocType(e.target.value)}
                     className="w-full px-3 py-2 border rounded-xl text-xs font-medium bg-white"
@@ -1931,7 +1931,7 @@ export function ProjectWorkspacePage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1">File URL / Storage Link *</label>
-                  <input
+                  <input aria-label="File URL / Storage Link"
                     type="text"
                     required
                     placeholder="https://..."
@@ -2115,7 +2115,7 @@ export function ProjectWorkspacePage() {
 
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">Review Headline *</label>
-                <input
+                <input aria-label="Review Headline"
                   type="text"
                   required
                   placeholder="e.g. Outstanding quality, structural precision & timely handover"
@@ -2127,7 +2127,7 @@ export function ProjectWorkspacePage() {
 
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">Detailed Feedback *</label>
-                <textarea
+                <textarea aria-label="Detailed Feedback"
                   required
                   rows={3}
                   placeholder="Share details about milestone adherence, communication, site safety, and overall satisfaction..."

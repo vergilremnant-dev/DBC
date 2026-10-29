@@ -187,7 +187,7 @@ export default function ConsultantCrmPage() {
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider"> central database </span>
           <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Customer Relationship Management</h1>
-          <p className="text-xs text-stone-500 font-medium">Manage customer relationship logs, scheduled follow-ups, and notes histories.</p>
+          <p className="text-xs text-stone-600 font-medium">Manage customer relationship logs, scheduled follow-ups, and notes histories.</p>
         </div>
 
         <div className="flex flex-wrap gap-2 text-xs">
@@ -285,7 +285,7 @@ export default function ConsultantCrmPage() {
           {filteredCustomers.length === 0 ? (
             <div className="bg-white border border-light-border p-12 rounded-3xl text-center space-y-4 shadow-apple-sm">
               <span className="text-3xl block">👥</span>
-              <h3 className="text-xs font-black text-stone-500 uppercase tracking-widest">No customers matching criteria</h3>
+              <h3 className="text-xs font-black text-stone-600 uppercase tracking-widest">No customers matching criteria</h3>
             </div>
           ) : (
             <div className="space-y-3">
@@ -304,7 +304,7 @@ export default function ConsultantCrmPage() {
                     <div className="flex justify-between items-start pb-2 border-b border-light-border/40 gap-2">
                       <div>
                         <h4 className="text-xs font-black text-stone-900">{cust.fullName}</h4>
-                        <span className="block text-3xs text-stone-400 font-bold uppercase tracking-wider">{cust.id} &bull; {cust.location}</span>
+                        <span className="block text-3xs text-stone-500 font-bold uppercase tracking-wider">{cust.id} &bull; {cust.location}</span>
                       </div>
                       <div className="flex gap-1.5 shrink-0">
                         <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded-full border ${
@@ -344,7 +344,7 @@ export default function ConsultantCrmPage() {
                   </div>
                   <div>
                     <h3 className="text-xs font-black text-stone-900">{selectedCustomer.fullName}</h3>
-                    <span className="text-3xs text-stone-400 font-bold uppercase">{selectedCustomer.id}</span>
+                    <span className="text-3xs text-stone-500 font-bold uppercase">{selectedCustomer.id}</span>
                   </div>
                 </div>
                 <button onClick={() => setSelectedCustomerId(null)} className="text-stone-400 hover:text-stone-900 text-sm transition">✕</button>
@@ -381,7 +381,7 @@ export default function ConsultantCrmPage() {
 
             {/* 5. Autosaved Consultant Notes */}
             <div className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
-              <div className="flex justify-between items-center text-2xs text-stone-400 font-semibold">
+              <div className="flex justify-between items-center text-2xs text-stone-500 font-semibold">
                 <span>🔒 Consultant-only logs</span>
                 {isSavingNotes && <span className="text-brand-emerald animate-pulse">Autosaving...</span>}
               </div>
@@ -420,7 +420,7 @@ export default function ConsultantCrmPage() {
                   <div key={fup.id} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                     <div>
                       <strong className="block text-stone-900 font-bold">{fup.customerName} ({fup.type})</strong>
-                      <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">Due date: {fup.date} &bull; Status: {fup.status}</span>
+                      <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">Due date: {fup.date} &bull; Status: {fup.status}</span>
                     </div>
                     {fup.status !== 'Completed' && (
                       <button

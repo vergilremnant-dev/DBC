@@ -34,7 +34,7 @@ export function ComparisonTable({ items, onRemove, onClose }: ComparisonTablePro
           </div>
           <button
             onClick={onClose}
-            className="text-2xs font-bold uppercase tracking-wider text-stone-500 hover:text-stone-900 px-2 py-1 rounded-md hover:bg-stone-100 transition cursor-pointer"
+            className="text-2xs font-bold uppercase tracking-wider text-stone-600 hover:text-stone-900 px-2 py-1 rounded-md hover:bg-stone-100 transition cursor-pointer"
           >
             Minimize ✕
           </button>
@@ -43,7 +43,7 @@ export function ComparisonTable({ items, onRemove, onClose }: ComparisonTablePro
         {/* Comparison grid layout */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-1">
           {/* Metrics Headers */}
-          <div className="hidden md:block space-y-3 pt-10 text-stone-400 text-3xs font-black uppercase tracking-wider">
+          <div className="hidden md:block space-y-3 pt-10 text-stone-600 text-3xs font-black uppercase tracking-wider">
             <div className="h-9 border-b border-stone-100 flex items-center">Rating Profile</div>
             <div className="h-9 border-b border-stone-100 flex items-center">Experience Level</div>
             <div className="h-9 border-b border-stone-100 flex items-center">Consultation Fee</div>
@@ -59,7 +59,7 @@ export function ComparisonTable({ items, onRemove, onClose }: ComparisonTablePro
               {/* Remove absolute cross */}
               <button
                 onClick={() => onRemove(item.id)}
-                className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-white border border-stone-200 text-stone-400 hover:text-rose-600 hover:border-rose-200 flex items-center justify-center font-bold text-2xs shadow-2xs transition cursor-pointer"
+                className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-white border border-stone-200 text-stone-500 hover:text-rose-600 hover:border-rose-200 flex items-center justify-center font-bold text-2xs shadow-2xs transition cursor-pointer"
                 title="Remove from comparison"
               >
                 ✕
@@ -76,25 +76,25 @@ export function ComparisonTable({ items, onRemove, onClose }: ComparisonTablePro
 
                 {/* Rating row */}
                 <div className="h-9 md:border-b border-stone-200/80 flex items-center">
-                  <span className="md:hidden text-3xs text-stone-400 font-black uppercase tracking-wider mr-2">Rating:</span>
+                  <span className="md:hidden text-3xs text-stone-600 font-black uppercase tracking-wider mr-2">Rating:</span>
                   <span className="text-xs font-extrabold text-stone-900">⭐ {item.rating.toFixed(1)}</span>
                 </div>
 
                 {/* Experience row */}
                 <div className="h-9 md:border-b border-stone-200/80 flex items-center">
-                  <span className="md:hidden text-3xs text-stone-400 font-black uppercase tracking-wider mr-2">Exp:</span>
+                  <span className="md:hidden text-3xs text-stone-600 font-black uppercase tracking-wider mr-2">Exp:</span>
                   <span className="text-xs font-extrabold text-stone-900">{item.experienceYears} Years</span>
                 </div>
 
                 {/* Fee row */}
                 <div className="h-9 md:border-b border-stone-200/80 flex items-center">
-                  <span className="md:hidden text-3xs text-stone-400 font-black uppercase tracking-wider mr-2">Fee:</span>
+                  <span className="md:hidden text-3xs text-stone-600 font-black uppercase tracking-wider mr-2">Fee:</span>
                   <span className="text-xs font-extrabold text-emerald-800">₹{item.consultationFee || '500'}</span>
                 </div>
 
                 {/* Skills row */}
                 <div className="h-12 md:border-b border-stone-200/80 overflow-y-auto no-scrollbar py-1">
-                  <span className="md:hidden text-3xs text-stone-400 font-black uppercase tracking-wider mr-2 block">Skills:</span>
+                  <span className="md:hidden text-3xs text-stone-600 font-black uppercase tracking-wider mr-2 block">Skills:</span>
                   <div className="flex flex-wrap gap-1">
                     {item.skills.slice(0, 3).map((s) => (
                       <span key={s} className="text-3xs font-semibold bg-white border border-stone-200 px-1.5 py-0.5 rounded-md text-stone-600">
@@ -110,7 +110,7 @@ export function ComparisonTable({ items, onRemove, onClose }: ComparisonTablePro
 
           {/* Empty slot placeholder columns */}
           {Array.from({ length: Math.max(0, 3 - items.length) }).map((_, i) => (
-            <div key={i} className="hidden md:flex flex-col items-center justify-center border border-dashed border-stone-200 rounded-2xl p-6 bg-stone-50/50 text-stone-400 text-2xs font-semibold">
+            <div key={i} className="hidden md:flex flex-col items-center justify-center border border-dashed border-stone-200 rounded-2xl p-6 bg-stone-50/50 text-stone-500 text-2xs font-semibold">
               <span>+ Add slot</span>
               <span className="text-3xs opacity-75 mt-1">Select from listing grid</span>
             </div>

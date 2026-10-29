@@ -48,15 +48,15 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
       </h3>
 
       {error && (
-        <div className="bg-rose-50 border border-rose-100 text-rose-800 text-2xs font-bold p-3 rounded-xl">
+        <div role="alert" className="bg-rose-50 border border-rose-100 text-rose-800 text-2xs font-bold p-3 rounded-xl">
           ⚠️ {error}
         </div>
       )}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1">
-          <label className="block text-2xs uppercase font-bold text-stone-400">First Name *</label>
-          <input
+          <label className="block text-2xs uppercase font-bold text-stone-500">First Name *</label>
+          <input aria-label="First Name"
             type="text"
             name="firstName"
             value={values.firstName}
@@ -68,8 +68,8 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
         </div>
 
         <div className="space-y-1">
-          <label className="block text-2xs uppercase font-bold text-stone-400">Last Name *</label>
-          <input
+          <label className="block text-2xs uppercase font-bold text-stone-500">Last Name *</label>
+          <input aria-label="Last Name"
             type="text"
             name="lastName"
             value={values.lastName}
@@ -83,8 +83,8 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1">
-          <label className="block text-2xs uppercase font-bold text-stone-400">Display Name</label>
-          <input
+          <label className="block text-2xs uppercase font-bold text-stone-500">Display Name</label>
+          <input aria-label="Display Name"
             type="text"
             name="displayName"
             value={values.displayName}
@@ -95,8 +95,8 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
         </div>
 
         <div className="space-y-1">
-          <label className="block text-2xs uppercase font-bold text-stone-400">Gender</label>
-          <select
+          <label className="block text-2xs uppercase font-bold text-stone-500">Gender</label>
+          <select aria-label="Gender"
             name="gender"
             value={values.gender}
             onChange={handleChange}
@@ -111,8 +111,8 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
       </div>
 
       <div className="space-y-1">
-        <label className="block text-2xs uppercase font-bold text-stone-400">Date of Birth</label>
-        <input
+        <label className="block text-2xs uppercase font-bold text-stone-500">Date of Birth</label>
+        <input aria-label="Date of Birth"
           type="date"
           name="dob"
           value={values.dob}
@@ -122,8 +122,8 @@ export function ProfileForm({ initialValues, onSubmit, onCancel, saving = false 
       </div>
 
       <div className="space-y-1">
-        <label className="block text-2xs uppercase font-bold text-stone-400">Biography</label>
-        <textarea
+        <label className="block text-2xs uppercase font-bold text-stone-500">Biography</label>
+        <textarea aria-label="Biography"
           name="bio"
           value={values.bio}
           onChange={handleChange}

@@ -25,7 +25,7 @@ export default function DashboardHeader({ adminName, onTabSelect }: DashboardHea
         <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
           Welcome, {adminName}
         </h1>
-        <div className="flex flex-wrap items-center gap-3 text-xs text-stone-500 font-semibold">
+        <div className="flex flex-wrap items-center gap-3 text-xs text-stone-600 font-semibold">
           <span>{currentDate}</span>
           <span className="text-stone-300">|</span>
           <span className="flex items-center gap-1.5 text-brand-emerald">

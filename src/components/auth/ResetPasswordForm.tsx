@@ -30,7 +30,7 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
       
       <div className="space-y-1">
         <h2 className="text-2xl font-bold text-stone-900 font-display tracking-tight">Reset Password</h2>
-        <p className="text-xs text-stone-500">Enter your new secure password credentials.</p>
+        <p className="text-xs text-stone-600">Enter your new secure password credentials.</p>
       </div>
 
       {!success ? (
@@ -103,7 +103,7 @@ export function ResetPasswordForm({ onResetComplete, onBackToLogin }: ResetPassw
 
       {!success && (
         <div className="pt-2 text-center border-t border-stone-100">
-          <p className="text-xs text-stone-500">
+          <p className="text-xs text-stone-600">
             <button
               type="button"
               onClick={onBackToLogin}

@@ -150,7 +150,7 @@ export function AppointmentSchedulingPage() {
       <div className="flex h-screen items-center justify-center bg-stone-50">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 rounded-full border-4 border-stone-200 border-t-emerald-700 animate-spin mx-auto"></div>
-          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">Loading Scheduler...</p>
+          <p className="text-xs font-bold text-stone-600 uppercase tracking-widest">Loading Scheduler...</p>
         </div>
       </div>
     );
@@ -186,13 +186,13 @@ export function AppointmentSchedulingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         {/* Messages */}
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl text-sm font-semibold flex items-center gap-2">
+          <div role="alert" className="mb-6 bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl text-sm font-semibold flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
             {error}
           </div>
         )}
         {success && (
-          <div className="mb-6 bg-emerald-50 border border-emerald-100 text-emerald-800 p-4 rounded-xl text-sm font-semibold flex items-center gap-2">
+          <div role="status" className="mb-6 bg-emerald-50 border border-emerald-100 text-emerald-800 p-4 rounded-xl text-sm font-semibold flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full"></span>
             {success}
           </div>
@@ -216,13 +216,13 @@ export function AppointmentSchedulingPage() {
                           <span className="bg-emerald-50 text-emerald-700 text-3xs font-bold px-1.5 py-0.5 rounded border border-emerald-100 uppercase">
                             {apt.eventType}
                           </span>
-                          <span className="text-2xs text-stone-400 font-bold uppercase tracking-wider">
+                          <span className="text-2xs text-stone-500 font-bold uppercase tracking-wider">
                             Status: {apt.status}
                           </span>
                         </div>
                         <h4 className="font-bold text-sm text-stone-900">{apt.title}</h4>
-                        {apt.description && <p className="text-xs text-stone-500">{apt.description}</p>}
-                        <div className="text-2xs text-stone-400 font-bold uppercase">
+                        {apt.description && <p className="text-xs text-stone-600">{apt.description}</p>}
+                        <div className="text-2xs text-stone-500 font-bold uppercase">
                           Time: {new Date(apt.startTime).toLocaleString()} - {new Date(apt.endTime).toLocaleTimeString()}
                         </div>
                       </div>
@@ -268,7 +268,7 @@ export function AppointmentSchedulingPage() {
                 <h3 className="text-sm font-bold text-stone-950 uppercase tracking-widest font-display">Appointment Wizard</h3>
                 <div className="space-y-1">
                   <label className="text-2xs font-bold text-stone-500 uppercase">Event Title</label>
-                  <input
+                  <input aria-label="Event Title"
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -279,7 +279,7 @@ export function AppointmentSchedulingPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-2xs font-bold text-stone-500 uppercase">Event Type</label>
-                    <select
+                    <select aria-label="Event Type"
                       value={eventType}
                       onChange={(e) => setEventType(e.target.value)}
                       className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-700"
@@ -292,7 +292,7 @@ export function AppointmentSchedulingPage() {
                   </div>
                   <div className="space-y-1">
                     <label className="text-2xs font-bold text-stone-500 uppercase">Provider UUID</label>
-                    <input
+                    <input aria-label="Provider UUID"
                       type="text"
                       value={providerId}
                       onChange={(e) => setProviderId(e.target.value)}
@@ -303,7 +303,7 @@ export function AppointmentSchedulingPage() {
                 </div>
                 <div className="space-y-1">
                   <label className="text-2xs font-bold text-stone-500 uppercase">Select Date</label>
-                  <input
+                  <input aria-label="Select Date"
                     type="date"
                     value={bookingDate}
                     onChange={(e) => setBookingDate(e.target.value)}
@@ -335,7 +335,7 @@ export function AppointmentSchedulingPage() {
                 )}
                 <div className="space-y-1">
                   <label className="text-2xs font-bold text-stone-500 uppercase">Description / Notes</label>
-                  <textarea
+                  <textarea aria-label="Description / Notes"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Discuss drawings and layouts..."

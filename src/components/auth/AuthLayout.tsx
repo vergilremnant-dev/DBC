@@ -52,7 +52,7 @@ export function AuthLayout({
             <BrandLogo variant="compact" theme="light" />
             <button
               onClick={handleBack}
-              className="text-xs font-medium text-stone-500 hover:text-stone-900 transition flex items-center gap-1 cursor-pointer"
+              className="text-xs font-medium text-stone-600 hover:text-stone-900 transition flex items-center gap-1 cursor-pointer"
             >
               ← Back to Marketplace
             </button>
@@ -63,7 +63,7 @@ export function AuthLayout({
             <div className="hidden lg:flex items-center justify-between mb-3">
               <button
                 onClick={handleBack}
-                className="text-xs font-medium text-stone-400 hover:text-stone-700 transition flex items-center gap-1.5 cursor-pointer focus:outline-none"
+                className="text-xs font-medium text-stone-500 hover:text-stone-700 transition flex items-center gap-1.5 cursor-pointer focus:outline-none"
               >
                 ← Back to Marketplace
               </button>

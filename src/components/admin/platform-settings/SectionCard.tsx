@@ -22,7 +22,7 @@ export default function SectionCard({ title, subtitle, icon, badge, children, cl
           </div>
         </div>
         {badge && (
-          <span className="text-3xs font-black uppercase tracking-wider text-stone-500 bg-stone-100 border border-stone-200 px-2 py-0.5 rounded-full shrink-0">
+          <span className="text-3xs font-black uppercase tracking-wider text-stone-600 bg-stone-100 border border-stone-200 px-2 py-0.5 rounded-full shrink-0">
             {badge}
           </span>
         )}

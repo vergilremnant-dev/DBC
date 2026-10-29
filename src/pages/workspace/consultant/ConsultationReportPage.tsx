@@ -195,13 +195,13 @@ export default function ConsultationReportPage() {
               {isSaving ? (
                 <span className="text-3xs text-emerald-600 font-bold animate-pulse">Autosaving changes...</span>
               ) : (
-                <span className="text-3xs text-stone-400 font-bold">{lastSaved}</span>
+                <span className="text-3xs text-stone-500 font-bold">{lastSaved}</span>
               )}
             </div>
             <h1 className="text-xl sm:text-2xl font-black text-stone-900 font-display leading-tight">
               Villa Spatial Orientation & Design Report
             </h1>
-            <p className="text-xs text-stone-500 font-medium">
+            <p className="text-xs text-stone-600 font-medium">
               Client: <strong>Ramesh Kumar</strong> &bull; Project: Gachibowli Modern Villa Construction Brief
             </p>
           </div>
@@ -533,7 +533,7 @@ export default function ConsultationReportPage() {
                 <div key={idx} className="p-2.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center text-xs">
                   <div>
                     <span className="font-bold text-stone-850 block truncate max-w-[150px]">{file.name}</span>
-                    <span className="block text-3xs text-stone-400 font-bold uppercase mt-0.5">{file.size} &bull; {file.date}</span>
+                    <span className="block text-3xs text-stone-500 font-bold uppercase mt-0.5">{file.size} &bull; {file.date}</span>
                   </div>
                   <button
                     onClick={() => alert(`Downloading attachment: ${file.name}`)}
@@ -552,7 +552,7 @@ export default function ConsultationReportPage() {
             <div className="space-y-3">
               {versions.map((ver, idx) => (
                 <div key={idx} className="p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs space-y-1 text-left">
-                  <div className="flex justify-between items-center text-2xs font-black text-stone-400 uppercase">
+                  <div className="flex justify-between items-center text-2xs font-black text-stone-500 uppercase">
                     <span>Version: {ver.version}</span>
                     <span>{ver.date}</span>
                   </div>

@@ -64,7 +64,7 @@ export function LeadFilters({
         <div className="flex flex-wrap items-center gap-3">
           {/* Category Dropdown */}
           <div className="space-y-1">
-            <span className="block text-3xs font-black uppercase text-stone-400 tracking-widest">Trade Category</span>
+            <span className="block text-3xs font-black uppercase text-stone-500 tracking-widest">Trade Category</span>
             <select
               value={categoryFilter}
               onChange={(e) => onCategoryChange(e.target.value)}
@@ -78,7 +78,7 @@ export function LeadFilters({
 
           {/* Budget Range Dropdown */}
           <div className="space-y-1">
-            <span className="block text-3xs font-black uppercase text-stone-400 tracking-widest">Budget Bracket</span>
+            <span className="block text-3xs font-black uppercase text-stone-500 tracking-widest">Budget Bracket</span>
             <select
               value={budgetFilter}
               onChange={(e) => onBudgetChange(e.target.value)}
@@ -92,7 +92,7 @@ export function LeadFilters({
 
           {/* Sort Selector */}
           <div className="space-y-1">
-            <span className="block text-3xs font-black uppercase text-stone-400 tracking-widest">Sort Sequence</span>
+            <span className="block text-3xs font-black uppercase text-stone-500 tracking-widest">Sort Sequence</span>
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}

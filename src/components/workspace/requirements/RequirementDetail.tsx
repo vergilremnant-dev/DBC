@@ -72,13 +72,13 @@ export function RequirementDetail({
             <h3 className="text-sm font-bold text-stone-900 font-display">{requirement.title}</h3>
             <RequirementStatusBadge status={requirement.status} />
           </div>
-          <p className="text-3xs font-black uppercase text-stone-400 tracking-wider">
+          <p className="text-3xs font-black uppercase text-stone-600 tracking-wider">
             Ticket ID: {requirement.id}
           </p>
         </div>
-        <button
+        <button aria-label="Close details"
           onClick={onClose}
-          className="text-stone-400 hover:text-stone-700 h-6 w-6 rounded-full hover:bg-stone-50 border border-stone-150 flex items-center justify-center transition cursor-pointer"
+          className="text-stone-500 hover:text-stone-700 h-6 w-6 rounded-full hover:bg-stone-50 border border-stone-150 flex items-center justify-center transition cursor-pointer"
         >
           ✕
         </button>
@@ -87,34 +87,34 @@ export function RequirementDetail({
       {/* Main Metadata Grid */}
       <div className="grid grid-cols-2 gap-4 text-xs">
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Category</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Category</span>
           <span className="block font-bold text-stone-700">{requirement.category}</span>
         </div>
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Location</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Location</span>
           <span className="block font-bold text-stone-700">{requirement.city}</span>
         </div>
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Budget Range</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Budget Range</span>
           <span className="block font-bold text-stone-750">
             ₹{requirement.budgetMin.toLocaleString()} - ₹{requirement.budgetMax.toLocaleString()}
           </span>
         </div>
         <div className="space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Date Created</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Date Created</span>
           <span className="block font-bold text-stone-700">
             {new Date(requirement.createdAt).toLocaleDateString()}
           </span>
         </div>
         <div className="col-span-2 space-y-0.5">
-          <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Detailed Address</span>
+          <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Detailed Address</span>
           <span className="block font-semibold text-stone-600 leading-relaxed">{requirement.address}</span>
         </div>
       </div>
 
       {/* Description */}
       <div className="space-y-1.5 border-t border-stone-100 pt-4">
-        <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Project Scope</span>
+        <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Project Scope</span>
         <p className="text-2xs text-stone-600 leading-relaxed font-semibold">
           {requirement.description}
         </p>
@@ -122,15 +122,15 @@ export function RequirementDetail({
 
       {/* Attachments Placeholder */}
       <div className="space-y-2 border-t border-stone-100 pt-4">
-        <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Uploaded Attachments</span>
-        <div className="border border-dashed border-stone-200 rounded-xl p-3 bg-stone-50 text-center text-2xs text-stone-400 font-semibold">
+        <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Uploaded Attachments</span>
+        <div className="border border-dashed border-stone-200 rounded-xl p-3 bg-stone-50 text-center text-2xs text-stone-500 font-semibold">
           No files uploaded.
         </div>
       </div>
 
       {/* Status Timeline */}
       <div className="space-y-3 border-t border-stone-100 pt-4">
-        <span className="block text-3xs uppercase font-black text-stone-400 tracking-wider">Progress Timeline</span>
+        <span className="block text-3xs uppercase font-black text-stone-600 tracking-wider">Progress Timeline</span>
         <div className="relative pl-4 space-y-3 border-l border-stone-150">
           {getTimelineMilestones(requirement.status).map((m, idx) => (
             <div key={idx} className="relative text-2xs space-y-0.5">
@@ -144,7 +144,7 @@ export function RequirementDetail({
               <span className={`block font-bold ${m.active ? 'text-stone-900' : 'text-stone-400'}`}>
                 {m.label}
               </span>
-              <span className="block text-3xs text-stone-400 font-semibold">{m.date}</span>
+              <span className="block text-3xs text-stone-500 font-semibold">{m.date}</span>
             </div>
           ))}
         </div>

@@ -14,11 +14,10 @@ interface SidebarItem {
 }
 
 const CUSTOMER_SIDEBAR_ITEMS: SidebarItem[] = [
-  { name: 'Dashboard', path: '/workspace/overview', icon: '📊' },
+  { name: 'My Account', path: '/workspace/overview', icon: '👤' },
   { name: 'Project Requests', path: '/workspace/bookings', icon: '📋' },
   { name: 'Inbox', path: '/workspace/inbox', icon: '💬' },
-  { name: 'Profile & Settings', path: '/workspace/settings', icon: '⚙️' },
-  { name: 'About DBC', path: '/know-more', icon: 'ℹ️' },
+  { name: 'Settings', path: '/workspace/settings', icon: '⚙️' },
 ];
 
 const PROVIDER_SIDEBAR_ITEMS: SidebarItem[] = [
@@ -114,7 +113,7 @@ export default function WorkspaceLayout() {
           </NavLink>
 
           <div className="hidden sm:flex items-center gap-2 text-stone-300 text-sm">
-            <span>/</span>
+            <span aria-hidden="true">/</span>
             <span className="font-semibold text-xs text-stone-600 uppercase tracking-wider">{getBreadcrumbLabel()}</span>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { useAuthDispatch } from '../../hooks/auth/useAuthStore';
 import { logoutThunk } from '../../store/auth/authSlice';
@@ -65,7 +65,12 @@ export default function WorkspaceSettings() {
   };
 
   // Active sub tab
-  const [activeTab, setActiveTab] = useState<'PROFILE' | 'ADDRESSES' | 'PREFERENCES' | 'SECURITY' | 'SYSTEM'>('PROFILE');
+  // Optional deep link from the profile hub, e.g. /workspace/settings?tab=ADDRESSES
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState<'PROFILE' | 'ADDRESSES' | 'PREFERENCES' | 'SECURITY' | 'SYSTEM'>(() => {
+    const requested = searchParams.get('tab');
+    return requested === 'ADDRESSES' || requested === 'PREFERENCES' || requested === 'SECURITY' ? requested : 'PROFILE';
+  });
 
   // Edit states
   const [isEditingProfile, setIsEditingProfile] = useState(false);

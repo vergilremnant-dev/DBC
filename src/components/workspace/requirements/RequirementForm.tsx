@@ -1,18 +1,10 @@
 import { useState, useEffect, startTransition } from 'react';
+import { categoryApi } from '../../../services/category/categoryService';
+import type { ServiceCategory } from '../../../types/category/categoryTypes';
 
-const CATEGORIES = [
-  'Architect',
-  'Interior Designer',
-  'Civil Engineer',
-  'Structural Engineer',
-  'Landscape Designer',
-  'Quantity Surveyor',
-  'Vastu Consultant',
-  'Pest Control',
-  'False Ceiling',
-  'Tiles Specialist',
-  'Masonry Work',
-  'CCTV Installation',
+const WORKFORCE_GROUPS: Array<{ type: ServiceCategory['categoryType']; label: string }> = [
+  { type: 'WHITE_COLLAR', label: 'Design & Consultancy' },
+  { type: 'BLUE_COLLAR', label: 'Construction Trades' },
 ];
 
 /** Typed shape of a requirement form's field values. */
@@ -20,6 +12,8 @@ export interface RequirementValues {
   title: string;
   description: string;
   category: string;
+  /** service_categories.id of the selected service (set when the category comes from the catalog API). */
+  categoryId?: number;
   budgetMin: number;
   budgetMax: number;
   city: string;
@@ -34,10 +28,13 @@ interface RequirementFormProps {
 
 export function RequirementForm({ initialValues, onSubmit, onCancel }: RequirementFormProps) {
   const [step, setStep] = useState(1);
+  // Services come from the live catalog (GET /api/categories), already in workforce + display order.
+  const [categories, setCategories] = useState<ServiceCategory[]>([]);
+  const [categoriesState, setCategoriesState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    category: 'Architect',
+    category: '',
     budgetMin: 5000,
     budgetMax: 50000,
     city: 'Hyderabad',
@@ -50,7 +47,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
         setFormData({
           title: initialValues.title || '',
           description: initialValues.description || '',
-          category: initialValues.category || 'Architect',
+          category: initialValues.category || '',
           budgetMin: initialValues.budgetMin || 5000,
           budgetMax: initialValues.budgetMax || 50000,
           city: initialValues.city || 'Hyderabad',
@@ -59,6 +56,24 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
       });
     }
   }, [initialValues]);
+
+  useEffect(() => {
+    let alive = true;
+    categoryApi
+      .getCategories()
+      .then((list) => {
+        if (!alive) return;
+        setCategories(list.filter((c) => c.isActive !== false));
+        setCategoriesState('ready');
+      })
+      .catch(() => alive && setCategoriesState('error'));
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  // An existing requirement may use a service that is no longer offered; keep it selectable so editing doesn't change it silently.
+  const legacyCategory = formData.category && categoriesState === 'ready' && !categories.some((c) => c.name === formData.category) ? formData.category : null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -77,7 +92,8 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
   };
 
   const handleFinalSubmit = (status: 'Open' | 'Draft') => {
-    onSubmit(formData, status);
+    const match = categories.find((c) => c.name === formData.category);
+    onSubmit({ ...formData, categoryId: match?.id }, status);
   };
 
   const stepsList = [
@@ -162,14 +178,29 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
+                disabled={categoriesState !== 'ready'}
                 className="dbc-input bg-white"
               >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
+                <option value="" disabled>
+                  {categoriesState === 'loading' ? 'Loading services…' : categoriesState === 'error' ? 'Services unavailable' : 'Select a service'}
+                </option>
+                {legacyCategory && <option value={legacyCategory}>{legacyCategory} (no longer offered)</option>}
+                {WORKFORCE_GROUPS.map((group) => {
+                  const items = categories.filter((c) => c.categoryType === group.type);
+                  return items.length ? (
+                    <optgroup key={group.type} label={group.label}>
+                      {items.map((cat) => (
+                        <option key={cat.id} value={cat.name}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ) : null;
+                })}
               </select>
+              {categoriesState === 'error' && (
+                <p className="dbc-error-text" role="alert">We couldn't load the service list. Please check your connection and try again.</p>
+              )}
             </div>
             <p className="text-2xs text-stone-500 font-semibold leading-relaxed">
               Selecting the appropriate category ensures your requirements are visible to matching verified providers.
@@ -295,7 +326,7 @@ export function RequirementForm({ initialValues, onSubmit, onCancel }: Requireme
             {step < 5 ? (
               <button
                 onClick={nextStep}
-                disabled={step === 1 && !formData.title.trim()}
+                disabled={(step === 1 && !formData.title.trim()) || (step === 2 && !formData.category)}
                 className="dbc-btn dbc-btn-md dbc-btn-primary"
               >
                 Continue

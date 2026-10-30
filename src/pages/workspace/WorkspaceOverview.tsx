@@ -49,6 +49,8 @@ interface OptionItem {
   to: string;
   icon: keyof typeof ICONS;
   meta?: string;
+  /** Longer status label: shown under the text on phones, at the right from sm up. */
+  status?: string;
 }
 
 const rowClass =
@@ -64,7 +66,9 @@ function OptionRow({ item }: { item: OptionItem }) {
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-semibold text-stone-900 break-words">{item.label}</span>
           {item.description && <span className="block text-xs text-stone-600 break-words">{item.description}</span>}
+          {item.status && <span className="mt-1 inline-block rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-stone-700 sm:hidden">{item.status}</span>}
         </span>
+        {item.status && <span className="hidden shrink-0 rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-stone-700 sm:inline-block">{item.status}</span>}
         {item.meta && <span className="shrink-0 rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-stone-700">{item.meta}</span>}
         <Icon name="chevron" className="h-4 w-4 shrink-0 text-stone-500 group-hover:text-stone-800" />
       </Link>
@@ -114,12 +118,8 @@ export default function WorkspaceOverview() {
 
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(' ').trim();
   const displayName = fullName || user?.email || 'Your account';
-  const initials = (fullName || user?.email || 'U')
-    .split(/\s+/)
-    .map((p) => p[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
+  // Same initials rule as the workspace header avatar, so both match on screen.
+  const initials = (user?.firstName || user?.email || 'U').slice(0, 2).toUpperCase();
   const pct = completion ? Math.max(0, Math.min(100, Math.round(completion.percentage))) : null;
   const complete = pct === 100;
 
@@ -150,22 +150,22 @@ export default function WorkspaceOverview() {
       {/* Profile header */}
       <section aria-label="Profile summary" className="rounded-2xl border border-stone-200 bg-white p-5 shadow-xs sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="flex min-w-0 flex-1 items-center gap-4">
+          <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
             {user?.profileImageUrl ? (
-              <img src={user.profileImageUrl} alt="" className="h-16 w-16 shrink-0 rounded-full object-cover" />
+              <img src={user.profileImageUrl} alt="" className="h-14 w-14 shrink-0 rounded-full object-cover sm:h-16 sm:w-16" />
             ) : (
-              <span aria-hidden="true" className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-emerald-700 text-lg font-bold text-white">
+              <span aria-hidden="true" className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-700 text-base font-bold text-white sm:h-16 sm:w-16 sm:text-lg">
                 {initials}
               </span>
             )}
             <div className="min-w-0">
-              <h1 className="text-xl font-bold text-stone-900 break-words font-display">{displayName}</h1>
+              <h1 className="text-lg font-bold leading-snug text-stone-900 [overflow-wrap:anywhere] font-display sm:text-xl">{displayName}</h1>
               <div className="mt-1 space-y-0.5 text-sm text-stone-600">
                 {user?.phone && (
-                  <p className="flex items-center gap-1.5 break-all"><Icon name="phone" className="h-3.5 w-3.5 shrink-0" />{user.phone}</p>
+                  <p className="flex items-start gap-1.5"><Icon name="phone" className="mt-[3px] h-3.5 w-3.5 shrink-0" /><span className="min-w-0 [overflow-wrap:anywhere]">{user.phone}</span></p>
                 )}
                 {user?.email && fullName && (
-                  <p className="flex items-center gap-1.5 break-all"><Icon name="mail" className="h-3.5 w-3.5 shrink-0" />{user.email}</p>
+                  <p className="flex items-start gap-1.5"><Icon name="mail" className="mt-[3px] h-3.5 w-3.5 shrink-0" /><span className="min-w-0 [overflow-wrap:anywhere]">{user.email}</span></p>
                 )}
               </div>
             </div>
@@ -178,9 +178,9 @@ export default function WorkspaceOverview() {
         {pct !== null && !complete && (
           <div className="mt-5 rounded-xl bg-stone-50 p-4">
             <div className="flex items-center justify-between gap-3 text-sm">
-              <span className="font-semibold text-stone-900">Profile {pct}% complete</span>
+              <span className="min-w-0 font-semibold text-stone-900">Profile {pct}% complete</span>
               {completion && completion.missingFields.length > 0 && (
-                <span className="text-xs text-stone-600">{completion.missingFields.length} item{completion.missingFields.length === 1 ? '' : 's'} left</span>
+                <span className="shrink-0 whitespace-nowrap text-xs text-stone-600">{completion.missingFields.length} item{completion.missingFields.length === 1 ? '' : 's'} left</span>
               )}
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-stone-200" role="progressbar" aria-label="Profile completion" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
@@ -247,7 +247,7 @@ export default function WorkspaceOverview() {
                     description: [p.provider?.businessName || p.provider?.fullName, 'Documents, milestones & timeline'].filter(Boolean).join(' · '),
                     to: `/projects/${p.id}`,
                     icon: 'building',
-                    meta: formatStatus(p.status),
+                    status: formatStatus(p.status),
                   }}
                 />
               ))}

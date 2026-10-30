@@ -54,6 +54,7 @@ interface RequirementFormData {
   title: string;
   description: string;
   category: string;
+  categoryId?: number;
   budgetMin: number;
   budgetMax: number;
   city: string;
@@ -137,6 +138,7 @@ export default function WorkspaceRequirements() {
             title: formData.title,
             description: formData.description,
             serviceCategory: formData.category,
+            ...(formData.categoryId ? { serviceCategoryId: formData.categoryId } : {}),
             location: `${formData.address}, ${formData.city}`,
             budgetMin: formData.budgetMin,
             budgetMax: formData.budgetMax,
@@ -162,6 +164,7 @@ export default function WorkspaceRequirements() {
           title: formData.title,
           description: formData.description,
           serviceCategory: formData.category,
+          ...(formData.categoryId ? { serviceCategoryId: formData.categoryId } : {}),
           location: `${formData.address}, ${formData.city}`,
           budgetMin: formData.budgetMin,
           budgetMax: formData.budgetMax,

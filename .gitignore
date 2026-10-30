@@ -62,3 +62,6 @@ lerna-debug.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Local snapshots written by prisma/migrate_service_catalog.ts
+prisma/backups/

@@ -11,6 +11,8 @@ export interface ProviderSearchParams {
   isFeatured?: boolean;
   canProvideServices?: boolean;
   canProvideConsultation?: boolean;
+  /** Filter by workforce group (category type). */
+  workforce?: 'WHITE_COLLAR' | 'BLUE_COLLAR';
   sort?: 'relevance' | 'rating' | 'experience' | 'price_asc' | 'price_desc' | 'newest';
   cursor?: string;
   limit?: number;

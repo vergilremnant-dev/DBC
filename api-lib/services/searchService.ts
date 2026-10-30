@@ -1,4 +1,21 @@
 import { db } from '../utils/db.js';
+import { resolveServices, type Workforce } from '../utils/serviceCatalog.js';
+
+export const MAX_SEARCH_LIMIT = 100;
+export const DEFAULT_SEARCH_LIMIT = 20;
+
+/** Active (customer-facing) category ids for the catalog services a query resolves to. */
+export async function resolveCategoryIds(query: string, workforce?: Workforce): Promise<number[]> {
+  const slugs = resolveServices(query, { workforce }).flatMap((m) => [m.service.slug, ...(m.service.aliasSlugs ?? [])]);
+  if (!slugs.length) return [];
+  const rows = await db.serviceCategory.findMany({
+    where: { slug: { in: slugs }, isActive: true, deletedAt: null },
+    select: { id: true, slug: true },
+  });
+  // Best match first.
+  const rank = (slug: string) => slugs.indexOf(slug);
+  return [...rows].sort((a: { slug: string }, b: { slug: string }) => rank(a.slug) - rank(b.slug)).map((r: { id: number }) => r.id);
+}
 
 export interface ProviderSearchParams {
   search?: string;
@@ -10,21 +27,32 @@ export interface ProviderSearchParams {
   isFeatured?: boolean;
   canProvideServices?: boolean;
   canProvideConsultation?: boolean;
+  /** WHITE_COLLAR | BLUE_COLLAR — filters by the provider's category type. */
+  workforce?: Workforce;
   sort?: 'relevance' | 'rating' | 'experience' | 'price_asc' | 'price_desc' | 'newest';
   cursor?: string;
   limit?: number;
 }
 
 export async function searchProviders(params: ProviderSearchParams) {
-  const limit = params.limit ? Number(params.limit) : 10;
-  const whereClause: any = {};
+  const requested = Number(params.limit);
+  const limit = Number.isFinite(requested) && requested > 0 ? Math.min(Math.floor(requested), MAX_SEARCH_LIMIT) : DEFAULT_SEARCH_LIMIT;
 
-  // Filters mapping
-  if (params.search) {
+  // Public discovery only shows providers whose category is active (retired services stay hidden;
+  // their providers and history are untouched and still reachable by direct profile link).
+  const whereClause: any = {
+    category: { isActive: true, deletedAt: null, ...(params.workforce ? { categoryType: params.workforce } : {}) },
+  };
+
+  // Free text: providers in any matching service category, or whose own name/business/description matches.
+  const search = params.search?.trim();
+  if (search) {
+    const categoryIds = await resolveCategoryIds(search, params.workforce);
     whereClause.OR = [
-      { fullName: { contains: params.search, mode: 'insensitive' } },
-      { businessName: { contains: params.search, mode: 'insensitive' } },
-      { description: { contains: params.search, mode: 'insensitive' } },
+      ...(categoryIds.length ? [{ categoryId: { in: categoryIds } }] : []),
+      { fullName: { contains: search, mode: 'insensitive' } },
+      { businessName: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
     ];
   }
 
@@ -63,11 +91,6 @@ export async function searchProviders(params: ProviderSearchParams) {
     whereClause.canProvideConsultation = params.canProvideConsultation;
   }
 
-  // Cursor pagination
-  if (params.cursor) {
-    whereClause.id = { gt: params.cursor };
-  }
-
   // Sorting
   const orderBy: any[] =
     params.sort === 'rating'
@@ -88,10 +111,12 @@ export async function searchProviders(params: ProviderSearchParams) {
     ];
 
   // Fetch take limit + 1 to check if another page is available
+  // Cursor pagination: Prisma cursors follow the orderBy (always ending in id), so pages never skip or repeat.
   const providers = await db.providerProfile.findMany({
     where: whereClause,
     orderBy,
     take: limit + 1,
+    ...(params.cursor ? { cursor: { id: params.cursor }, skip: 1 } : {}),
     include: {
       category: true,
       user: {
@@ -103,16 +128,10 @@ export async function searchProviders(params: ProviderSearchParams) {
     },
   });
 
-  let nextCursor: string | null = null;
   const hasMore = providers.length > limit;
-
-  if (hasMore) {
-    // Remove the extra item, use its ID as next cursor
-    const lastItem = providers.pop();
-    if (lastItem) {
-      nextCursor = lastItem.id;
-    }
-  }
+  if (hasMore) providers.pop();
+  // The cursor is the last item returned; the next page starts right after it.
+  const nextCursor: string | null = hasMore && providers.length ? providers[providers.length - 1].id : null;
 
   return {
     success: true,
@@ -128,18 +147,15 @@ export async function globalSearch(keyword: string) {
     return { success: true, categories: [], providers: [] };
   }
 
-  const [categories, providers] = await Promise.all([
-    db.serviceCategory.findMany({
-      where: {
-        name: { contains: cleanKeyword, mode: 'insensitive' },
-        isActive: true,
-        deletedAt: null,
-      },
-      take: 5,
-    }),
+  const categoryIds = await resolveCategoryIds(cleanKeyword);
+  const [categoryRows, providers] = await Promise.all([
+    categoryIds.length
+      ? db.serviceCategory.findMany({ where: { id: { in: categoryIds }, isActive: true, deletedAt: null } })
+      : Promise.resolve([]),
     db.providerProfile.findMany({
       where: {
         verificationStatus: 'VERIFIED',
+        category: { isActive: true, deletedAt: null },
         OR: [
           { fullName: { contains: cleanKeyword, mode: 'insensitive' } },
           { businessName: { contains: cleanKeyword, mode: 'insensitive' } },
@@ -151,6 +167,12 @@ export async function globalSearch(keyword: string) {
       take: 5,
     }),
   ]);
+
+  // Keep the resolver's relevance order.
+  const categories = categoryIds
+    .map((id) => (categoryRows as Array<{ id: number }>).find((c) => c.id === id))
+    .filter(Boolean)
+    .slice(0, 5);
 
   return {
     success: true,

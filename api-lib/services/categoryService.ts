@@ -1,5 +1,6 @@
 import { db } from '../utils/db.js';
 import { CategoryType } from '@prisma/client';
+import { sortCategoriesForDisplay } from '../utils/serviceCatalog.js';
 
 export interface CategoryInput {
   name: string;
@@ -14,11 +15,13 @@ export interface CategoryInput {
   displayOrder?: number;
 }
 
+/** Active categories: white-collar group first, then blue-collar, each in display order. */
 export async function getActiveCategories() {
-  return await db.serviceCategory.findMany({
+  const rows = await db.serviceCategory.findMany({
     where: { isActive: true, deletedAt: null },
-    orderBy: { displayOrder: 'asc' },
+    orderBy: [{ displayOrder: 'asc' }, { id: 'asc' }],
   });
+  return sortCategoriesForDisplay(rows);
 }
 
 export async function getCategoryTree() {

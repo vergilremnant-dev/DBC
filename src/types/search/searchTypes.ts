@@ -25,6 +25,14 @@ export interface SearchProvidersResponse {
   hasMore: boolean;
 }
 
+/** GET /api/search/suggestions — services resolved by the backend catalog resolver. */
+export interface SearchSuggestions {
+  categories: Array<{ id: number; name: string; slug: string; type: 'category'; categoryType?: 'WHITE_COLLAR' | 'BLUE_COLLAR' }>;
+  professionals: Array<{ id: string; name: string; businessName: string | null; type: 'professional' }>;
+  locations: string[];
+  popularSearches: string[];
+}
+
 export interface GlobalSearchResponse {
   success: boolean;
   categories: ServiceCategory[];

@@ -27,11 +27,18 @@ describe('Module 70 — Mobile Viewport, Horizontal Overflow & Responsive Layout
     expect(content).toContain('max-w-[calc(100vw-2rem)]');
   });
 
-  it('verifies PublicMarketplace hero inputs prevent auto-zoom and dropdowns specify max-width', () => {
+  it('verifies marketplace search inputs prevent auto-zoom and suggestions stay within the viewport', () => {
     const content = fs.readFileSync(marketplacePath, 'utf-8');
-    // Hero search input has 16px (text-base) on mobile to prevent iOS auto-zoom
-    expect(content).toContain('text-base sm:text-xs');
-    // Dropdowns use max-width calc to prevent horizontal viewport spilling
-    expect(content).toContain('max-w-[calc(100vw-2rem)]');
+    const search = fs.readFileSync(path.join(rootDir, 'src/components/marketplace/ServiceSearch.tsx'), 'utf-8');
+    const city = fs.readFileSync(path.join(rootDir, 'src/components/marketplace/CitySelect.tsx'), 'utf-8');
+    // The marketplace hero uses the shared search + city controls
+    expect(content).toContain('<ServiceSearch');
+    expect(content).toContain('<CitySelect');
+    // 16px (text-base) inputs on mobile prevent iOS auto-zoom
+    expect(search).toContain('text-base');
+    expect(city).toContain('text-base');
+    expect(city).toContain('sm:text-sm');
+    // Suggestions dropdown is anchored to the search box width (left-0 right-0), never wider than the viewport
+    expect(search).toContain('absolute left-0 right-0');
   });
 });

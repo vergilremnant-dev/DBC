@@ -7,6 +7,7 @@ import {
   getRelatedServices
 } from '../../services/recommendationService.js';
 import { getCached, setCached } from '../../utils/cache.js';
+import { toPublicProviders } from '../../utils/publicProvider.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = req.method;
@@ -30,19 +31,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     switch (type) {
       case 'trending':
-        data = await getTrendingProfessionals(parsedLimit);
+        data = toPublicProviders(await getTrendingProfessionals(parsedLimit));
         break;
       case 'most-booked':
         data = await getMostBookedServices(parsedLimit);
         break;
       case 'newly-verified':
-        data = await getNewlyVerifiedProfessionals(parsedLimit);
+        data = toPublicProviders(await getNewlyVerifiedProfessionals(parsedLimit));
         break;
       case 'similar':
         if (!providerId) {
           return res.status(400).json({ success: false, message: 'Provider ID is required for similar recommendations.' });
         }
-        data = await getSimilarProfessionals(String(providerId), parsedLimit);
+        data = toPublicProviders(await getSimilarProfessionals(String(providerId), parsedLimit));
         break;
       case 'related-services':
         if (!categoryId) {

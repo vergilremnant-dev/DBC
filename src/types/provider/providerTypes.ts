@@ -1,6 +1,7 @@
 export interface ProviderProfile {
   id: string;
-  userId: string;
+  /** Not included in public marketplace responses. */
+  userId?: string;
   fullName: string;
   businessName: string | null;
   profileImage: string | null;
@@ -11,8 +12,10 @@ export interface ProviderProfile {
   state: string;
   serviceAreas: string | null;
   categoryId: number;
-  phoneNumber: string;
-  email: string;
+  /** Profile endpoint only, masked unless the viewer is entitled. Never in search results. */
+  phoneNumber?: string;
+  /** Not included in public marketplace responses. */
+  email?: string;
   verificationStatus: 'PENDING' | 'VERIFIED' | 'REJECTED';
   averageRating: number;
   totalReviews: number;

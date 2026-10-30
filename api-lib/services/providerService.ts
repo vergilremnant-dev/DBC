@@ -1,5 +1,6 @@
 import { db } from '../utils/db.js';
 import { Role, VerificationStatus } from '@prisma/client';
+import { toPublicProviders } from '../utils/publicProvider.js';
 
 export interface ProviderProfileInput {
   fullName: string;
@@ -90,7 +91,8 @@ export async function listProviders(filters: ProviderQueryFilters) {
     page,
     limit,
     totalPages: Math.ceil(total / limit),
-    data,
+    // Public DTO: no login email, user id or phone number.
+    data: toPublicProviders(data),
   };
 }
 

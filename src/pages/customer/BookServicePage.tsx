@@ -165,13 +165,22 @@ export function BookServicePage() {
       return;
     }
 
+    // The service always comes from the selected professional (or the link); never guess a category.
+    const resolvedCategoryId = categoryId || selectedProvider?.categoryId || 0;
+    if (!resolvedCategoryId) {
+      setError('We could not determine the service for this request. Please start again from the professional\'s profile.');
+      setLoading(false);
+      submittingRef.current = false;
+      return;
+    }
+
     try {
       const fullNotes = `Expected Timeline: ${timeline}\nBudget Range: ${budgetRange}\n\nProject Description:\n${notes}`;
       const numericBudget = BUDGET_MAPPING[budgetRange] || null;
 
       const response = await bookingApi.createBooking({
         providerId,
-        categoryId: categoryId || 1,
+        categoryId: resolvedCategoryId,
         preferredDate: date,
         preferredTime: time,
         customerAddress: address,

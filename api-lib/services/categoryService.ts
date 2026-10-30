@@ -64,9 +64,10 @@ export async function getFeaturedCategories() {
   });
 }
 
+/** Looks up by slug, or by numeric id (the route is /api/categories/:slugOrId). */
 export async function getCategoryBySlug(slug: string) {
   return await db.serviceCategory.findFirst({
-    where: { slug, deletedAt: null },
+    where: /^\d+$/.test(slug) ? { id: Number(slug), deletedAt: null } : { slug, deletedAt: null },
     include: {
       children: {
         where: { isActive: true, deletedAt: null },

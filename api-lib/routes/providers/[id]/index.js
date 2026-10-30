@@ -1,4 +1,5 @@
 import { getProviderById } from '../../../services/providerService.js';
+import { toPublicProvider } from '../../../utils/publicProvider.js';
 export default async function handler(req, res) {
     const { id } = req.query;
     const paramId = Array.isArray(id) ? id[0] : id;
@@ -22,7 +23,8 @@ export default async function handler(req, res) {
                 profile.phoneNumber = profile.phoneNumber.substring(0, 3) + 'XXXXXX' + profile.phoneNumber.substring(profile.phoneNumber.length - 2);
             }
         }
-        return res.status(200).json({ success: true, data: profile });
+        // Public DTO: phone (masked above unless entitled) is the only contact field exposed.
+        return res.status(200).json({ success: true, data: toPublicProvider(profile, { includePhone: true }) });
     }
     catch (err) {
         const message = err.message || '';

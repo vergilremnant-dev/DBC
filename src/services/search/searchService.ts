@@ -3,11 +3,21 @@ import type {
   ProviderSearchParams,
   SearchProvidersResponse,
   GlobalSearchResponse,
+  SearchSuggestions,
 } from '../../types/search/searchTypes';
 
 const searchCache: Record<string, SearchProvidersResponse> = {};
 
 export const searchApi = {
+  /** Typeahead suggestions (services via synonyms/partial/spelling matching, professionals, locations). */
+  async getSuggestions(q: string, signal?: AbortSignal): Promise<SearchSuggestions> {
+    const response = await axiosClient.get<{ success: boolean; suggestions: SearchSuggestions }>('/api/search/suggestions', {
+      params: { q },
+      signal,
+    });
+    return response.data.suggestions;
+  },
+
   async searchProviders(params: ProviderSearchParams): Promise<SearchProvidersResponse> {
     const cacheKey = JSON.stringify(params);
     if (searchCache[cacheKey]) {

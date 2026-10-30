@@ -1,5 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { getProviderById } from '../../../services/providerService.js';
+import { toPublicProvider } from '../../../utils/publicProvider.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { id } = req.query;
@@ -32,7 +33,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    return res.status(200).json({ success: true, data: profile });
+    // Public DTO: phone (masked above unless entitled) is the only contact field exposed.
+    return res.status(200).json({ success: true, data: toPublicProvider(profile, { includePhone: true }) });
   } catch (err: any) {
     const message = err.message || '';
     if (message.includes('not found')) {

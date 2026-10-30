@@ -32,6 +32,8 @@ import { ProjectWorkspacePage } from './pages/shared/ProjectWorkspacePage';
 import { AppointmentSchedulingPage } from './pages/shared/AppointmentSchedulingPage';
 import { CollaborationWorkspacePage } from './pages/shared/CollaborationWorkspacePage';
 import { CategoryProvidersPage } from './pages/CategoryProvidersPage';
+import { ServicesCatalogPage } from './pages/ServicesCatalogPage';
+import { ServiceProfessionalsPage } from './pages/ServiceProfessionalsPage';
 import { SearchResultsPage } from './pages/SearchResultsPage';
 import { KnowMorePage } from './pages/KnowMorePage';
 import { PublicProfessionalProfilePage } from './pages/PublicProfessionalProfilePage';
@@ -101,6 +103,9 @@ function App() {
       <Route element={<PublicLayout />}>
         {/* The root page is the single unified dashboard for everyone */}
         <Route path="/" element={<PublicMarketplace />} />
+        <Route path="/services" element={<ServicesCatalogPage />} />
+        <Route path="/services/:slug" element={<ServiceProfessionalsPage />} />
+        {/* Legacy id-based links redirect to /services/:slug */}
         <Route path="/category/:id/providers" element={<CategoryProvidersPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
         <Route path="/professional/:id" element={<PublicProfessionalProfilePage />} />

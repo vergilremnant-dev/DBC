@@ -103,6 +103,13 @@ export function PublicProfessionalProfilePage() {
   }
 
   const displayName = provider.businessName || provider.fullName;
+  const portfolio = (Array.isArray(provider.portfolios) ? provider.portfolios : []) as Array<{
+    id: string;
+    title: string;
+    description?: string | null;
+    projectType?: string | null;
+    imageUrl?: string | null;
+  }>;
   const isVerified = provider.verificationStatus === 'VERIFIED';
 
   return (
@@ -113,10 +120,10 @@ export function PublicProfessionalProfilePage() {
         <div className="absolute inset-0 bg-arch-grid opacity-30" />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 relative z-10">
           <Link
-            to="/search"
+            to={provider.category?.slug ? `/services/${provider.category.slug}` : '/search'}
             className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-300 hover:text-white transition bg-stone-950/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10"
           >
-            ← Back to Search Results
+            ← {provider.category?.name ? `More ${provider.category.name} professionals` : 'Back to search'}
           </Link>
         </div>
       </div>
@@ -157,9 +164,18 @@ export function PublicProfessionalProfilePage() {
               <div className="flex flex-wrap items-center gap-3 text-xs text-stone-600 font-medium pt-1">
                 <span>📍 {provider.city}, {provider.state}</span>
                 <span>•</span>
-                <span>💼 {provider.experienceYears || 5}+ Years Experience</span>
-                <span>•</span>
-                <span className="text-amber-800 font-bold">⭐ {provider.averageRating ? provider.averageRating.toFixed(1) : 'New'}</span>
+                {provider.experienceYears > 0 && (
+                  <>
+                    <span>•</span>
+                    <span>💼 {provider.experienceYears} years experience</span>
+                  </>
+                )}
+                {provider.totalReviews > 0 && provider.averageRating > 0 && (
+                  <>
+                    <span>•</span>
+                    <span className="text-amber-800 font-bold">⭐ {provider.averageRating.toFixed(1)} ({provider.totalReviews} review{provider.totalReviews === 1 ? '' : 's'})</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -170,7 +186,7 @@ export function PublicProfessionalProfilePage() {
               onClick={handleStartProjectRequest}
               className="dbc-btn dbc-btn-lg dbc-btn-primary shadow-apple-sm min-h-[44px] py-3 px-6 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer"
             >
-              Start Project Request →
+              Request a Quote
             </button>
           </div>
         </div>
@@ -185,7 +201,7 @@ export function PublicProfessionalProfilePage() {
             <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-3 shadow-xs">
               <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">About Professional</h3>
               <p className="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
-                {provider.description || 'Verified coordination specialist offering certified layout drafting, architectural oversight, and on-site construction execution.'}
+                {provider.description || 'This professional has not added a description yet.'}
               </p>
             </div>
 
@@ -193,7 +209,7 @@ export function PublicProfessionalProfilePage() {
             <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
               <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">Services & Specializations</h3>
               <div className="flex flex-wrap gap-2">
-                {(provider.serviceAreas ? provider.serviceAreas.split(',') : ['Civil Engineering', 'Design Coordination', 'Structural Audits', 'Site Inspection', 'Permit Assistance']).map((skill) => (
+                {(provider.serviceAreas ? provider.serviceAreas.split(',').filter((x) => x.trim()) : [provider.category?.name].filter((x): x is string => !!x)).map((skill) => (
                   <span
                     key={skill}
                     className="text-xs font-semibold bg-stone-100 text-stone-800 border border-stone-200 px-3 py-1.5 rounded-xl"
@@ -204,41 +220,32 @@ export function PublicProfessionalProfilePage() {
               </div>
             </div>
 
-            {/* Portfolio Showcase */}
-            <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
-              <div className="flex justify-between items-center">
-                <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">Featured Projects Gallery</h3>
-                <span className="text-2xs font-bold uppercase text-stone-500">Verified Work</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    title: 'Villa Structural Layout & Foundation',
-                    category: 'Residential Build',
-                    img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
-                  },
-                  {
-                    title: 'Modern Living Room Renovation',
-                    category: 'Interior & Fitout',
-                    img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80',
-                  },
-                ].map((proj, idx) => (
-                  <div key={idx} className="border border-stone-200 rounded-2xl overflow-hidden shadow-2xs group">
-                    <div className="h-36 overflow-hidden bg-stone-100">
-                      <img src={proj.img} alt={proj.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+            {/* Portfolio — the professional's own projects only */}
+            {portfolio.length > 0 && (
+              <div className="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
+                <h3 className="text-xs font-black uppercase tracking-wider text-stone-500">Past Projects</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {portfolio.map((proj) => (
+                    <div key={proj.id} className="border border-stone-200 rounded-2xl overflow-hidden shadow-2xs">
+                      {proj.imageUrl && (
+                        <div className="h-36 overflow-hidden bg-stone-100">
+                          <img src={proj.imageUrl} alt={proj.title} loading="lazy" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      <div className="p-3.5 space-y-1 bg-white">
+                        {proj.projectType && (
+                          <span className="text-3xs font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 inline-block">
+                            {proj.projectType}
+                          </span>
+                        )}
+                        <h4 className="text-xs font-bold text-stone-900 font-display leading-snug">{proj.title}</h4>
+                        {proj.description && <p className="text-xs text-stone-600 line-clamp-3">{proj.description}</p>}
+                      </div>
                     </div>
-                    <div className="p-3.5 space-y-1 bg-white">
-                      <span className="text-3xs font-black uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 inline-block">
-                        {proj.category}
-                      </span>
-                      <h4 className="text-xs font-bold text-stone-900 font-display leading-snug">{proj.title}</h4>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-
+            )}
           </div>
 
           {/* Right Sidebar */}
@@ -273,7 +280,7 @@ export function PublicProfessionalProfilePage() {
                 onClick={handleStartProjectRequest}
                 className="w-full dbc-btn dbc-btn-primary py-3 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm mt-2"
               >
-                Discuss Project / Request Quote
+                Request a Quote
               </button>
             </div>
 

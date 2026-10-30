@@ -1,5 +1,6 @@
 import { db } from '../utils/db.js';
 import { resolveServices, type Workforce } from '../utils/serviceCatalog.js';
+import { toPublicProvider, toPublicProviders } from '../utils/publicProvider.js';
 
 export const MAX_SEARCH_LIMIT = 100;
 export const DEFAULT_SEARCH_LIMIT = 20;
@@ -117,15 +118,7 @@ export async function searchProviders(params: ProviderSearchParams) {
     orderBy,
     take: limit + 1,
     ...(params.cursor ? { cursor: { id: params.cursor }, skip: 1 } : {}),
-    include: {
-      category: true,
-      user: {
-        select: {
-          id: true,
-          email: true,
-        },
-      },
-    },
+    include: { category: true },
   });
 
   const hasMore = providers.length > limit;
@@ -135,7 +128,8 @@ export async function searchProviders(params: ProviderSearchParams) {
 
   return {
     success: true,
-    data: providers,
+    // Public DTO: no login email, user id or phone number.
+    data: toPublicProviders(providers),
     nextCursor,
     hasMore,
   };
@@ -177,6 +171,6 @@ export async function globalSearch(keyword: string) {
   return {
     success: true,
     categories,
-    providers,
+    providers: toPublicProviders(providers),
   };
 }

@@ -14,8 +14,9 @@ import { NotificationButton } from './NotificationButton';
 import { ProfileMenu } from './ProfileMenu';
 import { MobileDrawer } from './MobileDrawer';
 import { NavigationGroup } from './NavigationGroup';
+import { SUPPORTED_CITIES } from '../../config/locations';
 
-const POPULAR_CITIES = ['Hyderabad', 'Chennai', 'Bangalore', 'Mumbai', 'Delhi'];
+const POPULAR_CITIES = [...SUPPORTED_CITIES];
 
 export function Navbar() {
   const { isAuthenticated, user } = useAuth();
@@ -158,14 +159,15 @@ export function Navbar() {
       // Customer role (default for authenticated customer)
       return [
         { label: 'Marketplace', to: '/' },
+        { label: 'Services', to: '/services' },
         { label: 'Dashboard', to: '/workspace/overview' },
         { label: 'Subscription', to: '/subscriptions' },
       ];
     }
     // Public / Logged-out navigation
     return [
-      { label: 'Find Services', to: '/' },
-      { label: 'Browse Professionals', to: '/search' },
+      { label: 'Services', to: '/services' },
+      { label: 'Professionals', to: '/search' },
       { label: 'How It Works', to: '/know-more' },
       { label: 'Premium Plans', to: '/subscriptions' },
     ];

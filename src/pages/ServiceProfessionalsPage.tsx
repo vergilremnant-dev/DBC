@@ -106,6 +106,9 @@ export function ServiceProfessionalsPage() {
             <p className="text-xs font-semibold uppercase tracking-wider text-stone-600">{group}</p>
             <h1 className="text-2xl font-bold text-stone-900 font-display [overflow-wrap:anywhere]">{category.name}</h1>
             {category.description && <p className="mt-0.5 text-sm text-stone-600">{category.description}</p>}
+            <Link to={`/request-project?service=${encodeURIComponent(category.slug)}${city ? `&city=${encodeURIComponent(city)}` : ''}`} className="dbc-btn dbc-btn-primary mt-3 min-h-[44px]">
+              Request quotes
+            </Link>
           </div>
         </div>
         <div className="grid w-full grid-cols-1 gap-2.5 sm:grid-cols-[12rem_1fr] lg:max-w-lg">

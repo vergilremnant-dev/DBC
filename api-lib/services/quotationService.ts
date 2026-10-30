@@ -2,6 +2,26 @@ import { db } from '../utils/db.js';
 import { QuotationStatus, PricingModel, RequirementStatus } from '@prisma/client';
 import { validateTransition } from './quotationWorkflow.js';
 import { calculateAndValidatePricing } from './pricingEngine.js';
+import { isValidTransition as isValidRequirementTransition } from './workflowService.js';
+import { QUOTABLE_STATUSES, getProviderAccess, notify, requestReference } from './projectRequestService.js';
+
+/**
+ * Advance a requirement along the validated requirement state machine (inside a transaction),
+ * stepping through intermediate states where the workflow requires them. No-op if already past them.
+ */
+async function advanceRequirement(tx: any, requirementId: number, path: RequirementStatus[], userId: string, reason: string) {
+  const current = await tx.requirement.findUnique({ where: { id: requirementId }, select: { status: true } });
+  if (!current) return;
+  let status: RequirementStatus = current.status;
+  const start = path.indexOf(status);
+  if (start < 0) return;
+  for (const next of path.slice(start + 1)) {
+    if (!isValidRequirementTransition(status, next)) break;
+    await tx.requirement.update({ where: { id: requirementId }, data: { status: next } });
+    await tx.requirementHistory.create({ data: { requirementId, fromStatus: status, toStatus: next, changedById: userId, changeReason: reason } });
+    status = next;
+  }
+}
 
 export interface CreateQuotationInput {
   requirementId: number;
@@ -54,6 +74,15 @@ export async function createQuotation(providerId: string, userId: string, input:
 
   if (!requirement) {
     throw new Error('Requirement not found');
+  }
+
+  // Professionals can only quote requests they may see, while the request is still open for quotations.
+  if (!QUOTABLE_STATUSES.includes(requirement.status)) {
+    throw new Error('This request is no longer accepting quotations');
+  }
+  const access = await getProviderAccess(providerId, input.requirementId);
+  if (!access.allowed) {
+    throw new Error('Unauthorized: you do not have access to this request');
   }
 
   // Prevent multiple active quotes from same provider on same requirement
@@ -277,6 +306,31 @@ export async function transitionQuotationStatus(
       },
     });
 
+    // Submission: the customer's request moves to "quotation received" (validated path).
+    if (newStatus === QuotationStatus.SUBMITTED) {
+      if (!QUOTABLE_STATUSES.includes(existing.requirement.status)) {
+        throw new Error('This request is no longer accepting quotations');
+      }
+      await advanceRequirement(
+        tx,
+        existing.requirementId,
+        [RequirementStatus.PUBLISHED, RequirementStatus.PROVIDER_REVIEW, RequirementStatus.QUOTATION_RECEIVED],
+        userId,
+        'Quotation submitted by professional',
+      );
+    }
+
+    // Customer opens a quotation: their request moves to "reviewing quotations".
+    if (newStatus === QuotationStatus.VIEWED && isCustomer) {
+      await advanceRequirement(
+        tx,
+        existing.requirementId,
+        [RequirementStatus.QUOTATION_RECEIVED, RequirementStatus.CUSTOMER_REVIEW],
+        userId,
+        'Customer is reviewing quotations',
+      );
+    }
+
     // Handle acceptance side-effects
     if (newStatus === QuotationStatus.ACCEPTED) {
       // 1. Lock the Requirement
@@ -317,6 +371,16 @@ export async function transitionQuotationStatus(
 
     return updated;
   });
+
+  // Best-effort notifications after the transaction commits.
+  const ref = requestReference(existing.requirementId);
+  if (newStatus === QuotationStatus.SUBMITTED) {
+    await notify(existing.requirement.customer.userId, 'New quotation received', `A professional sent a quotation for ${ref}: ${existing.requirement.title}`);
+  } else if (newStatus === QuotationStatus.ACCEPTED) {
+    await notify(existing.provider.userId, 'Quotation accepted', `Your quotation for ${ref} was accepted. The project has been created.`);
+  } else if (newStatus === QuotationStatus.REJECTED && isCustomer) {
+    await notify(existing.provider.userId, 'Quotation declined', `The customer declined your quotation for ${ref}.`);
+  }
 
   return result;
 }

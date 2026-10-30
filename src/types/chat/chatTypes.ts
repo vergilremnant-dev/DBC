@@ -1,5 +1,8 @@
 export interface Conversation {
   id: string;
+  /** Linked project request (requirement), when the thread is about one. */
+  requirementId?: number | null;
+  conversationType?: string;
   bookingId: string | null;
   consultationBookingId: string | null;
   customerId: string;

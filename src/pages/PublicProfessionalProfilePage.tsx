@@ -17,7 +17,7 @@ export function PublicProfessionalProfilePage() {
 
   // Auth interceptor
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authMessage, setAuthMessage] = useState('');
+  const [authMessage] = useState('Please sign in to continue.');
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
 
   useEffect(() => {
@@ -47,18 +47,12 @@ export function PublicProfessionalProfilePage() {
   const handleStartProjectRequest = () => {
     if (!provider) return;
 
+    // The request form works for guests too (the draft is kept through sign-in before submitting).
     const action = () => {
-      navigate(`/book-service?providerId=${provider.id}&categoryId=${provider.categoryId || ''}`);
+      navigate(`/request-project?professional=${encodeURIComponent(provider.id)}${provider.category?.slug ? `&service=${encodeURIComponent(provider.category.slug)}` : ''}`);
     };
 
-    if (!isAuthenticated) {
-      setPendingAction(() => action);
-      setAuthMessage('Please sign in or create an account to start a project request with this professional.');
-      setIsAuthModalOpen(true);
-      return;
-    }
-
-    if (user?.role !== 'ROLE_CUSTOMER') {
+    if (isAuthenticated && user?.role !== 'ROLE_CUSTOMER') {
       setErrorMsg('Only registered customers can submit project requests.');
       return;
     }

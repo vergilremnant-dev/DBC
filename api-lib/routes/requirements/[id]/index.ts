@@ -1,6 +1,8 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken } from '../../../utils/auth.js';
 import { getRequirementById, updateRequirement, deleteRequirement } from '../../../services/requirementService.js';
+import { db } from '../../../utils/db.js';
+import { getProviderAccess, toProviderView, toCustomerView } from '../../../services/projectRequestService.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = req.method;
@@ -29,7 +31,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!requirement) {
         return res.status(404).json({ success: false, message: 'Requirement not found' });
       }
-      return res.status(200).json({ success: true, data: requirement });
+      // Owner and admins see the full request; professionals only with access, and with limited customer data.
+      if (user.role === 'ADMIN') return res.status(200).json({ success: true, data: requirement });
+      if (requirement.customer?.userId === user.id) return res.status(200).json({ success: true, data: toCustomerView(requirement) });
+      if (user.role === 'PROVIDER') {
+        const provider = await db.providerProfile.findFirst({ where: { userId: user.id }, select: { id: true } });
+        const access = provider ? await getProviderAccess(provider.id, requirementId) : null;
+        if (access?.allowed) return res.status(200).json({ success: true, data: toProviderView(requirement, access) });
+      }
+      return res.status(403).json({ success: false, message: 'Forbidden: You do not have access to this request' });
     }
 
     if (method === 'PUT') {

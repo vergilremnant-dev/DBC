@@ -3,6 +3,7 @@ import { verifyToken } from '../../utils/auth.js';
 import { db } from '../../utils/db.js';
 import { createRequirement } from '../../services/requirementService.js';
 import { RequirementStatus } from '@prisma/client';
+import { INVITE_CONVERSATION_TYPE, toProviderView } from '../../services/projectRequestService.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = req.method;
@@ -51,7 +52,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         budgetMin: Number(budgetMin),
         budgetMax: Number(budgetMax),
         preferredStartDate: preferredStartDate ? new Date(preferredStartDate) : null,
-        status: status as RequirementStatus,
+        // Clients may only create drafts or submitted/published requests; later states are workflow-driven.
+        status: ['DRAFT', 'SUBMITTED', 'PUBLISHED'].includes(String(status)) ? (status as RequirementStatus) : undefined,
         attachments,
       });
 
@@ -103,7 +105,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const userProfile = await db.user.findUnique({ where: { id: user.id } });
       
       if (userProfile?.role === 'PROVIDER') {
-        whereClause.status = status ? (status as RequirementStatus) : RequirementStatus.PUBLISHED;
+        // Providers browse open requests only (not drafts, other customers' later stages, or requests invited to others).
+        whereClause.status = RequirementStatus.PUBLISHED;
+        whereClause.conversations = { none: { conversationType: INVITE_CONVERSATION_TYPE } };
       } else if (userProfile?.role === 'CUSTOMER') {
         const customerProfile = await db.customerProfile.findUnique({ where: { userId: user.id } });
         whereClause.customerId = customerProfile?.id || 'non-existent';
@@ -148,7 +152,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       return res.status(200).json({
         success: true,
-        data: requirements,
+        // Professionals never receive customer records from the open feed.
+        data: userProfile?.role === 'PROVIDER' ? requirements.map((r) => toProviderView(r, { invited: false, engaged: false })) : requirements,
         nextCursor,
       });
     } catch (err: any) {

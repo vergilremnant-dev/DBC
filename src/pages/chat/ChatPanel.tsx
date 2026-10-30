@@ -27,6 +27,8 @@ export function ChatPanel() {
   // Read params for auto creation if redirected from bookings details
   const bookingIdParam = searchParams.get('bookingId');
   const consultationIdParam = searchParams.get('consultationId');
+  // Open a specific existing thread (e.g. from a project request): /chat?conversation=<id>
+  const conversationParam = searchParams.get('conversation');
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -57,7 +59,7 @@ export function ChatPanel() {
           const convo = await chatApi.createConversation({ consultationBookingId: consultationIdParam });
           await loadConversations(convo.id);
         } else {
-          await loadConversations();
+          await loadConversations(conversationParam || undefined);
         }
       } catch (err) {
         console.error('Failed to initialize target conversation', err);
@@ -66,7 +68,7 @@ export function ChatPanel() {
       }
     }
     initChat();
-  }, [bookingIdParam, consultationIdParam]);
+  }, [bookingIdParam, consultationIdParam, conversationParam]);
 
   // 2. Fetch Messages when Conversation changes
   useEffect(() => {

@@ -13,7 +13,8 @@ export type QuotationStatus =
   | 'EXPIRED'
   | 'ARCHIVED';
 
-export type PricingModel = 'FIXED' | 'MILESTONE_BASED' | 'HOURLY_ESTIMATE' | 'UNIT_PRICE';
+/** Matches the backend PricingModel enum. */
+export type PricingModel = 'FIXED' | 'HOURLY' | 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'MILESTONE_BASED' | 'CUSTOM';
 
 export interface QuotationProposal {
   title: string;
@@ -47,12 +48,17 @@ export interface Quotation {
   updatedAt: string;
   proposal?: QuotationProposal;
   milestones?: QuotationMilestone[];
+  /** Public professional fields only. */
   provider?: {
     id: string;
-    businessName: string;
-    contactPerson: string;
-    rating?: number;
-  };
+    fullName: string;
+    businessName: string | null;
+    city?: string;
+    profileImage?: string | null;
+    verificationStatus?: string;
+    category?: { name: string; slug: string } | null;
+  } | null;
+  attachments?: Array<{ id: number; fileName: string; fileUrl: string; fileType: string }>;
   requirement?: {
     id: number;
     title: string;

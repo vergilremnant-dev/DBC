@@ -3,6 +3,7 @@ import { verifyToken } from '../../utils/auth.js';
 import { db } from '../../utils/db.js';
 import { createQuotation } from '../../services/quotationService.js';
 import { QuotationStatus } from '@prisma/client';
+import { toPublicProvider } from '../../utils/publicProvider.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = req.method;
@@ -92,6 +93,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       if (status) {
+        // Customers never see drafts, even when filtering by status.
+        if (userProfile?.role === 'CUSTOMER' && status === QuotationStatus.DRAFT) {
+          return res.status(200).json({ success: true, data: [] });
+        }
         whereClause.status = status as QuotationStatus;
       }
 
@@ -109,7 +114,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       return res.status(200).json({
         success: true,
-        data: quotations,
+        // The professional is shown with public profile fields only (no login email or account ids).
+        data: quotations.map((q: any) => ({ ...q, provider: q.provider ? toPublicProvider(q.provider) : null })),
       });
     } catch (err: any) {
       return res.status(500).json({ success: false, message: err.message });

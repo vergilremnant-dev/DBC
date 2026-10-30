@@ -12,9 +12,9 @@ const initials = (name: string) =>
     .join('')
     .toUpperCase() || 'DB';
 
-/** Request-a-quote entry point. The request workflow itself is unchanged in this phase. */
-const quoteRequestPath = (p: Pick<ProviderProfile, 'id' | 'categoryId'>) =>
-  `/book-service?providerId=${encodeURIComponent(p.id)}&categoryId=${p.categoryId}`;
+/** Request-a-quote entry point: the structured project request form with this professional and service. */
+const quoteRequestPath = (p: Pick<ProviderProfile, 'id' | 'category'>) =>
+  `/request-project?professional=${encodeURIComponent(p.id)}${p.category?.slug ? `&service=${encodeURIComponent(p.category.slug)}` : ''}`;
 
 /**
  * Professional discovery card. Uses public profile fields only (no contact details, emails or account ids).

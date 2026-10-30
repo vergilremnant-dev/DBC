@@ -131,7 +131,7 @@ export default function WorkspaceOverview() {
   const count = (n: number | null) => (n === null ? undefined : String(n));
 
   const shortcuts: OptionItem[] = [
-    { label: 'Project Requests', to: '/workspace/bookings', icon: 'clipboard', meta: count(requestCount) },
+    { label: 'Project Requests', to: '/workspace/requests', icon: 'clipboard', meta: count(requirementCount) },
     { label: 'My Projects', to: '#my-projects', icon: 'building', meta: projects ? String(projects.length) : undefined },
     { label: 'Inbox', to: '/workspace/inbox', icon: 'chat' },
   ];
@@ -234,7 +234,7 @@ export default function WorkspaceOverview() {
               <p className="text-sm text-stone-700">
                 No projects yet. A project starts once you accept a professional's quotation; its documents, milestones and timeline will appear here.
               </p>
-              <Link to="/workspace/requirements" className="dbc-btn dbc-btn-primary dbc-btn-md min-h-[44px]">Post a requirement</Link>
+              <Link to="/services" className="dbc-btn dbc-btn-primary dbc-btn-md min-h-[44px]">Start a project request</Link>
             </div>
           )}
           {projects && projects.length > 0 && (
@@ -257,8 +257,8 @@ export default function WorkspaceOverview() {
       </section>
 
       <OptionGroup id="hub-workspace" title="Project workspace">
-        <OptionRow item={{ label: 'My Requirements', description: 'Post and manage project requirements', to: '/workspace/requirements', icon: 'file', meta: count(requirementCount) }} />
-        <OptionRow item={{ label: 'Project Requests', description: 'Track requests sent to professionals', to: '/workspace/bookings', icon: 'clipboard', meta: count(requestCount) }} />
+        <OptionRow item={{ label: 'Project Requests', description: 'Requests, messages and quotations', to: '/workspace/requests', icon: 'clipboard', meta: count(requirementCount) }} />
+        <OptionRow item={{ label: 'Earlier Bookings', description: 'Bookings made before project requests', to: '/workspace/bookings', icon: 'file', meta: count(requestCount) }} />
         <OptionRow item={{ label: 'Appointments', description: 'Consultations and site visits', to: '/appointments', icon: 'calendar' }} />
         <OptionRow item={{ label: 'Inbox', description: 'Messages with professionals', to: '/workspace/inbox', icon: 'chat' }} />
         <OptionRow item={{ label: 'Notifications', to: '/workspace/notifications', icon: 'bell' }} />

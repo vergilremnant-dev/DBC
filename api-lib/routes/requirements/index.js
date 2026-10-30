@@ -2,6 +2,7 @@ import { verifyToken } from '../../utils/auth.js';
 import { db } from '../../utils/db.js';
 import { createRequirement } from '../../services/requirementService.js';
 import { RequirementStatus } from '@prisma/client';
+import { INVITE_CONVERSATION_TYPE, toProviderView } from '../../services/projectRequestService.js';
 export default async function handler(req, res) {
     const method = req.method;
     if (method === 'POST') {
@@ -32,7 +33,8 @@ export default async function handler(req, res) {
                 budgetMin: Number(budgetMin),
                 budgetMax: Number(budgetMax),
                 preferredStartDate: preferredStartDate ? new Date(preferredStartDate) : null,
-                status: status,
+                // Clients may only create drafts or submitted/published requests; later states are workflow-driven.
+                status: ['DRAFT', 'SUBMITTED', 'PUBLISHED'].includes(String(status)) ? status : undefined,
                 attachments,
             });
             return res.status(201).json({
@@ -67,7 +69,9 @@ export default async function handler(req, res) {
             // Filter by status (providers see PUBLISHED, admins see everything, customers see their own)
             const userProfile = await db.user.findUnique({ where: { id: user.id } });
             if (userProfile?.role === 'PROVIDER') {
-                whereClause.status = status ? status : RequirementStatus.PUBLISHED;
+                // Providers browse open requests only (not drafts, other customers' later stages, or requests invited to others).
+                whereClause.status = RequirementStatus.PUBLISHED;
+                whereClause.conversations = { none: { conversationType: INVITE_CONVERSATION_TYPE } };
             }
             else if (userProfile?.role === 'CUSTOMER') {
                 const customerProfile = await db.customerProfile.findUnique({ where: { userId: user.id } });
@@ -109,7 +113,8 @@ export default async function handler(req, res) {
             const nextCursor = requirements.length === limitNum ? requirements[requirements.length - 1].id : null;
             return res.status(200).json({
                 success: true,
-                data: requirements,
+                // Professionals never receive customer records from the open feed.
+                data: userProfile?.role === 'PROVIDER' ? requirements.map((r) => toProviderView(r, { invited: false, engaged: false })) : requirements,
                 nextCursor,
             });
         }

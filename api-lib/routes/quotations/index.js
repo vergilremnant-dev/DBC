@@ -2,6 +2,7 @@ import { verifyToken } from '../../utils/auth.js';
 import { db } from '../../utils/db.js';
 import { createQuotation } from '../../services/quotationService.js';
 import { QuotationStatus } from '@prisma/client';
+import { toPublicProvider } from '../../utils/publicProvider.js';
 export default async function handler(req, res) {
     const method = req.method;
     const user = verifyToken(req);
@@ -70,6 +71,10 @@ export default async function handler(req, res) {
                 whereClause.status = { not: QuotationStatus.DRAFT }; // Hide drafts from customers
             }
             if (status) {
+                // Customers never see drafts, even when filtering by status.
+                if (userProfile?.role === 'CUSTOMER' && status === QuotationStatus.DRAFT) {
+                    return res.status(200).json({ success: true, data: [] });
+                }
                 whereClause.status = status;
             }
             const quotations = await db.quotation.findMany({
@@ -85,7 +90,8 @@ export default async function handler(req, res) {
             });
             return res.status(200).json({
                 success: true,
-                data: quotations,
+                // The professional is shown with public profile fields only (no login email or account ids).
+                data: quotations.map((q) => ({ ...q, provider: q.provider ? toPublicProvider(q.provider) : null })),
             });
         }
         catch (err) {

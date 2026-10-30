@@ -15,15 +15,15 @@ interface SidebarItem {
 
 const CUSTOMER_SIDEBAR_ITEMS: SidebarItem[] = [
   { name: 'My Account', path: '/workspace/overview', icon: '👤' },
-  { name: 'Project Requests', path: '/workspace/bookings', icon: '📋' },
+  { name: 'Project Requests', path: '/workspace/requests', icon: '📋' },
   { name: 'Inbox', path: '/workspace/inbox', icon: '💬' },
   { name: 'Settings', path: '/workspace/settings', icon: '⚙️' },
 ];
 
 const PROVIDER_SIDEBAR_ITEMS: SidebarItem[] = [
   { name: 'Dashboard', path: '/workspace/dashboard', icon: '📊' },
-  { name: 'Project Requests', path: '/workspace/bookings', icon: '📩' },
-  { name: 'Leads', path: '/workspace/leads', icon: '⚡' },
+  { name: 'Project Requests', path: '/workspace/leads', icon: '📩' },
+  { name: 'Bookings', path: '/workspace/bookings', icon: '📅' },
   { name: 'Projects', path: '/workspace/projects', icon: '🏗️' },
   { name: 'Quotations', path: '/workspace/quotations', icon: '📝' },
   { name: 'Inbox', path: '/workspace/inbox', icon: '💬' },

@@ -3,9 +3,9 @@ import { Navigate, Route, Routes, Outlet } from 'react-router-dom';
 
 const WorkspaceLayout = lazy(() => import('./layouts/WorkspaceLayout'));
 const WorkspaceOverview = lazy(() => import('./pages/workspace/WorkspaceOverview'));
-const WorkspaceRequirements = lazy(() => import('./pages/workspace/WorkspaceRequirements'));
+const CustomerRequestsPage = lazy(() => import('./pages/workspace/CustomerRequestsPage'));
+const CustomerRequestDetailPage = lazy(() => import('./pages/workspace/CustomerRequestDetailPage'));
 const WorkspaceBookings = lazy(() => import('./pages/workspace/WorkspaceBookings'));
-const WorkspaceInbox = lazy(() => import('./pages/workspace/WorkspaceInbox'));
 const WorkspaceNotifications = lazy(() => import('./pages/workspace/WorkspaceNotifications'));
 const WorkspaceSettings = lazy(() => import('./pages/workspace/WorkspaceSettings'));
 const ProfessionalDashboard = lazy(() => import('./pages/workspace/professional/ProfessionalDashboard'));
@@ -22,7 +22,8 @@ import { useAuth } from './hooks/auth/useAuth';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { PublicMarketplace } from './pages/PublicMarketplace';
-import { BookServicePage } from './pages/customer/BookServicePage';
+import { RequestProjectPage } from './pages/requests/RequestProjectPage';
+import { BookServiceRedirect } from './pages/requests/BookServiceRedirect';
 import { RequestCallbackPage } from './pages/RequestCallbackPage';
 import { BlogCatalog } from './pages/blog/BlogCatalog';
 import { ArticleDetailPage } from './pages/blog/ArticleDetailPage';
@@ -114,14 +115,10 @@ function App() {
         <Route path="/request-callback" element={<RequestCallbackPage />} />
         <Route path="/subscriptions" element={<SubscriptionsPage />} />
         
-        <Route
-          path="/book-service"
-          element={
-            <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
-              <BookServicePage />
-            </ProtectedRoute>
-          }
-        />
+        {/* Project request form: open to guests (draft is kept through sign-in); submission requires a customer account */}
+        <Route path="/request-project" element={<RequestProjectPage />} />
+        {/* Legacy appointment-style booking links now open the project request form */}
+        <Route path="/book-service" element={<BookServiceRedirect />} />
         
         <Route path="/blog" element={<BlogCatalog />} />
         <Route path="/blog/:slug" element={<ArticleDetailPage />} />
@@ -190,7 +187,9 @@ function App() {
           }
         >
           <Route path="overview" element={<WorkspaceOverview />} />
-          <Route path="requirements" element={<WorkspaceRequirements />} />
+          <Route path="requests" element={<CustomerRequestsPage />} />
+          <Route path="requests/:id" element={<CustomerRequestDetailPage />} />
+          <Route path="requirements" element={<Navigate to="/workspace/requests" replace />} />
           <Route path="settings" element={<WorkspaceSettings />} />
         </Route>
 
@@ -216,7 +215,8 @@ function App() {
 
         {/* Shared subroutes (dynamic rendering inside components) */}
         <Route path="bookings" element={<WorkspaceBookings />} />
-        <Route path="inbox" element={<WorkspaceInbox />} />
+        {/* Real DBC messaging for customers and professionals (?conversation=<id> opens a thread) */}
+        <Route path="inbox" element={<ChatPanel />} />
         <Route path="notifications" element={<WorkspaceNotifications />} />
         <Route path="finance" element={<FinanceBillingPage />} />
         <Route path="ai-intelligence" element={<SmartIntelligencePage />} />

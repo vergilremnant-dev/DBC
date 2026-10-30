@@ -134,7 +134,7 @@ export function MobileBottomNav() {
     return [
       { label: 'Home', path: '/', icon: 'House' },
       { label: 'Discover', path: '/search', icon: 'Compass' },
-      { label: 'Active', path: '/workspace/bookings', icon: 'ClipboardCheck' },
+      { label: 'Active', path: '/workspace/requests', icon: 'ClipboardCheck' },
       { label: 'Messages', path: '/workspace/inbox', icon: 'MessageCircle' },
       { label: 'Profile', path: '/workspace/overview', icon: 'UserRound' },
     ];

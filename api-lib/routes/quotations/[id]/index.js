@@ -1,5 +1,6 @@
 import { verifyToken } from '../../../utils/auth.js';
 import { getQuotationById, updateQuotationDraft, deleteQuotationDraft } from '../../../services/quotationService.js';
+import { toPublicProvider } from '../../../utils/publicProvider.js';
 export default async function handler(req, res) {
     const method = req.method;
     const user = verifyToken(req);
@@ -25,7 +26,18 @@ export default async function handler(req, res) {
             if (!canView) {
                 return res.status(403).json({ success: false, message: 'Forbidden: You do not have access to this quotation' });
             }
-            return res.status(200).json({ success: true, data: quotation });
+            // Participants see each other through limited views: public professional fields, customer display name only.
+            const q = quotation;
+            return res.status(200).json({
+                success: true,
+                data: {
+                    ...q,
+                    provider: q.provider ? toPublicProvider(q.provider) : null,
+                    requirement: q.requirement
+                        ? { ...q.requirement, customer: q.requirement.customer ? { id: q.requirement.customer.id, fullName: q.requirement.customer.fullName } : null }
+                        : null,
+                },
+            });
         }
         if (method === 'PUT') {
             const updated = await updateQuotationDraft(quotationId, user.id, req.body);

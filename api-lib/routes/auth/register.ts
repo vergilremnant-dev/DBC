@@ -8,6 +8,8 @@ import { logSecurityEvent } from '../../services/auditService.js';
 import { VercelRequestWithUser } from '../../middleware/authMiddleware.js';
 import { verifyFirebasePhoneIdentity } from '../../utils/verifyFirebaseToken.js';
 import { normalizeE164 } from '../../utils/phone.js';
+import { clientIp, consumeAttempt, throttledResponse } from '../../utils/authThrottle.js';
+import { proofToken } from '../../utils/emailVerification.js';
 
 export default async function handler(req: VercelRequestWithUser, res: VercelResponse) {
   const method = req.method;
@@ -26,11 +28,14 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
     phone,
     preferredCity,
     skills: _skills,
-    experienceYears,
+    experienceYears: _experienceYears,
     verificationToken,
     firebaseUid,
     firebaseIdToken,
   } = req.body;
+
+  const ipLimit = await consumeAttempt('register-ip', clientIp(req), 10, 60 * 60 * 1000);
+  if (ipLimit.limited) return throttledResponse(res, ipLimit);
 
   if (!email || !password) {
     return res.status(400).json({ success: false, message: 'Email and password are required' });
@@ -81,7 +86,7 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
         });
       }
 
-      const proofTokenKey = `REGISTRATION_PROOF:${normalizedEmail}:${verificationToken.trim()}`;
+      const proofTokenKey = proofToken(normalizedEmail, verificationToken);
       const proofSession = await db.userSession.findFirst({
         where: { token: proofTokenKey },
       });
@@ -145,7 +150,7 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
 
       // Consume token if a proof session exists for this phone registration email
       if (verificationToken) {
-        const proofTokenKey = `REGISTRATION_PROOF:${normalizedEmail}:${verificationToken.trim()}`;
+        const proofTokenKey = proofToken(normalizedEmail, String(verificationToken));
         await db.userSession.deleteMany({ where: { token: proofTokenKey } });
       }
     }
@@ -157,62 +162,48 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
     // ROLE SECURITY: Public registration is strictly enforced to Role.CUSTOMER
     const mappedRole: Role = Role.CUSTOMER;
 
-    // Create user and profile
-    const user = await db.user.create({
-      data: {
-        email: normalizedEmail,
-        password: hashedPassword,
-        role: mappedRole,
-        status: 'ACTIVE',
-        ...(trustedFirebaseUid && trustedPhoneE164
-          ? { firebaseUid: trustedFirebaseUid, phoneE164: trustedPhoneE164, phoneVerifiedAt: new Date() }
-          : {}),
-      },
-    });
-
     const fullName = `${firstName || ''} ${lastName || ''}`.trim() || 'New User';
-
-    if (mappedRole === Role.CUSTOMER) {
-      await db.customerProfile.create({
-        data: {
-          userId: user.id,
-          fullName,
-          phoneNumber: phone || '',
-          city: preferredCity || 'Hyderabad',
-          state: 'Telangana',
-          pincode: '500001',
-        },
-      });
-    } else if (mappedRole === Role.PROVIDER) {
-      // Find default category ID or use 1
-      const defaultCategory = await db.serviceCategory.findFirst({ where: { isActive: true } });
-      const categoryId = defaultCategory ? defaultCategory.id : 1;
-
-      await db.providerProfile.create({
-        data: {
-          userId: user.id,
-          fullName,
-          email,
-          phoneNumber: phone || '',
-          experienceYears: experienceYears ? Number(experienceYears) : 5,
-          city: preferredCity || 'Hyderabad',
-          state: 'Telangana',
-          categoryId,
-        },
-      });
-    }
+    // Location is stored only as provided; it is never invented (the customer completes it in their profile).
+    const city = typeof preferredCity === 'string' ? preferredCity.trim() : '';
+    const state = typeof req.body?.state === 'string' ? req.body.state.trim() : '';
+    const pincode = typeof req.body?.pincode === 'string' ? req.body.pincode.trim() : '';
 
     // Generate email verification token in DB
     const emailVerifyToken = crypto.randomBytes(32).toString('hex');
     const hashedToken = crypto.createHash('sha256').update(emailVerifyToken).digest('hex');
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
-    await db.userSession.create({
-      data: {
-        userId: user.id,
-        token: `EMAIL_VERIFY:${hashedToken}`,
-        expiresAt,
-      },
+    // User, CustomerProfile and the verification token are created atomically: a failure leaves no partial account.
+    const user = await db.$transaction(async (tx) => {
+      const created = await tx.user.create({
+        data: {
+          email: normalizedEmail,
+          password: hashedPassword,
+          role: mappedRole,
+          status: 'ACTIVE',
+          ...(trustedFirebaseUid && trustedPhoneE164
+            ? { firebaseUid: trustedFirebaseUid, phoneE164: trustedPhoneE164, phoneVerifiedAt: new Date() }
+            : {}),
+        },
+      });
+      await tx.customerProfile.create({
+        data: {
+          userId: created.id,
+          fullName,
+          phoneNumber: phone || '',
+          city,
+          state,
+          pincode,
+        },
+      });
+      await tx.userSession.create({
+        data: {
+          userId: created.id,
+          token: `EMAIL_VERIFY:${hashedToken}`,
+          expiresAt,
+        },
+      });
+      return created;
     });
 
     await logSecurityEvent(user.id, 'PROFILE_UPDATE', 'New user account created successfully');

@@ -1,5 +1,6 @@
 import { verifyToken } from '../../utils/auth.js';
 import { getProviderByUserId, createProviderProfile, updateProviderProfile, } from '../../services/providerService.js';
+import { ServiceChangeError } from '../../services/providerEligibility.js';
 export default async function handler(req, res) {
     const user = verifyToken(req);
     if (!user) {
@@ -48,6 +49,8 @@ export default async function handler(req, res) {
                 });
             }
             catch (err) {
+                if (err instanceof ServiceChangeError)
+                    return res.status(err.status).json({ success: false, code: err.code, message: err.message });
                 const message = err.message || '';
                 if (message.includes('not found') ||
                     message.includes('Must be') ||

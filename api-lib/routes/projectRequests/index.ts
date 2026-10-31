@@ -9,6 +9,7 @@ import {
   toProviderView,
   INVITE_CONVERSATION_TYPE,
 } from '../../services/projectRequestService.js';
+import { requireVerifiedProvider } from '../../services/providerEligibility.js';
 
 /**
  * POST /api/project-requests        — customer submits a project request (optionally to a chosen professional).
@@ -30,8 +31,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (req.method === 'GET') {
       if (user.role !== 'PROVIDER') return res.status(403).json({ success: false, message: 'Only professionals have a request inbox.' });
-      const provider = await db.providerProfile.findFirst({ where: { userId: user.id }, select: { id: true, categoryId: true } });
-      if (!provider) return res.status(403).json({ success: false, message: 'Complete your professional profile first.' });
+      const gate = await requireVerifiedProvider(user);
+      if (!gate.ok) return res.status(gate.status).json({ success: false, code: gate.code, message: gate.message });
+      const provider = gate.provider;
       const scope = req.query.scope === 'open' ? 'open' : 'invited';
       const where = scope === 'open' ? openRequestsFilter(provider.categoryId) : engagedRequestsFilter(provider.id);
       const rows = await db.requirement.findMany({

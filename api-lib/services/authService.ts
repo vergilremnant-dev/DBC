@@ -5,6 +5,7 @@ import { Role } from '@prisma/client';
 import { generateAccessToken } from '../utils/auth.js';
 import { logSecurityEvent } from './auditService.js';
 import { verifyFirebaseIdToken } from '../utils/verifyFirebaseToken.js';
+import { clearAttempts, isThrottled, recordAttempt } from '../utils/authThrottle.js';
 
 export interface LoginRequest {
   email: string;
@@ -31,6 +32,26 @@ export interface RefreshResponse {
   accessToken: string;
   refreshToken: string;
   user: AuthUser;
+}
+
+const LOGIN_FAIL_SCOPE = 'login-fail';
+const LOGIN_FAIL_LIMIT = 5;
+const LOGIN_FAIL_WINDOW_MS = 15 * 60 * 1000;
+export const GENERIC_LOGIN_ERROR = 'Invalid email, phone number, or password';
+
+/** Too many recent failed attempts for this identifier (temporary; HTTP 429, or 503 if the limiter is unavailable). */
+export class LoginThrottledError extends Error {
+  constructor(readonly retryAfterSeconds: number, readonly unavailable = false) {
+    super(unavailable ? 'Sign-in is temporarily unavailable. Please try again shortly.' : 'Too many failed sign-in attempts. Please wait a few minutes and try again.');
+    this.name = 'LoginThrottledError';
+  }
+}
+
+let dummyHash: Promise<string> | null = null;
+/** A real bcrypt hash used to keep "unknown account" as slow as "wrong password". */
+function dummyPasswordHash(): Promise<string> {
+  dummyHash ??= bcrypt.hash(crypto.randomBytes(16).toString('hex'), 10);
+  return dummyHash;
 }
 
 function hashToken(token: string): string {
@@ -104,6 +125,12 @@ export async function loginUser(
 
   const rawInput = email.trim();
   const lowerInput = rawInput.toLowerCase();
+
+  // Temporary lock per identifier after repeated failures (never a permanent suspension).
+  const lock = await isThrottled(LOGIN_FAIL_SCOPE, lowerInput, LOGIN_FAIL_LIMIT, LOGIN_FAIL_WINDOW_MS);
+  if (lock.limited) {
+    throw new LoginThrottledError(lock.retryAfterSeconds, !!lock.unavailable);
+  }
   const digits = rawInput.replace(/\D/g, '');
   const isPhone = digits.length >= 10;
 
@@ -127,40 +154,26 @@ export async function loginUser(
   });
 
   if (!user) {
-    throw new Error('Invalid email, phone number, or password');
-  }
-
-  if (user.status !== 'ACTIVE') {
-    throw new Error('Your account is currently inactive or suspended');
-  }
-
-  // Check failed attempts lockout policy (5 recent failures within 15 minutes)
-  const cutoff = new Date(Date.now() - 15 * 60 * 1000);
-  const failedAttempts = await db.globalActivity.count({
-    where: {
-      actorId: user.id,
-      activityType: 'LOGIN',
-      description: { contains: 'Failed login attempt' },
-      createdAt: { gte: cutoff },
-    },
-  });
-
-  if (failedAttempts >= 5) {
-    // Suspend user account automatically
-    await db.user.update({
-      where: { id: user.id },
-      data: { status: 'SUSPENDED' },
-    });
-    await logSecurityEvent(user.id, 'ADMIN_ACTION', 'User account auto-suspended due to repeated failed login attempts.');
-    throw new Error('Your account is temporarily locked due to repeated failed login attempts. Please contact support.');
+    // Same work and same answer as a wrong password, so responses do not reveal which accounts exist.
+    await bcrypt.compare(password, await dummyPasswordHash());
+    await recordAttempt(LOGIN_FAIL_SCOPE, lowerInput, LOGIN_FAIL_WINDOW_MS);
+    throw new Error(GENERIC_LOGIN_ERROR);
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    // Log failed attempt to track lockouts
+    await recordAttempt(LOGIN_FAIL_SCOPE, lowerInput, LOGIN_FAIL_WINDOW_MS);
+    // Audit trail only; failed attempts never change the account's status.
     await logSecurityEvent(user.id, 'LOGIN', `Failed login attempt: invalid password from IP: ${ipAddress || 'unknown'}`);
-    throw new Error('Invalid email or password');
+    throw new Error(GENERIC_LOGIN_ERROR);
   }
+
+  // Account status is only disclosed to someone who proved the password.
+  if (user.status !== 'ACTIVE') {
+    throw new Error('Your account is currently inactive or suspended');
+  }
+
+  await clearAttempts(LOGIN_FAIL_SCOPE, lowerInput);
 
   // Log successful login security audit event
   await logSecurityEvent(user.id, 'LOGIN', `User successfully authenticated from IP: ${ipAddress || 'unknown'}`);
@@ -424,10 +437,11 @@ export async function socialLoginUser(
       data: {
         userId: newUser.id,
         fullName,
+        // Location is unknown at social sign-up; left empty (never invented) for the customer to complete.
         phoneNumber: '',
-        city: 'Hyderabad',
-        state: 'Telangana',
-        pincode: '500001',
+        city: '',
+        state: '',
+        pincode: '',
       },
     });
 

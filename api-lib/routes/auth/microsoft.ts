@@ -14,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const userAgent = (req.headers && req.headers['user-agent']) as string || 'unknown';
   const ipAddress = (req.headers && req.headers['x-forwarded-for'] as string) || req.socket?.remoteAddress || 'unknown';
 
-  const isAllowed = await checkRateLimit(ipAddress, 15, 60000);
+  const isAllowed = await checkRateLimit(ipAddress, 15, 60000, 'social');
   if (!isAllowed) {
     return res.status(429).json({
       success: false,

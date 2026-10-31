@@ -10,6 +10,7 @@ export async function getTrendingProfessionals(limit: number = 5) {
   return await db.providerProfile.findMany({
     where: {
       verificationStatus: VerificationStatus.VERIFIED,
+      user: { status: 'ACTIVE' },
       isAvailable: true,
       averageRating: { gte: 4.0 },
     },
@@ -49,6 +50,7 @@ export async function getNewlyVerifiedProfessionals(limit: number = 5) {
   return await db.providerProfile.findMany({
     where: {
       verificationStatus: VerificationStatus.VERIFIED,
+      user: { status: 'ACTIVE' },
     },
     include: {
       category: true,
@@ -71,6 +73,7 @@ export async function getSimilarProfessionals(providerId: string, limit: number 
     where: {
       id: { not: providerId },
       verificationStatus: VerificationStatus.VERIFIED,
+      user: { status: 'ACTIVE' },
       categoryId: currentProvider.categoryId,
       city: currentProvider.city,
     },

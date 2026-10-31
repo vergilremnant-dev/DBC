@@ -1,4 +1,6 @@
 import { PrismaClient, CategoryType, VerificationStatus } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+import { assertDemoSeedAllowed, demoSeedPassword } from './seedGuard.js';
 
 const prisma = new PrismaClient();
 
@@ -125,6 +127,8 @@ const partnersToSeed = [
 ];
 
 async function main() {
+  assertDemoSeedAllowed('seed_active_partners.js');
+  const demoPasswordHash = await bcrypt.hash(demoSeedPassword('seed_active_partners.js'), 10);
   console.log('=== SEEDING ACTIVE SERVICE PARTNERS ===\n');
 
   for (const partner of partnersToSeed) {
@@ -152,7 +156,7 @@ async function main() {
       user = await prisma.user.create({
         data: {
           email: partner.email,
-          password: '$2a$10$7wM0FfKuxlC00k2yOQ6YV.v.X/X3fF5/6uYn23cMvL1sU1Q3s292G', // Hashed 'password123'
+          password: demoPasswordHash,
           role: 'PROVIDER',
           status: 'ACTIVE'
         }

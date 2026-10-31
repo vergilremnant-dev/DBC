@@ -17,6 +17,7 @@ vi.mock('../../api-lib/utils/db.js', () => {
       },
       providerProfile: {
         findUnique: vi.fn(),
+        findFirst: vi.fn(),
       },
       conversation: {
         findMany: vi.fn(),
@@ -83,7 +84,8 @@ describe('Quotation Service Mock Tests', () => {
   it('should create quotation draft successfully', async () => {
     // An open (published) request for the professional's own service, which they may quote.
     vi.spyOn(db.requirement, 'findUnique').mockResolvedValue({ id: 10, status: 'PUBLISHED', serviceCategoryId: 2 } as any);
-    vi.spyOn(db.providerProfile, 'findUnique').mockResolvedValue({ categoryId: 2 } as any);
+    vi.spyOn(db.providerProfile, 'findUnique').mockResolvedValue({ id: 'prov-id', userId: 'user-123', categoryId: 2, verificationStatus: 'VERIFIED', user: { status: 'ACTIVE' } } as any);
+    vi.spyOn(db.providerProfile, 'findFirst').mockResolvedValue({ id: 'prov-id', userId: 'user-123', categoryId: 2, verificationStatus: 'VERIFIED', user: { status: 'ACTIVE' } } as any);
     vi.spyOn(db.conversation, 'findMany').mockResolvedValue([] as any);
     vi.spyOn(db.quotation, 'findFirst').mockResolvedValue(null);
     const mockCreate = vi.spyOn(db.quotation, 'create').mockResolvedValueOnce({
@@ -117,10 +119,12 @@ describe('Quotation Service Mock Tests', () => {
 
   it('refuses quotations on requests that are closed or not visible to the professional', async () => {
     vi.spyOn(db.requirement, 'findUnique').mockResolvedValue({ id: 11, status: 'QUOTATION_ACCEPTED', serviceCategoryId: 2 } as any);
+    vi.spyOn(db.providerProfile, 'findFirst').mockResolvedValue({ id: 'prov-id', userId: 'user-123', categoryId: 2, verificationStatus: 'VERIFIED', user: { status: 'ACTIVE' } } as any);
     const input = { requirementId: 11, priceModel: PricingModel.FIXED, totalAmount: 100, estimatedDurationDays: 3, proposal: { title: 't', summary: 's', scope: 's', deliverables: 'd' } };
     await expect(createQuotation('prov-id', 'user-123', input)).rejects.toThrow(/no longer accepting/);
     vi.spyOn(db.requirement, 'findUnique').mockResolvedValue({ id: 11, status: 'PUBLISHED', serviceCategoryId: 9 } as any);
-    vi.spyOn(db.providerProfile, 'findUnique').mockResolvedValue({ categoryId: 2 } as any);
+    vi.spyOn(db.providerProfile, 'findUnique').mockResolvedValue({ id: 'prov-id', userId: 'user-123', categoryId: 2, verificationStatus: 'VERIFIED', user: { status: 'ACTIVE' } } as any);
+    vi.spyOn(db.providerProfile, 'findFirst').mockResolvedValue({ id: 'prov-id', userId: 'user-123', categoryId: 2, verificationStatus: 'VERIFIED', user: { status: 'ACTIVE' } } as any);
     vi.spyOn(db.conversation, 'findMany').mockResolvedValue([] as any);
     vi.spyOn(db.quotation, 'findFirst').mockResolvedValue(null);
     await expect(createQuotation('prov-id', 'user-123', input)).rejects.toThrow(/Unauthorized/);

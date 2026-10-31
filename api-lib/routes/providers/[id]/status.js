@@ -1,5 +1,6 @@
 import { verifyToken, hasRole } from '../../../utils/auth.js';
 import { adminUpdateProviderAvailability } from '../../../services/providerService.js';
+import { recordAdminAction } from '../../../services/adminSafety.js';
 export default async function handler(req, res) {
     const user = verifyToken(req);
     if (!user) {
@@ -24,6 +25,7 @@ export default async function handler(req, res) {
             return res.status(400).json({ success: false, message: 'isAvailable boolean is required' });
         }
         const updated = await adminUpdateProviderAvailability(paramId, Boolean(isAvailable));
+        await recordAdminAction(user.id, `Admin set provider ${paramId} availability to ${updated.isAvailable}`, 'PROVIDER_PROFILE', paramId);
         return res.status(200).json({
             success: true,
             message: `Provider availability status updated to ${isAvailable}`,

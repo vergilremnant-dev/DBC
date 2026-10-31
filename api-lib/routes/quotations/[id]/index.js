@@ -1,6 +1,7 @@
 import { verifyToken } from '../../../utils/auth.js';
 import { getQuotationById, updateQuotationDraft, deleteQuotationDraft } from '../../../services/quotationService.js';
 import { toPublicProvider } from '../../../utils/publicProvider.js';
+import { ProviderAccessError } from '../../../services/providerEligibility.js';
 export default async function handler(req, res) {
     const method = req.method;
     const user = verifyToken(req);
@@ -55,6 +56,8 @@ export default async function handler(req, res) {
         return res.status(405).json({ success: false, message: `Method ${method} Not Allowed` });
     }
     catch (err) {
+        if (err instanceof ProviderAccessError)
+            return res.status(403).json({ success: false, code: err.code, message: err.message });
         const message = err?.message || '';
         if (/^(Unauthorized|Only the)/.test(message)) {
             return res.status(403).json({ success: false, message });

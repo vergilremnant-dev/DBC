@@ -1,5 +1,6 @@
 import { verifyToken } from '../../../utils/auth.js';
 import { addNegotiationMessage } from '../../../services/quotationService.js';
+import { ProviderAccessError } from '../../../services/providerEligibility.js';
 export default async function handler(req, res) {
     const method = req.method;
     if (method !== 'POST') {
@@ -28,6 +29,8 @@ export default async function handler(req, res) {
         });
     }
     catch (err) {
+        if (err instanceof ProviderAccessError)
+            return res.status(403).json({ success: false, code: err.code, message: err.message });
         return res.status(500).json({ success: false, message: err.message });
     }
 }

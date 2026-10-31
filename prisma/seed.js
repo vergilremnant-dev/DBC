@@ -1,5 +1,6 @@
 import { PrismaClient, CategoryType } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { assertDemoSeedAllowed, demoAdminAllowed, demoSeedPassword } from './seedGuard.js';
 
 const prisma = new PrismaClient();
 
@@ -183,13 +184,11 @@ const categories = [
 const testUsers = [
   {
     email: 'admin@dbc.com',
-    password: 'AdminPassword123',
     role: 'ADMIN',
     profile: null,
   },
   {
     email: 'customer@dbc.com',
-    password: 'CustomerPassword123',
     role: 'CUSTOMER',
     profile: {
       type: 'customer',
@@ -205,7 +204,6 @@ const testUsers = [
   },
   {
     email: 'professional@dbc.com',
-    password: 'ProfessionalPassword123',
     role: 'PROVIDER',
     profile: {
       type: 'provider_services',
@@ -213,7 +211,6 @@ const testUsers = [
   },
   {
     email: 'consultant@dbc.com',
-    password: 'ConsultantPassword123',
     role: 'PROVIDER',
     profile: {
       type: 'provider_consultant',
@@ -222,6 +219,8 @@ const testUsers = [
 ];
 
 async function main() {
+  assertDemoSeedAllowed('seed.js');
+  const demoPassword = demoSeedPassword('seed.js');
   console.log('Seeding service categories...');
   for (const category of categories) {
     const upserted = await prisma.serviceCategory.upsert({
@@ -242,11 +241,16 @@ async function main() {
 
   console.log('\nSeeding test users...');
   for (const user of testUsers) {
+    // Admin demo accounts are opt-in: a seed never grants ADMIN silently.
+    if (user.role === 'ADMIN' && !demoAdminAllowed()) {
+      console.log(`Skipped admin demo account ${user.email} (set SEED_CREATE_ADMIN=true to create it).`);
+      continue;
+    }
     const existing = await prisma.user.findUnique({
       where: { email: user.email },
     });
     if (!existing) {
-      const hashedPassword = await bcrypt.hash(user.password, 10);
+      const hashedPassword = await bcrypt.hash(demoPassword, 10);
       const createdUser = await prisma.user.create({
         data: {
           email: user.email,

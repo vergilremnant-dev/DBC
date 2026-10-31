@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const userAgent = (req.headers?.['user-agent'] as string) || 'unknown';
   const ipAddress = (req.headers?.['x-forwarded-for'] as string) || req.socket?.remoteAddress || 'unknown';
 
-  if (!(await checkRateLimit(ipAddress, 10, 60000))) {
+  if (!(await checkRateLimit(ipAddress, 10, 60000, 'phone-register'))) {
     return res.status(429).json({
       success: false,
       message: 'Too many registration attempts. Please try again in a minute.',

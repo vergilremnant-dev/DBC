@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { validatePasswordStrength } from '../../utils/validation.js';
 import { logSecurityEvent } from '../../services/auditService.js';
 import { withAuth, VercelRequestWithUser } from '../../middleware/authMiddleware.js';
+import { isThrottled, recordAttempt, throttledResponse } from '../../utils/authThrottle.js';
 
 async function handler(req: VercelRequestWithUser, res: VercelResponse) {
   const method = req.method;
@@ -31,8 +32,13 @@ async function handler(req: VercelRequestWithUser, res: VercelResponse) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
+    // At most 5 wrong current passwords per account per 15 minutes (limits guessing with a stolen access token).
+    const lock = await isThrottled('change-password-fail', userId, 5, 15 * 60 * 1000);
+    if (lock.limited) return throttledResponse(res, lock);
+
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
+      await recordAttempt('change-password-fail', userId, 15 * 60 * 1000);
       await logSecurityEvent(userId, 'PASSWORD_CHANGE', 'Failed password change attempt: incorrect current password');
       return res.status(400).json({ success: false, message: 'Incorrect current password' });
     }

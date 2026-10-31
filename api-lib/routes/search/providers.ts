@@ -17,7 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       city,
       experience,
       rating,
-      verificationStatus,
+      // verificationStatus is intentionally not accepted: public search is always verified-only.
       isFeatured,
       canProvideServices,
       canProvideConsultation,
@@ -31,14 +31,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let finalSearch = rawSearch;
     let finalCity = city ? String(city) : undefined;
     let finalExperience = experience ? Number(experience) : undefined;
-    let finalVerified = verificationStatus ? String(verificationStatus) : undefined;
 
     // Apply Intelligent Natural Language query parsing
     if (rawSearch) {
       const parsed = parseNaturalLanguageQuery(rawSearch);
       if (parsed.city && !city) finalCity = parsed.city;
       if (parsed.experience && !experience) finalExperience = parsed.experience;
-      if (parsed.verifiedOnly && !verificationStatus) finalVerified = 'VERIFIED';
       if (parsed.search) finalSearch = parsed.search;
     }
 
@@ -48,7 +46,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       city: finalCity,
       experience: finalExperience,
       rating: rating ? Number(rating) : undefined,
-      verificationStatus: finalVerified,
       isFeatured: isFeatured === 'true' ? true : isFeatured === 'false' ? false : undefined,
       canProvideServices: canProvideServices === 'true' ? true : canProvideServices === 'false' ? false : undefined,
       canProvideConsultation: canProvideConsultation === 'true' ? true : canProvideConsultation === 'false' ? false : undefined,

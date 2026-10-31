@@ -3,6 +3,7 @@ import { db } from '../../utils/db.js';
 import { createRequirement } from '../../services/requirementService.js';
 import { RequirementStatus } from '@prisma/client';
 import { INVITE_CONVERSATION_TYPE, toProviderView } from '../../services/projectRequestService.js';
+import { requireVerifiedProvider } from '../../services/providerEligibility.js';
 export default async function handler(req, res) {
     const method = req.method;
     if (method === 'POST') {
@@ -69,6 +70,9 @@ export default async function handler(req, res) {
             // Filter by status (providers see PUBLISHED, admins see everything, customers see their own)
             const userProfile = await db.user.findUnique({ where: { id: user.id } });
             if (userProfile?.role === 'PROVIDER') {
+                const gate = await requireVerifiedProvider({ id: user.id, role: 'PROVIDER' });
+                if (!gate.ok)
+                    return res.status(gate.status).json({ success: false, code: gate.code, message: gate.message });
                 // Providers browse open requests only (not drafts, other customers' later stages, or requests invited to others).
                 whereClause.status = RequirementStatus.PUBLISHED;
                 whereClause.conversations = { none: { conversationType: INVITE_CONVERSATION_TYPE } };

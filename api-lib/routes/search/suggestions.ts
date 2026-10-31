@@ -41,6 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       db.providerProfile.findMany({
         where: {
           verificationStatus: 'VERIFIED',
+          user: { status: 'ACTIVE' },
           category: { isActive: true, deletedAt: null },
           OR: [
             { fullName: { contains: keyword, mode: 'insensitive' } },

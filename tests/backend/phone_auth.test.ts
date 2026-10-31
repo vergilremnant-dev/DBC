@@ -4,7 +4,16 @@
  * Exercises phoneAuthService with an in-memory database double and a fake
  * Firebase verifier, so these tests need no live database or Firebase project.
  */
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+
+// The route-handler tests below need a database for the per-IP limiter (which fails closed without one).
+// Service tests inject their own doubles; routes get an in-memory database (test data only).
+vi.mock('../../api-lib/utils/db.js', async () => {
+  const { createFakePrisma } = await import('./helpers/fakePrisma.js');
+  const db = createFakePrisma();
+  await db.user.create({ data: { id: 'temp_unregistered', email: 'system_temp_otp@dbc.com', password: 'x' } });
+  return { db };
+});
 import {
   registerPhoneUser,
   startPhoneSession,

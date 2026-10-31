@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import { validatePasswordStrength } from '../../utils/validation.js';
 import { logSecurityEvent } from '../../services/auditService.js';
 import { VercelRequestWithUser } from '../../middleware/authMiddleware.js';
+import { clientIp, consumeAttempt, throttledResponse } from '../../utils/authThrottle.js';
 
 export default async function handler(req: VercelRequestWithUser, res: VercelResponse) {
   const method = req.method;
@@ -14,7 +15,10 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
     return res.status(405).json({ success: false, message: `Method ${method} Not Allowed` });
   }
 
-  const { token, newPassword } = req.body;
+  const limit = await consumeAttempt('reset-password-ip', clientIp(req), 10, 15 * 60 * 1000);
+  if (limit.limited) return throttledResponse(res, limit);
+
+  const { token, newPassword } = req.body ?? {};
 
   if (!token || !newPassword) {
     return res.status(400).json({ success: false, message: 'Token and new password are required' });
@@ -42,17 +46,21 @@ export default async function handler(req: VercelRequestWithUser, res: VercelRes
       return res.status(400).json({ success: false, message: 'Reset token has expired' });
     }
 
+    // A reset only changes the password. It never restores SUSPENDED or INACTIVE (incl. soft-deleted) accounts;
+    // that needs an authorised admin or support action.
+    const account = await db.user.findUnique({ where: { id: session.userId }, select: { status: true } });
+    if (!account || account.status !== 'ACTIVE') {
+      await db.userSession.delete({ where: { id: session.id } });
+      return res.status(400).json({ success: false, message: 'This account cannot be reset online. Please contact DBC support.' });
+    }
+
     // Hash the new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // Update user password and activate if locked
     await db.user.update({
       where: { id: session.userId },
-      data: {
-        password: hashedPassword,
-        status: 'ACTIVE', // Resetting password unlocks locked accounts!
-      },
+      data: { password: hashedPassword },
     });
 
     // Delete token session

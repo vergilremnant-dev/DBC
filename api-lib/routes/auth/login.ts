@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { loginUser } from '../../services/authService.js';
+import { LoginThrottledError, loginUser } from '../../services/authService.js';
 import { setCookie } from '../../utils/cookies.js';
 import { checkRateLimit } from '../../utils/rateLimiter.js';
 
@@ -15,7 +15,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const ipAddress = (req.headers['x-forwarded-for'] as string) || req.socket.remoteAddress || 'unknown';
 
   // Apply request throttling/rate-limiting by IP (max 10 attempts per minute)
-  const isAllowed = await checkRateLimit(ipAddress, 10, 60000);
+  const isAllowed = await checkRateLimit(ipAddress, 10, 60000, 'login');
   if (!isAllowed) {
     return res.status(429).json({
       success: false,
@@ -38,6 +38,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       user: response.user,
     });
   } catch (err: any) {
+    if (err instanceof LoginThrottledError) {
+      res.setHeader('Retry-After', String(err.retryAfterSeconds));
+      return res.status(err.unavailable ? 503 : 429).json({ success: false, code: 'TOO_MANY_ATTEMPTS', retryAfterSeconds: err.retryAfterSeconds, message: err.message });
+    }
     const message = err.message || '';
     if (message.includes('Invalid') || message.includes('required') || message.includes('inactive') || message.includes('locked')) {
       return res.status(400).json({ success: false, message });

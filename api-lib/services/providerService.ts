@@ -1,4 +1,5 @@
 import { db } from '../utils/db.js';
+import { assertServiceChangeAllowed } from './providerEligibility.js';
 import { Role, VerificationStatus } from '@prisma/client';
 import { toPublicProviders } from '../utils/publicProvider.js';
 
@@ -38,6 +39,7 @@ export async function listProviders(filters: ProviderQueryFilters) {
 
   const whereClause: any = {
     verificationStatus: VerificationStatus.VERIFIED, // Public list only shows verified
+    user: { status: 'ACTIVE' },
   };
 
   if (filters.categoryId) {
@@ -100,6 +102,7 @@ export async function getProviderById(id: string) {
   const profile = await db.providerProfile.findUnique({
     where: { id },
     include: {
+      user: { select: { status: true } },
       category: true,
       portfolios: true,
       reviews: {
@@ -180,6 +183,8 @@ export async function updateProviderProfile(userId: string, input: Partial<Provi
   if (!existingProfile) {
     throw new Error('Provider profile not found');
   }
+  // A verified professional cannot switch service without DBC re-verification.
+  assertServiceChangeAllowed(existingProfile, input.categoryId);
 
   // 2. Validate inputs
   if (input.experienceYears !== undefined && Number(input.experienceYears) < 0) {

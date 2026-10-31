@@ -3,6 +3,7 @@ import { withAuth, VercelRequestWithUser } from '../../middleware/authMiddleware
 import { db } from '../../utils/db.js';
 import { clearCookie } from '../../utils/cookies.js';
 import { logSecurityEvent } from '../../services/auditService.js';
+import { AdminSafetyError, assertNotLastActiveAdmin } from '../../services/adminSafety.js';
 
 async function handler(req: VercelRequestWithUser, res: VercelResponse) {
   const method = req.method;
@@ -32,6 +33,9 @@ async function handler(req: VercelRequestWithUser, res: VercelResponse) {
     if (!existingUser) {
       return res.status(404).json({ success: false, message: 'User account not found' });
     }
+
+    // The last active administrator cannot be deleted (self-service or by another admin).
+    await assertNotLastActiveAdmin(targetUserId, { status: 'INACTIVE' });
 
     // Execute atomic transaction to anonymize account & purge active sessions
     await db.$transaction(async (tx) => {
@@ -101,6 +105,9 @@ async function handler(req: VercelRequestWithUser, res: VercelResponse) {
       deletedUserId: targetUserId,
     });
   } catch (err: any) {
+    if (err instanceof AdminSafetyError) {
+      return res.status(err.status).json({ success: false, code: err.code, message: err.message });
+    }
     return res.status(500).json({
       success: false,
       message: err.message || 'An error occurred during account deletion',

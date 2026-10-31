@@ -1,5 +1,6 @@
 import { getProviderById } from '../../../services/providerService.js';
 import { toPublicProvider } from '../../../utils/publicProvider.js';
+import { isEligibleProfile } from '../../../services/providerEligibility.js';
 export default async function handler(req, res) {
     const { id } = req.query;
     const paramId = Array.isArray(id) ? id[0] : id;
@@ -17,6 +18,12 @@ export default async function handler(req, res) {
         const { verifyToken } = await import('../../../utils/auth.js');
         const { verifyActiveSubscription } = await import('../../../services/subscriptionService.js');
         const user = verifyToken(req);
+        // Only verified professionals with an ACTIVE account are public. Pending, rejected or inactive profiles are
+        // visible to their owner and to admins only; everyone else gets the same 404 as for a missing profile.
+        const isOwnerOrAdmin = !!user && (user.role === 'ADMIN' || user.id === profile.userId);
+        if (!isOwnerOrAdmin && !isEligibleProfile(profile)) {
+            return res.status(404).json({ success: false, message: 'Provider profile not found' });
+        }
         const hasActive = user ? (user.role === 'ADMIN' || user.id === profile.userId || await verifyActiveSubscription(user.id)) : false;
         if (!hasActive) {
             if (profile.phoneNumber) {

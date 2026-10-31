@@ -73,12 +73,10 @@ export async function searchProviders(params: ProviderSearchParams) {
     whereClause.averageRating = { gte: Number(params.rating) };
   }
 
-  if (params.verificationStatus) {
-    whereClause.verificationStatus = params.verificationStatus as any;
-  } else {
-    // Public search only returns verified providers
-    whereClause.verificationStatus = 'VERIFIED';
-  }
+  // Public search only returns DBC-verified professionals with an ACTIVE account. Callers cannot override this
+  // (params.verificationStatus is ignored: it used to let anyone list pending or rejected profiles).
+  whereClause.verificationStatus = 'VERIFIED';
+  whereClause.user = { status: 'ACTIVE' };
 
   if (params.isFeatured !== undefined) {
     whereClause.isFeatured = params.isFeatured;
@@ -149,6 +147,7 @@ export async function globalSearch(keyword: string) {
     db.providerProfile.findMany({
       where: {
         verificationStatus: 'VERIFIED',
+        user: { status: 'ACTIVE' },
         category: { isActive: true, deletedAt: null },
         OR: [
           { fullName: { contains: cleanKeyword, mode: 'insensitive' } },

@@ -5,6 +5,7 @@ import {
   createProviderProfile,
   updateProviderProfile,
 } from '../../services/providerService.js';
+import { ServiceChangeError } from '../../services/providerEligibility.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const user = verifyToken(req);
@@ -57,6 +58,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           data: updatedProfile,
         });
       } catch (err: any) {
+        if (err instanceof ServiceChangeError) return res.status(err.status).json({ success: false, code: err.code, message: err.message });
         const message = err.message || '';
         if (
           message.includes('not found') ||

@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken } from '../../utils/auth.js';
-import { db } from '../../utils/db.js';
 import { RequestError, acknowledgeRequest, contactCustomer } from '../../services/projectRequestService.js';
+import { requireVerifiedProvider } from '../../services/providerEligibility.js';
 
 /**
  * POST /api/project-requests/:id  { action: 'acknowledge' | 'contact' } — professional actions on a request.
@@ -22,8 +22,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!Number.isInteger(requirementId) || requirementId <= 0) return res.status(400).json({ success: false, message: 'Invalid request id' });
 
   try {
-    const provider = await db.providerProfile.findFirst({ where: { userId: user.id }, select: { id: true } });
-    if (!provider) return res.status(403).json({ success: false, message: 'Complete your professional profile first.' });
+    const gate = await requireVerifiedProvider(user);
+    if (!gate.ok) return res.status(gate.status).json({ success: false, code: gate.code, message: gate.message });
+    const provider = gate.provider;
     const action = req.body?.action;
     if (action === 'acknowledge') {
       const access = await acknowledgeRequest(user.id, provider.id, requirementId);

@@ -2,6 +2,7 @@ import { VercelResponse } from '@vercel/node';
 import { VercelRequestWithUser } from '../../middleware/authMiddleware.js';
 import { requirePermission } from '../../middleware/permissionMiddleware.js';
 import { getProfile, upsertCustomerProfile, upsertProviderProfile } from '../../services/profileService.js';
+import { ServiceChangeError } from '../../services/providerEligibility.js';
 import { Role } from '@prisma/client';
 
 async function handler(req: VercelRequestWithUser, res: VercelResponse) {
@@ -30,6 +31,7 @@ async function handler(req: VercelRequestWithUser, res: VercelResponse) {
       }
       return res.status(200).json({ success: true, data });
     } catch (err: any) {
+      if (err instanceof ServiceChangeError) return res.status(err.status).json({ success: false, code: err.code, message: err.message });
       try {
         const parsed = JSON.parse(err.message);
         if (parsed.validationErrors) {

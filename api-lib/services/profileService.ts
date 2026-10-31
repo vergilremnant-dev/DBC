@@ -1,4 +1,5 @@
 import { db } from '../utils/db.js';
+import { assertServiceChangeAllowed } from './providerEligibility.js';
 import { Role, VerificationStatus } from '@prisma/client';
 import { validateCustomerProfileInput, validateProviderProfileInput } from '../utils/validation.js';
 import { storage } from '../utils/storage.js';
@@ -63,6 +64,10 @@ export async function upsertProviderProfile(userId: string, input: any) {
   if (!categoryExists) {
     throw new Error('Selected service category does not exist');
   }
+
+  // A verified professional cannot switch service without DBC re-verification.
+  const existingProvider = await db.providerProfile.findUnique({ where: { userId }, select: { categoryId: true, verificationStatus: true } });
+  assertServiceChangeAllowed(existingProvider, input.categoryId);
 
   const emailUser = await db.user.findUnique({ where: { id: userId } });
   const email = emailUser?.email || '';

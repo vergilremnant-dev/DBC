@@ -2,6 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken } from '../../../utils/auth.js';
 import { transitionQuotationStatus } from '../../../services/quotationService.js';
 import { QuotationStatus } from '@prisma/client';
+import { ProviderAccessError } from '../../../services/providerEligibility.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = req.method;
@@ -43,6 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       message: `Quotation transitioned to ${status} successfully`,
     });
   } catch (err: any) {
+    if (err instanceof ProviderAccessError) return res.status(403).json({ success: false, code: err.code, message: err.message });
     const message = err?.message || '';
     if (/^(Unauthorized|Only the)/.test(message)) {
       return res.status(403).json({ success: false, message });

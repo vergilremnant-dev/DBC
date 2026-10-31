@@ -1,5 +1,6 @@
 import { PrismaClient, CategoryType, VerificationStatus, BookingStatus, RequirementStatus, CallbackStatus } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { assertDemoSeedAllowed, demoSeedPassword } from './seedGuard.js';
 
 const prisma = new PrismaClient();
 
@@ -170,13 +171,16 @@ const providersToSeed = [
 ];
 
 async function main() {
+  // This script deletes and recreates demo data: development/test databases only.
+  assertDemoSeedAllowed('seed_all_services.js');
+  const demoPassword = demoSeedPassword('seed_all_services.js');
   console.log('=== STARTING ALL SERVICES SEEDING ===\n');
 
   // Verify and create a default customer profile
   const customerEmail = 'customer@dbc.com';
   let customerUser = await prisma.user.findUnique({ where: { email: customerEmail } });
   if (!customerUser) {
-    const hashedPassword = await bcrypt.hash('CustomerPassword123', 10);
+    const hashedPassword = await bcrypt.hash(demoPassword, 10);
     customerUser = await prisma.user.create({
       data: {
         email: customerEmail,
@@ -264,7 +268,7 @@ async function main() {
     }
 
     // Create user
-    const hashedPassword = await bcrypt.hash('password123', 10);
+    const hashedPassword = await bcrypt.hash(demoPassword, 10);
     const user = await prisma.user.create({
       data: {
         email: partner.email,

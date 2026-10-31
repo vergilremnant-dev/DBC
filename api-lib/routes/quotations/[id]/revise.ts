@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken } from '../../../utils/auth.js';
 import { submitQuotationRevision } from '../../../services/quotationService.js';
+import { ProviderAccessError } from '../../../services/providerEligibility.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = req.method;
@@ -56,6 +57,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       message: 'Quotation revised successfully',
     });
   } catch (err: any) {
+    if (err instanceof ProviderAccessError) return res.status(403).json({ success: false, code: err.code, message: err.message });
     return res.status(500).json({ success: false, message: err.message });
   }
 }

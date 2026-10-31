@@ -35,10 +35,22 @@ const RELATIONS: Record<string, Record<string, Rel>> = {
     messages: { model: 'message', many: true, local: 'id', remote: 'conversationId' },
   },
   message: { sender: { model: 'user', many: false, local: 'senderId', remote: 'id' } },
-  providerProfile: { category: { model: 'serviceCategory', many: false, local: 'categoryId', remote: 'id' } },
+  providerProfile: {
+    category: { model: 'serviceCategory', many: false, local: 'categoryId', remote: 'id' },
+    user: { model: 'user', many: false, local: 'userId', remote: 'id' },
+  },
+  customerProfile: { user: { model: 'user', many: false, local: 'userId', remote: 'id' } },
+  user: {
+    customerProfile: { model: 'customerProfile', many: false, local: 'id', remote: 'userId' },
+    providerProfile: { model: 'providerProfile', many: false, local: 'id', remote: 'userId' },
+  },
+  userSession: { user: { model: 'user', many: false, local: 'userId', remote: 'id' } },
 };
 
-const UNIQUE: Record<string, string[]> = { project: ['requirementId', 'quotationId'], customerProfile: ['userId'], providerProfile: ['userId'] };
+/** Column defaults from prisma/schema.prisma that the services rely on. */
+const DEFAULTS: Record<string, Row> = { user: { role: 'CUSTOMER', status: 'ACTIVE' }, providerProfile: { verificationStatus: 'PENDING' } };
+
+const UNIQUE: Record<string, string[]> = { project: ['requirementId', 'quotationId'], customerProfile: ['userId'], providerProfile: ['userId'], user: ['email'], userSession: ['token'] };
 
 export function createFakePrisma() {
   const tables: Record<string, Row[]> = {};
@@ -64,6 +76,7 @@ export function createFakePrisma() {
     if ('gt' in cond && !(v != null && cmp(v, cond.gt) > 0)) return false;
     if ('lte' in cond && !(v != null && cmp(v, cond.lte) <= 0)) return false;
     if ('lt' in cond && !(v != null && cmp(v, cond.lt) < 0)) return false;
+    if ('startsWith' in cond && !String(v ?? '').startsWith(String(cond.startsWith))) return false;
     if ('contains' in cond && !String(v ?? '').toLowerCase().includes(String(cond.contains).toLowerCase())) return false;
     return true;
   }
@@ -151,7 +164,7 @@ export function createFakePrisma() {
     count: async (args: any = {}) => t(model).filter((x) => match(model, x, args.where)).length,
     create: async (args: any) => {
       const id = args.data.id ?? (INT_IDS.has(model) ? (seq[model] = (seq[model] ?? 0) + 1) : `${model}-${++uuid}`);
-      const row = { createdAt: new Date(Date.now() + uuid), updatedAt: new Date(), ...args.data, id };
+      const row = { createdAt: new Date(Date.now() + uuid), updatedAt: new Date(), ...DEFAULTS[model], ...args.data, id };
       checkUnique(model, row);
       t(model).push(row);
       return shape(model, row, args);
@@ -177,6 +190,12 @@ export function createFakePrisma() {
       const r = t(model).find((x) => match(model, x, args.where));
       return r ? delegate(model).update({ where: args.where, data: args.update }) : delegate(model).create({ data: args.create });
     },
+    deleteMany: async (args: any = {}) => {
+      const keep = t(model).filter((x) => !match(model, x, args.where));
+      const count = t(model).length - keep.length;
+      tables[model] = keep;
+      return { count };
+    },
     delete: async (args: any) => {
       const i = t(model).findIndex((x) => match(model, x, args.where));
       if (i < 0) throw new Error(`${model} not found`);
@@ -185,7 +204,21 @@ export function createFakePrisma() {
   });
 
   const db: any = new Proxy(
-    { _tables: tables, $transaction: async (fn: any) => (typeof fn === 'function' ? fn(db) : Promise.all(fn)) },
+    {
+      _tables: tables,
+      // Interactive transactions roll back on error, like Prisma's.
+      $transaction: async (fn: any) => {
+        if (typeof fn !== 'function') return Promise.all(fn);
+        const snapshot = structuredClone(tables);
+        try {
+          return await fn(db);
+        } catch (e) {
+          for (const k of Object.keys(tables)) delete tables[k];
+          Object.assign(tables, snapshot);
+          throw e;
+        }
+      },
+    },
     { get: (target: any, prop: string) => (prop in target ? target[prop] : (target[prop] = delegate(prop))) },
   );
   return db;

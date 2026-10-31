@@ -3,6 +3,7 @@ import { db } from '../../utils/db.js';
 import { createQuotation } from '../../services/quotationService.js';
 import { QuotationStatus } from '@prisma/client';
 import { toPublicProvider } from '../../utils/publicProvider.js';
+import { ProviderAccessError, requireVerifiedProvider } from '../../services/providerEligibility.js';
 export default async function handler(req, res) {
     const method = req.method;
     const user = verifyToken(req);
@@ -11,15 +12,11 @@ export default async function handler(req, res) {
     }
     if (method === 'POST') {
         try {
-            const providerProfile = await db.providerProfile.findFirst({
-                where: { userId: user.id },
-            });
-            if (!providerProfile) {
-                return res.status(403).json({
-                    success: false,
-                    message: 'Only registered provider profiles can submit quotations.',
-                });
-            }
+            // Only ACTIVE, DBC-verified professionals may quote (role and profile status read from the database).
+            const gate = await requireVerifiedProvider(user);
+            if (!gate.ok)
+                return res.status(gate.status).json({ success: false, code: gate.code, message: gate.message });
+            const providerProfile = gate.provider;
             const { requirementId, priceModel, totalAmount, estimatedDurationDays, warrantyMonths, proposal, milestones, attachments, } = req.body;
             if (!requirementId || !priceModel || totalAmount === undefined || !estimatedDurationDays || !proposal) {
                 return res.status(400).json({ success: false, message: 'Missing required quotation parameters' });
@@ -46,6 +43,8 @@ export default async function handler(req, res) {
             });
         }
         catch (err) {
+            if (err instanceof ProviderAccessError)
+                return res.status(403).json({ success: false, code: err.code, message: err.message });
             return res.status(500).json({ success: false, message: err.message });
         }
     }

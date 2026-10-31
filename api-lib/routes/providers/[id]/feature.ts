@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken, hasRole } from '../../../utils/auth.js';
 import { adminFeatureProvider } from '../../../services/providerService.js';
+import { recordAdminAction } from '../../../services/adminSafety.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const user = verifyToken(req);
@@ -32,6 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const updated = await adminFeatureProvider(paramId, Boolean(isFeatured));
+    await recordAdminAction(user.id, `Admin set provider ${paramId} featured to ${updated.isFeatured}`, 'PROVIDER_PROFILE', paramId);
     return res.status(200).json({
       success: true,
       message: `Provider featured status updated to ${isFeatured}`,

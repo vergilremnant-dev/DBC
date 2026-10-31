@@ -179,6 +179,9 @@ import chatMessagesIndexHandler from './routes/chat/messages/index.js';
 import chatMessagesFetchHandler from './routes/chat/messages/[conversationId].js';
 import chatMessagesReadHandler from './routes/chat/messages/[id]/read.js';
 
+import { verifyToken } from './utils/auth.js';
+import { db } from './utils/db.js';
+
 const app = express();
 app.disable('x-powered-by');
 app.use(corsAllowlist);
@@ -187,6 +190,25 @@ app.use((req, res, next) => {
     next();
   } else {
     express.json()(req, res, next);
+  }
+});
+
+// Privileged-session check. Access tokens are stateless for 15 minutes, so an administrator who was demoted,
+// suspended or deactivated could otherwise keep using an old token. Every request made with an ADMIN token to an
+// admin path, and every non-GET request with an ADMIN token, re-reads role and status from the database.
+// Non-admin tokens are untouched (no extra query); their sessions are revoked when an admin changes them.
+app.use(async (req, res, next) => {
+  try {
+    const claims = verifyToken(req as unknown as Parameters<typeof verifyToken>[0]);
+    if (!claims || claims.role !== 'ADMIN') return next();
+    if (req.method === 'GET' && !req.path.startsWith('/api/admin')) return next();
+    const account = await db.user.findUnique({ where: { id: claims.id }, select: { role: true, status: true } });
+    if (!account || account.role !== 'ADMIN' || account.status !== 'ACTIVE') {
+      return res.status(401).json({ success: false, code: 'SESSION_REVOKED', message: 'Your session is no longer valid. Please sign in again.' });
+    }
+    return next();
+  } catch {
+    return res.status(503).json({ success: false, message: 'Service temporarily unavailable. Please try again.' });
   }
 });
 

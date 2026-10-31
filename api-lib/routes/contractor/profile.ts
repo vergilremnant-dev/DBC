@@ -2,6 +2,8 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyToken } from '../../utils/auth.js';
 import { db } from '../../utils/db.js';
 import { VerificationStatus } from '@prisma/client';
+import { findCatalogService, resolveServices } from '../../utils/serviceCatalog.js';
+import { ServiceChangeError, assertServiceChangeAllowed } from '../../services/providerEligibility.js';
 
 function mapToContractorProfile(profile: any) {
   return {
@@ -11,7 +13,7 @@ function mapToContractorProfile(profile: any) {
     ownerName: profile.fullName || '',
     phoneNumber: profile.phoneNumber,
     experienceYears: profile.experienceYears,
-    specialization: profile.category ? profile.category.name : 'Plumbing',
+    specialization: profile.category ? profile.category.name : '',
     serviceAreas: profile.serviceAreas,
     description: profile.description,
     verificationStatus: profile.verificationStatus,
@@ -45,6 +47,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     case 'POST':
     case 'PUT':
+      // Only professional accounts may hold a professional profile; customers cannot create one here.
+      if (user.role !== 'PROVIDER') {
+        return res.status(403).json({ success: false, message: 'Only professional accounts can manage a professional profile.' });
+      }
       try {
         const {
           companyName,
@@ -54,54 +60,74 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           specialization,
           serviceAreas,
           description,
-        } = req.body;
+          city,
+          state,
+        } = req.body ?? {};
 
         if (!ownerName || !phoneNumber || experienceYears === undefined || !specialization) {
           return res.status(400).json({ success: false, message: 'Missing required profile fields' });
         }
 
-        // Find category matching specialization
-        const category = await db.serviceCategory.findFirst({
-          where: {
-            name: { contains: specialization, mode: 'insensitive' },
-          },
-        });
-        const categoryId = category ? category.id : 1;
+        // Resolve the specialization to an active DBC service; there is no fallback service.
+        const catalog = findCatalogService(String(specialization)) ?? resolveServices(String(specialization), { limit: 1 })[0]?.service;
+        const category = catalog
+          ? await db.serviceCategory.findFirst({ where: { slug: catalog.slug, isActive: true, deletedAt: null } })
+          : null;
+        if (!category) {
+          return res.status(400).json({ success: false, message: 'Please choose one of the DBC services as your specialization.' });
+        }
 
-        const profile = await db.providerProfile.upsert({
+        const existing = await db.providerProfile.findUnique({
           where: { userId: user.id },
-          update: {
-            fullName: ownerName,
-            businessName: companyName,
-            phoneNumber,
-            experienceYears: Number(experienceYears),
-            categoryId,
-            serviceAreas,
-            description,
-            email: user.email,
-          },
-          create: {
-            userId: user.id,
-            fullName: ownerName,
-            businessName: companyName,
-            phoneNumber,
-            experienceYears: Number(experienceYears),
-            categoryId,
-            serviceAreas,
-            description,
-            email: user.email,
-            city: 'Hyderabad',
-            state: 'Telangana',
-            verificationStatus: VerificationStatus.PENDING,
-            isFeatured: false,
-            isAvailable: true,
-          },
-          include: { category: true },
+          select: { categoryId: true, verificationStatus: true },
         });
+
+        let profile;
+        if (existing) {
+          assertServiceChangeAllowed(existing, category.id);
+          // Professionals may edit their own descriptive fields only; verification and featuring stay admin-only.
+          profile = await db.providerProfile.update({
+            where: { userId: user.id },
+            data: {
+              fullName: ownerName,
+              businessName: companyName,
+              phoneNumber,
+              experienceYears: Number(experienceYears),
+              categoryId: category.id,
+              serviceAreas,
+              description,
+            },
+            include: { category: true },
+          });
+        } else {
+          if (!city || !state) {
+            return res.status(400).json({ success: false, message: 'City and state are required to create a professional profile.' });
+          }
+          profile = await db.providerProfile.create({
+            data: {
+              userId: user.id,
+              fullName: ownerName,
+              businessName: companyName,
+              phoneNumber,
+              experienceYears: Number(experienceYears),
+              categoryId: category.id,
+              serviceAreas,
+              description,
+              email: user.email,
+              city: String(city),
+              state: String(state),
+              verificationStatus: VerificationStatus.PENDING,
+              isFeatured: false,
+              isAvailable: true,
+            },
+            include: { category: true },
+          });
+        }
 
         return res.status(200).json({ success: true, data: mapToContractorProfile(profile) });
-      } catch (err: any) {
-        return res.status(500).json({ success: false, message: err.message });
+      } catch (err: unknown) {
+        if (err instanceof ServiceChangeError) return res.status(err.status).json({ success: false, code: err.code, message: err.message });
+        return res.status(500).json({ success: false, message: 'An internal server error occurred.' });
       }
 
     default:

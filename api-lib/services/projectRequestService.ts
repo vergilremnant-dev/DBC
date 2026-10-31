@@ -11,6 +11,7 @@
  */
 import { RequirementStatus } from '@prisma/client';
 import { db } from '../utils/db.js';
+import { isEligibleProfile } from './providerEligibility.js';
 import { createRequirement, transitionRequirementStatus } from './requirementService.js';
 import { publicDisplayName } from '../utils/publicProvider.js';
 
@@ -208,11 +209,13 @@ export interface ProviderAccess {
 export async function getProviderAccess(providerProfileId: string, requirementId: number): Promise<ProviderAccess> {
   const [requirement, provider, conversations, quotation] = await Promise.all([
     db.requirement.findUnique({ where: { id: requirementId }, select: { status: true, serviceCategoryId: true } }),
-    db.providerProfile.findUnique({ where: { id: providerProfileId }, select: { categoryId: true } }),
+    db.providerProfile.findUnique({ where: { id: providerProfileId }, select: { id: true, userId: true, categoryId: true, verificationStatus: true, user: { select: { status: true } } } }),
     db.conversation.findMany({ where: { requirementId }, select: { providerId: true, conversationType: true } }),
     db.quotation.findFirst({ where: { requirementId, providerId: providerProfileId }, select: { id: true } }),
   ]);
   if (!requirement || !provider) return { allowed: false, invited: false, engaged: false };
+  // Only ACTIVE, DBC-verified professionals may see or act on requests (even ones they were invited to).
+  if (!isEligibleProfile(provider)) return { allowed: false, invited: false, engaged: false };
   const invited = conversations.some((c) => c.providerId === providerProfileId && c.conversationType === INVITE_CONVERSATION_TYPE);
   const engaged = invited || !!quotation || conversations.some((c) => c.providerId === providerProfileId);
   if (engaged) return { allowed: true, invited, engaged };

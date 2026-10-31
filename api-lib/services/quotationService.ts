@@ -4,6 +4,7 @@ import { validateTransition } from './quotationWorkflow.js';
 import { calculateAndValidatePricing } from './pricingEngine.js';
 import { isValidTransition as isValidRequirementTransition } from './workflowService.js';
 import { QUOTABLE_STATUSES, getProviderAccess, notify, requestReference } from './projectRequestService.js';
+import { assertVerifiedProviderUser } from './providerEligibility.js';
 
 /**
  * Advance a requirement along the validated requirement state machine (inside a transaction),
@@ -61,6 +62,10 @@ export interface UpdateQuotationInput {
 }
 
 export async function createQuotation(providerId: string, userId: string, input: CreateQuotationInput) {
+  // The quoting account must be an ACTIVE, verified professional and must own this provider profile.
+  const eligible = await assertVerifiedProviderUser(userId);
+  if (eligible.id !== providerId) throw new Error('Unauthorized: you can only quote as your own professional profile');
+
   // Validate pricing input
   calculateAndValidatePricing({
     priceModel: input.priceModel,
@@ -206,6 +211,7 @@ export async function updateQuotationDraft(id: number, userId: string, input: Up
   if (existing.provider.userId !== userId) {
     throw new Error('Unauthorized edit access');
   }
+  await assertVerifiedProviderUser(userId);
 
   if (existing.status !== QuotationStatus.DRAFT) {
     throw new Error('Only draft quotations can be modified directly');
@@ -277,6 +283,8 @@ export async function transitionQuotationStatus(
   if (!isAdmin) {
     if (newStatus === QuotationStatus.SUBMITTED || newStatus === QuotationStatus.WITHDRAWN) {
       if (!isProvider) throw new Error('Only the provider can submit or withdraw quotations');
+      // Withdrawing stays possible; sending a quotation requires a verified, active professional.
+      if (newStatus === QuotationStatus.SUBMITTED) await assertVerifiedProviderUser(userId);
     } else if (newStatus === QuotationStatus.ACCEPTED || newStatus === QuotationStatus.REJECTED) {
       if (!isCustomer) throw new Error('Only the customer can accept or reject quotations');
     }
@@ -411,6 +419,7 @@ export async function addNegotiationMessage(
   if (!isProvider && !isCustomer) {
     throw new Error('Unauthorized comment permission');
   }
+  if (isProvider) await assertVerifiedProviderUser(userId);
 
   return await db.$transaction(async (tx) => {
     const msg = await tx.quotationNegotiation.create({
@@ -451,6 +460,7 @@ export async function submitQuotationRevision(
   if (existing.provider.userId !== userId) {
     throw new Error('Unauthorized edit access');
   }
+  await assertVerifiedProviderUser(userId);
 
   // Validate pricing input
   calculateAndValidatePricing({

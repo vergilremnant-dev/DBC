@@ -1,4 +1,5 @@
 import { db } from '../utils/db.js';
+import { isEligibleProviderId } from './providerEligibility.js';
 
 export interface CreateConversationInput {
   conversationType?: string;
@@ -133,7 +134,11 @@ export async function sendMessage(
     throw new Error('Conversation not found');
   }
   // Only conversation participants may post (throws 'Conversation not found' / 'Access denied').
-  await getConversationDetails(finalSenderId, finalConversationId);
+  const conversation = await getConversationDetails(finalSenderId, finalConversationId);
+  // In project-request conversations the professional must still be an ACTIVE, verified professional.
+  if (conversation.requirementId && conversation.provider?.userId === finalSenderId && !(await isEligibleProviderId(conversation.providerId))) {
+    throw new Error('Access denied: your professional profile must be verified by DBC to message customers about project requests');
+  }
 
   return await db.$transaction(async (tx) => {
     const msg = await tx.message.create({

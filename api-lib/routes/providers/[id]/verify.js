@@ -1,5 +1,6 @@
 import { verifyToken, hasRole } from '../../../utils/auth.js';
 import { adminVerifyProvider } from '../../../services/providerService.js';
+import { recordAdminAction } from '../../../services/adminSafety.js';
 export default async function handler(req, res) {
     const user = verifyToken(req);
     if (!user) {
@@ -24,6 +25,7 @@ export default async function handler(req, res) {
             return res.status(400).json({ success: false, message: 'Verification status is required' });
         }
         const updated = await adminVerifyProvider(paramId, status);
+        await recordAdminAction(user.id, `Admin set provider ${paramId} verification to ${updated.verificationStatus}`, 'PROVIDER_PROFILE', paramId);
         return res.status(200).json({
             success: true,
             message: `Provider profile verification status updated to ${status}`,

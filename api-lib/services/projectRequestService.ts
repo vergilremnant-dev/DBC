@@ -27,6 +27,13 @@ export const QUOTABLE_STATUSES: RequirementStatus[] = [
 
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 const MAX_ATTACHMENTS = 5;
+/**
+ * Photos are stored inline as data URLs in production, and Vercel caps request and response bodies at
+ * 4.5 MB, so the request's photos together must stay well below that.
+ */
+export const MAX_ATTACHMENT_TOTAL_CHARS = 3_000_000;
+/** Accepted attachment URLs: inline images (production storage), uploaded files (dev storage) or https links. */
+const ATTACHMENT_URL = /^(data:image\/(jpeg|png|webp);base64,|https:\/\/|\/uploads\/)/;
 
 export class RequestError extends Error {
   constructor(public status: number, message: string) {
@@ -90,6 +97,12 @@ export function validateProjectRequest(input: ProjectRequestInput) {
     if (!a?.fileUrl || !a?.fileName || !/^image\/(jpeg|png|webp)$/.test(String(a.fileType))) {
       errors.attachments = 'Attachments must be JPEG, PNG or WEBP images.';
       break;
+    }
+  }
+  if (!errors.attachments) {
+    if (attachments.some((a) => !ATTACHMENT_URL.test(String(a.fileUrl)))) errors.attachments = 'Attachments must be JPEG, PNG or WEBP images.';
+    else if (attachments.reduce((n, a) => n + String(a.fileUrl).length, 0) > MAX_ATTACHMENT_TOTAL_CHARS) {
+      errors.attachments = 'The photos are too large together. Remove one or use smaller images.';
     }
   }
   if (Object.keys(errors).length) {

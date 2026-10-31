@@ -27,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         where: { conversationId },
         orderBy: { createdAt: 'asc' },
         include: {
-          sender: true,
+          sender: { select: { id: true, role: true } },
           readReceipts: true,
           reactions: true,
         },

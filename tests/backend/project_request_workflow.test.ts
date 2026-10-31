@@ -90,6 +90,14 @@ describe('Project request submission', () => {
     await expect(submitProjectRequest(U.cust1.id, { ...base, serviceCategoryId: 2, attachments: [{ fileName: 'a.pdf', fileUrl: 'x', fileType: 'application/pdf' }] })).rejects.toThrow(/JPEG, PNG or WEBP/);
   });
 
+  it('rejects attachment links that are not images and photo sets too large for one request', async () => {
+    const img = (fileUrl: string) => ({ fileName: 'site.jpg', fileUrl, fileType: 'image/jpeg' });
+    await expect(submitProjectRequest(U.cust1.id, { ...base, serviceCategoryId: 2, attachments: [img('javascript:alert(1)')] })).rejects.toThrow(/JPEG, PNG or WEBP/);
+    await expect(submitProjectRequest(U.cust1.id, { ...base, serviceCategoryId: 2, attachments: [img('data:text/html;base64,PGI+')] })).rejects.toThrow(/JPEG, PNG or WEBP/);
+    const big = img(`data:image/jpeg;base64,${'A'.repeat(800_000)}`);
+    await expect(submitProjectRequest(U.cust1.id, { ...base, serviceCategoryId: 2, attachments: [big, big, big, big] })).rejects.toThrow(/too large together/);
+  });
+
   it('only customer accounts can submit (route)', async () => {
     const r = await call(projectRequestsRoute, U.pro1, { method: 'POST', body: { ...base, serviceCategoryId: 2 } });
     expect(r.status).toBe(403);

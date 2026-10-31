@@ -9,6 +9,15 @@ export interface CreateConversationInput {
   providerId?: string; // legacy support
 }
 
+/**
+ * Fields of the other participant that a conversation member may see. Full profiles carry
+ * phone numbers, emails and addresses, so chat responses select only display fields.
+ */
+const CHAT_CUSTOMER_SELECT = { id: true, userId: true, fullName: true, profileImageUrl: true, city: true } as const;
+const CHAT_PROVIDER_SELECT = { id: true, userId: true, fullName: true, businessName: true, profileImage: true, city: true, verificationStatus: true } as const;
+/** Message authors / receipt and reaction users: never the full User row (email, phone, Firebase id). */
+const CHAT_USER_SELECT = { id: true, role: true } as const;
+
 export async function logGlobalActivity(
   actorId: string,
   activityType: string,
@@ -79,14 +88,14 @@ export async function getConversationDetail(id: string) {
   return await db.conversation.findUnique({
     where: { id },
     include: {
-      customer: true,
-      provider: true,
+      customer: { select: CHAT_CUSTOMER_SELECT },
+      provider: { select: CHAT_PROVIDER_SELECT },
       messages: {
         orderBy: { createdAt: 'asc' },
         include: {
-          sender: true,
-          readReceipts: { include: { user: true } },
-          reactions: { include: { user: true } },
+          sender: { select: CHAT_USER_SELECT },
+          readReceipts: { include: { user: { select: CHAT_USER_SELECT } } },
+          reactions: { include: { user: { select: CHAT_USER_SELECT } } },
         },
       },
     },
@@ -136,7 +145,7 @@ export async function sendMessage(
         attachmentUrl: finalAttachmentUrl || null,
       },
       include: {
-        sender: true,
+        sender: { select: CHAT_USER_SELECT },
       },
     });
 
@@ -275,8 +284,8 @@ export async function listConversations(userId: string) {
       OR: whereConditions,
     },
     include: {
-      customer: true,
-      provider: true,
+      customer: { select: CHAT_CUSTOMER_SELECT },
+      provider: { select: CHAT_PROVIDER_SELECT },
       messages: {
         take: 1,
         orderBy: { createdAt: 'desc' },
@@ -290,8 +299,8 @@ export async function getConversationDetails(userId: string, conversationId: str
   const conversation = await db.conversation.findUnique({
     where: { id: conversationId },
     include: {
-      customer: true,
-      provider: true,
+      customer: { select: CHAT_CUSTOMER_SELECT },
+      provider: { select: CHAT_PROVIDER_SELECT },
     },
   });
 
@@ -319,7 +328,7 @@ export async function getMessages(userId: string, conversationId: string) {
     where: { conversationId },
     orderBy: { createdAt: 'asc' },
     include: {
-      sender: true,
+      sender: { select: CHAT_USER_SELECT },
       readReceipts: true,
       reactions: true,
     },

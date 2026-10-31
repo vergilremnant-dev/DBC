@@ -28,7 +28,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       where: { customerId: customerProfile.id },
       orderBy: { createdAt: 'desc' },
       include: {
-        attachments: true,
+        // List view: attachment metadata only. Photos are inline data URLs and would bloat the response.
+        attachments: { select: { id: true, fileName: true, fileType: true } },
         _count: {
           select: { notes: true, history: true },
         },

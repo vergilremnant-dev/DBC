@@ -34,6 +34,7 @@ const RELATIONS: Record<string, Record<string, Rel>> = {
     provider: { model: 'providerProfile', many: false, local: 'providerId', remote: 'id' },
     messages: { model: 'message', many: true, local: 'id', remote: 'conversationId' },
   },
+  message: { sender: { model: 'user', many: false, local: 'senderId', remote: 'id' } },
   providerProfile: { category: { model: 'serviceCategory', many: false, local: 'categoryId', remote: 'id' } },
 };
 

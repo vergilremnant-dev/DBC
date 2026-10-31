@@ -119,6 +119,39 @@ const fileToDataUrl = (file: File) =>
     r.readAsDataURL(file);
   });
 
+/** Photos travel inline with the request, so the set must stay under the server's total (see MAX_ATTACHMENT_TOTAL_CHARS). */
+const MAX_PHOTOS_TOTAL_CHARS = 3_000_000;
+const MAX_PHOTO_EDGE = 1600;
+
+/**
+ * Downscale a photo to at most 1600px on its longest side and re-encode it as JPEG, so that a full set of
+ * site photos fits in one request. Falls back to the original image if the browser cannot decode it.
+ */
+async function compressPhoto(file: File): Promise<{ dataUrl: string; type: string }> {
+  const original = await fileToDataUrl(file);
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const el = new Image();
+      el.onload = () => resolve(el);
+      el.onerror = () => reject(new Error('decode'));
+      el.src = original;
+    });
+    const scale = Math.min(1, MAX_PHOTO_EDGE / Math.max(img.naturalWidth, img.naturalHeight));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return { dataUrl: original, type: file.type };
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const jpeg = canvas.toDataURL('image/jpeg', 0.82);
+    return jpeg.length < original.length ? { dataUrl: jpeg, type: 'image/jpeg' } : { dataUrl: original, type: file.type };
+  } catch {
+    return { dataUrl: original, type: file.type };
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Small UI pieces                                                     */
 /* ------------------------------------------------------------------ */
@@ -291,6 +324,7 @@ export function RequestProjectPage() {
     if (!files?.length) return;
     setErrors((e) => ({ ...e, photos: '' }));
     const list = Array.from(files).slice(0, MAX_PHOTOS - photos.length);
+    let usedChars = photos.reduce((n, p) => n + p.fileUrl.length, 0);
     for (const f of list) {
       if (!/^image\/(jpeg|png|webp)$/.test(f.type)) {
         setErrors((e) => ({ ...e, photos: `${f.name}: only JPEG, PNG or WEBP images are supported.` }));
@@ -302,10 +336,15 @@ export function RequestProjectPage() {
       }
       setUploading(true);
       try {
-        const dataUrl = await fileToDataUrl(f);
+        const { dataUrl, type } = await compressPhoto(f);
+        if (usedChars + dataUrl.length > MAX_PHOTOS_TOTAL_CHARS) {
+          setErrors((e) => ({ ...e, photos: `${f.name} would make the photos too large together. Remove a photo or use a smaller image.` }));
+          continue;
+        }
         const res = await profileService.uploadImage(dataUrl, 'requirements');
         if (!res?.url) throw new Error('Upload failed');
-        setPhotos((p) => [...p, { fileName: f.name, fileUrl: res.url, fileType: f.type, size: f.size }]);
+        usedChars += res.url.length;
+        setPhotos((p) => [...p, { fileName: f.name, fileUrl: res.url, fileType: type, size: Math.round((dataUrl.length * 3) / 4) }]);
       } catch {
         setErrors((e) => ({ ...e, photos: `Could not upload ${f.name}. Please try again.` }));
       } finally {

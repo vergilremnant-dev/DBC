@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../hooks/auth/useAuth';
 
 // ==========================================
 // Types & interfaces
@@ -40,6 +41,9 @@ interface NotificationItem {
 }
 
 export default function ConsultantDashboard() {
+  // Greet the signed-in professional by their own name (never a sample name).
+  const { user } = useAuth();
+  const welcomeName = [user?.firstName, user?.lastName].filter(Boolean).join(' ').trim();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [availability, setAvailability] = useState<'Available Today' | 'Busy' | 'On Leave'>('Available Today');
@@ -119,7 +123,7 @@ export default function ConsultantDashboard() {
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative">
         <div className="space-y-1">
           <span className="text-2xs font-black uppercase text-stone-500 tracking-wider">Good Morning</span>
-          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">Welcome back, John Anderson</h1>
+          <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight">{welcomeName ? `Welcome back, ${welcomeName}` : 'Welcome back'}</h1>
           <p className="text-xs text-stone-600 font-medium">Saturday, August 1 • "Help homeowners make better decisions through expert guidance."</p>
         </div>
         <div className="relative">

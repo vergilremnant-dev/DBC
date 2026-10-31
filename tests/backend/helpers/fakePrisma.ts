@@ -86,6 +86,7 @@ export function createFakePrisma() {
       if (cond === undefined) continue;
       if (k === 'OR') { if (!(cond as any[]).some((w) => match(model, row, w))) return false; continue; }
       if (k === 'AND') { if (!(cond as any[]).every((w) => match(model, row, w))) return false; continue; }
+      if (k === 'NOT') { const list = Array.isArray(cond) ? cond : [cond]; if (list.some((w: any) => match(model, row, w))) return false; continue; }
       const rel = related(model, row, k);
       if (rel) {
         const c = cond as any;

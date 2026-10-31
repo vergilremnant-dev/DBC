@@ -1,510 +1,275 @@
-import { useState, useEffect, useMemo } from 'react';
-import ConsultantProfilePage from '../consultant/ConsultantProfilePage';
+import { useState } from 'react';
+import { useAuth } from '../../../hooks/auth/useAuth';
+import { useOwnProfile, profileSaveErrors } from '../../../hooks/profile/useOwnProfile';
 
-// ==========================================
-// Types & Interfaces
-// ==========================================
-interface PortfolioItem {
+/** The signed-in professional's own profile, as returned by GET /api/profile (resolved from the access token). */
+interface ProviderProfileRecord {
   id: string;
-  name: string;
-  category: string;
-  location: string;
-  year: string;
-  description: string;
-  imgUrl: string;
+  userId: string;
+  fullName: string;
+  businessName: string | null;
+  description: string | null;
+  experienceYears: number;
+  city: string;
+  state: string;
+  serviceAreas: string | null;
+  categoryId: number;
+  category?: { id: number; name: string } | null;
+  phoneNumber: string | null;
+  email?: string;
+  profileImage: string | null;
+  coverImage: string | null;
+  verificationStatus: 'PENDING' | 'VERIFIED' | 'REJECTED';
+  canProvideServices: boolean;
+  canProvideConsultation: boolean;
+  consultationFee: number;
+  averageRating: number;
+  totalReviews: number;
+  createdAt: string;
 }
 
-interface VerificationDoc {
-  name: string;
-  status: 'Approved' | 'Pending' | 'Rejected';
-}
+type EditableFields = 'fullName' | 'businessName' | 'description' | 'experienceYears' | 'city' | 'state' | 'serviceAreas' | 'consultationFee';
+type FormValues = Record<EditableFields, string>;
 
-const COMPANY_INFO = {
-  businessType: 'Partnership Firm',
-  experienceYears: '8 Years',
-  regNo: 'REG-10928374-B',
-  gstNo: '36AAAAA1111A1Z1',
-  licenseNo: 'LIC-ARCH-2024-88',
-  companySize: '5-10 Employees'
+const VERIFICATION: Record<ProviderProfileRecord['verificationStatus'], { label: string; tone: string; note: string }> = {
+  VERIFIED: { label: 'Verified by DBC', tone: 'bg-emerald-50 text-emerald-800 border-emerald-200', note: 'Your profile is public and you can respond to project requests.' },
+  PENDING: { label: 'Awaiting verification', tone: 'bg-amber-50 text-amber-800 border-amber-200', note: 'DBC is reviewing your profile. It becomes public, and you can respond to project requests, once verified.' },
+  REJECTED: { label: 'Not approved', tone: 'bg-rose-50 text-rose-800 border-rose-200', note: 'Your profile was not approved. Please contact DBC support.' },
 };
 
-export default function ProfessionalProfile() {
-  const [workspaceView, setWorkspaceView] = useState<'PRO' | 'CONSULTANT'>(() => {
-    return (localStorage.getItem('dbc_provider_view') as 'PRO' | 'CONSULTANT') || 'PRO';
-  });
+const MISSING_LABELS: Record<string, string> = {
+  fullName: 'Add your full name',
+  phoneNumber: 'Add your phone number',
+  city: 'Add your city',
+  state: 'Add your state',
+  experienceYears: 'Add your years of experience',
+  categoryId: 'Choose your service',
+  consultationFee: 'Set your consultation fee',
+};
 
-  useEffect(() => {
-    const handleStorage = () => {
-      setWorkspaceView((localStorage.getItem('dbc_provider_view') as 'PRO' | 'CONSULTANT') || 'PRO');
-    };
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, []);
+const toForm = (p: ProviderProfileRecord | null): FormValues => ({
+  fullName: p?.fullName ?? '',
+  businessName: p?.businessName ?? '',
+  description: p?.description ?? '',
+  experienceYears: p ? String(p.experienceYears ?? '') : '',
+  city: p?.city ?? '',
+  state: p?.state ?? '',
+  serviceAreas: p?.serviceAreas ?? '',
+  consultationFee: p ? String(p.consultationFee ?? 0) : '0',
+});
 
-  const [isLoading, setIsLoading] = useState(true);
+/**
+ * Professional profile. Shows and edits only the signed-in professional's own record; nothing is invented or
+ * shared between accounts. Remounted per account (see the default export).
+ */
+function OwnProfessionalProfile() {
+  const { user } = useAuth();
+  const own = useOwnProfile<ProviderProfileRecord>();
+  const profile = own.status === 'ready' ? own.profile : null;
+  const [editing, setEditing] = useState(false);
+  const [values, setValues] = useState<FormValues>(toForm(null));
+  const [saving, setSaving] = useState(false);
+  const [errors, setErrors] = useState<{ fields: Record<string, string>; message: string }>({ fields: {}, message: '' });
+  const [notice, setNotice] = useState('');
 
-  // Profile General info state
-  const [profileData, setProfileData] = useState({
-    businessName: 'Apex Architecture & Build',
-    ownerName: 'John Anderson',
-    category: 'Structural Consultancy',
-    description: 'Premier structural engineering audits and architectural spatial planners in Hyderabad.',
-    phone: '+91 98765 43210',
-    email: 'apexbuilds@example.com',
-    website: 'https://apexbuilds.example.com',
-    address: 'Banjara Hills, Plot 102, Hyderabad, TS, India'
-  });
+  if (own.status === 'loading') return <SkeletonProfile />;
+  if (own.status === 'error') {
+    return (
+      <div className="max-w-3xl mx-auto rounded-3xl border border-stone-200 bg-white p-6 text-center" role="alert">
+        <p className="text-sm text-stone-700">{own.error}</p>
+        <button type="button" onClick={own.reload} className="dbc-btn dbc-btn-md dbc-btn-secondary mt-3">Try again</button>
+      </div>
+    );
+  }
+  if (!profile) {
+    return (
+      <div className="max-w-3xl mx-auto rounded-3xl border border-stone-200 bg-white p-6 text-center">
+        <h1 className="text-lg font-bold text-stone-900">Your professional profile isn't set up yet</h1>
+        <p className="mt-1 text-sm text-stone-600">Please contact DBC support to complete your professional onboarding.</p>
+      </div>
+    );
+  }
 
-  // Company registration state (static constants to fix unused state warnings)
-  const companyInfo = COMPANY_INFO;
+  const v = VERIFICATION[profile.verificationStatus] ?? VERIFICATION.PENDING;
+  const pct = own.completion ? Math.max(0, Math.min(100, Math.round(own.completion.percentage))) : null;
+  const startEdit = () => {
+    setValues(toForm(profile));
+    setErrors({ fields: {}, message: '' });
+    setNotice('');
+    setEditing(true);
+  };
+  const set = (k: EditableFields) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setValues((x) => ({ ...x, [k]: e.target.value }));
 
-  // Services offered state
-  const services = {
-    primary: 'Structural blueprint auditing',
-    secondary: 'Spatial blueprint design, Load-bearing reinforcement calculations',
-    pricingType: 'Project Based'
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const local: Record<string, string> = {};
+    if (!values.fullName.trim()) local.fullName = 'Full name is required';
+    if (!values.city.trim()) local.city = 'City is required';
+    if (!values.state.trim()) local.state = 'State is required';
+    if (!/^\d{1,2}$/.test(values.experienceYears.trim())) local.experienceYears = 'Enter years of experience (0–99)';
+    if (profile.canProvideConsultation && !(Number(values.consultationFee) >= 0)) local.consultationFee = 'Enter a valid fee';
+    if (Object.keys(local).length) return setErrors({ fields: local, message: 'Please correct the highlighted fields.' });
+    setSaving(true);
+    try {
+      // Send the full record: unchanged values (service, phone, capabilities, images) are kept as they are.
+      await own.save({
+        fullName: values.fullName.trim(),
+        businessName: values.businessName.trim() || null,
+        description: values.description.trim() || null,
+        experienceYears: Number(values.experienceYears),
+        city: values.city.trim(),
+        state: values.state.trim(),
+        serviceAreas: values.serviceAreas.trim() || null,
+        categoryId: profile.categoryId,
+        phoneNumber: profile.phoneNumber,
+        profileImage: profile.profileImage ?? undefined,
+        coverImage: profile.coverImage ?? undefined,
+        canProvideServices: profile.canProvideServices,
+        canProvideConsultation: profile.canProvideConsultation,
+        consultationFee: profile.canProvideConsultation ? Number(values.consultationFee) : profile.consultationFee,
+      });
+      setEditing(false);
+      setNotice('Profile saved.');
+    } catch (err) {
+      setErrors(profileSaveErrors(err));
+    } finally {
+      setSaving(false);
+    }
   };
 
-  // Areas of expertise multiple selections state
-  const specializations = ['Residential Duplexes', 'Commercial Complexes', 'Vastu Layout Plan adjustments'];
+  const fieldError = (k: string) => errors.fields[k];
+  const input = (k: EditableFields, label: string, opts: { textarea?: boolean; inputMode?: 'numeric' | 'decimal'; span?: boolean } = {}) => (
+    <label className={`block space-y-1 ${opts.span ? 'sm:col-span-2' : ''}`}>
+      <span className="text-2xs font-bold uppercase text-stone-600">{label}</span>
+      {opts.textarea ? (
+        <textarea name={k} value={values[k]} onChange={set(k)} rows={4} className="dbc-input w-full" aria-invalid={!!fieldError(k)} />
+      ) : (
+        <input name={k} value={values[k]} onChange={set(k)} inputMode={opts.inputMode} className="dbc-input w-full" aria-invalid={!!fieldError(k)} />
+      )}
+      {fieldError(k) && <span className="block text-2xs font-semibold text-rose-700" role="alert">{fieldError(k)}</span>}
+    </label>
+  );
 
-  // Service locations state
-  const locations = ['Hyderabad', 'Secunderabad', 'Rangareddy'];
-
-  // Portfolio items state
-  const [portfolio, setPortfolio] = useState<PortfolioItem[]>([
-    {
-      id: 'p-1',
-      name: 'Jubilee Hills Duplex foundation load checks',
-      category: 'Civil Engineering',
-      location: 'Hyderabad',
-      year: '2026',
-      description: 'Completed raft layout concrete slab calculation audits and steel reinforcement spacing review.',
-      imgUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80'
-    }
-  ]);
-
-  // Team members list
-  const team = [
-    { name: 'John Anderson', role: 'Principal Structural Engineer', email: 'john@example.com' },
-    { name: 'Vikram Singh', role: 'Site Inspection Coordinator', email: 'vikram@example.com' }
+  const details: [string, string | number | null | undefined][] = [
+    ['Full name', profile.fullName],
+    ['Business name', profile.businessName],
+    ['Service', profile.category?.name],
+    ['Experience', profile.experienceYears != null ? `${profile.experienceYears} years` : null],
+    ['Location', [profile.city, profile.state].filter(Boolean).join(', ')],
+    ['Service areas', profile.serviceAreas],
+    ['Phone number', profile.phoneNumber],
+    ['Sign-in email', user?.email],
+    ...(profile.canProvideConsultation ? ([['Consultation fee', `₹${Number(profile.consultationFee || 0).toLocaleString('en-IN')}`]] as [string, string][]) : []),
   ];
 
-  // Working Hours
-  const workingDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-  const workingHours = '09:00 AM - 06:00 PM';
-  const [vacationMode, setVacationMode] = useState(false);
-
-  // Notification toggles
-  const [notifications, setNotifications] = useState({
-    alerts: true,
-    updates: true,
-    emails: true
-  });
-
-  // Verification Documents
-  const [verificationDocs, setVerificationDocs] = useState<VerificationDoc[]>([
-    { name: 'Professional_License_Certificate.pdf', status: 'Approved' },
-    { name: 'GST_Registration_Certificate.pdf', status: 'Approved' },
-    { name: 'Company_PAN_Card.pdf', status: 'Pending' }
-  ]);
-
-  // Simulated Startup loader
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 700);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleSaveProfile = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert('Profile & Company details updated successfully.');
-  };
-
-  const handleUploadVerificationDoc = () => {
-    const name = prompt('Enter document file name (e.g. License_Document.pdf):');
-    if (name) {
-      setVerificationDocs([...verificationDocs, { name, status: 'Pending' }]);
-      alert('Verification document uploaded successfully. Awaiting admin review.');
-    }
-  };
-
-  const handleAddPortfolioItem = () => {
-    const name = prompt('Enter project name:');
-    if (!name) return;
-    const newItem: PortfolioItem = {
-      id: `p-${Date.now()}`,
-      name,
-      category: 'Residential construction',
-      location: 'Hyderabad',
-      year: '2026',
-      description: 'Completed inspection checklist verification.',
-      imgUrl: 'https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=400&q=80'
-    };
-    setPortfolio([...portfolio, newItem]);
-    alert('Portfolio item added.');
-  };
-
-  const handleDeletePortfolioItem = (id: string) => {
-    const confirm = window.confirm('Are you sure you want to delete this portfolio project?');
-    if (confirm) {
-      setPortfolio(prev => prev.filter(item => item.id !== id));
-      alert('Portfolio project deleted.');
-    }
-  };
-
-  const profileCompletion = useMemo(() => {
-    let completedFields = 0;
-    if (profileData.businessName) completedFields++;
-    if (profileData.phone) completedFields++;
-    if (profileData.email) completedFields++;
-    if (companyInfo.gstNo) completedFields++;
-    if (portfolio.length > 0) completedFields++;
-    return Math.round((completedFields / 5) * 100);
-  }, [profileData, companyInfo, portfolio]);
-
-  if (workspaceView === 'CONSULTANT') {
-    return <ConsultantProfilePage />;
-  }
-
-  if (isLoading) {
-    return <SkeletonProfile />;
-  }
-
   return (
-    <div className="space-y-8 max-w-7xl mx-auto pb-20 text-left animate-gentle-fade select-none">
-      
-      {/* 1. Header */}
-      <header className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <span className="text-3xl p-3 bg-stone-50 border border-stone-200 rounded-2xl w-fit">🏢</span>
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-black text-stone-900 leading-tight font-display">{profileData.businessName}</h1>
-              <span className="bg-emerald-50 text-emerald-800 text-3xs font-black px-2 py-0.5 rounded-full border border-emerald-200">
-                ✓ Verified Business
-              </span>
-            </div>
-            <p className="text-xs text-stone-600 font-medium">Category: {profileData.category} &bull; Profile completion: {profileCompletion}%</p>
+    <div className="space-y-6 max-w-5xl mx-auto pb-16 text-left">
+      <header className="flex flex-wrap items-start justify-between gap-4 rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+        <div className="flex min-w-0 items-center gap-4">
+          {profile.profileImage ? (
+            <img src={profile.profileImage} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
+          ) : (
+            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-emerald-700 text-lg font-bold text-white" aria-hidden="true">
+              {(profile.businessName || profile.fullName || 'DB').slice(0, 2).toUpperCase()}
+            </span>
+          )}
+          <div className="min-w-0">
+            <h1 className="text-xl font-black text-stone-900 font-display [overflow-wrap:anywhere]">{profile.businessName || profile.fullName}</h1>
+            {profile.businessName && <p className="text-sm text-stone-600">{profile.fullName}</p>}
+            <span className={`mt-1 inline-block rounded-full border px-2 py-0.5 text-xs font-semibold ${v.tone}`}>{v.label}</span>
           </div>
         </div>
-
-        <div className="flex gap-2 text-xs">
-          <button
-            onClick={() => alert('Public view modal coming soon!')}
-            className="dbc-btn dbc-btn-md dbc-btn-outline bg-white border border-stone-200 hover:bg-stone-50"
-          >
-            Preview Public Profile
+        {!editing && (
+          <button type="button" onClick={startEdit} className="dbc-btn dbc-btn-md dbc-btn-secondary">
+            Edit profile
           </button>
-        </div>
+        )}
       </header>
 
-      {/* Two Column Layout details */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        {/* Left Column: Form settings and portfolios (Col span 8) */}
-        <div className="lg:col-span-8 space-y-8">
-          
-          {/* Profile Overview form */}
-          <form onSubmit={handleSaveProfile} className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-5 text-xs">
-            <h3 className="text-sm font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Business Identity Profile</h3>
-            
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-1.5">
-                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Business / Company Name</label>
-                <input aria-label="Business / Company Name"
-                  type="text"
-                  value={profileData.businessName}
-                  onChange={e => setProfileData({ ...profileData, businessName: e.target.value })}
-                  className="dbc-input"
-                  required
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Contact person Name</label>
-                <input aria-label="Contact person Name"
-                  type="text"
-                  value={profileData.ownerName}
-                  onChange={e => setProfileData({ ...profileData, ownerName: e.target.value })}
-                  className="dbc-input"
-                  required
-                />
-              </div>
-            </div>
+      <p className="rounded-2xl border border-stone-200 bg-white p-4 text-sm text-stone-700">{v.note}</p>
+      {notice && <p className="rounded-xl border border-stone-200 bg-white p-3 text-xs font-semibold text-stone-700" role="status">{notice}</p>}
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-1.5">
-                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Phone number</label>
-                <input aria-label="Phone number"
-                  type="text"
-                  value={profileData.phone}
-                  onChange={e => setProfileData({ ...profileData, phone: e.target.value })}
-                  className="dbc-input"
-                  required
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">Email address</label>
-                <input aria-label="Email address"
-                  type="email"
-                  value={profileData.email}
-                  onChange={e => setProfileData({ ...profileData, email: e.target.value })}
-                  className="dbc-input"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="block text-3xs font-black uppercase tracking-widest text-stone-gray">About business summary</label>
-              <textarea aria-label="About business summary"
-                value={profileData.description}
-                onChange={e => setProfileData({ ...profileData, description: e.target.value })}
-                className="dbc-input h-24 resize-none"
-                required
-              />
-            </div>
-
-            <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary">
-              Save Identity Settings
-            </button>
-          </form>
-
-          {/* Company Information details */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4 text-xs font-semibold text-stone-600">
-            <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Business Registrations</h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <span className="block text-3xs font-black text-stone-500 uppercase">GST registration ID</span>
-                <strong className="text-stone-900 block mt-0.5">{companyInfo.gstNo}</strong>
-              </div>
-              <div>
-                <span className="block text-3xs font-black text-stone-500 uppercase">License registration number</span>
-                <strong className="text-stone-900 block mt-0.5">{companyInfo.licenseNo}</strong>
-              </div>
-              <div>
-                <span className="block text-3xs font-black text-stone-500 uppercase">Business structure</span>
-                <strong className="text-stone-900 block mt-0.5">{companyInfo.businessType}</strong>
-              </div>
-              <div>
-                <span className="block text-3xs font-black text-stone-500 uppercase">Years of market experience</span>
-                <strong className="text-stone-900 block mt-0.5">{companyInfo.experienceYears}</strong>
-              </div>
-            </div>
-          </section>
-
-          {/* Services & Expertise */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4 text-xs font-semibold text-stone-600">
-            <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Services & Specialties</h3>
-            
-            <div className="space-y-3">
-              <div>
-                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Primary trade category</span>
-                <span className="text-stone-900 font-bold">{services.primary}</span>
-              </div>
-              <div>
-                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Specialized scopes</span>
-                <span className="text-stone-900 font-bold">{services.secondary}</span>
-              </div>
-              <div>
-                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Areas of Specialization Expertise</span>
-                <div className="flex gap-1.5 flex-wrap mt-1">
-                  {specializations.map((spec, i) => (
-                    <span key={i} className="bg-stone-50 border border-stone-200 px-2.5 py-0.5 rounded text-2xs text-stone-600">
-                      {spec}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="pt-2 border-t border-light-border/40">
-                <span className="block text-3xs font-black text-stone-450 uppercase mb-0.5">Service Locations Served</span>
-                <div className="flex gap-1.5 flex-wrap mt-1">
-                  {locations.map((loc, i) => (
-                    <span key={i} className="bg-stone-50 border border-stone-200 px-2.5 py-0.5 rounded text-2xs text-stone-600">
-                      {loc}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Portfolio Manager */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-light-border/40">
-              <h3 className="text-xs font-black uppercase text-stone-900">Portfolio Showcase</h3>
-              <button
-                onClick={handleAddPortfolioItem}
-                className="text-3xs font-black uppercase text-brand-emerald hover:underline"
-              >
-                + Add Project
-              </button>
-            </div>
-
-            {portfolio.length === 0 ? (
-              <div className="text-center py-8 text-stone-400 text-xs">
-                No portfolio items listed.
-              </div>
-            ) : (
+      <div className="grid items-start gap-6 lg:grid-cols-12">
+        <section className="space-y-4 rounded-3xl border border-stone-200 bg-white p-6 shadow-sm lg:col-span-8">
+          {editing ? (
+            <form onSubmit={save} noValidate className="space-y-4">
+              <h2 className="border-b border-stone-100 pb-2 text-sm font-bold text-stone-900">Edit profile</h2>
+              {errors.message && <p className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700" role="alert">{errors.message}</p>}
               <div className="grid gap-4 sm:grid-cols-2">
-                {portfolio.map(proj => (
-                  <div key={proj.id} className="border border-stone-200 rounded-2xl overflow-hidden text-xs flex flex-col justify-between">
-                    <img src={proj.imgUrl} alt={proj.name} className="w-full h-32 object-cover bg-stone-100" />
-                    <div className="p-4 space-y-2">
-                      <strong className="text-stone-900 block truncate">{proj.name}</strong>
-                      <p className="text-2xs text-stone-500 leading-relaxed font-semibold">{proj.description}</p>
-                      
-                      <div className="flex justify-between items-center pt-2 border-t border-light-border/40 text-3xs text-stone-500 font-bold uppercase">
-                        <span>{proj.location} &bull; {proj.year}</span>
-                        <button onClick={() => handleDeletePortfolioItem(proj.id)} className="text-rose-600 hover:underline">
-                          Delete
-                        </button>
-                      </div>
-                    </div>
+                {input('fullName', 'Full name', { span: true })}
+                {input('businessName', 'Business name (optional)', { span: true })}
+                {input('experienceYears', 'Years of experience', { inputMode: 'numeric' })}
+                {profile.canProvideConsultation && input('consultationFee', 'Consultation fee (₹)', { inputMode: 'decimal' })}
+                {input('city', 'City')}
+                {input('state', 'State')}
+                {input('serviceAreas', 'Service areas (optional)', { span: true })}
+                {input('description', 'About your work (optional)', { textarea: true, span: true })}
+              </div>
+              <p className="text-2xs text-stone-500">
+                Your service ({profile.category?.name ?? 'not set'}) and sign-in phone number can only be changed by DBC support, because verification is granted per service.
+              </p>
+              <div className="flex flex-wrap justify-end gap-2">
+                <button type="button" onClick={() => setEditing(false)} className="dbc-btn dbc-btn-md dbc-btn-secondary" disabled={saving}>Cancel</button>
+                <button type="submit" className="dbc-btn dbc-btn-md dbc-btn-primary" disabled={saving}>{saving ? 'Saving…' : 'Save changes'}</button>
+              </div>
+            </form>
+          ) : (
+            <>
+              <h2 className="border-b border-stone-100 pb-2 text-sm font-bold text-stone-900">Profile details</h2>
+              <dl className="grid gap-4 text-xs font-semibold text-stone-600 sm:grid-cols-2">
+                {details.map(([label, value]) => (
+                  <div key={label} className="space-y-0.5 rounded-xl border border-stone-100 bg-stone-50/50 p-3">
+                    <dt className="text-3xs font-bold uppercase text-stone-500">{label}</dt>
+                    <dd className="text-stone-900 [overflow-wrap:anywhere]">{value || 'Not added yet'}</dd>
                   </div>
                 ))}
-              </div>
-            )}
-          </section>
-
-        </div>
-
-        {/* Right Column: Availability, Team, settings (Col span 4) */}
-        <div className="lg:col-span-4 space-y-6">
-          
-          {/* Verification documents status */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
-            <div className="flex justify-between items-center border-b border-light-border/40 pb-2">
-              <h3 className="text-xs font-black uppercase text-stone-900">Verification Center</h3>
-              <button onClick={handleUploadVerificationDoc} className="text-3xs font-black uppercase text-brand-emerald hover:underline">
-                Upload doc
-              </button>
-            </div>
-
-            <div className="space-y-2.5 text-xs font-semibold text-stone-600">
-              {verificationDocs.map((doc, idx) => (
-                <div key={idx} className="p-2.5 bg-stone-50 border border-stone-200 rounded-xl flex justify-between items-center">
-                  <span className="truncate max-w-[130px] block">{doc.name}</span>
-                  <span className={`text-3xs font-black uppercase px-2 py-0.5 rounded border ${
-                    doc.status === 'Approved' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-800'
-                  }`}>
-                    {doc.status}
-                  </span>
+                <div className="space-y-0.5 rounded-xl border border-stone-100 bg-stone-50/50 p-3 sm:col-span-2">
+                  <dt className="text-3xs font-bold uppercase text-stone-500">About your work</dt>
+                  <dd className="leading-relaxed text-stone-700">{profile.description || 'Not added yet'}</dd>
                 </div>
-              ))}
-            </div>
-          </section>
+              </dl>
+            </>
+          )}
+        </section>
 
-          {/* Working hours availability */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4 text-xs font-semibold text-stone-600">
-            <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Availability Rules</h3>
-            <div className="space-y-3">
-              <div>
-                <span className="block text-3xs font-black text-stone-500 uppercase">Working Days</span>
-                <strong className="text-stone-900 block mt-0.5">{workingDays.join(', ')}</strong>
+        <aside className="space-y-3 rounded-3xl border border-stone-200 bg-white p-6 shadow-sm lg:col-span-4">
+          <h2 className="text-sm font-bold text-stone-900">Profile strength</h2>
+          {pct === null ? (
+            <p className="text-xs text-stone-600">Not available right now.</p>
+          ) : (
+            <>
+              <p className="text-2xl font-black text-stone-900">{pct}%</p>
+              <div className="h-2 overflow-hidden rounded-full bg-stone-200" role="progressbar" aria-label="Profile completion" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+                <div className="h-full rounded-full bg-emerald-700" style={{ width: `${pct}%` }} />
               </div>
-              <div>
-                <span className="block text-3xs font-black text-stone-500 uppercase">Operational Hours</span>
-                <strong className="text-stone-900 block mt-0.5">{workingHours}</strong>
-              </div>
-              <div className="pt-2 flex justify-between items-center border-t border-light-border/40">
-                <div>
-                  <strong className="text-stone-850 block">Vacation Mode</strong>
-                   <span className="text-2xs text-stone-500 font-bold block">Pause inbound project requests</span>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={vacationMode}
-                  onChange={e => setVacationMode(e.target.checked)}
-                  className="dbc-checkbox"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Informal Team Members list */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4">
-            <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Business Team List</h3>
-            <div className="space-y-2.5">
-              {team.map((member, idx) => (
-                <div key={idx} className="p-3 bg-stone-50 border border-stone-100 rounded-xl space-y-1 text-xs">
-                  <strong className="text-stone-900 block">{member.name}</strong>
-                  <div className="flex justify-between text-2xs text-stone-450 font-bold uppercase">
-                    <span>{member.role}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Notification settings */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4 text-xs font-semibold text-stone-600">
-            <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Notification preferences</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span>Leads Alert Dispatch</span>
-                <input
-                  type="checkbox"
-                  checked={notifications.alerts}
-                  onChange={e => setNotifications({ ...notifications, alerts: e.target.checked })}
-                  className="dbc-checkbox"
-                />
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Milestone updates</span>
-                <input
-                  type="checkbox"
-                  checked={notifications.updates}
-                  onChange={e => setNotifications({ ...notifications, updates: e.target.checked })}
-                  className="dbc-checkbox"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Security details Change password form */}
-          <section className="bg-white border border-light-border p-6 rounded-3xl shadow-apple-sm space-y-4 text-xs">
-            <h3 className="text-xs font-black uppercase text-stone-900 border-b border-light-border/40 pb-2">Security settings</h3>
-            <div className="space-y-3">
-              <button
-                onClick={() => {
-                  const p = prompt('Enter new password:');
-                  if (p) alert('Password updated.');
-                }}
-                className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
-              >
-                Change password
-              </button>
-              <button
-                onClick={() => alert('Two-factor authentication placeholder configured.')}
-                className="w-full dbc-btn dbc-btn-sm dbc-btn-secondary bg-white border border-stone-200 hover:bg-stone-50"
-              >
-                Enable Two-Factor auth
-              </button>
-            </div>
-          </section>
-
-        </div>
-
+              {(own.completion?.missingFields ?? []).length > 0 && (
+                <ul className="space-y-1 text-xs text-stone-700">
+                  {own.completion!.missingFields.map((f) => <li key={f}>• {MISSING_LABELS[f] ?? 'Complete your profile'}</li>)}
+                </ul>
+              )}
+            </>
+          )}
+          {profile.totalReviews > 0 && (
+            <p className="text-xs text-stone-600">Rated {Number(profile.averageRating).toFixed(1)} from {profile.totalReviews} review{profile.totalReviews === 1 ? '' : 's'}.</p>
+          )}
+        </aside>
       </div>
-
     </div>
   );
 }
 
-// ==========================================
-// Loading Skeletons
-// ==========================================
+/** One instance per authenticated account, so state never carries over between accounts. */
+export default function ProfessionalProfile() {
+  const { user } = useAuth();
+  return <OwnProfessionalProfile key={user?.id != null ? String(user.id) : 'signed-out'} />;
+}
+
 function SkeletonProfile() {
   return (
-    <div className="space-y-8 max-w-7xl mx-auto pb-16 text-left animate-pulse">
-      <div className="h-28 bg-white border border-light-border rounded-3xl p-6 shadow-apple-sm"></div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8 h-96 bg-white border border-light-border rounded-3xl p-6 shadow-apple-sm"></div>
-        <div className="lg:col-span-4 h-96 bg-white border border-light-border rounded-3xl p-6 shadow-apple-sm"></div>
-      </div>
+    <div className="space-y-6 max-w-5xl mx-auto pb-16 animate-pulse" aria-busy="true" aria-label="Loading your profile">
+      <div className="h-28 rounded-3xl bg-stone-100" />
+      <div className="h-12 rounded-2xl bg-stone-100" />
+      <div className="h-72 rounded-3xl bg-stone-100" />
     </div>
   );
 }

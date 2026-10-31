@@ -2,6 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { authService } from '../../services/auth/authService'
 import { setAccessToken } from '../../services/auth/axiosClient'
 import type { AuthState, AuthUser, LoginRequest, LoginResponse, PhoneRegisterRequest, PhoneSessionResponse } from '../../types/auth/authTypes'
+import { clearAccountData, purgeLegacySharedKeys } from '../../utils/accountStorage'
+
+// Older builds kept account details under shared browser keys that any account could read; drop them.
+purgeLegacySharedKeys()
 
 function readStoredUser() {
   const rawUser = localStorage.getItem('user')
@@ -15,10 +19,15 @@ function readStoredUser() {
 }
 
 function persistUser(user: AuthUser) {
+  // A different account signing in on this browser must never see the previous account's data.
+  const previous = readStoredUser()
+  if (previous && String(previous.id) !== String(user.id)) clearAccountData()
   localStorage.setItem('user', JSON.stringify(user))
 }
 
-function clearStoredAuth() {
+/** Ends the stored session. `wipeAccountData` also removes the account's browser data (sign-out, expiry). */
+function clearStoredAuth(wipeAccountData = true) {
+  if (wipeAccountData) clearAccountData()
   localStorage.removeItem('user')
 }
 
@@ -91,7 +100,7 @@ export const refreshThunk = createAsyncThunk<LoginResponse, void, { rejectValue:
       persistUser(response.user)
       return response
     } catch (error) {
-      clearStoredAuth()
+      clearStoredAuth(readStoredUser() !== null)
       setAccessToken(null)
       return rejectWithValue(toErrorMessage(error, 'Session expired'))
     }
@@ -139,6 +148,19 @@ const authSlice = createSlice({
     },
     clearError(state) {
       state.error = null
+    },
+    /** Keeps the signed-in user's display data in step with a profile edit (identity stays the same user id). */
+    profilePatched(state, action: { payload: { fullName?: string; phone?: string | null; profileImageUrl?: string | null } }) {
+      if (!state.user) return
+      const { fullName, phone, profileImageUrl } = action.payload
+      if (fullName !== undefined) {
+        const parts = fullName.trim().split(/\s+/)
+        state.user.firstName = parts[0] || ''
+        state.user.lastName = parts.slice(1).join(' ')
+      }
+      if (phone !== undefined) state.user.phone = phone
+      if (profileImageUrl !== undefined) state.user.profileImageUrl = profileImageUrl
+      localStorage.setItem('user', JSON.stringify(state.user))
     },
     clearAuth(state) {
       clearStoredAuth()
@@ -245,5 +267,5 @@ const authSlice = createSlice({
   },
 })
 
-export const { clearAuth, logout, clearError } = authSlice.actions
+export const { clearAuth, logout, clearError, profilePatched } = authSlice.actions
 export const authReducer = authSlice.reducer

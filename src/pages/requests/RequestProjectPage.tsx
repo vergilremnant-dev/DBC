@@ -86,19 +86,27 @@ const emptyForm = (serviceSlug: string, providerId: string, city: string): FormS
 
 type Photo = { fileName: string; fileUrl: string; fileType: string; size: number };
 
-function readDraft(): { form: FormState; step: number; savedAt: number } | null {
+/**
+ * A draft belongs to the account that wrote it (or to a guest, ownerId null, until they sign in).
+ * A draft written by another signed-in account on this browser is discarded, never shown.
+ */
+function readDraft(currentUserId: string | null): { form: FormState; step: number; savedAt: number } | null {
   try {
     const raw = localStorage.getItem(DRAFT_KEY);
     if (!raw) return null;
     const d = JSON.parse(raw);
+    if (d.ownerId && d.ownerId !== currentUserId) {
+      localStorage.removeItem(DRAFT_KEY);
+      return null;
+    }
     return Date.now() - d.savedAt < DRAFT_TTL_MS ? d : null;
   } catch {
     return null;
   }
 }
-function writeDraft(form: FormState, step: number) {
+function writeDraft(form: FormState, step: number, ownerId: string | null) {
   try {
-    localStorage.setItem(DRAFT_KEY, JSON.stringify({ form, step, savedAt: Date.now() }));
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ form, step, savedAt: Date.now(), ownerId }));
   } catch {
     /* storage unavailable: the form still works, it just won't survive a reload */
   }
@@ -196,6 +204,7 @@ export function RequestProjectPage() {
   const [params] = useSearchParams();
   const location = useLocation();
   const { isAuthenticated, user } = useAuth();
+  const currentUserId = user?.id != null ? String(user.id) : null;
   const { categories, bySlug, byId, status: catalogStatus } = useServiceCatalog();
 
   const urlProfessional = params.get('professional') || params.get('providerId') || '';
@@ -203,12 +212,12 @@ export function RequestProjectPage() {
   const urlCategoryId = Number(params.get('categoryId')) || 0;
 
   const [form, setForm] = useState<FormState>(() => {
-    const d = readDraft();
+    const d = readDraft(currentUserId);
     if (d && (!urlService || d.form.serviceSlug === urlService) && (!urlProfessional || d.form.providerId === urlProfessional)) return d.form;
     return emptyForm(urlService, urlProfessional, params.get('city') || '');
   });
   const [step, setStep] = useState<number>(() => {
-    const d = readDraft();
+    const d = readDraft(currentUserId);
     return d && params.get('resume') === '1' ? Math.min(d.step, STEPS.length - 1) : 0;
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -256,8 +265,8 @@ export function RequestProjectPage() {
 
   // Persist the draft (text only) so sign-in or a reload doesn't lose it.
   useEffect(() => {
-    if (!done) writeDraft(form, step);
-  }, [form, step, done]);
+    if (!done) writeDraft(form, step, currentUserId);
+  }, [form, step, done, currentUserId]);
 
   // Move focus to the heading when the step changes (not on first load) so screen readers announce it.
   const firstRender = useRef(true);

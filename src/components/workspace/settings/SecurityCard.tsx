@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import { BRAND } from '../../../config/branding';
 
+export interface SessionSummary {
+  id: string;
+  browser: string;
+  ip: string;
+  location: string;
+  current: boolean;
+}
+
 interface SecurityCardProps {
   onChangePassword: (oldPw: string, newPw: string) => Promise<boolean>;
   onExportData: () => void;
   onDeleteAccount: () => void;
+  /** The signed-in account's own sessions (from /api/auth/sessions). */
+  sessions?: SessionSummary[];
+  onRevokeSession?: (id: string) => void;
 }
 
-export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }: SecurityCardProps) {
+export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount, sessions = [], onRevokeSession }: SecurityCardProps) {
   // Password states
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -20,11 +31,6 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
   const [visibleInSearch, setVisibleInSearch] = useState(true);
   const [telemetry, setTelemetry] = useState(false);
 
-  // Active Sessions Mock
-  const [sessions, setSessions] = useState([
-    { id: 's1', browser: 'Chrome on Windows 11', ip: '183.82.112.9', location: 'Hyderabad, India', current: true },
-    { id: 's2', browser: 'Safari on iPhone 15', ip: '49.204.113.2', location: 'Chennai, India', current: false }
-  ]);
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,7 +65,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
   };
 
   const handleTerminateSession = (id: string) => {
-    setSessions(prev => prev.filter(s => s.id !== id));
+    onRevokeSession?.(id);
   };
 
   return (
@@ -166,7 +172,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
 
         <div className="divide-y divide-stone-100 space-y-3">
           {sessions.length === 0 ? (
-            <p className="text-stone-400 text-center py-4 font-medium">No other active sessions detected.</p>
+            <p className="text-stone-400 text-center py-4 font-medium">No active sessions found.</p>
           ) : (
             sessions.map((sess) => (
               <div key={sess.id} className="pt-3 first:pt-0 flex items-center justify-between gap-4 text-xs font-semibold text-stone-700">
@@ -180,7 +186,7 @@ export function SecurityCard({ onChangePassword, onExportData, onDeleteAccount }
                     )}
                   </div>
                   <div className="text-2xs text-stone-500 font-medium">
-                    IP: {sess.ip} • {sess.location}
+                    {[sess.ip && `IP: ${sess.ip}`, sess.location].filter(Boolean).join(' • ')}
                   </div>
                 </div>
                 {!sess.current && (

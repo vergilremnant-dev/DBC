@@ -327,8 +327,13 @@ export async function logoutAllUserSessions(userId: string): Promise<void> {
 }
 
 export async function getUserSessions(userId: string) {
+  // Sign-in sessions only: verification/reset tokens share this table and are not sessions.
   return await db.userSession.findMany({
-    where: { userId },
+    where: {
+      userId,
+      expiresAt: { gt: new Date() },
+      NOT: [{ token: { startsWith: 'EMAIL_VERIFY:' } }, { token: { startsWith: 'PWD_RESET:' } }],
+    },
     select: {
       id: true,
       userAgent: true,
